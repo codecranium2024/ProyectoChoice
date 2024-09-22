@@ -9,8 +9,8 @@ http://ionicframework.com/docs/theming/ */
   --ion-color-primary-contrast-rgb: 255, 255, 255; /*Color de contraste, se diferencia del color primario*/
   --ion-color-primary-shade: #edbe50;/*Color de animaciones*/
   --ion-color-primary-tint: #efb734;
-  /*background color*/
-    --ion-background-color: #1449e9;
+  /*EL color de fondo*/
+    --ion-background-color: #ffffff;
 /*Colores secundarios*/
   --ion-color-secondary: #57ff3d;
   --ion-color-secondary-rgb: 61, 194, 255;
