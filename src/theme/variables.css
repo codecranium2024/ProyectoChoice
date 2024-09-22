@@ -1,2 +1,47 @@
 /* For information on how to create your own theme, please see:
 http://ionicframework.com/docs/theming/ */
+/*Declarar los colore principales*/
+:root {
+    /*Colores primarios*/
+  --ion-color-primary: #fbb514; /*Color primario de componentes seleccionados */
+  --ion-color-primary-rgb: 255, 165, 97; /*Color de fondo para un objeto seleccionado*/
+  --ion-color-primary-contrast: #ffffff;
+  --ion-color-primary-contrast-rgb: 255, 255, 255; /*Color de contraste, se diferencia del color primario*/
+  --ion-color-primary-shade: #edbe50;/*Color de animaciones*/
+  --ion-color-primary-tint: #efb734;
+  /*background color*/
+    --ion-background-color: #1449e9;
+/*Colores secundarios*/
+  --ion-color-secondary: #57ff3d;
+  --ion-color-secondary-rgb: 61, 194, 255;
+  --ion-color-secondary-contrast: #ffffff;
+  --ion-color-secondary-contrast-rgb: 255, 255, 255;
+  --ion-color-secondary-shade: #307a17;
+  --ion-color-secondary-tint: #50c8ff;
+
+  --ion-color-tertiary: #5260ff;
+  --ion-color-tertiary-rgb: 82, 96, 255;
+  --ion-color-tertiary-contrast: #ffffff;
+  --ion-color-tertiary-contrast-rgb: 255, 255, 255;
+  --ion-color-tertiary-shade: #4854e0;
+  --ion-color-tertiary-tint: #6370ff;
+/*Colores para resaltar procesos exitosos*/
+  --ion-color-success: #2dd36f;
+  --ion-color-success-rgb: 45, 211, 111;
+  --ion-color-success-contrast: #ffffff;
+  --ion-color-success-contrast-rgb: 255, 255, 255;
+  --ion-color-success-shade: #29ba62;
+  --ion-color-success-tint: #42d77d;
+/*Colores para advertencias*/
+  --ion-color-warning: #f17b21;
+  --ion-color-warning-rgb: 255, 196, 9;
+  --ion-color-warning-contrast: #000000;
+  --ion-color-warning-contrast-rgb: 0, 0, 0;
+  --ion-color-warning-shade: #e0ac08;
+  --ion-color-warning-tint: #ffca22;
+/*Colores para resaltar errores*/
+  --ion-color-danger: #ee2e1e; /*Color primario */
+  --ion-color-danger-rgb: 235, 68, 90;
+  --ion-color-danger-contrast: #ffffff; /*Color de contraste*/
+  --ion-color-danger-contrast-rgb:
+ }
