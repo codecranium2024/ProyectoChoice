@@ -25,9 +25,13 @@ interface AppPage {
 const appPages: AppPage[] = [
   {
     title: 'Panel',
-    url: '/folder/Panel',
+    url: '/Panel',
     iosIcon: appsOutline,
-    mdIcon: appsSharp
+    mdIcon: appsSharp,
+    subPages: [
+      { title: 'panel', url: 'Panel' },
+  
+    ]
   },
   {
     title: 'Reportes',
@@ -59,7 +63,7 @@ const appPages: AppPage[] = [
     iosIcon: documentOutline,
     mdIcon: documentSharp,
     subPages: [
-      { title: 'Visualizar', url: '' },
+      { title: 'Visualizar', url: '/Visualizar' },
       { title: 'Comunidades', url: '/Comunidad' },
       { title: 'subtest3', url: '' },
       { title: 'Mapa', url: '' },

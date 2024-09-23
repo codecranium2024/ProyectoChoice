@@ -5,6 +5,8 @@ import Menu from './components/Menu';
 import Page from './pages/Page';
 import Comunidad from './components/RomeoComp/Comunidad/Comunidad';
 import ListadoGeneral from './components/RomeoComp/Comunidad/ListadoGeneral';
+import Visualizar from './components/RomeoComp/Proyecto/Visualizar';
+import Panel from './components/RomeoComp/Panel/Panel'
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
 
@@ -45,7 +47,7 @@ const App: React.FC = () => {
           <Menu />
           <IonRouterOutlet id="main">
             <Route path="/" exact={true}>
-              <Redirect to="/folder/Inbox" />
+              <Redirect to="/Panel" />
             </Route>
             <Route path="/folder/:name" exact={true}>
               <Page />
@@ -56,6 +58,13 @@ const App: React.FC = () => {
             <Route path="/listadogeneral" exact={true}>
             <ListadoGeneral />  {"/listadogeneral"}
             </Route>
+            <Route path="/Visualizar" exact={true}>
+            <Visualizar /> 
+              </Route>
+            <Route path="/panel" exact={true}>
+              <Panel /> 
+            </Route>
+            
           </IonRouterOutlet>
         </IonSplitPane>
       </IonReactRouter>
