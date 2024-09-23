@@ -36,19 +36,19 @@ const appPages: AppPage[] = [
     mdIcon: statsChartSharp,
     subPages: [
       { title: 'Visualizar', url: '' },
-      { title: 'Comunidades', url: '/Comunidad' },
+      { title: 'C', url: '/Com' },
       { title: 'subtest3', url: '' },
       { title: 'Mapa', url: '' },
     ]
   },
   {
     title: 'Comunidades',
-    url: '/folder/Comunidades',
+    url: '/Comunidad',
     iosIcon: peopleOutline,
     mdIcon: peopleSharp,
     subPages: [
-      { title: 'Visualizar', url: '' },
       { title: 'Comunidades', url: '/Comunidad' },
+      { title: 'Listado General', url: '/ListadoGeneral' },
       { title: 'subtest3', url: '' },
       { title: 'Mapa', url: '' },
     ]
@@ -72,7 +72,7 @@ const appPages: AppPage[] = [
     mdIcon: settingsSharp,
     subPages: [
       { title: 'Visualizar', url: '' },
-      { title: 'Comunidades', url: '/Comunidad' },
+      { title: 'Comun', url: '/Coidad' },
       { title: 'subtest3', url: '' },
       { title: 'Mapa', url: '' },
     ]

@@ -1,0 +1,67 @@
+.ion-page {
+    --background: #f9f9f9;
+  }
+  
+  .ion-header {
+    --background: #3880ff;
+    --color: #fff;
+  }
+  
+  .ion-segment-button {
+    --background: #fff;
+    --color: #3880ff;
+    --border-radius: 4px;
+    --border-color: #3880ff;
+  }
+  
+  .ion-segment-button.ion-activated {
+    --background: #3880ff;
+    --color: #fff;
+  }
+  
+  .ion-list {
+    padding: 16px;
+  }
+  
+  .ion-item {
+    --background: #fff;
+    --border-radius: 8px;
+    --padding-start: 16px;
+    --padding-end: 16px;
+    --border-color: #ddd;
+    --border-width: 1px;
+    --border-style: solid;
+    margin-bottom: 8px;
+  }
+  
+  .ion-item h2 {
+    font-size: 18px;
+    color: #3880ff;
+    margin: 0;
+  }
+  
+  .table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+  }
+  
+  .table th, .table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+  }
+  
+  .table th {
+    background-color: #3880ff;
+    color: white;
+  }
+  
+  .table tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  
+  .table tr:hover {
+    background-color: #ddd;
+  }
+  
