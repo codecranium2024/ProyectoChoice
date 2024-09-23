@@ -159,7 +159,7 @@ const Menu: React.FC = () => {
           </IonItemDivider>
           {/*-- Pestañas secundarias --*/}
           <IonMenuToggle hidden={subMenu['Comunidades']} autoHide={false}>
-            <IonItem lines="full" detail={true}>
+            <IonItem lines="full" detail={true} routerLink='/VisualizarComunidades'>
               <IonIcon slot="start" ios={albumsOutline} md={albumsSharp} />
               <IonLabel>Visualizar</IonLabel>
             </IonItem>

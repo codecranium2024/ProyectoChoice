@@ -49,6 +49,11 @@ const App: React.FC = () => {
             <Route path="/folder/:name" exact={true}>
               <Page />
             </Route>
+
+            <Route path="/VisualizarComunidades" exact={true}>
+              <VisualizarComunidades/> {"/VisualizarComunidades"}
+            </Route>
+            
           </IonRouterOutlet>
         </IonSplitPane>
       </IonReactRouter>
