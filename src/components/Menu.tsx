@@ -51,7 +51,7 @@ const appPages: AppPage[] = [
     iosIcon: peopleOutline,
     mdIcon: peopleSharp,
     subPages: [
-      { title: 'Comunidades', url: '/Comunidad' },
+      { title: 'Comunidades', url: '' },
       { title: 'Listado General', url: '/ListadoGeneral' },
       { title: 'subtest3', url: '' },
       { title: 'Mapa', url: '' },
