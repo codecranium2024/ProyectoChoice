@@ -4,7 +4,7 @@ import { Redirect, Route } from 'react-router-dom';
 import Menu from './components/Menu';
 import Page from './pages/Page';
 import ListadoGeneral from './components/RomeoComp/Comunidad/ListadoGeneral';
-import Comunidad from './components/RomeoComp/Comunidad/Comunidad';
+import Comunidad from './components/RomeoComp/Comunidad/Comunidad1';
 import Visualizar from './components/RomeoComp/Proyecto/Visualizar';
 import Panel from './components/RomeoComp/Panel/Panel'
 /* Core CSS required for Ionic components to work properly */
@@ -61,9 +61,9 @@ const App: React.FC = () => {
             <Route path="/panel" exact={true}>
               <Panel /> 
             </Route>
-            <Route path="/comunidad" exact={true}>
+            {/* <Route path="/comunidad" exact={true}>
               <Comunidad /> 
-            </Route>
+            </Route> */}
           </IonRouterOutlet>
         </IonSplitPane>
       </IonReactRouter>

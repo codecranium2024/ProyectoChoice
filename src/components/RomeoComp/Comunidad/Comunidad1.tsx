@@ -2,7 +2,7 @@
 import React from 'react';
 import { IonContent, IonHeader, IonPage, IonSegment, IonSegmentButton, IonLabel, IonToolbar, IonTitle, IonList, IonItem } from '@ionic/react';
 import { IonButton } from '@ionic/react';
-import './Comunidad.css'
+import './Comunidad1.css'
 
 const RegistrarComunidad: React.FC = ()=>(
     <IonList>
