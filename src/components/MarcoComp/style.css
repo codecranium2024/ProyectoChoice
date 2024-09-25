@@ -1,5 +1,14 @@
-/*Logo panel style*/
+/*Estilos para las paginas y componentes desarrollados por Marco Corporation*/
+/*Export colors from variables.css in theme */
+@import url('./../../theme/variables.css');
 
+/* Ahora puedes usar las variables CSS definidas en variables.css 
+.my-element {
+  background-color: var(--ion-color-primary);
+  color: var(--ion-color-primary-contrast);
+}
+*/
+/*Logo panel style*/
 .LogoPanel {
     display: flex;
     justify-content: center;
@@ -7,12 +16,60 @@
     height: 100%;
     width: 100%;
     border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   }
   
-.LogoImg {
+  .LogoImg {
     width: 50%;
     height: auto;
+    
   }
 
   /*Logo panel style*/
+
+  /* Visualizar comunidades - Tablas */
+
+  .PanelPrincipal {
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    padding: 25px;
+  }
+
+  .TituloPagina {
+    font-size: 2.5em;
+    margin: 0;
+    padding: 25px;
+    color: var(--ion-color-primary);
+  }
+
+  .TablaComunidad {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 25px 0;
+    font-size: 0.9em;
+    padding: 15px;
+    min-width: 400px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    text-align: center;
+  }
+
+  .EncabezadoTabla {
+    background-color: var(--ion-logo-naranja);
+    border: solid 1px rgb(120, 119, 119);
+    text-align: center;
+    /*bold style text*/
+    font-weight: bold;
+    color: black;
+  }
+  .CeldaTabla {
+    background-color: var(--ion-background-color);
+    border: solid 1px rgb(120, 119, 119);
+    text-align: center;
+  }
+
+  .CeldaTablaEstado {
+    /*background-color: green;*/
+    border: solid 1px rgb(120, 119, 119);
+    text-align: center;
+  }
+  /* Visualizar comunidades - Tablas */
