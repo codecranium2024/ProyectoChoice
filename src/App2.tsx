@@ -1,8 +1,9 @@
 import { IonApp, IonRouterOutlet, IonSplitPane, setupIonicReact } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import { Redirect, Route } from 'react-router-dom';
-import Menu from './components/Menu';
+import Menu from './components/Menu2';
 import Page from './pages/Page';
+
 import ListadoGeneral from './components/RomeoComp/Comunidad/ListadoGeneral';
 import Comunidad from './components/RomeoComp/Comunidad/Comunidad1';
 import Visualizar from './components/RomeoComp/Proyecto/Visualizar';
@@ -61,9 +62,9 @@ const App: React.FC = () => {
             <Route path="/panel" exact={true}>
               <Panel /> 
             </Route>
-            {/* <Route path="/comunidad" exact={true}>
+            <Route path="/comunidad" exact={true}>
               <Comunidad /> 
-            </Route> */}
+            </Route>
           </IonRouterOutlet>
         </IonSplitPane>
       </IonReactRouter>

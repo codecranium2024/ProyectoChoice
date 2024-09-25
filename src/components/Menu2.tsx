@@ -45,18 +45,18 @@ const appPages: AppPage[] = [
       { title: 'Mapa', url: '' },
     ]
   },
-  // {
-  //   title: 'Comunidades',
-  //   url: '/Comunidad',
-  //   iosIcon: peopleOutline,
-  //   mdIcon: peopleSharp,
-  //   subPages: [
-  //     { title: 'Comunidades', url: '/Comunidad' },
-  //     { title: 'Listado General', url: '/ListadoGeneral' },
-  //     { title: 'subtest3', url: '' },
-  //     { title: 'Mapa', url: '' },
-  //   ]
-  // },
+  {
+    title: 'Comunidades',
+    url: '/Comunidad',
+    iosIcon: peopleOutline,
+    mdIcon: peopleSharp,
+    subPages: [
+      { title: 'Comunidades', url: '/Comunidad' },
+      { title: 'Listado General', url: '/ListadoGeneral' },
+      { title: 'subtest3', url: '' },
+      { title: 'Mapa', url: '' },
+    ]
+  },
   {
     title: 'Proyectos',
     url: '/folder/Proyectos',
