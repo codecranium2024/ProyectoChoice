@@ -15,7 +15,7 @@ import {
   IonRouterLink
 } from '@ionic/react';
 import { useState } from 'react';
-import { chevronDownOutline, chevronDownSharp, peopleCircleOutline, peopleCircleSharp } from 'ionicons/icons';
+import { chevronDownOutline, chevronDownSharp, peopleCircleOutline, peopleCircleSharp} from 'ionicons/icons';
 import { Route, useLocation } from 'react-router-dom';
 import { appsOutline, appsSharp, statsChartOutline, statsChartSharp, peopleOutline, peopleSharp, documentOutline, documentSharp, settingsOutline, settingsSharp, albumsOutline, albumsSharp, addOutline, addSharp} from 'ionicons/icons';
 import './Menu.css';
@@ -156,7 +156,7 @@ const Menu: React.FC = () => {
             <IonIcon slot="end" color="medium" ios={chevronDownOutline} md={chevronDownSharp} />
             {/*-- Texto de la pestaña principal --*/}
             <IonLabel>Comunidades</IonLabel>
-          </IonItemDivider>
+          </IonItemDivider> 
           {/*-- Pestañas secundarias --*/}
           <IonMenuToggle hidden={subMenu['Comunidades']} autoHide={false}>
             <IonItem lines="full" detail={true} routerLink='/VisualizarComunidades'>
@@ -190,7 +190,6 @@ const Menu: React.FC = () => {
           </IonMenuToggle>
         </IonItemGroup>
 
-
         {/*-- Configuraciones --*/}
         <IonItemGroup>
           {/*-- Pestaña principal --*/}
@@ -210,7 +209,6 @@ const Menu: React.FC = () => {
             </IonItem>
           </IonMenuToggle>
         </IonItemGroup>
-
       </IonContent>
     </IonMenu>
   );

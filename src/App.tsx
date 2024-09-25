@@ -51,7 +51,7 @@ const App: React.FC = () => {
             </Route>
 
             <Route path="/VisualizarComunidades" exact={true}>
-              <VisualizarComunidades/> {"/VisualizarComunidades"}
+              <VisualizarComunidades/> 
             </Route>
             
           </IonRouterOutlet>
