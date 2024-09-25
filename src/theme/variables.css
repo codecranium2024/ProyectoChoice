@@ -2,6 +2,14 @@
 http://ionicframework.com/docs/theming/ */
 /*Declarar los colore principales*/
 :root {
+    /*Colores del logo de Choice Humanitarian*/
+    --ion-logo-naranja: #ef6e23;
+    --ion-logo-azul: #2f4fa2;
+    --ion-logo-amarillo: #fbd100;
+    --ion-logo-verde: #57b841;
+    --ion-logo-rojo: #ed1c22;
+    --ion-logo-celeste: #03a5cd;
+    
     /*Colores primarios*/
   --ion-color-primary: #fbb514; /*Color primario de componentes seleccionados */
   --ion-color-primary-rgb: 255, 165, 97; /*Color de fondo para un objeto seleccionado*/
@@ -9,6 +17,7 @@ http://ionicframework.com/docs/theming/ */
   --ion-color-primary-contrast-rgb: 255, 255, 255; /*Color de contraste, se diferencia del color primario*/
   --ion-color-primary-shade: #edbe50;/*Color de animaciones*/
   --ion-color-primary-tint: #efb734;
+  
   /*EL color de fondo*/
     --ion-background-color: #ffffff;
 /*Colores secundarios*/
