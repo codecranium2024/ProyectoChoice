@@ -8,7 +8,7 @@ import ListadoGeneral from './components/RomeoComp/Comunidad/ListadoGeneral';
 import Comunidad from './components/RomeoComp/Comunidad/Comunidad1';
 import Visualizar from './components/RomeoComp/Proyecto/Visualizar';
 import Panel from './components/RomeoComp/Panel/Panel';
-import VisualizarComunidades from './pages/MarcoPaginas/VisualizarComunidad';
+import VisualizarComunidades from './pages/MarcoPaginas/AgregarComunidad';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -34,11 +34,12 @@ import '@ionic/react/css/display.css';
  */
 
 /* import '@ionic/react/css/palettes/dark.always.css'; */
-/* import '@ionic/react/css/palettes/dark.class.css'; */
-import '@ionic/react/css/palettes/dark.system.css';
+import '@ionic/react/css/palettes/dark.class.css'; 
+/*import '@ionic/react/css/palettes/dark.system.css';*/
 
 /* Theme variables */
 import './theme/variables.css';
+import { Configuraciones } from './pages/MarcoPaginas/Configuraciones';
 
 setupIonicReact();
 
@@ -67,8 +68,11 @@ const App: React.FC = () => {
             <Route path="/comunidad" exact={true}>
               <Comunidad />
             </Route>
-            <Route path="/VisualizarComunidades" exact={true}>
+            <Route path="/AgregarComunidades" exact={true}>
               <VisualizarComunidades />
+            </Route>
+            <Route path="/Configuraciones" exact={true}>
+              <Configuraciones />
             </Route>
           </IonRouterOutlet>
         </IonSplitPane>

@@ -62,7 +62,7 @@ const appPages: AppPage[] = [
     subPages: [
       { title: 'Comunidades', url: '/Comunidad' },
       { title: 'Listado General', url: '/ListadoGeneral' },
-      { title: 'subtest3', url: '' },
+      { title: 'Agregar', url: '/AgregarComunidades' },
       { title: 'Mapa', url: '' },
     ]
   },
@@ -80,15 +80,9 @@ const appPages: AppPage[] = [
   },
   {
     title: 'Configuraciones',
-    url: '/folder/Configuraciones',
+    url: '/Configuraciones',
     iosIcon: settingsOutline,
     mdIcon: settingsSharp,
-    subPages: [
-      { title: 'Visualizar', url: '' },
-      { title: 'Comun', url: '/Coidad' },
-      { title: 'subtest3', url: '' },
-      { title: 'Mapa', url: '' },
-    ]
   },
 ];
 
