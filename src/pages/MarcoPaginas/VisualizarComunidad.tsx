@@ -4,7 +4,7 @@ import './../../components/MarcoComp/style.css';
 import { SlOptionsVertical } from "react-icons/sl";
 /* Basic CSS for apps built with Ionic */
 
-function VisualizarComunidades() {
+function VisualizarComunidad() {
     return (
         <main className="PanelPrincipal">
             <h1 className="TituloPagina">Visualizar Comunidades</h1>
@@ -34,4 +34,4 @@ function VisualizarComunidades() {
       
     );
   }
-  export default VisualizarComunidades;
+  export default VisualizarComunidad;

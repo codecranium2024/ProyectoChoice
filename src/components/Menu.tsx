@@ -55,14 +55,14 @@ const appPages: AppPage[] = [
     ]
   },
   {
-    title: 'Comunidades',
+    title: 'Comunidad',
     url: '/Comunidad',
     iosIcon: peopleOutline,
     mdIcon: peopleSharp,
     subPages: [
-      { title: 'Comunidades', url: '/Comunidad' },
-      { title: 'Listado General', url: '/ListadoGeneral' },
-      { title: 'subtest3', url: '' },
+      { title: 'Tecnico por Comunidad', url: '/Comunidad1' },
+      { title: 'Listado Comunidades', url: '/ListadoGeneral' },
+      { title: 'Registrar', url: '/Registrar' },
       { title: 'Mapa', url: '' },
     ]
   },

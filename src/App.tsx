@@ -3,12 +3,12 @@ import { IonReactRouter } from '@ionic/react-router';
 import { Redirect, Route } from 'react-router-dom';
 import Menu from './components/Menu';
 import Page from './pages/Page';
-
+import Registrar from './components/RomeoComp/Registrar/Registrar';
 import ListadoGeneral from './components/RomeoComp/Comunidad/ListadoGeneral';
-import Comunidad from './components/RomeoComp/Comunidad/Comunidad1';
+import Comunidad1 from './components/RomeoComp/Comunidad/Comunidad1';
 import Visualizar from './components/RomeoComp/Proyecto/Visualizar';
 import Panel from './components/RomeoComp/Panel/Panel';
-import VisualizarComunidades from './pages/MarcoPaginas/VisualizarComunidad';
+import VisualizarComunidad from './pages/MarcoPaginas/VisualizarComunidad';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -40,6 +40,7 @@ import '@ionic/react/css/palettes/dark.system.css';
 /* Theme variables */
 import './theme/variables.css';
 
+
 setupIonicReact();
 
 const App: React.FC = () => {
@@ -64,11 +65,14 @@ const App: React.FC = () => {
             <Route path="/panel" exact={true}>
               <Panel />
             </Route>
-            <Route path="/comunidad" exact={true}>
-              <Comunidad />
+            <Route path="/comunidad1" exact={true}>
+              <Comunidad1 />
             </Route>
-            <Route path="/VisualizarComunidades" exact={true}>
-              <VisualizarComunidades />
+            <Route path="/VisualizarComunidad" exact={true}>
+              <VisualizarComunidad />
+            </Route>
+            <Route path="/Registrar" exact={true}>
+              <Registrar/>
             </Route>
           </IonRouterOutlet>
         </IonSplitPane>
