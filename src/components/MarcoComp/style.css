@@ -16,6 +16,7 @@
     height: 100%;
     width: 100%;
     border-radius: 10px;
+    background-color: transparent;
   }
   
   .LogoImg {
@@ -32,6 +33,18 @@
     justify-content: center;
     align-items: center;
     border-radius: 10px;
+    width: 100%;
+    position: fixed;
+    flex-wrap: wrap;
+  }
+
+  .pg {
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    width: 100%;
+    position: fixed;
+    flex-wrap: wrap;
   }
 
   .TituloPagina {
@@ -39,17 +52,21 @@
     margin: 0;
     padding: 25px;
     text-align: left;
+    color: var(--ion-logo-azul);
   }
 
   .PanelSecundario {
     border-radius: 10px;
     margin: 25px;
+    background-color: var(--ion-background-secondary);
+    padding: 25px;
+
   }
 
   .TituloN2 {
     font-size: 1.5em;
     margin: 0;
-    color: var(--ion-logo-naranja);
+    color: var(--ion-color-contrast-rgb);
     padding: 25px;
   }
 
@@ -63,11 +80,19 @@
     margin-top: 5px;
     margin-bottom: 5px;
   }
+
+  .BotonGuardar {
+    padding: 50px;
+  }
   /* Componentes formularios */
   
   /*Configuraciones*/
   .component-icon-dark {
-    background: var(--ion-color-step-850, #27323e);
-    color: var(--ion-item-background, #fff);
+    background: var(--ion-color-primary, --ion-color-primary);
+    color: var(--ion-item-background, --ion-color-primary);
+  }
+
+  .ItemIonList {
+    background-color: transparent;
   }
   /*Configuraciones*/

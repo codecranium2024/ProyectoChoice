@@ -44,6 +44,7 @@ import { Configuraciones } from './pages/MarcoPaginas/Configuraciones';
 setupIonicReact();
 
 const App: React.FC = () => {
+
   return (
     <IonApp>
       <IonReactRouter>

@@ -2,7 +2,6 @@ import react from 'react'
 import {IonPage, IonIcon, IonButton, IonList, IonItem, IonLabel, IonToggle} from "@ionic/react";
 import {moon} from 'ionicons/icons';
 import './../../components/MarcoComp/style.css';
-import './../../theme/variables.css';
 
 export const Configuraciones = () => {
     const toggleDarkModeHandler = () => {
@@ -14,8 +13,8 @@ export const Configuraciones = () => {
             <h1 className='TituloPagina'>Configuraciones</h1>
             <div className='PanelSecundario'> 
                 <h2 className='TituloN2'>Interfaz</h2>
-                <IonList className="ion-margin-top">
-              <IonItem>
+                <IonList>
+              <IonItem className='ItemIonList'>
                 <IonIcon slot="start" icon={moon} />
                 <IonLabel>Activar modo oscuro</IonLabel>
                 <IonToggle
