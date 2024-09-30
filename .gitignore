@@ -29,5 +29,3 @@ yarn-error.log*
 
 # Optional eslint cache
 .eslintcache
-/src/components/Menu.tsx 
-/src/App.tsx
