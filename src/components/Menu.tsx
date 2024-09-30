@@ -62,6 +62,7 @@ const appPages: AppPage[] = [
     subPages: [
       { title: 'Tecnico por Comunidad', url: '/Comunidad1' },
       { title: 'Listado Comunidades', url: '/ListadoGeneral' },
+      
       { title: 'Registrar', url: '/Registrar' },
       { title: 'Mapa', url: '' },
     ]
@@ -80,7 +81,7 @@ const appPages: AppPage[] = [
   },
   {
     title: 'Configuraciones',
-    url: '/folder/Configuraciones',
+    url: '/Configuraciones',
     iosIcon: settingsOutline,
     mdIcon: settingsSharp,
     subPages: [
