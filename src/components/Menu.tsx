@@ -55,14 +55,13 @@ const appPages: AppPage[] = [
     ]
   },
   {
-    title: 'Comunidad',
-    url: '/Comunidad',
+    title: 'Comunidades',
+    url: '/Comunidades',
     iosIcon: peopleOutline,
     mdIcon: peopleSharp,
     subPages: [
-      { title: 'Tecnico por Comunidad', url: '/Comunidad1' },
-      { title: 'Listado Comunidades', url: '/ListadoGeneral' },
-      
+      { title: 'Comunidades', url: '/Comunidad' },
+      { title: 'Listado General', url: '/ListadoGeneral' },
       { title: 'Registrar', url: '/Registrar' },
       { title: 'Mapa', url: '' },
     ]
@@ -81,7 +80,7 @@ const appPages: AppPage[] = [
   },
   {
     title: 'Configuraciones',
-    url: '/Configuraciones',
+    url: '/carpeta/Configuraciones',
     iosIcon: settingsOutline,
     mdIcon: settingsSharp,
     subPages: [
