@@ -82,12 +82,6 @@ const appPages: AppPage[] = [
     url: '/Configuraciones',
     iosIcon: settingsOutline,
     mdIcon: settingsSharp,
-    subPages: [
-      { title: 'Visualizar', url: '' },
-      { title: 'Comun', url: '/Coidad' },
-      { title: 'subtest3', url: '' },
-      { title: 'Mapa', url: '' },
-    ]
   },
 ];
 
@@ -106,14 +100,8 @@ const Menu: React.FC = () => {
 
   return (
     <IonMenu contentId="main" type="overlay">
-      <IonHeader>
-        <IonToolbar>
-          <IonTitle>Menu</IonTitle>
-        </IonToolbar>
-      </IonHeader>
       <IonContent>
         <br />
-        <IonNote>choice2024@hotmail.com</IonNote>
         <IonList id="inbox-list">
           <Logo />
 

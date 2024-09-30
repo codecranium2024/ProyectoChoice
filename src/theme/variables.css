@@ -1,7 +1,10 @@
 /* For information on how to create your own theme, please see:
 http://ionicframework.com/docs/theming/ */
+
 /*Declarar los colore principales*/
 :root {
+    /*Colores modo claro*/
+
     /*Colores del logo de Choice Humanitarian*/
     --ion-logo-naranja: #ef6e23;
     --ion-logo-azul: #2f4fa2;
@@ -9,19 +12,22 @@ http://ionicframework.com/docs/theming/ */
     --ion-logo-verde: #57b841;
     --ion-logo-rojo: #ed1c22;
     --ion-logo-celeste: #03a5cd;
-    
+    --ion-color-texto: #ffffff;
     /*Colores primarios*/
-  --ion-color-primary: #fbb514; /*Color primario de componentes seleccionados */
-  --ion-color-primary-rgb: 255, 165, 97; /*Color de fondo para un objeto seleccionado*/
-  --ion-color-primary-contrast: #ffffff;
-  --ion-color-primary-contrast-rgb: 255, 255, 255; /*Color de contraste, se diferencia del color primario*/
-  --ion-color-primary-shade: #edbe50;/*Color de animaciones*/
-  --ion-color-primary-tint: #efb734;
-  
-  /*EL color de fondo*/
+    --ion-color-primary: #2f4fa2; /*Color primario de componentes seleccionados */
+    --ion-color-primary-rgb: 47, 79, 162; /*Color de fondo para un objeto seleccionado*/
+    --ion-color-primary-contrast: #ffffff;
+    --ion-color-primary-contrast-rgb: 255, 255, 255; /*Color de contraste, se diferencia del color primario*/
+    --ion-color-primary-shade: #273e8a; /*Color de animaciones*/
+    --ion-color-primary-tint: #3a5bb5; /*Color de animaciones*/
+    --checkbox-background-checked: var(--ion-logo-azul);
+
+  /*Colores de fondo modo claro*/
     --ion-background-color: #ffffff;
+    --ion-background-secondary: #cccccc;
+    --ion-item-background: transparent;
 /*Colores secundarios*/
-  --ion-color-secondary: #57ff3d;
+  --ion-color-secondary: #03a5cd;
   --ion-color-secondary-rgb: 61, 194, 255;
   --ion-color-secondary-contrast: #ffffff;
   --ion-color-secondary-contrast-rgb: 255, 255, 255;
@@ -53,4 +59,69 @@ http://ionicframework.com/docs/theming/ */
   --ion-color-danger-rgb: 235, 68, 90;
   --ion-color-danger-contrast: #ffffff; /*Color de contraste*/
   --ion-color-danger-contrast-rgb:
- }
+
+  }
+
+  body.dark{
+    /*Colores logo modo oscuro*/
+    --ion-logo-naranja: #ef6e23;
+    --ion-logo-azul: #2f4fa2;
+    --ion-logo-amarillo: #fbd100;
+    --ion-logo-verde: #57b841;
+    --ion-logo-rojo: #ed1c22;
+    --ion-logo-celeste: #03a5cd;
+    --ion-color-texto: #000000;
+
+    /*Colores primarios*/
+    --ion-color-primary: #fbb514; /*Color primario de componentes seleccionados */
+    --ion-color-primary-rgb: 255, 165, 97; /*Color de fondo para un objeto seleccionado*/
+    --ion-color-primary-contrast: #000000;
+    --ion-color-secondary: #ef6e23;
+    --ion-color-primary-contrast-rgb: 255, 255, 255; /*Color de contraste, se diferencia del color primario*/
+    --ion-color-primary-shade: #e27100;/*Color de animaciones*/
+    --ion-color-primary-tint: #efb734;
+    --checkbox-background-checked: var(--ion-logo-naranja);
+    --ion-background-color: #121212;
+    --ion-background-secondary: #242424;
+    --ion-background-color-rgb: 18, 18, 18;
+    --ion-text-color: #ffffff;
+    --ion-text-color-rgb: 255, 255, 255;
+    --ion-background-color-step-50: #1e1e1e;
+    --ion-background-color-step-100: #2a2a2a;
+    --ion-background-color-step-150: #363636;
+    --ion-background-color-step-200: #414141;
+    --ion-background-color-step-250: #4d4d4d;
+    --ion-background-color-step-300: #595959;
+    --ion-background-color-step-350: #656565;
+    --ion-background-color-step-400: #717171;
+    --ion-background-color-step-450: #7d7d7d;
+    --ion-background-color-step-500: #898989;
+    --ion-background-color-step-550: #949494;
+    --ion-background-color-step-600: #a0a0a0;
+    --ion-background-color-step-650: #acacac;
+    --ion-background-color-step-700: #b8b8b8;
+    --ion-background-color-step-750: #c4c4c4;
+    --ion-background-color-step-800: #d0d0d0;
+    --ion-background-color-step-850: #dbdbdb;
+    --ion-background-color-step-900: #e7e7e7;
+    --ion-background-color-step-950: #f3f3f3;
+    --ion-text-color-step-50: #f3f3f3;
+    --ion-text-color-step-100: #e7e7e7;
+    --ion-text-color-step-150: #dbdbdb;
+    --ion-text-color-step-200: #d0d0d0;
+    --ion-text-color-step-250: #c4c4c4;
+    --ion-text-color-step-300: #b8b8b8;
+    --ion-text-color-step-350: #acacac;
+    --ion-text-color-step-400: #a0a0a0;
+    --ion-text-color-step-450: #949494;
+  }
+
+  body.dark .TituloPagina {
+    color: var(--ion-logo-amarillo);
+  }
+  body.dark .component-icon-dark {
+    background: var(--ion-color-primary, #ffffff);
+    color: var(--ion-item-background, --ion-color-primary);
+  }
+ 
+
