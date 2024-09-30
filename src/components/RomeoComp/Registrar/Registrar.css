@@ -1,13 +1,15 @@
+/* Estilos para el contenedor general del formulario */
 .ion-page {
     --background: #f9f9f9;
-    
   }
   
+  /* Estilos para el encabezado de la página */
   .ion-header {
     --background: #3880ff;
     --color: #fff;
   }
   
+  /* Estilos para los botones de los segmentos */
   .ion-segment-button {
     --background: #fff;
     --color: #3880ff;
@@ -15,15 +17,18 @@
     --border-color: #3880ff;
   }
   
+  /* Estilos para el contenido del segmento activo */
   .ion-segment-button.ion-activated {
     --background: #3880ff;
     --color: #fff;
   }
   
+  /* Estilos para el contenido dentro de los elementos de lista */
   .ion-list {
     padding: 16px;
   }
   
+  /* Estilos para los elementos de lista */
   .ion-item {
     --background: #fff;
     --border-radius: 8px;
@@ -35,12 +40,14 @@
     margin-bottom: 8px;
   }
   
+  /* Estilos para los títulos de los elementos de lista */
   .ion-item h2 {
     font-size: 18px;
     color: #3880ff;
     margin: 0;
   }
   
+  /* Estilos específicos para las tablas */
   .table {
     width: 100%;
     border-collapse: collapse;
@@ -48,26 +55,21 @@
   }
   
   .table th, .table td {
-    /* border: 1px solid #ddd; */
-    border: 1px solid #0b0b0b;
+    border: 1px solid #ddd;
     padding: 8px;
     text-align: left;
-    /* color negro de fondo de tabla */
-    background-color: #0b0b0b; 
   }
   
   .table th {
-    background-color: #c21c1c;
-    /* color de las letras de titulos columnas */
-    color: black; 
+    background-color: #3880ff;
+    color: white;
   }
   
   .table tr:nth-child(even) {
-    /* background-color: #f2f2f2; */
-    background-color: #0d0d0d;
+    background-color: #f2f2f2;
   }
   
   .table tr:hover {
-    background-color: #b8b5b5;
+    background-color: #ddd;
   }
   

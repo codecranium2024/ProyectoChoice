@@ -11,8 +11,6 @@ import {
   IonHeader,
   IonToolbar,
   IonTitle,
-  IonItemGroup,
-  IonItemDivider,
 } from '@ionic/react';
 import {
   chevronDownOutline, chevronDownSharp, peopleCircleOutline, peopleCircleSharp,
@@ -39,7 +37,7 @@ const appPages: AppPage[] = [
     iosIcon: appsOutline,
     mdIcon: appsSharp,
     subPages: [
-      { title: 'panel', url: 'Panel' },
+      { title: 'Panel', url: 'Panel' },
     ]
   },
   {
@@ -56,13 +54,14 @@ const appPages: AppPage[] = [
   },
   {
     title: 'Comunidades',
-    url: '/Comunidad',
+    url: '/Comunidades',
     iosIcon: peopleOutline,
     mdIcon: peopleSharp,
     subPages: [
       { title: 'Comunidades', url: '/Comunidad' },
       { title: 'Listado General', url: '/ListadoGeneral' },
       { title: 'Agregar', url: '/AgregarComunidades' },
+      { title: 'Registrar', url: '/Registrar' },
       { title: 'Mapa', url: '' },
     ]
   },
@@ -99,10 +98,6 @@ const Menu: React.FC = () => {
     setOpenSubMenu(openSubMenu === title ? null : title);
   };
 
-  const handleSubMenuToggle = (menu: string) => {
-    setSubMenu((prev) => ({ ...prev, [menu]: !prev[menu] }));
-  };
-
   return (
     <IonMenu contentId="main" type="overlay">
       <IonContent>
@@ -120,7 +115,7 @@ const Menu: React.FC = () => {
                   routerDirection="none"
                   lines="none"
                   detail={false}
-                  onClick={appPage.subPages ? () => toggleSubMenu(appPage.title) : undefined} // Manejador para alternar submenú
+                  onClick={appPage.subPages ? () => toggleSubMenu(appPage.title) : undefined}
                 >
                   <IonIcon aria-hidden="true" slot="start" ios={appPage.iosIcon} md={appPage.mdIcon} />
                   <IonLabel>{appPage.title}</IonLabel>

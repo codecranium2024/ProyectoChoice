@@ -15,7 +15,7 @@ const RegistrarComunidad: React.FC = ()=>(
           <th>Habitantes</th>
           <th>Lider</th>
           <th>Municipio</th>
-          <th>Aldea</th>
+          <th>Comunidad</th>
           <th>Accion</th>
         </tr>
       </thead>
@@ -67,7 +67,7 @@ const Comunidad: React.FC = () => {
       <IonPage>
         <IonHeader>
           <IonToolbar>
-           <IonTitle>Comunidad</IonTitle>
+           <IonTitle>Comunidad / Tecnico</IonTitle>
           </IonToolbar> 
         </IonHeader>
         <IonContent>

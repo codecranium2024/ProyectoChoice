@@ -4,11 +4,13 @@ import { Redirect, Route } from 'react-router-dom';
 import Menu from './components/Menu';
 import Page from './pages/Page';
 
+import Registrar from './components/RomeoComp/Registrar/Registrar';
 import ListadoGeneral from './components/RomeoComp/Comunidad/ListadoGeneral';
-import Comunidad from './components/RomeoComp/Comunidad/Comunidad1';
 import Visualizar from './components/RomeoComp/Proyecto/Visualizar';
 import Panel from './components/RomeoComp/Panel/Panel';
+import Comunidad from './components/RomeoComp/Comunidad/Comunidad1';
 import VisualizarComunidades from './pages/MarcoPaginas/AgregarComunidad';
+import { Configuraciones } from './pages/MarcoPaginas/Configuraciones';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -26,25 +28,15 @@ import '@ionic/react/css/text-transformation.css';
 import '@ionic/react/css/flex-utils.css';
 import '@ionic/react/css/display.css';
 
-/**
- * Ionic Dark Mode
- * -----------------------------------------------------
- * For more info, please see:
- * https://ionicframework.com/docs/theming/dark-mode
- */
-
-/* import '@ionic/react/css/palettes/dark.always.css'; */
-import '@ionic/react/css/palettes/dark.class.css'; 
-/*import '@ionic/react/css/palettes/dark.system.css';*/
+/* Dark Mode Styles (Optional) */
+import '@ionic/react/css/palettes/dark.class.css';
 
 /* Theme variables */
 import './theme/variables.css';
-import { Configuraciones } from './pages/MarcoPaginas/Configuraciones';
 
 setupIonicReact();
 
 const App: React.FC = () => {
-
   return (
     <IonApp>
       <IonReactRouter>
@@ -74,6 +66,9 @@ const App: React.FC = () => {
             </Route>
             <Route path="/Configuraciones" exact={true}>
               <Configuraciones />
+            </Route>
+            <Route path="/Registrar" exact={true}>
+              <Registrar />
             </Route>
           </IonRouterOutlet>
         </IonSplitPane>
