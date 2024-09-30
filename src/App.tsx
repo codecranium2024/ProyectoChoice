@@ -66,7 +66,7 @@ const App: React.FC = () => {
               <Panel />
             </Route>
             <Route path="/comunidad" exact={true}>
-              <Comunidad />
+              <Comunidad1 />
             </Route>
             
               
