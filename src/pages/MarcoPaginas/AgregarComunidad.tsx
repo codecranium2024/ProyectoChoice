@@ -1,5 +1,5 @@
 import React from "react";
-import {IonPage,IonHeader,IonTab,IonContent,IonTabBar,IonTabButton,IonTabs,IonToolbar,IonTitle,IonIcon,IonButton, IonRow,IonCheckbox} from "@ionic/react";
+import {IonSelectOption, IonSelect,IonText,IonPage,IonHeader,IonTab,IonContent,IonTabBar,IonTabButton,IonTabs,IonToolbar,IonTitle,IonIcon,IonButton, IonRow,IonCheckbox} from "@ionic/react";
 import './../../components/MarcoComp/style.css';
 import { bookOutline, cog, cogOutline, earthOutline, fitnessOutline, globeOutline, leafOutline, peopleOutline, waterOutline } from 'ionicons/icons';
 import { useState } from "react";
@@ -7,6 +7,8 @@ import { useState } from "react";
 
 function AgregarComunidades() {
   let [Comunidad, setComunidad] = useState('Comunidad')
+  let [Municipio, setMunicipio] = useState('Municipio');
+  let [Aldea, setAldea] = useState('Aldea');
   let [PresidenteCOCODE, setPresidenteCOCODE] = useState('Presidente de COCODE');
   let [TelefonoContacto, setTelefonoContacto] = useState('Teléfono de contacto');
   let [OtroLider, setOtroLider] = useState('Otro líder');
@@ -56,6 +58,15 @@ function AgregarComunidades() {
                 <h3 className="labelForm">1. Nombre de la comunidad:</h3>
                 <input onChange={e => setComunidad(e.target.value)} type="text" className='TextBox' />
               </IonRow>
+
+              <IonSelect placeholder="Seleccionar un municipio">
+                <div slot="label">
+                  <h3 className="labelForm">2. Municipio</h3>
+                </div>
+                <IonSelectOption value="0">Cobán</IonSelectOption>
+                <IonSelectOption value="1">Chisec</IonSelectOption>
+                <IonSelectOption value="2">Carchá</IonSelectOption>
+              </IonSelect>
 
               <IonRow className="FilaTextBox">
                 <h3 className="labelForm">2. Nombre del presidente de COCODE:</h3>
@@ -154,7 +165,7 @@ function AgregarComunidades() {
                 {Inseguridad && (
                   <>
                     <h3 className="labelForm">Tipo de inseguridad:</h3>
-                    <input onChange={e => setTipoInseguridad(e.target.value)} type="text" className='TextBoxPeq' />
+                    <input onChange={e => setTipoInseguridad(e.target.value)} type="text" className='TextBox' />
                   </>
                 )}
               </IonRow>
@@ -189,9 +200,9 @@ function AgregarComunidades() {
               <IonRow className="FilaTextBox">
                 <h3 className="labelForm">23. ¿A qué edad empiezan a trabajar en la comunidad?</h3>
                 <h3 className="labelForm">Hombres:</h3>
-                <input onChange={e => setEdadTrabajoHombres(e.target.value)} type="text" className='TextBox' />
+                <input onChange={e => setEdadTrabajoHombres(e.target.value)} type="text" className='TextBoxPeq' />
                 <h3 className="labelForm">Mujeres:</h3>
-                <input onChange={e => setEdadTrabajoMujeres(e.target.value)} type="text" className='TextBox' />
+                <input onChange={e => setEdadTrabajoMujeres(e.target.value)} type="text" className='TextBoxPeq' />
               </IonRow>
               
               <IonRow className="FilaTextBox">
@@ -206,7 +217,7 @@ function AgregarComunidades() {
                 {Jubilados && (
                   <>
                     <h3 className="labelForm">¿Cuántos?</h3>
-                    <input onChange={e => setCantidadJubilados(e.target.value)} type="text" className='TextBox' />
+                    <input onChange={e => setCantidadJubilados(e.target.value)} type="text" className='TextBoxPeq' />
                     <h3 className="labelForm">¿De cuál institución?</h3>
                     <input onChange={e => setInstitucionJubilados(e.target.value)} type="text" className='TextBox' />
                   </>
@@ -224,6 +235,7 @@ function AgregarComunidades() {
                 <input onChange={e => setOcupacionesHombres(e.target.value)} type="text" className='TextBox' />
               </IonRow>
             </div>
+
           </IonTab>
 
           <IonTabBar className="TabBarConf" slot="top">

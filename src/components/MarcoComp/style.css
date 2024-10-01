@@ -89,9 +89,9 @@
   .FilaTextBox {
     display: flex;
     flex-direction: row;
-    flex-direction: row;
     align-items: center;
     justify-items: center;
+    padding-left: 35px;
     /*Vertical align the items of the row*/
     
 
@@ -107,21 +107,25 @@
   }
   .TextBoxPeq{
     background-color: var(--ion-background-color);
-    border-color: var(--ion-color-primary);
+    border: transparent;
     border-radius: 15px;
     font-size:18px;
     margin-left: 25px;
     margin-right: 25px;
+    width: 10%;
   }
 
   ion-checkbox {
     --size: 32px;
     padding: 25px;
+    --checkbox-background-checked: var(--ion-color-primary);
+    
   }
   
   ion-checkbox::part(container) {
     border-radius: 6px;
-    border: 2px solid var(--ion-color-primary);
+    border: 2px solid var(--ion-background-color);
+    --checkbox-background: var(--ion-background-color);
   }
 
   .labelForm {
