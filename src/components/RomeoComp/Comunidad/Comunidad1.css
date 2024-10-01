@@ -53,7 +53,8 @@
     padding: 8px;
     text-align: left;
     /* color negro de fondo de tabla */
-    background-color: #0b0b0b; 
+    background-color: #f7f4f4; 
+    color: black;
   }
   
   .table th {

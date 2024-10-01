@@ -84,3 +84,30 @@
   overflow-y: auto;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
 }
+.scrollable-container {
+  max-height: 500px; 
+  overflow-y: scroll; 
+}
+.custom-button {
+  font-size: 10px; /* Tamaño de fuente para un botón de tamaño mediano */
+  padding: 12px 24px; /* Relleno para agrandar el botón */
+  border-radius: 12px; /* Bordes semi-redondeados */
+  text-align: center;
+  width: 100%; /* Opción para que el botón ocupe todo el ancho del contenedor */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra ligera */
+  transition: background-color 0.3s ease; /* Transición suave para el color de fondo */
+}
+
+.custom-button:hover {
+  background-color: #f0f0f0; /* Color al pasar el mouse por encima */
+}
+
+.custom-button-register {
+  background-color: #4caf50; /* Color verde para el botón de Registrar */
+  color: white;
+}
+
+.custom-button-delete {
+  background-color: #f44336; /* Color rojo para el botón de Eliminar */
+  color: white;
+}
