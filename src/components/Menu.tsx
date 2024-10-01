@@ -16,7 +16,9 @@ import {
   chevronDownOutline, chevronDownSharp, peopleCircleOutline, peopleCircleSharp,
   appsOutline, appsSharp, statsChartOutline, statsChartSharp, peopleOutline, peopleSharp,
   documentOutline, documentSharp, settingsOutline, settingsSharp, albumsOutline, albumsSharp,
-  addOutline, addSharp
+  addOutline, addSharp,
+  locateOutline,
+  locateSharp
 } from 'ionicons/icons';
 import { useLocation } from 'react-router-dom';
 import './Menu.css';
@@ -58,7 +60,7 @@ const appPages: AppPage[] = [
     iosIcon: peopleOutline,
     mdIcon: peopleSharp,
     subPages: [
-      { title: 'Comunicadades', url: '/Comunidad' },
+      { title: 'Comunidades', url: '/Comunidad' },
       { title: 'Listado General', url: '/ListadoGeneral' },
       { title: 'Agregar', url: '/AgregarComunidades' },
       { title: 'Registrar', url: '/Registrar' },
@@ -75,6 +77,14 @@ const appPages: AppPage[] = [
       { title: 'Comunidades', url: '/Comunidad' },
       { title: 'subtest3', url: '' },
       { title: 'Mapa', url: '' },
+    ]
+  },
+  { title: 'Regiones'
+    , url: '/Regiones',
+    iosIcon: locateOutline,
+    mdIcon: locateSharp,
+    subPages:[
+      { title: 'Departamentos', url: '/Departamentos' },
     ]
   },
   {

@@ -1,165 +1,117 @@
 import React, { useState } from 'react';
-import { IonContent, IonHeader, IonPage, IonSegment, IonSegmentButton, IonLabel, IonToolbar, IonTitle, IonList, IonItem } from '@ionic/react';
-import { IonButton } from '@ionic/react';
-import './Registrar.css'
-// Define los componentes para cada subcategoría
+import { IonContent, IonHeader, IonPage, IonToolbar, IonTitle, IonList, IonItem, IonButton, IonModal, IonInput, IonLabel, IonRow, IonCol, IonSelect, IonSelectOption } from '@ionic/react';
+import './Registrar.css';
 
-const RegistrarMunicipios: React.FC = () => (
-  <IonList>
-    <IonItem></IonItem>
-    {/* Agrega más elementos según sea necesario */}
-    <table className="table">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Departamento</th>
-          <th>Municipio</th>
-          <th>Accion</th>
-        </tr>
-      </thead>
-      <tbody>
+const RegistrarProyectos: React.FC = () => {
+  const [modalOpen, setModalOpen] = useState(false);
+  const [selectedProject, setSelectedProject] = useState<any>(null);
 
-      </tbody>
-      <tr>
-          <td>1</td>
-          <td>Alta Verapaz</td>
-          <td>Chisec</td>
+  const projects = [
+    { id: 1, nombre: 'Proyecto Salud', habitantes: 100, tecnico: 'Juan Pérez', municipio: 'Municipio X', etapa: 'En Progreso' },
+    { id: 2, nombre: 'Proyecto Capacitación', habitantes: 200, tecnico: 'Ana García', municipio: 'Municipio Y', etapa: 'Finalizado' },
+    // otros proyectos...
+  ];
 
-          <td>
-          <IonButton color="warning">Editar</IonButton>
-          </td>
-        </tr>
-      </table>
+  const municipios = ['Municipio X', 'Municipio Y', 'Municipio Z'];
+  const etapas = ['En Progreso', 'Finalizado', 'Planificación'];
 
-  </IonList>
-);
+  const handleEdit = (project: any) => {
+    setSelectedProject(project);
+    setModalOpen(true);
+  };
 
-const RegistrarComunidad: React.FC = () => (
-  <IonList>
+  const handleSave = () => {
+    console.log('Proyecto guardado:', selectedProject);
+    setModalOpen(false);
+  };
+
+  return (
     <IonList>
-    <IonItem></IonItem>
-    {/* Agrega más elementos según sea necesario */}
-    <table className="table">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Municipio</th>
-          <th>Habitantes</th>
-          <th>Accion</th>
-        </tr>
-      </thead>
-      <tbody>
+      <IonItem>
+        <table className="table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Nombre</th>
+              <th>Habitantes</th>
+              <th>Técnico</th>
+              <th>Municipio</th>
+              <th>Etapa</th>
+              <th>Acción</th>
+            </tr>
+          </thead>
+          <tbody>
+            {projects.map(project => (
+              <tr key={project.id}>
+                <td>{project.id}</td>
+                <td>{project.nombre}</td>
+                <td>{project.habitantes}</td>
+                <td>{project.tecnico}</td>
+                <td>{project.municipio}</td>
+                <td>{project.etapa}</td>
+                <td>
+                  <IonButton color="warning" onClick={() => handleEdit(project)}>Editar</IonButton>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </IonItem>
 
-      </tbody>
-      <tr>
-          <td>1</td>
-          <td>Chisec</td>
-          <td>100</td>
-
-          <td>
-          <IonButton color="warning">Editar</IonButton>
-          </td>
-        </tr>
-      </table>
-
-  </IonList>
-  </IonList>
-);
-
-const RegistrarProyectos: React.FC = () => (
-  <IonList>
-  <IonItem>
-    <table className="table">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Nombre</th>
-          <th>Habitantes</th>
-          <th>Técnico</th>
-          <th>Municipio</th>
-          <th>Etapa</th>
-          <th>Acción</th>
-        </tr>
-      </thead>
-      <tbody>
-        {/* Agrega aquí los datos de tus proyectos */}
-        <tr>
-          <td>1</td>
-          <td>Proyecto Salud</td>
-          <td>100</td>
-          <td>Juan Pérez</td>
-          <td>Municipio X</td>
-          <td>En Progreso</td>
-          <td>
-          <IonButton color="warning">Editar</IonButton>
-          </td>
-        </tr>
-        <tr>
-          <td>2</td>
-          <td>Proyecto Capacitacion</td>
-          <td>200</td>
-          <td>Ana García</td>
-          <td>Municipio Y</td>
-          <td>Finalizado</td>
-          <td>
-          {/* <IonButton color="danger">Eliminar</IonButton> */}
-          <IonButton color="warning">Editar</IonButton>
-          </td>
-        </tr>
-
-        <tr>
-          <td>3</td>
-          <td>Proyecto B</td>
-          <td>200</td>
-          <td>Ana García</td>
-          <td>Municipio Y</td>
-          <td>Finalizado</td>
-          <td>
-          <IonButton color="warning">Editar</IonButton>
-          </td>
-        </tr>
-
-        <tr>
-          <td>4</td>
-          <td>Proyecto Capacitacion</td>
-          <td>200</td>
-          <td>Ana García</td>
-          <td>Municipio Y</td>
-          <td>Finalizado</td>
-          <td>
-          <IonButton color="warning">Editar</IonButton>
-          </td>
-        </tr>
-
-        <tr>
-          <td>5</td>
-          <td>Proyecto B</td>
-          <td>200</td>
-          <td>Ana García</td>
-          <td>Municipio Y</td>
-          <td>Finalizado</td>
-          <td>
-          <IonButton color="warning">Editar</IonButton>
-          </td>
-        </tr>
-
-        <tr>
-          <td>6</td>
-          <td>Proyecto B</td>
-          <td>200</td>
-          <td>Ana García</td>
-          <td>Municipio Y</td>
-          <td>Finalizado</td>
-          <td>
-          <IonButton color="warning">Editar</IonButton>
-          </td>
-        </tr>
-        {/* Agrega más filas según sea necesario */}
-      </tbody>
-    </table>
-  </IonItem>
-</IonList>
-);
+      {/* Modal para editar el proyecto */}
+      <IonModal isOpen={modalOpen} onDidDismiss={() => setModalOpen(false)}>
+        <IonHeader>
+          <IonToolbar>
+            <IonTitle>Editar Proyecto</IonTitle>
+          </IonToolbar>
+        </IonHeader>
+        <IonContent>
+          {selectedProject && (
+            <form>
+              <IonItem>
+                <IonLabel position="stacked">Nombre</IonLabel>
+                <IonInput value={selectedProject.nombre} onIonChange={e => setSelectedProject({ ...selectedProject, nombre: e.detail.value! })} />
+              </IonItem>
+              <IonItem>
+                <IonLabel position="stacked">Habitantes</IonLabel>
+                <IonInput type="number" value={selectedProject.habitantes} onIonChange={e => setSelectedProject({ ...selectedProject, habitantes: Number(e.detail.value!) })} />
+              </IonItem>
+              <IonItem>
+                <IonLabel position="stacked">Técnico</IonLabel>
+                <IonInput value={selectedProject.tecnico} onIonChange={e => setSelectedProject({ ...selectedProject, tecnico: e.detail.value! })} />
+              </IonItem>
+              <IonItem>
+                <IonLabel position="stacked">Municipio</IonLabel>
+                <IonSelect value={selectedProject.municipio} onIonChange={e => setSelectedProject({ ...selectedProject, municipio: e.detail.value })}>
+                  {municipios.map((municipio, index) => (
+                    <IonSelectOption key={index} value={municipio}>{municipio}</IonSelectOption>
+                  ))}
+                </IonSelect>
+              </IonItem>
+              <IonItem>
+                <IonLabel position="stacked">Etapa</IonLabel>
+                <IonSelect value={selectedProject.etapa} onIonChange={e => setSelectedProject({ ...selectedProject, etapa: e.detail.value })}>
+                  {etapas.map((etapa, index) => (
+                    <IonSelectOption key={index} value={etapa}>{etapa}</IonSelectOption>
+                  ))}
+                </IonSelect>
+              </IonItem>
+              {/* Fila con los botones "Guardar Cambios" y "Cerrar" */}
+              <IonRow>
+                <IonCol>
+                  <IonButton expand="block" onClick={handleSave}>Guardar Cambios</IonButton>
+                </IonCol>
+                <IonCol>
+                  <IonButton expand="block" color="medium" onClick={() => setModalOpen(false)}>Cerrar</IonButton>
+                </IonCol>
+              </IonRow>
+            </form>
+          )}
+        </IonContent>
+      </IonModal>
+    </IonList>
+  );
+};
 
 const Registrar: React.FC = () => {
   const [selectedSegment, setSelectedSegment] = useState('Municipios');
@@ -168,27 +120,11 @@ const Registrar: React.FC = () => {
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>Registro</IonTitle>
+          <IonTitle>Proyectos</IonTitle>
         </IonToolbar>
-        <IonSegment value={selectedSegment} onIonChange={(e: { detail: { value: string; }; }) => setSelectedSegment(e.detail.value as string)}>
-          <IonSegmentButton value="Proyectos">
-            <IonLabel>Proyectos</IonLabel>
-          </IonSegmentButton>
-
-          <IonSegmentButton value="Municipios">
-            <IonLabel>Municipios</IonLabel>
-          </IonSegmentButton>
-
-          {/* <IonSegmentButton value="Comunidad">
-            <IonLabel>Comunidad</IonLabel>
-          </IonSegmentButton>
-           */}
-        </IonSegment>
       </IonHeader>
       <IonContent>
         {selectedSegment === 'Proyectos' && <RegistrarProyectos />}
-        {selectedSegment === 'Municipios' && <RegistrarMunicipios />}
-        {/* {selectedSegment === 'Comunidad' && <RegistrarComunidad />} */}
       </IonContent>
     </IonPage>
   );

@@ -11,6 +11,7 @@ import Panel from './components/RomeoComp/Panel/Panel';
 import Comunidad from './components/RomeoComp/Comunidad/Comunidad1';
 import VisualizarComunidades from './pages/MarcoPaginas/AgregarComunidad';
 import { Configuraciones } from './pages/MarcoPaginas/Configuraciones';
+import Departamentos from './components/RomeoComp/Region/Departamentos'
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -69,6 +70,9 @@ const App: React.FC = () => {
             </Route>
             <Route path="/Registrar" exact={true}>
               <Registrar />
+            </Route>
+            <Route path="/Departamentos" exact={true}>
+              <Departamentos />
             </Route>
           </IonRouterOutlet>
         </IonSplitPane>
