@@ -11,14 +11,14 @@ import {
   IonHeader,
   IonToolbar,
   IonTitle,
-  IonItemGroup,
-  IonItemDivider,
 } from '@ionic/react';
 import {
   chevronDownOutline, chevronDownSharp, peopleCircleOutline, peopleCircleSharp,
   appsOutline, appsSharp, statsChartOutline, statsChartSharp, peopleOutline, peopleSharp,
   documentOutline, documentSharp, settingsOutline, settingsSharp, albumsOutline, albumsSharp,
-  addOutline, addSharp
+  addOutline, addSharp,
+  locateOutline,
+  locateSharp
 } from 'ionicons/icons';
 import { useLocation } from 'react-router-dom';
 import './Menu.css';
@@ -39,7 +39,7 @@ const appPages: AppPage[] = [
     iosIcon: appsOutline,
     mdIcon: appsSharp,
     subPages: [
-      { title: 'panel', url: 'Panel' },
+      { title: 'Panel', url: 'Panel' },
     ]
   },
   {
@@ -56,13 +56,14 @@ const appPages: AppPage[] = [
   },
   {
     title: 'Comunidades',
-    url: '/Comunidad',
+    url: '/Comunidades',
     iosIcon: peopleOutline,
     mdIcon: peopleSharp,
     subPages: [
       { title: 'Comunidades', url: '/Comunidad' },
       { title: 'Listado General', url: '/ListadoGeneral' },
-      { title: 'subtest3', url: '' },
+      { title: 'Agregar', url: '/AgregarComunidades' },
+      { title: 'Registrar', url: '/Registrar' },
       { title: 'Mapa', url: '' },
     ]
   },
@@ -78,17 +79,19 @@ const appPages: AppPage[] = [
       { title: 'Mapa', url: '' },
     ]
   },
+  { title: 'Regiones'
+    , url: '/Regiones',
+    iosIcon: locateOutline,
+    mdIcon: locateSharp,
+    subPages:[
+      { title: 'Departamentos', url: '/Departamentos' },
+    ]
+  },
   {
     title: 'Configuraciones',
-    url: '/folder/Configuraciones',
+    url: '/Configuraciones',
     iosIcon: settingsOutline,
     mdIcon: settingsSharp,
-    subPages: [
-      { title: 'Visualizar', url: '' },
-      { title: 'Comun', url: '/Coidad' },
-      { title: 'subtest3', url: '' },
-      { title: 'Mapa', url: '' },
-    ]
   },
 ];
 
@@ -105,20 +108,10 @@ const Menu: React.FC = () => {
     setOpenSubMenu(openSubMenu === title ? null : title);
   };
 
-  const handleSubMenuToggle = (menu: string) => {
-    setSubMenu((prev) => ({ ...prev, [menu]: !prev[menu] }));
-  };
-
   return (
     <IonMenu contentId="main" type="overlay">
-      <IonHeader>
-        <IonToolbar>
-          <IonTitle>Menu</IonTitle>
-        </IonToolbar>
-      </IonHeader>
       <IonContent>
         <br />
-        <IonNote>choice2024@hotmail.com</IonNote>
         <IonList id="inbox-list">
           <Logo />
 
@@ -132,7 +125,7 @@ const Menu: React.FC = () => {
                   routerDirection="none"
                   lines="none"
                   detail={false}
-                  onClick={appPage.subPages ? () => toggleSubMenu(appPage.title) : undefined} // Manejador para alternar submenú
+                  onClick={appPage.subPages ? () => toggleSubMenu(appPage.title) : undefined}
                 >
                   <IonIcon aria-hidden="true" slot="start" ios={appPage.iosIcon} md={appPage.mdIcon} />
                   <IonLabel>{appPage.title}</IonLabel>

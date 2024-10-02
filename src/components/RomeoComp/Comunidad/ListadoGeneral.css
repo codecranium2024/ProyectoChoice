@@ -1,63 +1,113 @@
 /* Estilos generales para la página */
 .ion-page, .ion-content {
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    height: 100%;
-  }
-  
-  /* Estilos para la tabla */
-  .table {
-    width: 100%; /* Asegura que la tabla ocupe todo el ancho disponible */
-    border-collapse: collapse; /* Elimina los espacios entre las celdas */
-    margin-top: 20px; /* Espaciado superior opcional para separación */
-  }
-  
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* Estilos para la tabla */
+.table {
+  width: 100%;
+  border-collapse: collapse; 
+  margin-top: 20px; 
+  position: relative; /* Establecer la tabla como contenedor relativo */
+}
+
+.table th, .table td {
+  border: 1px solid #ddd; 
+  text-align: left;
+}
+
+.table th {
+  background-color: #f2f2f2; /* Color de fondo para los encabezados */
+  color: black; 
+  font-weight: bold;
+}
+
+/* Alterna el color de fondo en las filas para mejor legibilidad */
+.table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.table tr:hover {
+  background-color: #f1f1f1; /* Color de fondo cuando se pasa el ratón por encima */
+}
+
+/* Botones dentro de la tabla */
+.table ion-button {
+  font-size: 14px;
+  padding: 6px 12px;
+}
+
+/* Alineación del botón en la última columna */
+.table td:last-child {
+  text-align: center;
+}
+
+/* Asegura que la tabla se ajuste bien en pantallas pequeñas */
+@media screen and (max-width: 768px) {
   .table th, .table td {
-    border: 1px solid #ddd; /* Borde alrededor de cada celda */
-    padding: 8px; /* Espacio dentro de las celdas */
-    text-align: left; /* Alinea el texto a la izquierda */
-  }
-  
-  .table th {
-    background-color: #f2f2f2; /* Color de fondo para los encabezados */
-    color: black; /* Color del texto en los encabezados */
-    font-weight: bold;
-  }
-  
-  /* Alterna el color de fondo en las filas para mejor legibilidad */
-  .table tr:nth-child(even) {
-    background-color: #f9f9f9;
-  }
-  
-  .table tr:hover {
-    background-color: #f1f1f1; /* Color de fondo cuando se pasa el ratón por encima */
-  }
-  
-  /* Botones dentro de la tabla */
-  .table ion-button {
-    font-size: 14px;
-    padding: 6px 12px;
-  }
-  
-  /* Alineación del botón en la última columna */
-  .table td:last-child {
-    text-align: center;
-  }
-  
-  /* Asegura que la tabla se ajuste bien en pantallas pequeñas */
-  @media screen and (max-width: 768px) {
-    .table th, .table td {
       font-size: 14px; /* Reduce el tamaño del texto en pantallas pequeñas */
-    }
-  
-    .table {
+  }
+
+  .table {
       font-size: 12px;
-    }
-  
-    .table ion-button {
+  }
+
+  .table ion-button {
       font-size: 12px;
       padding: 4px 8px;
-    }
   }
-  
+}
+
+/* Estilo para centrar el modal dentro de la tabla */
+.modal-overlay {
+  position: absolute; /* Posiciona el modal relativo a la tabla */
+  top: 50%;
+  left: 20%;
+  transform: translate(-50%, -50%); /* Centra el modal */
+  background: rgba(0, 0, 0, 0.5); /* Fondo semitransparente */
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  width: 400px;
+  max-height: 90%;
+  overflow-y: auto;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+.scrollable-container {
+  max-height: 500px; 
+  overflow-y: scroll; 
+}
+.custom-button {
+  font-size: 10px; /* Tamaño de fuente para un botón de tamaño mediano */
+  padding: 12px 24px; /* Relleno para agrandar el botón */
+  border-radius: 12px; /* Bordes semi-redondeados */
+  text-align: center;
+  width: 100%; /* Opción para que el botón ocupe todo el ancho del contenedor */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra ligera */
+  transition: background-color 0.3s ease; /* Transición suave para el color de fondo */
+}
+
+.custom-button:hover {
+  background-color: #f0f0f0; /* Color al pasar el mouse por encima */
+}
+
+.custom-button-register {
+  background-color: #4caf50; /* Color verde para el botón de Registrar */
+  color: white;
+}
+
+.custom-button-delete {
+  background-color: #f44336; /* Color rojo para el botón de Eliminar */
+  color: white;
+}
