@@ -132,6 +132,11 @@
     font-size: 18px;
     padding-bottom: 10px;
   }
+
+  .select-wrapper{
+    justify-content: flex-start;
+  }
+
   /* Componentes formularios */
   
   /*Configuraciones*/

@@ -59,14 +59,24 @@ function AgregarComunidades() {
                 <input onChange={e => setComunidad(e.target.value)} type="text" className='TextBox' />
               </IonRow>
 
-              <IonSelect placeholder="Seleccionar un municipio">
-                <div slot="label">
-                  <h3 className="labelForm">2. Municipio</h3>
-                </div>
+              <IonRow className="FilaTextBox">
+              <IonSelect className="ListBox" placeholder="Seleccionar un municipio">
+                    <h3 className="labelForm">2. Municipio</h3>
                 <IonSelectOption value="0">Cobán</IonSelectOption>
                 <IonSelectOption value="1">Chisec</IonSelectOption>
                 <IonSelectOption value="2">Carchá</IonSelectOption>
               </IonSelect>
+
+                <h3 className="labelForm">3. Aldea:</h3>
+                <input onChange={e => setAldea(e.target.value)} type="text" className='TextBox' />
+              </IonRow>
+
+              <div>
+                <h3 className="labelForm">Seleccionar ubicación</h3>
+                <div className="Mapa">
+                  <IonText className="TextoMapa">Mapa</IonText>
+                </div>
+              </div>
 
               <IonRow className="FilaTextBox">
                 <h3 className="labelForm">2. Nombre del presidente de COCODE:</h3>
