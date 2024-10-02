@@ -3,7 +3,8 @@ import { IonContent, IonPage, IonInput, IonButton, IonGrid, IonRow, IonCol, IonA
 import { useHistory } from 'react-router-dom';
 import './Login.css';
 
-const Login: React.FC = () => {
+// Asegúrate de recibir la prop `onLoginSuccess`
+const Login: React.FC<{ onLoginSuccess: () => void }> = ({ onLoginSuccess }) => {
   const history = useHistory();
   const [usuario, setUsuario] = useState(''); // Estado para el usuario
   const [password, setPassword] = useState(''); // Estado para la contraseña
@@ -24,6 +25,7 @@ const Login: React.FC = () => {
       const data = await response.text();
 
       if (response.ok) {
+        onLoginSuccess(); // Llamar a la función de autenticación exitosa
         history.push('/panel'); // Redirige al panel si el login es exitoso
       } else {
         console.error('Error al iniciar sesión:', data); // Log para depuración
@@ -51,7 +53,6 @@ const Login: React.FC = () => {
             {/* Sección izquierda con imagen y texto */}
             <IonCol size="12" size-md="6" className="left-side">
               <div className="welcome-text">
-                {/* Imagen centrada y ajustada */}
                 <img
                   src="/src/img/logo_text.png"
                   alt="Choice Humanitarian"
@@ -82,7 +83,7 @@ const Login: React.FC = () => {
                     onIonChange={(e) => setPassword(e.detail.value!)}
                     required
                   />
-                  <IonButton expand="block" color="danger" className="login-button" onClick={(e) => handleLogin(e)}>
+                  <IonButton expand="block" color="danger" className="login-button" type="submit">
                     Iniciar Sesión
                   </IonButton>
                   <div className="login-options">
