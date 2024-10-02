@@ -1,43 +1,19 @@
-import { IonApp, IonRouterOutlet, IonSplitPane, setupIonicReact } from '@ionic/react';
+import { IonApp, IonRouterOutlet, setupIonicReact } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
-import { Redirect, Route } from 'react-router-dom';
-import Menu from './components/Menu';
-import Page from './pages/Page';
+import { Route, Redirect } from 'react-router-dom';
+import Login from './components/WilfredoComp/Login'; // Asegúrate de que la ruta sea correcta
 
-import ListadoGeneral from './components/RomeoComp/Comunidad/ListadoGeneral';
-import Comunidad from './components/RomeoComp/Comunidad/Comunidad1';
-import Visualizar from './components/RomeoComp/Proyecto/Visualizar';
-import Panel from './components/RomeoComp/Panel/Panel';
-import VisualizarComunidades from './pages/MarcoPaginas/VisualizarComunidad';
-
-/* Core CSS required for Ionic components to work properly */
+/* Importaciones CSS de Ionic */
 import '@ionic/react/css/core.css';
-
-/* Basic CSS for apps built with Ionic */
 import '@ionic/react/css/normalize.css';
 import '@ionic/react/css/structure.css';
 import '@ionic/react/css/typography.css';
-
-/* Optional CSS utils that can be commented out */
 import '@ionic/react/css/padding.css';
 import '@ionic/react/css/float-elements.css';
 import '@ionic/react/css/text-alignment.css';
 import '@ionic/react/css/text-transformation.css';
 import '@ionic/react/css/flex-utils.css';
 import '@ionic/react/css/display.css';
-
-/**
- * Ionic Dark Mode
- * -----------------------------------------------------
- * For more info, please see:
- * https://ionicframework.com/docs/theming/dark-mode
- */
-
-/* import '@ionic/react/css/palettes/dark.always.css'; */
-/* import '@ionic/react/css/palettes/dark.class.css'; */
-import '@ionic/react/css/palettes/dark.system.css';
-
-/* Theme variables */
 import './theme/variables.css';
 
 setupIonicReact();
@@ -46,32 +22,16 @@ const App: React.FC = () => {
   return (
     <IonApp>
       <IonReactRouter>
-        <IonSplitPane contentId="main">
-          <Menu />
-          <IonRouterOutlet id="main">
-            <Route path="/" exact={true}>
-              <Redirect to="/Panel" />
-            </Route>
-            <Route path="/folder/:name" exact={true}>
-              <Page />
-            </Route>
-            <Route path="/listadogeneral" exact={true}>
-              <ListadoGeneral />
-            </Route>
-            <Route path="/Visualizar" exact={true}>
-              <Visualizar />
-            </Route>
-            <Route path="/panel" exact={true}>
-              <Panel />
-            </Route>
-            <Route path="/comunidad" exact={true}>
-              <Comunidad />
-            </Route>
-            <Route path="/VisualizarComunidades" exact={true}>
-              <VisualizarComunidades />
-            </Route>
-          </IonRouterOutlet>
-        </IonSplitPane>
+        <IonRouterOutlet>
+          {/* Ruta para Login */}
+          <Route path="/login" exact={true}>
+            <Login />
+          </Route>
+          {/* Redireccionar a /login por defecto */}
+          <Route path="/" exact={true}>
+            <Redirect to="/login" />
+          </Route>
+        </IonRouterOutlet>
       </IonReactRouter>
     </IonApp>
   );
