@@ -1,20 +1,14 @@
 // Importar módulos necesarios
 const express = require('express');
-const mysql = require('mysql');
-const cors = require('cors'); // Mover la importación de CORS aquí
+const mysql = require('mysql2/promise'); // Usar la versión con soporte de promesas
+const cors = require('cors'); // Permitir solicitudes desde tu frontend
 
 // Configuración del servidor y puerto
 const app = express();
 const port = 3000;
 
-// Habilitar CORS antes de cualquier otro middleware o ruta
-app.use(cors());
-
-// Middleware para parsear JSON
-app.use(express.json());
-
 // Configuración de la conexión a la base de datos MySQL
-const db = mysql.createConnection({
+const dbConfig = {
   host: 'choice.mysql.database.azure.com',
   user: 'adminchoice',
   password: 'y4$Dt#*?*',
@@ -22,54 +16,81 @@ const db = mysql.createConnection({
   ssl: {
     rejectUnauthorized: true, // Asegura que la conexión sea segura
   },
-  insecureAuth: false,
+  insecureAuth: false
+};
+
+// Middleware para parsear JSON y permitir CORS
+app.use(express.json());
+const corsOptions = {
+  origin: 'http://localhost:8100',
+  methods: ['GET', 'POST'],
+  credentials: true
+};
+app.use(cors(corsOptions));
+
+// Middleware para evitar el almacenamiento en caché
+app.use((req, res, next) => {
+  res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, private');
+  res.setHeader('Pragma', 'no-cache');
+  res.setHeader('Expires', '0');
+  next();
 });
 
-// Conectar a la base de datos
-db.connect((err) => {
-  if (err) {
+// Verificar la conexión a la base de datos al iniciar el servidor
+async function testDBConnection() {
+  try {
+    const connection = await mysql.createConnection(dbConfig);
+    console.log('Conectado a la base de datos MySQL en Azure');
+    await connection.end();
+  } catch (err) {
     console.error('Error al conectar a la base de datos:', err);
-    return;
   }
-  console.log('Conectado a la base de datos MySQL en Azure');
-});
+}
+
+testDBConnection(); // Llamar a la función para verificar la conexión
 
 // Endpoint para el login
-app.post('/login', (req, res) => {
+app.post('/login', async (req, res) => {
   const { usuario, password } = req.body;
 
-  // Consulta para verificar el usuario
-  const query = 'SELECT * FROM tb_Usuario WHERE Usuario = ?';
+  console.log('Datos recibidos:', usuario, password); // Log para depuración
 
-  db.query(query, [usuario], (err, results) => {
-    if (err) {
-      return res.status(500).send('Error en el servidor');
-    }
+  try {
+    const connection = await mysql.createConnection(dbConfig);
+    console.log('Conexión establecida con la base de datos.');
+    
+    // Consulta para verificar el usuario
+    const [rows] = await connection.execute('SELECT * FROM tb_Usuario WHERE Usuario = ?', [usuario]);
+    console.log('Resultado de la consulta de usuario:', rows);
 
-    if (results.length > 0) {
-      const user = results[0];
-      
-      // Consulta para desencriptar la contraseña
-      const decryptionQuery = 'SELECT AES_DECRYPT(Password, ?) AS decryptedPassword FROM tb_Usuario WHERE idUsuario = ?';
+    if (rows.length > 0) {
+      const user = rows[0];
+      const [decryptionRows] = await connection.execute(
+        'SELECT CAST(AES_DECRYPT(Password, ?) AS CHAR) AS decryptedPassword FROM tb_Usuario WHERE idUsuario = ?',
+        ['y4$Dt#*?*', user.idUsuario]
+      );
 
-      db.query(decryptionQuery, ['y4$Dt#*?*', user.idUsuario], (err, decryptionResults) => {
-        if (err) {
-          return res.status(500).send('Error al desencriptar la contraseña');
-        }
+      console.log('Resultado de la desencriptación:', decryptionRows);
 
-        const decryptedPassword = decryptionResults[0].decryptedPassword;
+      const decryptedPassword = decryptionRows[0].decryptedPassword;
 
-        // Asegúrate de comparar la contraseña correctamente
-        if (decryptedPassword && decryptedPassword.toString() === password) {
-          res.send('Inicio de sesión exitoso');
-        } else {
-          res.status(401).send('Contraseña incorrecta');
-        }
-      });
+      if (decryptedPassword && decryptedPassword === password) {
+        console.log('Inicio de sesión exitoso');
+        res.send('Inicio de sesión exitoso');
+      } else {
+        console.log('Contraseña incorrecta');
+        res.status(401).send('Contraseña incorrecta');
+      }
     } else {
+      console.log('Usuario no encontrado');
       res.status(404).send('Usuario no encontrado');
     }
-  });
+
+    await connection.end();
+  } catch (err) {
+    console.error('Error al conectar o consultar la base de datos:', err);
+    res.status(500).send('Error en el servidor');
+  }
 });
 
 // Inicializar el servidor
