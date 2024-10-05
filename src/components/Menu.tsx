@@ -7,22 +7,27 @@ import {
   IonList,
   IonMenu,
   IonMenuToggle,
-  IonNote,
   IonHeader,
   IonToolbar,
   IonTitle,
+  IonButton
 } from '@ionic/react';
 import {
   chevronDownOutline, chevronDownSharp, peopleCircleOutline, peopleCircleSharp,
   appsOutline, appsSharp, statsChartOutline, statsChartSharp, peopleOutline, peopleSharp,
   documentOutline, documentSharp, settingsOutline, settingsSharp, albumsOutline, albumsSharp,
-  addOutline, addSharp,
-  locateOutline,
-  locateSharp
+  addOutline, addSharp, locateOutline, locateSharp, logOut
 } from 'ionicons/icons';
 import { useLocation } from 'react-router-dom';
 import './Menu.css';
 import { Logo } from './MarcoComp/Logo';
+
+// Props del componente para manejar la información del usuario y la función de logout
+interface MenuProps {
+  userName: string;
+  userRole: string;
+  onLogout: () => void;
+}
 
 interface AppPage {
   title: string;
@@ -32,6 +37,7 @@ interface AppPage {
   subPages?: { title: string; url: string }[];
 }
 
+// Ejemplo de configuración de páginas para el menú
 const appPages: AppPage[] = [
   {
     title: 'Panel',
@@ -79,11 +85,12 @@ const appPages: AppPage[] = [
       { title: 'Mapa', url: '' },
     ]
   },
-  { title: 'Regiones'
-    , url: '/Regiones',
+  {
+    title: 'Regiones',
+    url: '/Regiones',
     iosIcon: locateOutline,
     mdIcon: locateSharp,
-    subPages:[
+    subPages: [
       { title: 'Departamentos', url: '/Departamentos' },
     ]
   },
@@ -99,10 +106,10 @@ interface HideSubMenu {
   [key: string]: boolean;
 }
 
-const Menu: React.FC = () => {
+// Cambiar `Menu: React.FC` a `Menu: React.FC<MenuProps>`
+const Menu: React.FC<MenuProps> = ({ userName, userRole, onLogout }) => {
   const location = useLocation();
   const [openSubMenu, setOpenSubMenu] = useState<string | null>(null);
-  const [subMenu, setSubMenu] = useState<HideSubMenu>({});
 
   const toggleSubMenu = (title: string) => {
     setOpenSubMenu(openSubMenu === title ? null : title);
@@ -113,6 +120,7 @@ const Menu: React.FC = () => {
       <IonContent>
         <br />
         <IonList id="inbox-list">
+          {/* Logo del menú */}
           <Logo />
 
           {/* Mapeo del menú principal y submenús */}
@@ -152,6 +160,21 @@ const Menu: React.FC = () => {
               )}
             </div>
           ))}
+        </IonList>
+
+        {/* Información del usuario y botón de cerrar sesión */}
+        <IonList>
+          <IonItem lines="none">
+            <IonIcon slot="start" icon={peopleCircleOutline} />
+            <IonLabel>
+              <h3>{userName}</h3>
+              <p>{userRole}</p>
+            </IonLabel>
+          </IonItem>
+          <IonButton expand="block" fill="clear" color="danger" onClick={onLogout}>
+            <IonIcon slot="start" icon={logOut} />
+            Cerrar Sesión
+          </IonButton>
         </IonList>
       </IonContent>
     </IonMenu>

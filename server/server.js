@@ -50,6 +50,8 @@ async function testDBConnection() {
 testDBConnection(); // Llamar a la función para verificar la conexión
 
 // Endpoint para el login
+// Endpoint para el login
+// Endpoint para el login
 app.post('/login', async (req, res) => {
   const { usuario, password } = req.body;
 
@@ -76,22 +78,28 @@ app.post('/login', async (req, res) => {
 
       if (decryptedPassword && decryptedPassword === password) {
         console.log('Inicio de sesión exitoso');
-        res.send('Inicio de sesión exitoso');
+        // Respuesta en formato JSON
+        res.json({ message: 'Inicio de sesión exitoso', usuario: user.Usuario, rol: user.idRol });
       } else {
         console.log('Contraseña incorrecta');
-        res.status(401).send('Contraseña incorrecta');
+        // Respuesta de error en formato JSON
+        res.status(401).json({ message: 'Contraseña incorrecta' });
       }
     } else {
       console.log('Usuario no encontrado');
-      res.status(404).send('Usuario no encontrado');
+      // Respuesta de error en formato JSON
+      res.status(404).json({ message: 'Usuario no encontrado' });
     }
 
     await connection.end();
   } catch (err) {
     console.error('Error al conectar o consultar la base de datos:', err);
-    res.status(500).send('Error en el servidor');
+    // Respuesta de error en formato JSON
+    res.status(500).json({ message: 'Error en el servidor' });
   }
 });
+
+
 
 // Inicializar el servidor
 app.listen(port, () => {

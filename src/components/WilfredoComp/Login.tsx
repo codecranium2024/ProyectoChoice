@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom';
 import './Login.css';
 
 // Asegúrate de recibir la prop `onLoginSuccess`
-const Login: React.FC<{ onLoginSuccess: () => void }> = ({ onLoginSuccess }) => {
+const Login: React.FC<{ onLoginSuccess: (name: string, role: string) => void }> = ({ onLoginSuccess }) => {
   const history = useHistory();
   const [usuario, setUsuario] = useState(''); // Estado para el usuario
   const [password, setPassword] = useState(''); // Estado para la contraseña
@@ -17,7 +17,7 @@ const Login: React.FC<{ onLoginSuccess: () => void }> = ({ onLoginSuccess }) => 
     
     console.log('Usuario:', usuario);
     console.log('Contraseña:', password);
-
+  
     try {
       const response = await fetch('http://localhost:3000/login', {
         method: 'POST',
@@ -27,15 +27,27 @@ const Login: React.FC<{ onLoginSuccess: () => void }> = ({ onLoginSuccess }) => 
         body: JSON.stringify({ usuario, password }),
         credentials: 'include',
       });
-
-      const data = await response.text();
-
+  
+      const contentType = response.headers.get('content-type');
+      let data;
+      if (contentType && contentType.includes('application/json')) {
+        data = await response.json();
+      } else {
+        // Si la respuesta no es JSON
+        data = await response.text();
+        console.error('Respuesta no es JSON:', data);
+        setAlertMessage('Respuesta del servidor no válida');
+        setShowAlert(true);
+        return;
+      }
+  
       if (response.ok) {
-        onLoginSuccess(); // Llamar a la función de autenticación exitosa
+        console.log('Inicio de sesión exitoso:', data);
+        onLoginSuccess(data.usuario, data.rol); // Llamar a la función de autenticación exitosa con nombre y rol
         history.push('/panel'); // Redirige al panel si el login es exitoso
       } else {
-        console.error('Error al iniciar sesión:', data);
-        setAlertMessage(data);
+        console.error('Error al iniciar sesión:', data.message);
+        setAlertMessage(data.message);
         setShowAlert(true);
       }
     } catch (error) {
@@ -44,6 +56,8 @@ const Login: React.FC<{ onLoginSuccess: () => void }> = ({ onLoginSuccess }) => 
       setShowAlert(true);
     }
   };
+  
+  
 
   // Función para manejar el evento de "¿Olvidaste tu contraseña?"
   const handleForgotPassword = (event: React.MouseEvent) => {
@@ -79,9 +93,6 @@ const Login: React.FC<{ onLoginSuccess: () => void }> = ({ onLoginSuccess }) => 
                     value={usuario}
                     onIonChange={(e) => setUsuario(e.detail.value!)}
                     required
-                    autocomplete="off"
-                    autocorrect="off"
-                    spellCheck={false}
                   />
                   <IonInput
                     type="password"
@@ -90,9 +101,6 @@ const Login: React.FC<{ onLoginSuccess: () => void }> = ({ onLoginSuccess }) => 
                     value={password}
                     onIonChange={(e) => setPassword(e.detail.value!)}
                     required
-                    autocomplete="off"
-                    autocorrect="off"
-                    spellCheck={false}
                   />
                   <IonButton expand="block" color="danger" className="login-button" type="submit">
                     Iniciar Sesión

@@ -30,12 +30,24 @@ import './theme/variables.css';
 setupIonicReact();
 
 const App: React.FC = () => {
-  // Estado para manejar si el usuario está autenticado
+  // Estado para manejar si el usuario está autenticado, su nombre y rol
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [userName, setUserName] = useState('');
+  const [userRole, setUserRole] = useState('');
 
   // Función que se llamará cuando el login sea exitoso
-  const handleLoginSuccess = () => {
+  const handleLoginSuccess = (name: string, role: string) => {
     setIsAuthenticated(true); // Establecer el estado como autenticado
+    setUserName(name); // Establecer el nombre del usuario
+    setUserRole(role); // Establecer el rol del usuario
+  };
+
+  // Función para manejar el cierre de sesión
+  const handleLogout = () => {
+    setIsAuthenticated(false); // Cambiar el estado a no autenticado
+    setUserName(''); // Limpiar el nombre del usuario
+    setUserRole(''); // Limpiar el rol del usuario
+    // Puedes agregar lógica adicional para limpiar la sesión o tokens si es necesario
   };
 
   return (
@@ -52,7 +64,8 @@ const App: React.FC = () => {
         ) : (
           // Mostrar el menú y rutas de la aplicación cuando el usuario está autenticado
           <IonSplitPane contentId="main">
-            <Menu />
+            {/* Pasar `userName`, `userRole` y `handleLogout` al menú */}
+            <Menu userName={userName} userRole={userRole} onLogout={handleLogout} />
             <IonRouterOutlet id="main">
               <Route path="/" exact={true}>
                 <Redirect to="/panel" />
