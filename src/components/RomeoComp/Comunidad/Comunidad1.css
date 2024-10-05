@@ -1,5 +1,6 @@
 .ion-page {
     --background: #f9f9f9;
+    
   }
   
   .ion-header {
@@ -47,21 +48,27 @@
   }
   
   .table th, .table td {
-    border: 1px solid #ddd;
+    /* border: 1px solid #ddd; */
+    border: 1px solid #0b0b0b;
     padding: 8px;
     text-align: left;
+    /* color negro de fondo de tabla */
+    background-color: #f7f4f4; 
+    color: black;
   }
   
   .table th {
-    background-color: #3880ff;
-    color: white;
+    background-color: #c21c1c;
+    /* color de las letras de titulos columnas */
+    color: black; 
   }
   
   .table tr:nth-child(even) {
-    background-color: #f2f2f2;
+    /* background-color: #f2f2f2; */
+    background-color: #0d0d0d;
   }
   
   .table tr:hover {
-    background-color: #ddd;
+    background-color: #b8b5b5;
   }
   
