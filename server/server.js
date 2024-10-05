@@ -50,56 +50,44 @@ async function testDBConnection() {
 testDBConnection(); // Llamar a la función para verificar la conexión
 
 // Endpoint para el login
-// Endpoint para el login
-// Endpoint para el login
 app.post('/login', async (req, res) => {
   const { usuario, password } = req.body;
 
-  console.log('Datos recibidos:', usuario, password); // Log para depuración
-
   try {
     const connection = await mysql.createConnection(dbConfig);
-    console.log('Conexión establecida con la base de datos.');
-    
-    // Consulta para verificar el usuario
-    const [rows] = await connection.execute('SELECT * FROM tb_Usuario WHERE Usuario = ?', [usuario]);
-    console.log('Resultado de la consulta de usuario:', rows);
+
+    // Consulta para verificar el usuario y obtener el nombre completo y el rol
+    const [rows] = await connection.execute(
+      `SELECT tb_Usuario.Nombre, tb_Usuario.Apellido, tb_Rol.Rol AS nombreRol 
+       FROM tb_Usuario 
+       INNER JOIN tb_Rol ON tb_Usuario.idRol = tb_Rol.idRol 
+       WHERE tb_Usuario.Usuario = ?`, [usuario]);
 
     if (rows.length > 0) {
       const user = rows[0];
       const [decryptionRows] = await connection.execute(
-        'SELECT CAST(AES_DECRYPT(Password, ?) AS CHAR) AS decryptedPassword FROM tb_Usuario WHERE idUsuario = ?',
-        ['y4$Dt#*?*', user.idUsuario]
+        'SELECT CAST(AES_DECRYPT(Password, ?) AS CHAR) AS decryptedPassword FROM tb_Usuario WHERE Usuario = ?',
+        ['y4$Dt#*?*', usuario]
       );
-
-      console.log('Resultado de la desencriptación:', decryptionRows);
 
       const decryptedPassword = decryptionRows[0].decryptedPassword;
 
       if (decryptedPassword && decryptedPassword === password) {
-        console.log('Inicio de sesión exitoso');
-        // Respuesta en formato JSON
-        res.json({ message: 'Inicio de sesión exitoso', usuario: user.Usuario, rol: user.idRol });
+        // Devuelve el nombre completo del usuario y el rol
+        res.json({ success: true, nombre: `${user.Nombre} ${user.Apellido}`, rol: user.nombreRol });
       } else {
-        console.log('Contraseña incorrecta');
-        // Respuesta de error en formato JSON
-        res.status(401).json({ message: 'Contraseña incorrecta' });
+        res.status(401).json({ success: false, message: 'Contraseña incorrecta' });
       }
     } else {
-      console.log('Usuario no encontrado');
-      // Respuesta de error en formato JSON
-      res.status(404).json({ message: 'Usuario no encontrado' });
+      res.status(404).json({ success: false, message: 'Usuario no encontrado' });
     }
 
     await connection.end();
   } catch (err) {
     console.error('Error al conectar o consultar la base de datos:', err);
-    // Respuesta de error en formato JSON
-    res.status(500).json({ message: 'Error en el servidor' });
+    res.status(500).json({ success: false, message: 'Error en el servidor' });
   }
 });
-
-
 
 // Inicializar el servidor
 app.listen(port, () => {

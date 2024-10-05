@@ -13,10 +13,7 @@ const Login: React.FC<{ onLoginSuccess: (name: string, role: string) => void }> 
 
   // Función para manejar el envío del formulario de login
   const handleLogin = async (event: React.FormEvent) => {
-    event.preventDefault(); // Evitar recargar la página
-    
-    console.log('Usuario:', usuario);
-    console.log('Contraseña:', password);
+    event.preventDefault();
   
     try {
       const response = await fetch('http://localhost:3000/login', {
@@ -28,40 +25,25 @@ const Login: React.FC<{ onLoginSuccess: (name: string, role: string) => void }> 
         credentials: 'include',
       });
   
-      const contentType = response.headers.get('content-type');
-      let data;
-      if (contentType && contentType.includes('application/json')) {
-        data = await response.json();
-      } else {
-        // Si la respuesta no es JSON
-        data = await response.text();
-        console.error('Respuesta no es JSON:', data);
-        setAlertMessage('Respuesta del servidor no válida');
-        setShowAlert(true);
-        return;
-      }
+      const data = await response.json();
   
-      if (response.ok) {
-        console.log('Inicio de sesión exitoso:', data);
-        onLoginSuccess(data.usuario, data.rol); // Llamar a la función de autenticación exitosa con nombre y rol
-        history.push('/panel'); // Redirige al panel si el login es exitoso
+      if (response.ok && data.success) {
+        // Ahora `data` contiene `{ nombre: 'Nombre Apellido', rol: 'nombreRol' }`
+        onLoginSuccess(data.nombre, data.rol); // Llama a la función con el nombre completo y rol
+        history.push('/panel');
       } else {
-        console.error('Error al iniciar sesión:', data.message);
-        setAlertMessage(data.message);
+        setAlertMessage(data.message || 'Error al iniciar sesión');
         setShowAlert(true);
       }
     } catch (error) {
-      console.error('Error al conectar con el servidor:', error);
       setAlertMessage('Error al conectar con el servidor');
       setShowAlert(true);
     }
   };
   
-  
-
   // Función para manejar el evento de "¿Olvidaste tu contraseña?"
   const handleForgotPassword = (event: React.MouseEvent) => {
-    event.preventDefault(); // Evitar comportamiento predeterminado del enlace
+    event.preventDefault();
     setShowAlert(true);
     setAlertMessage('Por favor comunicarse con un administrador');
   };
@@ -127,3 +109,4 @@ const Login: React.FC<{ onLoginSuccess: (name: string, role: string) => void }> 
 };
 
 export default Login;
+

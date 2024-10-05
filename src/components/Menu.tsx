@@ -7,16 +7,12 @@ import {
   IonList,
   IonMenu,
   IonMenuToggle,
-  IonHeader,
-  IonToolbar,
-  IonTitle,
   IonButton
 } from '@ionic/react';
 import {
-  chevronDownOutline, chevronDownSharp, peopleCircleOutline, peopleCircleSharp,
+  chevronDownOutline, chevronDownSharp, peopleCircleOutline,
   appsOutline, appsSharp, statsChartOutline, statsChartSharp, peopleOutline, peopleSharp,
-  documentOutline, documentSharp, settingsOutline, settingsSharp, albumsOutline, albumsSharp,
-  addOutline, addSharp, locateOutline, locateSharp, logOut
+  documentOutline, documentSharp, settingsOutline, settingsSharp, locateOutline, locateSharp, logOut
 } from 'ionicons/icons';
 import { useLocation } from 'react-router-dom';
 import './Menu.css';
