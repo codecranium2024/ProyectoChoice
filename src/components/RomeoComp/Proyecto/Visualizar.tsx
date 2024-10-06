@@ -1,10 +1,7 @@
 import React from 'react';
-import { IonContent, IonHeader, IonPage, IonToolbar, IonTitle, IonButton, IonList } from '@ionic/react';
+import { IonContent, IonHeader, IonPage, IonToolbar, IonTitle, IonButton, IonList, IonIcon } from '@ionic/react';
 import './Visualizar.css';
-import casa from '../../../img/casa.png';
-import famili from '../../../img/familia.png'
-import grupo from '../../../img/grupopersonas.png'
-
+import { home,people,person } from 'ionicons/icons';
 const VerComunidad: React.FC = () => (
   <IonList>
     <table className="table">
@@ -82,18 +79,18 @@ const Visualizar: React.FC = () => {
 
             <div className="icons-container">
               <div className="icon-item">
-                <img src={grupo} alt="grupo personas" />
+                <IonIcon icon={person} style={{ fontSize: '30px' }} />
                 <p>Habitantes</p>
                 {/* cambiar el h4 por una variable para extraer los datos sql gay el que no lee esto */}
                 <h4>100</h4>
               </div>
               <div className="icon-item">
-                <img src={famili} alt="familia" />
+                <IonIcon icon={people} style={{ fontSize: '30px' }}/>
                 <p>Familias</p>
                 <h4>1200</h4>
               </div>
               <div className="icon-item">
-                <img src={casa} alt="casa" />
+                <IonIcon icon={home} style={{ fontSize: '30px' }}/>
                 <p>Casas</p>
                 <h4>900</h4>
               </div>
