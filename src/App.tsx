@@ -13,6 +13,7 @@ import Comunidad from './components/RomeoComp/Comunidad/Comunidad1';
 import VisualizarComunidades from './pages/MarcoPaginas/AgregarComunidad';
 import { Configuraciones } from './pages/MarcoPaginas/Configuraciones';
 import Departamentos from './components/RomeoComp/Region/Departamentos';
+import RegistrarUsuario from './components/WilfredoComp/RegistrarUsuario';
 
 /* Importaciones CSS de Ionic */
 import '@ionic/react/css/core.css';
@@ -96,6 +97,10 @@ const App: React.FC = () => {
               </Route>
               <Route path="/Departamentos" exact={true}>
                 <Departamentos />
+              </Route>
+              {/* Nueva ruta para registrar usuario */}
+              <Route path="/RegistrarUsuario" exact={true}>
+                <RegistrarUsuario />
               </Route>
             </IonRouterOutlet>
           </IonSplitPane>

@@ -89,6 +89,52 @@ app.post('/login', async (req, res) => {
   }
 });
 
+// Endpoint para obtener roles
+app.get('/roles', async (req, res) => {
+  try {
+    const connection = await mysql.createConnection(dbConfig);
+    const [rows] = await connection.execute('SELECT * FROM tb_Rol');
+    res.json(rows);
+    await connection.end();
+  } catch (err) {
+    console.error('Error al obtener roles:', err);
+    res.status(500).send('Error al obtener roles');
+  }
+});
+
+// Endpoint para obtener especialidades
+app.get('/especialidades', async (req, res) => {
+  try {
+    const connection = await mysql.createConnection(dbConfig);
+    const [rows] = await connection.execute('SELECT * FROM tb_Especialidad');
+    res.json(rows);
+    await connection.end();
+  } catch (err) {
+    console.error('Error al obtener especialidades:', err);
+    res.status(500).send('Error al obtener especialidades');
+  }
+});
+
+// Endpoint para registrar usuario
+app.post('/registrarUsuario', async (req, res) => {
+  const { nombre, apellido, correo, telefono, usuario, password, rolId, especialidadId } = req.body;
+
+  try {
+    const connection = await mysql.createConnection(dbConfig);
+    await connection.execute(
+      `INSERT INTO tb_Usuario (Nombre, Apellido, Correo, Telefono, Usuario, Password, idRol, idEspecialidad) 
+       VALUES (?, ?, ?, ?, ?, AES_ENCRYPT(?, 'y4$Dt#*?*'), ?, ?)`,
+      [nombre, apellido, correo, telefono, usuario, password, rolId, especialidadId]
+    );
+    res.send('Usuario registrado con éxito');
+    await connection.end();
+  } catch (err) {
+    console.error('Error al registrar usuario:', err);
+    res.status(500).send('Error al registrar usuario');
+  }
+});
+
+
 // Inicializar el servidor
 app.listen(port, () => {
   console.log(`Servidor corriendo en http://localhost:${port}`);

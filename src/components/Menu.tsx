@@ -12,7 +12,8 @@ import {
 import {
   chevronDownOutline, chevronDownSharp, peopleCircleOutline,
   appsOutline, appsSharp, statsChartOutline, statsChartSharp, peopleOutline, peopleSharp,
-  documentOutline, documentSharp, settingsOutline, settingsSharp, locateOutline, locateSharp, logOut
+  documentOutline, documentSharp, settingsOutline, settingsSharp, locateOutline, locateSharp, logOut,
+  peopleOutline as usersOutline, peopleSharp as usersSharp
 } from 'ionicons/icons';
 import { useLocation } from 'react-router-dom';
 import './Menu.css';
@@ -33,7 +34,7 @@ interface AppPage {
   subPages?: { title: string; url: string }[];
 }
 
-// Ejemplo de configuración de páginas para el menú
+// Configuración de páginas para el menú, con "Roles y Especialidades" combinados en un solo submenú
 const appPages: AppPage[] = [
   {
     title: 'Panel',
@@ -82,6 +83,17 @@ const appPages: AppPage[] = [
     ]
   },
   {
+    title: 'Usuarios',
+    url: '/Usuarios',
+    iosIcon: usersOutline,
+    mdIcon: usersSharp,
+    subPages: [
+      { title: 'Registrar Usuarios', url: '/RegistrarUsuario' }, // Corregido aquí para coincidir con App.tsx
+      { title: 'Administrar Usuarios', url: '/AdministrarUsuarios' },
+      { title: 'Roles y Especialidades', url: '/RolesEspecialidades' }, // Nueva combinación
+    ]
+  },
+  {
     title: 'Regiones',
     url: '/Regiones',
     iosIcon: locateOutline,
@@ -98,11 +110,6 @@ const appPages: AppPage[] = [
   },
 ];
 
-interface HideSubMenu {
-  [key: string]: boolean;
-}
-
-// Cambiar `Menu: React.FC` a `Menu: React.FC<MenuProps>`
 const Menu: React.FC<MenuProps> = ({ userName, userRole, onLogout }) => {
   const location = useLocation();
   const [openSubMenu, setOpenSubMenu] = useState<string | null>(null);
