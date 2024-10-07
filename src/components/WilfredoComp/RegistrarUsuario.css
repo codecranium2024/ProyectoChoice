@@ -1,0 +1,72 @@
+/* Ajustar el contenedor del formulario para abarcar todo el espacio */
+.page-content {
+  height: 100%; /* Ocupa toda la altura disponible */
+  background-color: #f1f1f1; /* Fondo gris */
+  padding: 20px;
+}
+
+/* Ajustar el contenedor del formulario */
+.form-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  border-radius: 8px;
+  background-color: #e0e0e0; /* Gris claro */
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Ajustar el estilo de los campos de entrada */
+.input-field {
+  background-color: white;
+  border-radius: 5px;
+  margin-bottom: 15px;
+  padding: 8px;
+  width: 100%;
+  border: none;
+  outline: none;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.12);
+}
+
+/* Etiquetas de los campos */
+.input-label {
+  font-weight: bold;
+  margin-bottom: 5px;
+  display: block;
+}
+
+/* Contenedor de los botones */
+.button-container {
+  display: flex;
+
+  margin-top: 20px;
+}
+
+/* Estilo de los botones */
+.button-save,
+.button-cancel {
+  padding: 8px 16px;
+  border-radius: 5px;
+  font-weight: bold;
+  border: none; /* Sin borde adicional */
+  cursor: pointer;
+}
+
+/* Quitar cualquier sombra de enfoque */
+.button-save:focus,
+.button-cancel:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+/* Quitar cualquier fondo azul al hacer clic */
+.button-save:active,
+.button-cancel:active {
+  background-color: #218838; /* Verde más oscuro para botón de guardar */
+  background-color: #c82333; /* Rojo más oscuro para botón de cancelar */
+}
+
+.button-save:hover,
+.button-cancel:hover {
+  opacity: 0.9; /* Ligero efecto al pasar el ratón */
+}
