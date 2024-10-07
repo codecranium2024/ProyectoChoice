@@ -198,7 +198,7 @@ app.delete('/eliminarUsuario/:idUsuario', async (req, res) => {
 // Endpoint para actualizar usuario
 app.put('/actualizarUsuario/:idUsuario', async (req, res) => {
   const { idUsuario } = req.params;
-  const { nombre, apellido, correo, telefono, rolId, especialidadId } = req.body;
+  const { nombre, apellido, correo, telefono, rolId, especialidadId, password } = req.body;
 
   // Validación de entrada
   if (!nombre || !apellido || !correo || !telefono || !rolId || !especialidadId) {
@@ -217,14 +217,23 @@ app.put('/actualizarUsuario/:idUsuario', async (req, res) => {
   try {
     const connection = await mysql.createConnection(dbConfig);
     
-    // Actualización de datos
-    await connection.execute(
-      `UPDATE tb_Usuario 
-       SET Nombre = ?, Apellido = ?, Correo = ?, Telefono = ?, idRol = ?, idEspecialidad = ?
-       WHERE idUsuario = ?`,
-      [nombre, apellido, correo, telefono, numericRolId, numericEspecialidadId, idUsuario]
-    );
-    
+    // Si se recibe una nueva contraseña, actualizarla también
+    if (password) {
+      await connection.execute(
+        `UPDATE tb_Usuario 
+         SET Nombre = ?, Apellido = ?, Correo = ?, Telefono = ?, idRol = ?, idEspecialidad = ?, Password = AES_ENCRYPT(?, 'y4$Dt#*?*')
+         WHERE idUsuario = ?`,
+        [nombre, apellido, correo, telefono, numericRolId, numericEspecialidadId, password, idUsuario]
+      );
+    } else {
+      await connection.execute(
+        `UPDATE tb_Usuario 
+         SET Nombre = ?, Apellido = ?, Correo = ?, Telefono = ?, idRol = ?, idEspecialidad = ?
+         WHERE idUsuario = ?`,
+        [nombre, apellido, correo, telefono, numericRolId, numericEspecialidadId, idUsuario]
+      );
+    }
+
     // Confirmación de éxito
     res.send('Usuario actualizado con éxito');
     
@@ -234,6 +243,7 @@ app.put('/actualizarUsuario/:idUsuario', async (req, res) => {
     res.status(500).send('Error al actualizar usuario');
   }
 });
+
 
 // Inicializar el servidor
 app.listen(port, () => {
