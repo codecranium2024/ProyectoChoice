@@ -88,9 +88,8 @@ const appPages: AppPage[] = [
     iosIcon: usersOutline,
     mdIcon: usersSharp,
     subPages: [
-      { title: 'Registrar Usuarios', url: '/RegistrarUsuario' }, // Corregido aquí para coincidir con App.tsx
       { title: 'Administrar Usuarios', url: '/AdministrarUsuarios' },
-      { title: 'Roles y Especialidades', url: '/RolesEspecialidades' }, // Nueva combinación
+      { title: 'Roles y Especialidades', url: '/roles-especialidades' }, // URL corregida
     ]
   },
   {

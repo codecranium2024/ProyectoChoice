@@ -244,6 +244,149 @@ app.put('/actualizarUsuario/:idUsuario', async (req, res) => {
   }
 });
 
+// Endpoint para agregar un nuevo rol
+app.post('/agregarRol', async (req, res) => {
+  const { Rol } = req.body;
+
+  // Validación de entrada
+  if (!Rol) {
+    return res.status(400).send('El nombre del rol es obligatorio.');
+  }
+
+  try {
+    const connection = await mysql.createConnection(dbConfig);
+    
+    // Inserción de datos
+    await connection.execute(
+      `INSERT INTO tb_Rol (Rol) VALUES (?)`,
+      [Rol]
+    );
+    
+    // Confirmación de éxito
+    res.send('Rol agregado con éxito');
+    
+    await connection.end();
+  } catch (err) {
+    console.error('Error al agregar rol:', err);
+    res.status(500).send('Error al agregar rol');
+  }
+});
+
+// Endpoint para actualizar un rol
+app.put('/actualizarRol/:idRol', async (req, res) => {
+  const { idRol } = req.params;
+  const { Rol } = req.body;
+
+  // Validación de entrada
+  if (!Rol) {
+    return res.status(400).send('El nombre del rol es obligatorio.');
+  }
+
+  try {
+    const connection = await mysql.createConnection(dbConfig);
+    
+    // Actualización de datos
+    await connection.execute(
+      `UPDATE tb_Rol SET Rol = ? WHERE idRol = ?`,
+      [Rol, idRol]
+    );
+    
+    // Confirmación de éxito
+    res.send('Rol actualizado con éxito');
+    
+    await connection.end();
+  } catch (err) {
+    console.error('Error al actualizar rol:', err);
+    res.status(500).send('Error al actualizar rol');
+  }
+});
+
+// Endpoint para eliminar un rol
+app.delete('/eliminarRol/:idRol', async (req, res) => {
+  const { idRol } = req.params;
+
+  try {
+    const connection = await mysql.createConnection(dbConfig);
+    await connection.execute('DELETE FROM tb_Rol WHERE idRol = ?', [idRol]);
+    res.send('Rol eliminado con éxito');
+    await connection.end();
+  } catch (err) {
+    console.error('Error al eliminar rol:', err);
+    res.status(500).send('Error al eliminar rol');
+  }
+});
+
+// Endpoint para agregar una nueva especialidad
+app.post('/agregarEspecialidad', async (req, res) => {
+  const { Especialidad } = req.body;
+
+  // Validación de entrada
+  if (!Especialidad) {
+    return res.status(400).send('El nombre de la especialidad es obligatorio.');
+  }
+
+  try {
+    const connection = await mysql.createConnection(dbConfig);
+    
+    // Inserción de datos
+    await connection.execute(
+      `INSERT INTO tb_Especialidad (Especialidad) VALUES (?)`,
+      [Especialidad]
+    );
+    
+    // Confirmación de éxito
+    res.send('Especialidad agregada con éxito');
+    
+    await connection.end();
+  } catch (err) {
+    console.error('Error al agregar especialidad:', err);
+    res.status(500).send('Error al agregar especialidad');
+  }
+});
+
+// Endpoint para actualizar una especialidad
+app.put('/actualizarEspecialidad/:idEspecialidad', async (req, res) => {
+  const { idEspecialidad } = req.params;
+  const { Especialidad } = req.body;
+
+  // Validación de entrada
+  if (!Especialidad) {
+    return res.status(400).send('El nombre de la especialidad es obligatorio.');
+  }
+
+  try {
+    const connection = await mysql.createConnection(dbConfig);
+    
+    // Actualización de datos
+    await connection.execute(
+      `UPDATE tb_Especialidad SET Especialidad = ? WHERE idEspecialidad = ?`,
+      [Especialidad, idEspecialidad]
+    );
+    
+    // Confirmación de éxito
+    res.send('Especialidad actualizada con éxito');
+    
+    await connection.end();
+  } catch (err) {
+    console.error('Error al actualizar especialidad:', err);
+    res.status(500).send('Error al actualizar especialidad');
+  }
+});
+
+// Endpoint para eliminar una especialidad
+app.delete('/eliminarEspecialidad/:idEspecialidad', async (req, res) => {
+  const { idEspecialidad } = req.params;
+
+  try {
+    const connection = await mysql.createConnection(dbConfig);
+    await connection.execute('DELETE FROM tb_Especialidad WHERE idEspecialidad = ?', [idEspecialidad]);
+    res.send('Especialidad eliminada con éxito');
+    await connection.end();
+  } catch (err) {
+    console.error('Error al eliminar especialidad:', err);
+    res.status(500).send('Error al eliminar especialidad');
+  }
+});
 
 // Inicializar el servidor
 app.listen(port, () => {
