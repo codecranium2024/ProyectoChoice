@@ -1,11 +1,12 @@
 import React from "react";
-import {IonSelectOption, IonSelect,IonText,IonPage,IonHeader,IonTab,IonContent,IonTabBar,IonTabButton,IonTabs,IonToolbar,IonTitle,IonIcon,IonButton, IonRow,IonCheckbox,IonList,IonItem} from "@ionic/react";
+import {IonSelectOption, IonSelect,IonText,IonPage,IonHeader,IonTab,IonContent,IonTabBar,IonTabButton,IonTabs,IonToolbar,IonTitle,IonIcon,IonButton, IonRow,IonCheckbox,IonList,IonItem,IonInput} from "@ionic/react";
 import './../../components/MarcoComp/style.css';
 import { bookOutline, cog, cogOutline, earthOutline, fitnessOutline, globeOutline, leafOutline, peopleOutline, waterOutline } from 'ionicons/icons';
 import { useState } from "react";
 /* Basic CSS for apps built with Ionic */
 
 function AgregarComunidades() {
+  
   let [Comunidad, setComunidad] = useState('Comunidad')
   let [Municipio, setMunicipio] = useState('Municipio');
   let [Aldea, setAldea] = useState('Aldea');
@@ -143,8 +144,39 @@ const [numPuntosVentaBebidas, setNumPuntosVentaBebidas] = useState('');  // Inpu
 const [tiposBebidasAlcoholicas, setTiposBebidasAlcoholicas] = useState(''); // Input de texto
 const [consumoTabaco, setConsumoTabaco] = useState(false);   // Checkbox
 const [otrosConsumo, setOtrosConsumo] = useState('');         // Input de texto
+// Pregunta 70 - Instituciones
+const [maga, setMaga] = useState(false);
+const [fodes, setFodes] = useState(false);
+const [mides, setMides] = useState(false);
+const [sesan, setSesan] = useState(false);
 
+// Pregunta 71 - Policía y comités
+const [llegaPolicia, setLlegaPolicia] = useState(false);
+const [comites, setComites] = useState(false);
 
+// Pregunta 72 y 73 - ONG
+const [ongList, setOngList] = useState([{ nombre: '', trabajo: '' }]);
+const addOng = () => {
+  setOngList([...ongList, { nombre: '', trabajo: '' }]);
+};
+
+// Pregunta 74 - Religiones
+const [religion, setReligion] = useState('');
+
+interface Actor {
+  nombre: string;
+  aceptacion: string;
+  importancia: string;
+  presencia: string;
+}
+const [actors, setActors] = useState<Actor[]>([]);  // Definimos que el estado será un arreglo de objetos tipo Actor
+const addActor = (nombre: string) => {
+  setActors([...actors, { nombre, aceptacion: '', importancia: '', presencia: '' }]);
+};
+
+const removeActor = (nombre: string) => {
+  setActors(actors.filter(actor => actor.nombre !== nombre));
+};
 
 
 
@@ -991,6 +1023,176 @@ const [otrosConsumo, setOtrosConsumo] = useState('');         // Input de texto
                   (Los campos subrayados son obligatorios)
                 </h3>
               </IonRow>
+              <IonRow className="FilaTextBox">
+                <h3 className="labelForm">70. ¿Qué instituciones están presentes en la comunidad?</h3>
+              </IonRow>
+
+              <IonRow className="FilaTextBox">
+                <h3 className="labelForm">MAGA</h3>
+                <IonCheckbox
+                  checked={maga}
+                  onIonChange={(e) => {
+                    setMaga(e.detail.checked);
+                    if (e.detail.checked) {
+                      addActor('MAGA');
+                    } else {
+                      removeActor('MAGA');
+                    }
+                  }}
+                />
+                <h3 className="labelForm">FODES</h3>
+                <IonCheckbox
+                  checked={fodes}
+                  onIonChange={(e) => {
+                    setFodes(e.detail.checked);
+                    if (e.detail.checked) {
+                      addActor('FODES');
+                    } else {
+                      removeActor('FODES');
+                    }
+                  }}
+                />
+                <h3 className="labelForm">MIDES</h3>
+                <IonCheckbox
+                  checked={mides}
+                  onIonChange={(e) => {
+                    setMides(e.detail.checked);
+                    if (e.detail.checked) {
+                      addActor('MIDES');
+                    } else {
+                      removeActor('MIDES');
+                    }
+                  }}
+                />
+                <h3 className="labelForm">SESAN</h3>
+                <IonCheckbox
+                  checked={sesan}
+                  onIonChange={(e) => {
+                    setSesan(e.detail.checked);
+                    if (e.detail.checked) {
+                      addActor('SESAN');
+                    } else {
+                      removeActor('SESAN');
+                    }
+                  }}
+                />
+              </IonRow>
+                
+              <IonRow className="FilaTextBox">
+                <h3 className="labelForm">71. ¿Llega la Policía a la comunidad?</h3>
+                <IonCheckbox
+                  checked={llegaPolicia}
+                  onIonChange={(e) => {
+                    setLlegaPolicia(e.detail.checked);
+                    if (e.detail.checked) {
+                      addActor('Policía');
+                    } else {
+                      removeActor('Policía');
+                    }
+                  }}
+                />
+                <h3 className="labelForm">¿Existen otros comités?</h3>
+                <IonCheckbox checked={comites} onIonChange={e => setComites(e.target.checked)} />
+              </IonRow>
+
+              <IonRow className="FilaTextBox">
+                <h3 className="labelForm">72. ¿Cuáles ONG´s están presentes en la comunidad?</h3>
+              </IonRow>
+                {ongList.map((ong, index) => (
+                  <IonRow key={index} className="FilaTextBox">
+                    <IonInput
+                      type="text"
+                      placeholder="Nombre ONG"
+                      value={ong.nombre}
+                      onIonChange={(e) => {
+                        const newOngList = [...ongList];
+                        newOngList[index].nombre = e.detail.value!;
+                        setOngList(newOngList);
+                        if (e.detail.value) {
+                          addActor(e.detail.value!);
+                        } else {
+                          removeActor(ong.nombre);
+                        }
+                      }}
+                    />
+                    <IonInput
+                    style={{ marginbottom: "10px" }}
+                      type="text"
+                      placeholder="Trabajo en la comunidad"
+                      value={ong.trabajo}
+                      onIonChange={(e) => {
+                        const newOngList = [...ongList];
+                        newOngList[index].trabajo = e.detail.value!;
+                        setOngList(newOngList);
+                      }}
+                    />
+                  </IonRow>
+                ))}
+                <IonButton onClick={addOng}>Añadir ONG</IonButton>
+
+
+                <IonRow className="FilaTextBox">
+                  <h3 className="labelForm">75. Mapeo de actores</h3>
+                  <table className="TableActores">
+                    <thead>
+                      <tr>
+                        <th>Nombre del actor</th>
+                        <th>Aceptación en la comunidad (alta, media, baja)</th>
+                        <th>Importancia en la comunidad (alta, media, baja)</th>
+                        <th>Presencia en la comunidad (alta, media, baja)</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {actors.map((actor, index) => (
+                        <tr key={index}>
+                          <td>{actor.nombre}</td>
+                          <td>
+                            <IonSelect
+                              value={actor.aceptacion}
+                              onIonChange={(e) => {
+                                const newActors = [...actors];
+                                newActors[index].aceptacion = e.detail.value!;
+                                setActors(newActors);
+                              }}
+                            >
+                              <IonSelectOption value="alta">Alta</IonSelectOption>
+                              <IonSelectOption value="media">Media</IonSelectOption>
+                              <IonSelectOption value="baja">Baja</IonSelectOption>
+                            </IonSelect>
+                          </td>
+                          <td>
+                            <IonSelect
+                              value={actor.importancia}
+                              onIonChange={(e) => {
+                                const newActors = [...actors];
+                                newActors[index].importancia = e.detail.value!;
+                                setActors(newActors);
+                              }}
+                            >
+                              <IonSelectOption value="alta">Alta</IonSelectOption>
+                              <IonSelectOption value="media">Media</IonSelectOption>
+                              <IonSelectOption value="baja">Baja</IonSelectOption>
+                            </IonSelect>
+                          </td>
+                          <td>
+                            <IonSelect
+                              value={actor.presencia}
+                              onIonChange={(e) => {
+                                const newActors = [...actors];
+                                newActors[index].presencia = e.detail.value!;
+                                setActors(newActors);
+                              }}
+                            >
+                              <IonSelectOption value="alta">Alta</IonSelectOption>
+                              <IonSelectOption value="media">Media</IonSelectOption>
+                              <IonSelectOption value="baja">Baja</IonSelectOption>
+                            </IonSelect>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </IonRow>
             </div>
           </IonTab>
 
