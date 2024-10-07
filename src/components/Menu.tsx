@@ -76,9 +76,9 @@ const appPages: AppPage[] = [
     iosIcon: documentOutline,
     mdIcon: documentSharp,
     subPages: [
+      { title: 'Registrar Proyecto', url: '/RegistrarProyecto' },
       { title: 'Visualizar', url: '/Visualizar' },
       { title: 'Comunidades', url: '/Comunidad' },
-      { title: 'subtest3', url: '' },
       { title: 'Mapa', url: '' },
     ]
   },

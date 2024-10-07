@@ -15,6 +15,8 @@ import { Configuraciones } from './pages/MarcoPaginas/Configuraciones';
 import Departamentos from './components/RomeoComp/Region/Departamentos';
 import AdministrarUsuarios from './components/WilfredoComp/AdministrarUsuarios';
 import AdministrarRE from './components/WilfredoComp/AdministrarRE';
+import RegistrarProyecto from './components/RomeoComp/Registrar/RegistrarProyecto';
+
 
 /* Importaciones CSS de Ionic */
 import '@ionic/react/css/core.css';
@@ -92,13 +94,14 @@ const App: React.FC = () => {
               <Route path="/Departamentos" exact={true}>
                 <Departamentos />
               </Route>
-              {/* Ruta para administrar usuarios */}
               <Route path="/AdministrarUsuarios" exact={true}>
                 <AdministrarUsuarios />
               </Route>
-              {/* Ruta para administrar roles y especialidades */}
               <Route path="/roles-especialidades" exact={true}>
                 <AdministrarRE />
+              </Route>
+              <Route path="/RegistrarProyecto" exact={true}>
+                <RegistrarProyecto />
               </Route>
             </IonRouterOutlet>
           </IonSplitPane>
