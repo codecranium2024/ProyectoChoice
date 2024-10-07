@@ -1,7 +1,7 @@
 // Importar módulos necesarios
 const express = require('express');
-const mysql = require('mysql2/promise'); // Usar la versión con soporte de promesas
-const cors = require('cors'); // Permitir solicitudes desde tu frontend
+const mysql = require('mysql2/promise');
+const cors = require('cors');
 
 // Configuración del servidor y puerto
 const app = express();
@@ -14,7 +14,7 @@ const dbConfig = {
   password: 'y4$Dt#*?*',
   database: 'bdChoice',
   ssl: {
-    rejectUnauthorized: true, // Asegura que la conexión sea segura
+    rejectUnauthorized: true,
   },
   insecureAuth: false
 };
@@ -23,7 +23,7 @@ const dbConfig = {
 app.use(express.json());
 const corsOptions = {
   origin: 'http://localhost:8100',
-  methods: ['GET', 'POST'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true
 };
 app.use(cors(corsOptions));
@@ -47,7 +47,7 @@ async function testDBConnection() {
   }
 }
 
-testDBConnection(); // Llamar a la función para verificar la conexión
+testDBConnection();
 
 // Endpoint para el login
 app.post('/login', async (req, res) => {
@@ -56,12 +56,12 @@ app.post('/login', async (req, res) => {
   try {
     const connection = await mysql.createConnection(dbConfig);
 
-    // Consulta para verificar el usuario y obtener el nombre completo y el rol
     const [rows] = await connection.execute(
       `SELECT tb_Usuario.Nombre, tb_Usuario.Apellido, tb_Rol.Rol AS nombreRol 
        FROM tb_Usuario 
        INNER JOIN tb_Rol ON tb_Usuario.idRol = tb_Rol.idRol 
-       WHERE tb_Usuario.Usuario = ?`, [usuario]);
+       WHERE tb_Usuario.Usuario = ?`, [usuario]
+    );
 
     if (rows.length > 0) {
       const user = rows[0];
@@ -73,7 +73,6 @@ app.post('/login', async (req, res) => {
       const decryptedPassword = decryptionRows[0].decryptedPassword;
 
       if (decryptedPassword && decryptedPassword === password) {
-        // Devuelve el nombre completo del usuario y el rol
         res.json({ success: true, nombre: `${user.Nombre} ${user.Apellido}`, rol: user.nombreRol });
       } else {
         res.status(401).json({ success: false, message: 'Contraseña incorrecta' });
@@ -119,14 +118,33 @@ app.get('/especialidades', async (req, res) => {
 app.post('/registrarUsuario', async (req, res) => {
   const { nombre, apellido, correo, telefono, usuario, password, rolId, especialidadId } = req.body;
 
+  // Validación de entrada
+  if (!nombre || !apellido || !correo || !telefono || !usuario || !password || !rolId || !especialidadId) {
+    return res.status(400).send('Todos los campos son obligatorios.');
+  }
+
+  // Convertir rolId y especialidadId a números
+  const numericRolId = parseInt(rolId, 10);
+  const numericEspecialidadId = parseInt(especialidadId, 10);
+
+  // Validación adicional
+  if (isNaN(numericRolId) || isNaN(numericEspecialidadId)) {
+    return res.status(400).send('El rol y la especialidad deben ser números válidos.');
+  }
+
   try {
     const connection = await mysql.createConnection(dbConfig);
+    
+    // Inserción de datos
     await connection.execute(
       `INSERT INTO tb_Usuario (Nombre, Apellido, Correo, Telefono, Usuario, Password, idRol, idEspecialidad) 
        VALUES (?, ?, ?, ?, ?, AES_ENCRYPT(?, 'y4$Dt#*?*'), ?, ?)`,
-      [nombre, apellido, correo, telefono, usuario, password, rolId, especialidadId]
+      [nombre, apellido, correo, telefono, usuario, password, numericRolId, numericEspecialidadId]
     );
+    
+    // Confirmación de éxito
     res.send('Usuario registrado con éxito');
+    
     await connection.end();
   } catch (err) {
     console.error('Error al registrar usuario:', err);
@@ -134,6 +152,88 @@ app.post('/registrarUsuario', async (req, res) => {
   }
 });
 
+// Endpoint para obtener usuarios con nombre de rol y especialidad
+app.get('/usuarios', async (req, res) => {
+  try {
+    const connection = await mysql.createConnection(dbConfig);
+    // Cambia la consulta para obtener los nombres de rol y especialidad
+    const [rows] = await connection.execute(`
+      SELECT 
+        tb_Usuario.idUsuario, 
+        tb_Usuario.Nombre, 
+        tb_Usuario.Apellido, 
+        tb_Usuario.Correo, 
+        tb_Usuario.Telefono, 
+        tb_Rol.Rol AS nombreRol, 
+        tb_Especialidad.Especialidad AS nombreEspecialidad
+      FROM tb_Usuario
+      LEFT JOIN tb_Rol ON tb_Usuario.idRol = tb_Rol.idRol
+      LEFT JOIN tb_Especialidad ON tb_Usuario.idEspecialidad = tb_Especialidad.idEspecialidad
+    `);
+    res.json(rows);
+    await connection.end();
+  } catch (err) {
+    console.error('Error al obtener usuarios:', err);
+    res.status(500).send('Error al obtener usuarios');
+  }
+});
+
+
+
+// Endpoint para eliminar usuario
+app.delete('/eliminarUsuario/:idUsuario', async (req, res) => {
+  const { idUsuario } = req.params;
+
+  try {
+    const connection = await mysql.createConnection(dbConfig);
+    await connection.execute('DELETE FROM tb_Usuario WHERE idUsuario = ?', [idUsuario]);
+    res.send('Usuario eliminado con éxito');
+    await connection.end();
+  } catch (err) {
+    console.error('Error al eliminar usuario:', err);
+    res.status(500).send('Error al eliminar usuario');
+  }
+});
+
+// Endpoint para actualizar usuario
+app.put('/actualizarUsuario/:idUsuario', async (req, res) => {
+  const { idUsuario } = req.params;
+  const { nombre, apellido, correo, telefono, rolId, especialidadId } = req.body;
+
+  // Validación de entrada
+  if (!nombre || !apellido || !correo || !telefono || !rolId || !especialidadId) {
+    return res.status(400).send('Todos los campos son obligatorios.');
+  }
+
+  // Convertir rolId y especialidadId a números
+  const numericRolId = parseInt(rolId, 10);
+  const numericEspecialidadId = parseInt(especialidadId, 10);
+
+  // Validación adicional
+  if (isNaN(numericRolId) || isNaN(numericEspecialidadId)) {
+    return res.status(400).send('El rol y la especialidad deben ser números válidos.');
+  }
+
+  try {
+    const connection = await mysql.createConnection(dbConfig);
+    
+    // Actualización de datos
+    await connection.execute(
+      `UPDATE tb_Usuario 
+       SET Nombre = ?, Apellido = ?, Correo = ?, Telefono = ?, idRol = ?, idEspecialidad = ?
+       WHERE idUsuario = ?`,
+      [nombre, apellido, correo, telefono, numericRolId, numericEspecialidadId, idUsuario]
+    );
+    
+    // Confirmación de éxito
+    res.send('Usuario actualizado con éxito');
+    
+    await connection.end();
+  } catch (err) {
+    console.error('Error al actualizar usuario:', err);
+    res.status(500).send('Error al actualizar usuario');
+  }
+});
 
 // Inicializar el servidor
 app.listen(port, () => {

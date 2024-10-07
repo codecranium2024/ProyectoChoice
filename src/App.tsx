@@ -14,6 +14,7 @@ import VisualizarComunidades from './pages/MarcoPaginas/AgregarComunidad';
 import { Configuraciones } from './pages/MarcoPaginas/Configuraciones';
 import Departamentos from './components/RomeoComp/Region/Departamentos';
 import RegistrarUsuario from './components/WilfredoComp/RegistrarUsuario';
+import AdministrarUsuarios from './components/WilfredoComp/AdministrarUsuarios';
 
 /* Importaciones CSS de Ionic */
 import '@ionic/react/css/core.css';
@@ -31,41 +32,34 @@ import './theme/variables.css';
 setupIonicReact();
 
 const App: React.FC = () => {
-  // Estado para manejar si el usuario está autenticado, su nombre y rol
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [userName, setUserName] = useState('');
   const [userRole, setUserRole] = useState('');
 
-  // Función que se llamará cuando el login sea exitoso
   const handleLoginSuccess = (name: string, role: string) => {
-    setIsAuthenticated(true); // Establecer el estado como autenticado
-    setUserName(name); // Establecer el nombre del usuario
-    setUserRole(role); // Establecer el rol del usuario
+    setIsAuthenticated(true);
+    setUserName(name);
+    setUserRole(role);
   };
 
-  // Función para manejar el cierre de sesión
   const handleLogout = () => {
-    setIsAuthenticated(false); // Cambiar el estado a no autenticado
-    setUserName(''); // Limpiar el nombre del usuario
-    setUserRole(''); // Limpiar el rol del usuario
-    // Puedes agregar lógica adicional para limpiar la sesión o tokens si es necesario
+    setIsAuthenticated(false);
+    setUserName('');
+    setUserRole('');
   };
 
   return (
     <IonApp>
       <IonReactRouter>
         {!isAuthenticated ? (
-          // Mostrar solo el login si no está autenticado
           <IonRouterOutlet>
             <Route path="/" exact>
-              <Login onLoginSuccess={handleLoginSuccess} /> {/* Pasar la función como prop */}
+              <Login onLoginSuccess={handleLoginSuccess} />
             </Route>
             <Redirect to="/" />
           </IonRouterOutlet>
         ) : (
-          // Mostrar el menú y rutas de la aplicación cuando el usuario está autenticado
           <IonSplitPane contentId="main">
-            {/* Pasar `userName`, `userRole` y `handleLogout` al menú */}
             <Menu userName={userName} userRole={userRole} onLogout={handleLogout} />
             <IonRouterOutlet id="main">
               <Route path="/" exact={true}>
@@ -98,9 +92,13 @@ const App: React.FC = () => {
               <Route path="/Departamentos" exact={true}>
                 <Departamentos />
               </Route>
-              {/* Nueva ruta para registrar usuario */}
+              {/* Ruta para registrar usuario */}
               <Route path="/RegistrarUsuario" exact={true}>
                 <RegistrarUsuario />
+              </Route>
+              {/* Ruta para administrar usuarios */}
+              <Route path="/AdministrarUsuarios" exact={true}>
+                <AdministrarUsuarios />
               </Route>
             </IonRouterOutlet>
           </IonSplitPane>

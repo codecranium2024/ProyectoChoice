@@ -1,0 +1,84 @@
+/* AdministrarUsuarios.css */
+.table-container {
+    margin: 20px;
+    padding: 20px;
+    background-color: #ffffff; /* Fondo blanco */
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    border-radius: 8px;
+  }
+  
+  .table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+  }
+  
+  .table th,
+  .table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .table th {
+    background-color: #f1f1f1;
+    font-weight: bold;
+  }
+  
+  .table tr:hover {
+    background-color: #f9f9f9; /* Efecto hover */
+  }
+  
+  .button-group {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+  }
+  
+  .button {
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    font-weight: bold;
+  }
+  
+  .button.edit {
+    background-color: #ffcc00;
+    color: white;
+  }
+  
+  .button.delete {
+    background-color: #e74c3c;
+    color: white;
+  }
+  
+  .button.add {
+    background-color: #3498db;
+    color: white;
+  }
+  
+  /* Alinear los botones en la parte superior */
+.button-container {
+    display: flex;
+    gap: 10px;
+    margin: 20px 0;
+  }
+  
+  /* Estilo para la tabla */
+  .usuarios-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  
+  .usuarios-table th, .usuarios-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+  }
+  
+  .usuarios-table th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+  }
+  
