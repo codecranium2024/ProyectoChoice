@@ -1,46 +1,142 @@
-import React from "react";
-import {IonPage,IonHeader,IonTab,IonContent,IonTabBar,IonTabButton,IonTabs,IonToolbar,IonTitle,IonIcon,IonButton, IonRow,IonCheckbox} from "@ionic/react";
-import './../../components/MarcoComp/style.css';
-import { bookOutline, cog, cogOutline, earthOutline, fitnessOutline, globeOutline, leafOutline, peopleOutline, waterOutline } from 'ionicons/icons';
-import { useState } from "react";
-/* Basic CSS for apps built with Ionic */
+import React, { useState } from "react";
+import { IonPage, IonContent, IonTabs, IonTab, IonTabBar, IonTabButton, IonIcon, IonButton, IonRow, IonCheckbox } from "@ionic/react";
+import { earthOutline, cogOutline, bookOutline, waterOutline, fitnessOutline, peopleOutline, leafOutline } from 'ionicons/icons';
 
 function AgregarComunidades() {
-  let [Comunidad, setComunidad] = useState('Comunidad')
-  let [PresidenteCOCODE, setPresidenteCOCODE] = useState('Presidente de COCODE');
-  let [TelefonoContacto, setTelefonoContacto] = useState('Teléfono de contacto');
-  let [OtroLider, setOtroLider] = useState('Otro líder');
-  let [TelefonoOtroLider, setTelefonoOtroLider] = useState('Teléfono de contacto otro líder');
-  let [Transporte, setTransporte] = useState('Tipo de transporte');
-  let [NumeroFamilias, setNumeroFamilias] = useState('Número de familias');
-  let [NumeroViviendas, setNumeroViviendas] = useState('Número de viviendas');
-  let [NumeroPersonas, setNumeroPersonas] = useState('Número de personas');
-  let [CertezaJuridica, setCertezaJuridica] = useState('Certeza jurídica de la tierra');
-  let [ConflictosTierra, setConflictosTierra] = useState('Conflictos de acceso o tenencia');
-  let [DimensionesLotes, setDimensionesLotes] = useState('Dimensiones de los lotes');
-  let [DimensionesTrabajaderos, setDimensionesTrabajaderos] = useState('Dimensiones de los trabajaderos');
-  let [TierraComunitaria, setTierraComunitaria] = useState('Cantidad de tierra comunitaria');
-  let [Idiomas, setIdiomas] = useState('Idiomas que se hablan en la comunidad');
-  let [FuentesEmpleo, setFuentesEmpleo] = useState('Fuentes de empleo');
-  let [Recreacion, setRecreacion] = useState('Recreación en la comunidad');
-  let [PotencialTuristico, setPotencialTuristico] = useState('Potencial turístico');
-  let [EdificiosPublicos, setEdificiosPublicos] = useState('Edificios públicos');
-  let [Inseguridad, setInseguridad] = useState<boolean>(false); 
-  let [TipoInseguridad, setTipoInseguridad] = useState('Tipo de inseguridad');
-  let [GruposDelincuenciales, setGruposDelincuenciales] = useState('Grupos delincuenciales');
-  let [PersonasOtrosMunicipios, setPersonasOtrosMunicipios] = useState('Personas que trabajan en otros municipios');
-  let [TipoTrabajo, setTipoTrabajo] = useState('Tipo de trabajo');
-  let [PersonasEEUU, setPersonasEEUU] = useState<boolean>(false); 
-  let [CantidadPersonasEEUU, setCantidadPersonasEEUU] = useState('Cantidad de personas en EE. UU.');
-  let [MenoresEEUU, setMenoresEEUU] = useState<boolean>(false); 
-  let [EdadTrabajoHombres, setEdadTrabajoHombres] = useState('Edad de trabajo hombres');
-  let [EdadTrabajoMujeres, setEdadTrabajoMujeres] = useState('Edad de trabajo mujeres');
-  let [Ocupaciones, setOcupaciones] = useState('Ocupaciones en las que trabajan');
-  let [Jubilados, setJubilados] = useState<boolean>(false); 
-  let [CantidadJubilados, setCantidadJubilados] = useState('Cantidad de jubilados');
-  let [InstitucionJubilados, setInstitucionJubilados] = useState('Institución de jubilados');
-  let [OcupacionesMujeres, setOcupacionesMujeres] = useState('Ocupaciones tradicionales de mujeres');
-  let [OcupacionesHombres, setOcupacionesHombres] = useState('Ocupaciones tradicionales de hombres');
+  // Variables de estado para todos los campos
+  let [Comunidad, setComunidad] = useState('');
+  let [PresidenteCOCODE, setPresidenteCOCODE] = useState('');
+  let [TelefonoContacto, setTelefonoContacto] = useState('');
+  let [OtroLider, setOtroLider] = useState('');
+  let [TelefonoOtroLider, setTelefonoOtroLider] = useState('');
+  let [Transporte, setTransporte] = useState('');
+  let [NumeroFamilias, setNumeroFamilias] = useState('');
+  let [NumeroViviendas, setNumeroViviendas] = useState('');
+  let [NumeroPersonas, setNumeroPersonas] = useState('');
+  let [CertezaJuridica, setCertezaJuridica] = useState('');  // Checkbox, true o false
+  let [ConflictosTierra, setConflictosTierra] = useState('');
+  let [DimensionesLotes, setDimensionesLotes] = useState('');
+  let [DimensionesTrabajaderos, setDimensionesTrabajaderos] = useState('');
+  let [TierraComunitaria, setTierraComunitaria] = useState('');
+  let [Idiomas, setIdiomas] = useState('');
+  let [FuentesEmpleo, setFuentesEmpleo] = useState('');
+  let [Recreacion, setRecreacion] = useState('');
+  let [PotencialTuristico, setPotencialTuristico] = useState('');
+  let [EdificiosPublicos, setEdificiosPublicos] = useState('');
+  let [Inseguridad, setInseguridad] = useState(false);  // Checkbox
+  let [TipoInseguridad, setTipoInseguridad] = useState('');
+  let [GruposDelincuenciales, setGruposDelincuenciales] = useState('');
+  let [PersonasOtrosMunicipios, setPersonasOtrosMunicipios] = useState('');
+  let [TipoTrabajo, setTipoTrabajo] = useState('');
+  let [PersonasEEUU, setPersonasEEUU] = useState(false);  // Checkbox
+  let [CantidadPersonasEEUU, setCantidadPersonasEEUU] = useState('');
+  let [MenoresEEUU, setMenoresEEUU] = useState(false);  // Checkbox
+  let [EdadTrabajoHombres, setEdadTrabajoHombres] = useState('');
+  let [EdadTrabajoMujeres, setEdadTrabajoMujeres] = useState('');
+  let [Ocupaciones, setOcupaciones] = useState('');
+  let [Jubilados, setJubilados] = useState(false);  // Checkbox
+  let [CantidadJubilados, setCantidadJubilados] = useState('');
+  let [InstitucionJubilados, setInstitucionJubilados] = useState('');
+  let [OcupacionesMujeres, setOcupacionesMujeres] = useState('');
+  let [OcupacionesHombres, setOcupacionesHombres] = useState('');
+
+  // Función para enviar los datos al backend
+const handleGuardarComunidad = async () => {
+  const data = {
+    nombre_comunidad: Comunidad,
+    presidente_cocode: PresidenteCOCODE,
+    telefono_contacto1: TelefonoContacto,
+    otro_lider: OtroLider,
+    telefono_contacto2: TelefonoOtroLider,
+    tipo_transporte: Transporte,
+    numero_familias: parseInt(NumeroFamilias, 10),
+    numero_viviendas: parseInt(NumeroViviendas, 10),
+    numero_personas: parseInt(NumeroPersonas, 10),
+    certeza_juridica_tierra: CertezaJuridica,
+    conflictos_tierra: ConflictosTierra,
+    dimension_lotes: DimensionesLotes,
+    dimension_trabajadores: DimensionesTrabajaderos,
+    tierra_comunitaria: TierraComunitaria,
+    idiomas_comunidad: Idiomas,
+    fuentes_empleo: FuentesEmpleo,
+    recreacion_comunidad: Recreacion,
+    potencial_turistico: PotencialTuristico,
+    tipo_edificios_publicos: EdificiosPublicos,
+    hay_inseguridad: Inseguridad ? 1 : 0,
+    tipo_inseguridad: Inseguridad ? TipoInseguridad : null,
+    grupos_delincuenciales: Inseguridad ? GruposDelincuenciales : null,
+    personas_otro_lugar: parseInt(PersonasOtrosMunicipios, 10),
+    ocupacion_otro_lugar: TipoTrabajo,
+    personas_en_eeuu: PersonasEEUU ? 1 : 0,
+    cantidad_personas_eeuu: PersonasEEUU ? parseInt(CantidadPersonasEEUU, 10) : null,
+    menores_en_eeuu: MenoresEEUU ? 1 : 0,
+    edad_empieza_trabajar_hombres: parseInt(EdadTrabajoHombres, 10),
+    edad_empieza_trabajar_mujeres: parseInt(EdadTrabajoMujeres, 10),
+    tipo_empleo: Ocupaciones,
+    existen_jubilados: Jubilados ? 1 : 0,
+    cantidad_jubilados: Jubilados ? parseInt(CantidadJubilados, 10) : null,
+    institucion_jubilados: Jubilados ? InstitucionJubilados : null,
+    ocupaciones_tradicionales_mujeres: OcupacionesMujeres,
+    ocupaciones_tradicionales_hombres: OcupacionesHombres
+  };
+
+  // Verificar los datos antes de enviar
+  console.log('Datos a enviar:', data);
+
+  try {
+    const response = await fetch('http://localhost:3000/comunidad', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    });
+
+    if (response.ok) {
+      alert('Comunidad registrada con éxito');
+      // Limpiar todos los campos de texto y checkbox
+      setComunidad('');
+      setPresidenteCOCODE('');
+      setTelefonoContacto('');
+      setOtroLider('');
+      setTelefonoOtroLider('');
+      setTransporte('');
+      setNumeroFamilias('');
+      setNumeroViviendas('');
+      setNumeroPersonas('');
+      setCertezaJuridica('');  // Si el campo es texto, limpiar a cadena vacía
+      setConflictosTierra('');
+      setDimensionesLotes('');
+      setDimensionesTrabajaderos('');
+      setTierraComunitaria('');
+      setIdiomas('');
+      setFuentesEmpleo('');
+      setRecreacion('');
+      setPotencialTuristico('');
+      setEdificiosPublicos('');
+      setInseguridad(false);  // Reiniciar checkbox a desmarcado
+      setTipoInseguridad('');
+      setGruposDelincuenciales('');
+      setPersonasOtrosMunicipios('');
+      setTipoTrabajo('');
+      setPersonasEEUU(false);  // Reiniciar checkbox a desmarcado
+      setCantidadPersonasEEUU('');
+      setMenoresEEUU(false);  // Reiniciar checkbox a desmarcado
+      setEdadTrabajoHombres('');
+      setEdadTrabajoMujeres('');
+      setOcupaciones('');
+      setJubilados(false);  // Reiniciar checkbox a desmarcado
+      setCantidadJubilados('');
+      setInstitucionJubilados('');
+      setOcupacionesMujeres('');
+      setOcupacionesHombres('');
+    } else {
+      alert('Error al registrar la comunidad');
+    }
+  } catch (error) {
+    console.error('Error:', error);
+    alert('Error al registrar la comunidad');
+  }
+};
+
 
   return (
     <IonPage className="pg">
@@ -150,7 +246,7 @@ function AgregarComunidades() {
               {/* Preguntas dependientes */}
               <IonRow className="FilaTextBox">
                 <h3 className="labelForm">20. ¿Hay inseguridad?</h3>
-                <IonCheckbox className="CheckBox" checked={Inseguridad} onIonChange={(e) => setInseguridad(e.detail.checked)}/>
+                <IonCheckbox className="CheckBox" checked={Inseguridad} onIonChange={(e) => setInseguridad(e.detail.checked)} />
                 {Inseguridad && (
                   <>
                     <h3 className="labelForm">Tipo de inseguridad:</h3>
@@ -158,12 +254,12 @@ function AgregarComunidades() {
                   </>
                 )}
               </IonRow>
-              
+
               <IonRow className="FilaTextBox">
                 <h3 className="labelForm">Grupos delincuenciales:</h3>
                 <input onChange={e => setGruposDelincuenciales(e.target.value)} type="text" className='TextBoxPeq' />
               </IonRow>
-              
+
               {/* Preguntas relacionadas */}
               <IonRow className="FilaTextBox">
                 <h3 className="labelForm">21. ¿Cuántas personas trabajan en otros municipios o departamentos?:</h3>
@@ -171,20 +267,20 @@ function AgregarComunidades() {
                 <h3 className="labelForm">¿En qué?</h3>
                 <input onChange={e => setTipoTrabajo(e.target.value)} type="text" className='TextBox' />
               </IonRow>
-              
+
               <IonRow className="FilaTextBox">
-                <h3 className="labelForm">22. ¿Hay personas que están en EE. UU.?</h3>
-                <IonCheckbox className="CheckBox" checked={PersonasEEUU} onIonChange={(e) => setPersonasEEUU(e.detail.checked)}/>
+                <h3 className="labelForm">22. ¿Hay personas en EE. UU.?</h3>
+                <IonCheckbox className="CheckBox" checked={PersonasEEUU} onIonChange={(e) => setPersonasEEUU(e.detail.checked)} />
                 {PersonasEEUU && (
                   <>
                     <h3 className="labelForm">¿Cuántas?</h3>
                     <input onChange={e => setCantidadPersonasEEUU(e.target.value)} type="text" className='TextBoxPeq' />
                     <h3 className="labelForm">¿Hay menores de edad en EE. UU.?</h3>
-                    <IonCheckbox className="CheckBox" checked={MenoresEEUU} onIonChange={(e) => setMenoresEEUU(e.detail.checked)}/>
+                    <IonCheckbox className="CheckBox" checked={MenoresEEUU} onIonChange={(e) => setMenoresEEUU(e.detail.checked)} />
                   </>
                 )}
               </IonRow>
-              
+
               {/* Preguntas con múltiples campos */}
               <IonRow className="FilaTextBox">
                 <h3 className="labelForm">23. ¿A qué edad empiezan a trabajar en la comunidad?</h3>
@@ -193,16 +289,16 @@ function AgregarComunidades() {
                 <h3 className="labelForm">Mujeres:</h3>
                 <input onChange={e => setEdadTrabajoMujeres(e.target.value)} type="text" className='TextBox' />
               </IonRow>
-              
+
               <IonRow className="FilaTextBox">
                 <h3 className="labelForm">¿En qué?</h3>
                 <input onChange={e => setOcupaciones(e.target.value)} type="text" className='TextBox' />
               </IonRow>
-              
+
               {/* Jubilados */}
               <IonRow className="FilaTextBox">
                 <h3 className="labelForm">24. ¿Existen jubilados en la comunidad?</h3>
-                <IonCheckbox className="CheckBox" checked={Jubilados} onIonChange={(e) => setJubilados(e.detail.checked)}/>
+                <IonCheckbox className="CheckBox" checked={Jubilados} onIonChange={(e) => setJubilados(e.detail.checked)} />
                 {Jubilados && (
                   <>
                     <h3 className="labelForm">¿Cuántos?</h3>
@@ -212,13 +308,13 @@ function AgregarComunidades() {
                   </>
                 )}
               </IonRow>
-              
+
               {/* Ocupaciones tradicionales */}
               <IonRow className="FilaTextBox">
                 <h3 className="labelForm">25. Ocupaciones tradicionales más importantes de las mujeres:</h3>
                 <input onChange={e => setOcupacionesMujeres(e.target.value)} type="text" className='TextBox' />
               </IonRow>
-              
+
               <IonRow className="FilaTextBox">
                 <h3 className="labelForm">Ocupaciones tradicionales más importantes de los hombres:</h3>
                 <input onChange={e => setOcupacionesHombres(e.target.value)} type="text" className='TextBox' />
@@ -238,14 +334,15 @@ function AgregarComunidades() {
             <IonTabButton tab="Ecologia"> <IonIcon size="large" icon={cogOutline} /> </IonTabButton>
           </IonTabBar>
 
-        </IonTabs>    
+        </IonTabs>
       </IonContent>
 
       <IonRow>
-        <IonButton className="Boton" color="success">Guardar</IonButton>   
-        <IonButton className="Boton" color="danger">Cancelar</IonButton>   
+        <IonButton className="Boton" color="success" onClick={handleGuardarComunidad}>Guardar</IonButton>
+        <IonButton className="Boton" color="danger">Cancelar</IonButton>
       </IonRow>
     </IonPage>
   );
 }
+
 export default AgregarComunidades;
