@@ -1,0 +1,78 @@
+/* Contenedor principal */
+#map {
+    width: 100%;
+    height: 100vh; /* Ocupa toda la altura de la ventana */
+    border: 2px solid #4a90e2; /* Borde azul */
+    border-radius: 10px; /* Bordes redondeados */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Sombra sutil */
+    margin-bottom: 20px; /* Espacio inferior */
+  }
+  
+  /* Estilo del popup del marcador */
+  .mapboxgl-popup {
+    max-width: 200px; /* Ancho máximo del popup */
+    font-family: Arial, sans-serif; /* Fuente */
+    font-size: 14px; /* Tamaño de fuente */
+    color: #333; /* Color del texto */
+  }
+  
+  .mapboxgl-popup-content {
+    padding: 10px; /* Espaciado interior */
+    border-radius: 5px; /* Bordes redondeados */
+    background: #fff; /* Fondo blanco */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Sombra del popup */
+  }
+  
+  /* Estilos generales para la página */
+  body {
+    font-family: Arial, sans-serif; /* Fuente general */
+    background-color: #f4f4f4; /* Color de fondo suave */
+    margin: 0; /* Eliminar margen */
+    padding: 0; /* Eliminar padding */
+  }
+  
+  /* Encabezado de la página */
+  h2 {
+    text-align: center; /* Centrar el texto */
+    color: #4a90e2; /* Color del encabezado */
+    margin: 20px 0; /* Margen superior e inferior */
+  }
+  
+  /* Estilo del contenedor de información */
+  .info-container {
+    padding: 20px; /* Espaciado interior */
+    background-color: #fff; /* Fondo blanco */
+    border-radius: 10px; /* Bordes redondeados */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Sombra suave */
+  }
+  
+  /* Contenedor de iconos */
+  .icons-container {
+    display: flex; /* Usar flexbox para disposición */
+    justify-content: space-around; /* Espaciado entre iconos */
+    margin-top: 20px; /* Margen superior */
+  }
+  
+  /* Item de icono */
+  .icon-item {
+    text-align: center; /* Centrar texto en icono */
+  }
+  
+  .icon-item h4 {
+    margin: 5px 0; /* Margen en el título */
+    color: #4a90e2; /* Color del título */
+  }
+  .map-container {
+    width: 100%; /* Ancho completo */
+    display: flex; /* Flexbox para centrar contenido si es necesario */
+    justify-content: center; /* Centrar contenido */
+    align-items: center; /* Centrar contenido verticalmente */
+    margin: 0 auto; /* Centrar el contenedor en la página */
+  }
+
+
+  
+  .mapboxgl-ctrl-bottom-left {
+    display: none; /* Oculta el cuadro de control de atribución */
+  }
+  
