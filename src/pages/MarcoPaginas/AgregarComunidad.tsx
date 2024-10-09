@@ -1,10 +1,15 @@
 import React, { useState } from "react";
-import { IonPage, IonContent, IonTabs, IonTab, IonTabBar, IonTabButton, IonIcon, IonButton, IonRow, IonCheckbox } from "@ionic/react";
-import { earthOutline, cogOutline, bookOutline, waterOutline, fitnessOutline, peopleOutline, leafOutline } from 'ionicons/icons';
+//import { IonPage, IonContent, IonTabs, IonTab, IonTabBar, IonTabButton, IonIcon, IonButton, IonRow, IonCheckbox } from "@ionic/react";
+//import { earthOutline, cogOutline, bookOutline, waterOutline, fitnessOutline, peopleOutline, leafOutline } from 'ionicons/icons';
+import {IonSelectOption, IonSelect,IonText,IonPage,IonHeader,IonTab,IonContent,IonTabBar,IonTabButton,IonTabs,IonToolbar,IonTitle,IonIcon,IonButton, IonRow,IonCheckbox,IonList,IonItem,IonInput} from "@ionic/react";
+import { bookOutline, cog, cogOutline, earthOutline, fitnessOutline, globeOutline, leafOutline, peopleOutline, waterOutline } from 'ionicons/icons';
 
 function AgregarComunidades() {
   // Variables de estado para todos los campos
   let [Comunidad, setComunidad] = useState('');
+  let [Municipio, setMunicipio] = useState(''); // campo para guardar el municipio
+  let [Aldea, setAldea] = useState(''); // para la aldea
+  let [Ubicacion, setUbicacion] = useState(''); // para la ubicacion
   let [PresidenteCOCODE, setPresidenteCOCODE] = useState('');
   let [TelefonoContacto, setTelefonoContacto] = useState('');
   let [OtroLider, setOtroLider] = useState('');
@@ -39,11 +44,15 @@ function AgregarComunidades() {
   let [InstitucionJubilados, setInstitucionJubilados] = useState('');
   let [OcupacionesMujeres, setOcupacionesMujeres] = useState('');
   let [OcupacionesHombres, setOcupacionesHombres] = useState('');
-
+  
   // Función para enviar los datos al backend
-const handleGuardarComunidad = async () => {
+  const handleGuardarComunidad = async () => {
   const data = {
     nombre_comunidad: Comunidad,
+    //se agregan campos para guardar los datos
+    nombre_municipio: Municipio,
+    nombre_aldea: Aldea,
+    ubicacion_real: Ubicacion, //hasta aca
     presidente_cocode: PresidenteCOCODE,
     telefono_contacto1: TelefonoContacto,
     otro_lider: OtroLider,
@@ -94,6 +103,9 @@ const handleGuardarComunidad = async () => {
       alert('Comunidad registrada con éxito');
       // Limpiar todos los campos de texto y checkbox
       setComunidad('');
+      setMunicipio('');
+      setAldea('');
+      setUbicacion('');
       setPresidenteCOCODE('');
       setTelefonoContacto('');
       setOtroLider('');
@@ -149,103 +161,132 @@ const handleGuardarComunidad = async () => {
 
               {/* Preguntas independientes */}
               <IonRow className="FilaTextBox">
-                <h3 className="labelForm">1. Hola:</h3>
+                <h3 className="labelForm">1. Nombre de la comunidad:</h3>
                 <input onChange={e => setComunidad(e.target.value)} type="text" className='TextBox' />
               </IonRow>
 
+              {/* Nuevos campos*/}
               <IonRow className="FilaTextBox">
-                <h3 className="labelForm">2. Nombre del presidente de COCODE:</h3>
+                <IonList>
+                  <IonItem>
+                    <IonSelect
+                      className="ListBox"
+                      placeholder="Seleccionar Municipio"
+                      cancelText="Cancelar"
+                      onIonChange={e => setMunicipio(e.detail.value)} // Captura el valor seleccionado
+                    >
+                      <IonSelectOption value="Cobán">Cobán</IonSelectOption>
+                      <IonSelectOption value="Chisec">Chisec</IonSelectOption>
+                      <IonSelectOption value="Carchá">Carchá</IonSelectOption>
+                    </IonSelect>
+                  </IonItem>
+                </IonList>
+              </IonRow>
+
+              <IonRow className="FilaTextBox">
+                <h3 className="labelForm">3. Aldea:</h3>
+                <IonInput onIonChange={e => setAldea(e.detail.value || '')} type="text" className='TextBox' />
+              </IonRow>
+
+              <IonRow className="FilaTextBox">
+                <h3 className="labelForm">4. Ubicación:</h3>
+                <IonInput onIonChange={e => setUbicacion(e.detail.value || '')} type="text" className='TextBox' />
+              </IonRow>
+
+
+              <IonRow className="FilaTextBox">
+                <h3 className="labelForm">5. Nombre del presidente de COCODE:</h3>
                 <input onChange={e => setPresidenteCOCODE(e.target.value)} type="text" className='TextBox' />
               </IonRow>
 
               <IonRow className="FilaTextBox">
-                <h3 className="labelForm">3. Teléfono de contacto:</h3>
+                <h3 className="labelForm">6. Teléfono de contacto:</h3>
                 <input onChange={e => setTelefonoContacto(e.target.value)} type="text" className='TextBox' />
               </IonRow>
 
               <IonRow className="FilaTextBox">
-                <h3 className="labelForm">4. Nombre de otro líder:</h3>
+                <h3 className="labelForm">7. Nombre de otro líder:</h3>
                 <input onChange={e => setOtroLider(e.target.value)} type="text" className='TextBox' />
               </IonRow>
 
               <IonRow className="FilaTextBox">
-                <h3 className="labelForm">5. Teléfono de contacto:</h3>
+                <h3 className="labelForm">8. Teléfono de contacto:</h3>
                 <input onChange={e => setTelefonoOtroLider(e.target.value)} type="text" className='TextBox' />
               </IonRow>
 
               <IonRow className="FilaTextBox">
-                <h3 className="labelForm">6. Tipo de transporte desde y hacia la comunidad:</h3>
+                <h3 className="labelForm">9. Tipo de transporte desde y hacia la comunidad:</h3>
                 <input onChange={e => setTransporte(e.target.value)} type="text" className='TextBox' />
               </IonRow>
 
               <IonRow className="FilaTextBox">
-                <h3 className="labelForm">7. Número de familias:</h3>
+                <h3 className="labelForm">10. Número de familias:</h3>
                 <input onChange={e => setNumeroFamilias(e.target.value)} type="text" className='TextBox' />
               </IonRow>
 
               <IonRow className="FilaTextBox">
-                <h3 className="labelForm">8. Número de viviendas:</h3>
+                <h3 className="labelForm">11. Número de viviendas:</h3>
                 <input onChange={e => setNumeroViviendas(e.target.value)} type="text" className='TextBox' />
               </IonRow>
 
               <IonRow className="FilaTextBox">
-                <h3 className="labelForm">9. Número de personas:</h3>
+                <h3 className="labelForm">12. Número de personas:</h3>
                 <input onChange={e => setNumeroPersonas(e.target.value)} type="text" className='TextBox' />
               </IonRow>
 
               <IonRow className="FilaTextBox">
-                <h3 className="labelForm">10. Certeza jurídica de la tierra comunitaria:</h3>
+                <h3 className="labelForm">13. Certeza jurídica de la tierra comunitaria:</h3>
                 <input onChange={e => setCertezaJuridica(e.target.value)} type="text" className='TextBox' />
               </IonRow>
 
               <IonRow className="FilaTextBox">
-                <h3 className="labelForm">11. Conflictos relacionados con acceso o tenencia de la tierra (invasiones, desalojos):</h3>
+                <h3 className="labelForm">14. Conflictos relacionados con acceso o tenencia de la tierra (invasiones, desalojos):</h3>
                 <input onChange={e => setConflictosTierra(e.target.value)} type="text" className='TextBox' />
               </IonRow>
 
               <IonRow className="FilaTextBox">
-                <h3 className="labelForm">12. Dimensiones de los lotes:</h3>
+                <h3 className="labelForm">15. Dimensiones de los lotes:</h3>
                 <input onChange={e => setDimensionesLotes(e.target.value)} type="text" className='TextBox' />
               </IonRow>
 
               <IonRow className="FilaTextBox">
-                <h3 className="labelForm">13. Dimensiones de los trabajaderos:</h3>
+                <h3 className="labelForm">16. Dimensiones de los trabajaderos:</h3>
                 <input onChange={e => setDimensionesTrabajaderos(e.target.value)} type="text" className='TextBox' />
               </IonRow>
 
               <IonRow className="FilaTextBox">
-                <h3 className="labelForm">14. ¿Cuánta tierra comunitaria hay?:</h3>
+                <h3 className="labelForm">17. ¿Cuánta tierra comunitaria hay?:</h3>
                 <input onChange={e => setTierraComunitaria(e.target.value)} type="text" className='TextBox' />
               </IonRow>
 
               <IonRow className="FilaTextBox">
-                <h3 className="labelForm">15. Idiomas que se hablan en la comunidad:</h3>
+                <h3 className="labelForm">18. Idiomas que se hablan en la comunidad:</h3>
                 <input onChange={e => setIdiomas(e.target.value)} type="text" className='TextBox' />
               </IonRow>
 
               <IonRow className="FilaTextBox">
-                <h3 className="labelForm">16. Fuentes de empleo en la comunidad:</h3>
+                <h3 className="labelForm">19. Fuentes de empleo en la comunidad:</h3>
                 <input onChange={e => setFuentesEmpleo(e.target.value)} type="text" className='TextBox' />
               </IonRow>
 
               <IonRow className="FilaTextBox">
-                <h3 className="labelForm">17. Recreación en la comunidad:</h3>
+                <h3 className="labelForm">20. Recreación en la comunidad:</h3>
                 <input onChange={e => setRecreacion(e.target.value)} type="text" className='TextBox' />
               </IonRow>
 
               <IonRow className="FilaTextBox">
-                <h3 className="labelForm">18. ¿Qué tipo de potencial turístico tiene la comunidad?:</h3>
+                <h3 className="labelForm">21. ¿Qué tipo de potencial turístico tiene la comunidad?:</h3>
                 <input onChange={e => setPotencialTuristico(e.target.value)} type="text" className='TextBox' />
               </IonRow>
 
               <IonRow className="FilaTextBox">
-                <h3 className="labelForm">19. Tipo de edificios públicos en la comunidad:</h3>
+                <h3 className="labelForm">22. Tipo de edificios públicos en la comunidad:</h3>
                 <input onChange={e => setEdificiosPublicos(e.target.value)} type="text" className='TextBox' />
               </IonRow>
 
               {/* Preguntas dependientes */}
               <IonRow className="FilaTextBox">
-                <h3 className="labelForm">20. ¿Hay inseguridad?</h3>
+                <h3 className="labelForm">23. ¿Hay inseguridad?</h3>
                 <IonCheckbox className="CheckBox" checked={Inseguridad} onIonChange={(e) => setInseguridad(e.detail.checked)} />
                 {Inseguridad && (
                   <>
@@ -262,14 +303,14 @@ const handleGuardarComunidad = async () => {
 
               {/* Preguntas relacionadas */}
               <IonRow className="FilaTextBox">
-                <h3 className="labelForm">21. ¿Cuántas personas trabajan en otros municipios o departamentos?:</h3>
+                <h3 className="labelForm">24. ¿Cuántas personas trabajan en otros municipios o departamentos?:</h3>
                 <input onChange={e => setPersonasOtrosMunicipios(e.target.value)} type="text" className='TextBoxPeq' />
                 <h3 className="labelForm">¿En qué?</h3>
                 <input onChange={e => setTipoTrabajo(e.target.value)} type="text" className='TextBox' />
               </IonRow>
 
               <IonRow className="FilaTextBox">
-                <h3 className="labelForm">22. ¿Hay personas en EE. UU.?</h3>
+                <h3 className="labelForm">25. ¿Hay personas en EE. UU.?</h3>
                 <IonCheckbox className="CheckBox" checked={PersonasEEUU} onIonChange={(e) => setPersonasEEUU(e.detail.checked)} />
                 {PersonasEEUU && (
                   <>
@@ -283,7 +324,7 @@ const handleGuardarComunidad = async () => {
 
               {/* Preguntas con múltiples campos */}
               <IonRow className="FilaTextBox">
-                <h3 className="labelForm">23. ¿A qué edad empiezan a trabajar en la comunidad?</h3>
+                <h3 className="labelForm">26. ¿A qué edad empiezan a trabajar en la comunidad?</h3>
                 <h3 className="labelForm">Hombres:</h3>
                 <input onChange={e => setEdadTrabajoHombres(e.target.value)} type="text" className='TextBox' />
                 <h3 className="labelForm">Mujeres:</h3>
@@ -297,7 +338,7 @@ const handleGuardarComunidad = async () => {
 
               {/* Jubilados */}
               <IonRow className="FilaTextBox">
-                <h3 className="labelForm">24. ¿Existen jubilados en la comunidad?</h3>
+                <h3 className="labelForm">27. ¿Existen jubilados en la comunidad?</h3>
                 <IonCheckbox className="CheckBox" checked={Jubilados} onIonChange={(e) => setJubilados(e.detail.checked)} />
                 {Jubilados && (
                   <>
@@ -311,7 +352,7 @@ const handleGuardarComunidad = async () => {
 
               {/* Ocupaciones tradicionales */}
               <IonRow className="FilaTextBox">
-                <h3 className="labelForm">25. Ocupaciones tradicionales más importantes de las mujeres:</h3>
+                <h3 className="labelForm">28. Ocupaciones tradicionales más importantes de las mujeres:</h3>
                 <input onChange={e => setOcupacionesMujeres(e.target.value)} type="text" className='TextBox' />
               </IonRow>
 
