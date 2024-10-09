@@ -6,6 +6,8 @@ import { bookOutline, cog, cogOutline, earthOutline, fitnessOutline, globeOutlin
 
 function AgregarComunidades() {
   const [showSuccessAlert, setShowSuccessAlert] = useState(false);
+  const [showValidationAlert, setShowValidationAlert] = useState(false);
+
   // Variables de estado para todos los campos
   let [Comunidad, setComunidad] = useState('');
   let [Municipio, setMunicipio] = useState(''); // campo para guardar el municipio
@@ -48,6 +50,11 @@ function AgregarComunidades() {
   
   // Función para enviar los datos al backend
   const handleGuardarComunidad = async () => {
+  // Validar campos obligatorios
+  if (!Comunidad || !Municipio || !Aldea || !Ubicacion || !PresidenteCOCODE || !TelefonoContacto) {
+    setShowValidationAlert(true);
+    return;
+  }
   const data = {
     nombre_comunidad: Comunidad,
     //se agregan campos para guardar los datos
@@ -383,6 +390,15 @@ function AgregarComunidades() {
         <IonButton className="Boton" color="success" onClick={handleGuardarComunidad}>Guardar</IonButton>
         <IonButton className="Boton" color="danger">Cancelar</IonButton>
       </IonRow>
+      
+      {/* Alerta de validación */}
+      <IonAlert
+        isOpen={showValidationAlert}
+        onDidDismiss={() => setShowValidationAlert(false)}
+        header={'Campos incompletos'}
+        message={'Por favor, completa todos los campos obligatorios'}
+        buttons={['Aceptar']}
+      />
 
       <IonAlert
         isOpen={showSuccessAlert}
