@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 //import { IonPage, IonContent, IonTabs, IonTab, IonTabBar, IonTabButton, IonIcon, IonButton, IonRow, IonCheckbox } from "@ionic/react";
 //import { earthOutline, cogOutline, bookOutline, waterOutline, fitnessOutline, peopleOutline, leafOutline } from 'ionicons/icons';
-import {IonSelectOption, IonSelect,IonText,IonPage,IonHeader,IonTab,IonContent,IonTabBar,IonTabButton,IonTabs,IonToolbar,IonTitle,IonIcon,IonButton, IonRow,IonCheckbox,IonList,IonItem,IonInput} from "@ionic/react";
+import {IonAlert, IonSelectOption, IonSelect,IonText,IonPage,IonHeader,IonTab,IonContent,IonTabBar,IonTabButton,IonTabs,IonToolbar,IonTitle,IonIcon,IonButton, IonRow,IonCheckbox,IonList,IonItem,IonInput} from "@ionic/react";
 import { bookOutline, cog, cogOutline, earthOutline, fitnessOutline, globeOutline, leafOutline, peopleOutline, waterOutline } from 'ionicons/icons';
 
 function AgregarComunidades() {
+  const [showSuccessAlert, setShowSuccessAlert] = useState(false);
   // Variables de estado para todos los campos
   let [Comunidad, setComunidad] = useState('');
   let [Municipio, setMunicipio] = useState(''); // campo para guardar el municipio
@@ -100,7 +101,7 @@ function AgregarComunidades() {
     });
 
     if (response.ok) {
-      alert('Comunidad registrada con éxito');
+      setShowSuccessAlert(true); // Mostrar la alerta de éxito
       // Limpiar todos los campos de texto y checkbox
       setComunidad('');
       setMunicipio('');
@@ -382,7 +383,16 @@ function AgregarComunidades() {
         <IonButton className="Boton" color="success" onClick={handleGuardarComunidad}>Guardar</IonButton>
         <IonButton className="Boton" color="danger">Cancelar</IonButton>
       </IonRow>
+
+      <IonAlert
+        isOpen={showSuccessAlert}
+        onDidDismiss={() => setShowSuccessAlert(false)}
+        header={'Registro Exitoso'}
+        message={'La comunidad ha sido registrada correctamente.'}
+        buttons={['Aceptar']}
+      />
     </IonPage>
+
   );
 }
 
