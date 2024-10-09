@@ -149,7 +149,7 @@ const handleGuardarComunidad = async () => {
 
               {/* Preguntas independientes */}
               <IonRow className="FilaTextBox">
-                <h3 className="labelForm">1. Hola:</h3>
+                <h3 className="labelForm">1. Nombre de la comunidad:</h3>
                 <input onChange={e => setComunidad(e.target.value)} type="text" className='TextBox' />
               </IonRow>
 
