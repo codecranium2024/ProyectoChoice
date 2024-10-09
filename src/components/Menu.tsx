@@ -10,7 +10,7 @@ import {
   IonButton
 } from '@ionic/react';
 import {
-  chevronDownOutline, chevronDownSharp, peopleCircleOutline,
+  peopleCircleOutline,
   appsOutline, appsSharp, statsChartOutline, statsChartSharp, peopleOutline, peopleSharp,
   documentOutline, documentSharp, settingsOutline, settingsSharp, locateOutline, locateSharp, logOut,
   peopleOutline as usersOutline, peopleSharp as usersSharp
@@ -46,15 +46,14 @@ const appPages: AppPage[] = [
     ]
   },
   {
-    title: 'Reportes',
-    url: '/folder/Reportes',
-    iosIcon: statsChartOutline,
-    mdIcon: statsChartSharp,
+    title: 'Proyectos',
+    url: '/folder/Proyectos',
+    iosIcon: documentOutline,
+    mdIcon: documentSharp,
     subPages: [
-      { title: 'Visualizar', url: '' },
-      { title: 'C', url: '/Com' },
-      { title: 'subtest3', url: '' },
-      { title: 'Mapa', url: '' },
+      { title: 'Registrar Proyecto', url: '/RegistrarProyecto' },
+      { title: 'Informacion Comunitaria', url: '/InformacionComunitaria' },
+      { title: 'Mapa', url: '/Mapa' },
     ]
   },
   {
@@ -66,20 +65,15 @@ const appPages: AppPage[] = [
       { title: 'Comunidades', url: '/Comunidad' },
       { title: 'Listado General', url: '/ListadoGeneral' },
       { title: 'Agregar', url: '/AgregarComunidades' },
-      { title: 'Registrar', url: '/Registrar' },
-      { title: 'Mapa', url: '' },
     ]
   },
   {
-    title: 'Proyectos',
-    url: '/folder/Proyectos',
-    iosIcon: documentOutline,
-    mdIcon: documentSharp,
+    title: 'Reportes',
+    url: '/folder/Reportes',
+    iosIcon: statsChartOutline,
+    mdIcon: statsChartSharp,
     subPages: [
-      { title: 'Registrar Proyecto', url: '/RegistrarProyecto' },
-      { title: 'Visualizar', url: '/Visualizar' },
-      { title: 'Comunidades', url: '/Comunidad' },
-      { title: 'Mapa', url: '' },
+      { title: 'Visualizar', url: '' },
     ]
   },
   {
