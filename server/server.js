@@ -388,6 +388,56 @@ app.delete('/eliminarEspecialidad/:idEspecialidad', async (req, res) => {
   }
 });
 
+// Endpoint para registrar una nueva comunidad
+app.post('/comunidad', async (req, res) => {
+  const {
+    nombre_comunidad, nombre_municipio, nombre_aldea, ubicacion_real, presidente_cocode, telefono_contacto1, otro_lider, telefono_contacto2,
+    tipo_transporte, numero_familias, numero_viviendas, numero_personas, certeza_juridica_tierra,
+    conflictos_tierra, dimension_lotes, dimension_trabajadores, tierra_comunitaria, idiomas_comunidad,
+    fuentes_empleo, recreacion_comunidad, potencial_turistico, tipo_edificios_publicos, hay_inseguridad,
+    tipo_inseguridad, grupos_delincuenciales, personas_otro_lugar, ocupacion_otro_lugar, personas_en_eeuu,
+    cantidad_personas_eeuu, menores_en_eeuu, edad_empieza_trabajar_hombres, edad_empieza_trabajar_mujeres,
+    tipo_empleo, existen_jubilados, cantidad_jubilados, institucion_jubilados, ocupaciones_tradicionales_mujeres,
+    ocupaciones_tradicionales_hombres
+  } = req.body;
+
+  try {
+    const connection = await mysql.createConnection(dbConfig);
+
+    const query = `
+      INSERT INTO tb_Comunidad (
+        nombre_comunidad, nombre_municipio, nombre_aldea, ubicacion_real, presidente_cocode, telefono_contacto1, otro_lider, telefono_contacto2, tipo_transporte,
+        numero_familias, numero_viviendas, numero_personas, certeza_juridica_tierra, conflictos_tierra, dimension_lotes,
+        dimension_trabajadores, tierra_comunitaria, idiomas_comunidad, fuentes_empleo, recreacion_comunidad, 
+        potencial_turistico, tipo_edificios_publicos, hay_inseguridad, tipo_inseguridad, grupos_delincuenciales, 
+        personas_otro_lugar, ocupacion_otro_lugar, personas_en_eeuu, cantidad_personas_eeuu, menores_en_eeuu, 
+        edad_empieza_trabajar_hombres, edad_empieza_trabajar_mujeres, tipo_empleo, existen_jubilados, cantidad_jubilados, 
+        institucion_jubilados, ocupaciones_tradicionales_mujeres, ocupaciones_tradicionales_hombres
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+
+    // Ejecutar el query
+    await connection.execute(query, [
+      nombre_comunidad, nombre_municipio, nombre_aldea, ubicacion_real, presidente_cocode, telefono_contacto1, otro_lider || null, telefono_contacto2 || null,
+      tipo_transporte || null, numero_familias || null, numero_viviendas || null, numero_personas || null,
+      certeza_juridica_tierra || null, conflictos_tierra || null, dimension_lotes || null, dimension_trabajadores || null,
+      tierra_comunitaria || null, idiomas_comunidad || null, fuentes_empleo || null, recreacion_comunidad || null,
+      potencial_turistico || null, tipo_edificios_publicos || null, hay_inseguridad, tipo_inseguridad || null,
+      grupos_delincuenciales || null, personas_otro_lugar || null, ocupacion_otro_lugar || null, personas_en_eeuu,
+      cantidad_personas_eeuu || null, menores_en_eeuu, edad_empieza_trabajar_hombres || null, edad_empieza_trabajar_mujeres || null,
+      tipo_empleo || null, existen_jubilados, cantidad_jubilados || null, institucion_jubilados || null,
+      ocupaciones_tradicionales_mujeres || null, ocupaciones_tradicionales_hombres || null
+    ]);
+
+    res.status(200).send('Comunidad registrada con éxito');
+    await connection.end();
+  } catch (error) {
+    console.error('Error al registrar comunidad:', error);
+    res.status(500).send('Error al registrar comunidad');
+  }
+});
+
+
+
 // Inicializar el servidor
 app.listen(port, () => {
   console.log(`Servidor corriendo en http://localhost:${port}`);
