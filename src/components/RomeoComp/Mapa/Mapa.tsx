@@ -34,7 +34,7 @@ const Mapa = () => {
         console.error('Error al obtener datos del clima:', error);
       }
     };
-
+    //funciona el mapa
     // Llamar a la función con las coordenadas de chisec
     getWeatherData(15.8131, -90.28896); // chisec, Alta Verapaz
 
