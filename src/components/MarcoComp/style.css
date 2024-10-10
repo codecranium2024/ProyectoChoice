@@ -68,7 +68,6 @@
     font-size: 1.5em;
     margin: 0;
     color: var(--ion-color-secondary);
-    padding: 25px;
     font-style: bold;
   }
 
@@ -80,54 +79,72 @@
     margin-top: 5px;
     margin-bottom: 5px;
   }
-
+  /*._.*/
   .Boton {
     padding: 25px;
     color: black;
   }
-
+  /*Estilo para elementos que van en la misma fila*/
   .FilaTextBox {
     display: flex;
     flex-direction: row;
-    flex-direction: row;
     align-items: center;
     justify-items: center;
+    padding-left: 35px;
     /*Vertical align the items of the row*/
     
 
   }
+  /*Estilo para la caja de texto grande*/
   .TextBox{
     background-color: var(--ion-background-color);
     border-color: transparent;
     border-radius: 15px;
     font-size:18px;
     width: 30%;
-    margin-left: 25px;
+    margin-left: 15px;
     margin-right: 25px;
   }
+  /*TextoBox para la caja de texto pequeña*/
   .TextBoxPeq{
     background-color: var(--ion-background-color);
-    border-color: var(--ion-color-primary);
+    border: transparent;
     border-radius: 15px;
     font-size:18px;
-    margin-left: 25px;
+    margin-left: 15px;
     margin-right: 25px;
+    width: 10%;
   }
-
+  /*Estilo del checkbox*/
   ion-checkbox {
     --size: 32px;
     padding: 25px;
+    --checkbox-background-checked: var(--ion-color-primary);
+    font-size: 18px;
+    
   }
-  
+  /*Estilo del checkbox seleccionado*/
   ion-checkbox::part(container) {
     border-radius: 6px;
-    border: 2px solid var(--ion-color-primary);
+    border: 2px solid var(--ion-background-color);
+    --checkbox-background: var(--ion-background-color);
   }
-
+  /*Texto de las preguntas*/
   .labelForm {
     font-size: 18px;
     padding-bottom: 10px;
+    padding-left: 15px;
   }
+  /*IonSelect*/
+  .ListBox{
+    padding-right: 25px;
+    font-size: 18px;
+  }
+  /*IonSelect opción seleccionada*/
+  ion-select::part(text) {
+    color: var(--ion-color-primary);
+  }
+
   /* Componentes formularios */
   
   /*Configuraciones*/

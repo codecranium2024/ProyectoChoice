@@ -28,3 +28,7 @@ por interfaz grafica
  ```bash
  sudo /opt/lampp/manager-linux-x64.run
  ```
+ para los iconos
+ ```bash
+ npm install ionicons
+ npm install @ionic/react ionicons
