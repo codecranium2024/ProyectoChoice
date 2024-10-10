@@ -60,7 +60,7 @@ const Login: React.FC<{ onLoginSuccess: (name: string, role: string) => void }> 
                   alt="Choice Humanitarian"
                   className="welcome-image"
                 />
-                <h1>Bienvenidos.</h1>
+                <h1 className='titulo'>Bienvenidos.</h1>
               </div>
             </IonCol>
 
