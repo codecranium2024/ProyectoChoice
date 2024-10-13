@@ -438,6 +438,9 @@ app.post('/comunidad', async (req, res) => {
 
 
 
+
+
+
 // Inicializar el servidor
 app.listen(port, () => {
   console.log(`Servidor corriendo en http://localhost:${port}`);
