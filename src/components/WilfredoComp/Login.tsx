@@ -60,13 +60,13 @@ const Login: React.FC<{ onLoginSuccess: (name: string, role: string) => void }> 
                   alt="Choice Humanitarian"
                   className="welcome-image"
                 />
-                <h1>Bienvenidos.</h1>
+                <h1 className='titulo'>Bienvenidos.</h1>
               </div>
             </IonCol>
 
             <IonCol size="12" size-md="6" className="right-side">
               <div className="login-form">
-                <h2>Iniciar Sesión</h2>
+                <h2 className="Login">Iniciar Sesión</h2>
                 <form onSubmit={handleLogin} autoComplete="off">
                   <IonInput
                     type="text"
@@ -84,7 +84,7 @@ const Login: React.FC<{ onLoginSuccess: (name: string, role: string) => void }> 
                     onIonChange={(e) => setPassword(e.detail.value!)}
                     required
                   />
-                  <IonButton expand="block" color="danger" className="login-button" type="submit">
+                  <IonButton color="danger" className="login-button" type="submit">
                     Iniciar Sesión
                   </IonButton>
                   <div className="login-options">
