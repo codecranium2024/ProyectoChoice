@@ -1,3 +1,4 @@
+//supuestemante deberia de arreglarse
 import React, { useState } from 'react';
 import {
   IonContent,
