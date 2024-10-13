@@ -158,7 +158,7 @@ const Menu: React.FC<MenuProps> = ({ userName, userRole, onLogout }) => {
           ))}
         </IonList>
 
-        {/* Información del usuario y botón de cerrar sesión */}
+        {/* Información del usuario y  se agrega el botón de cerrar sesión */}
         <IonList>
           <IonItem lines="none">
             <IonIcon slot="start" icon={peopleCircleOutline} />
