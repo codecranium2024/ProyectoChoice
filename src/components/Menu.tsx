@@ -47,7 +47,7 @@ const appPages: AppPage[] = [
   },
   {
     title: 'Proyectos',
-    url: '/folder/Proyectos',
+    url: '/Proyectos',
     iosIcon: documentOutline,
     mdIcon: documentSharp,
     subPages: [
