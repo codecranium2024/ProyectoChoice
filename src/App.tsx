@@ -5,14 +5,19 @@ import { Redirect, Route } from 'react-router-dom';
 import Menu from './components/Menu';
 import Page from './pages/Page';
 import Login from './components/WilfredoComp/Login';
-import Registrar from './components/RomeoComp/Registrar/Registrar';
 import ListadoGeneral from './components/RomeoComp/Comunidad/ListadoGeneral';
-import Visualizar from './components/RomeoComp/Proyecto/Visualizar';
 import Panel from './components/RomeoComp/Panel/Panel';
 import Comunidad from './components/RomeoComp/Comunidad/Comunidad1';
 import VisualizarComunidades from './pages/MarcoPaginas/AgregarComunidad';
 import { Configuraciones } from './pages/MarcoPaginas/Configuraciones';
 import Departamentos from './components/RomeoComp/Region/Departamentos';
+import InformacionComunitaria from './components/RomeoComp/Proyecto/InformacionComunitaria';
+import RegistrarProyecto from './components/RomeoComp/Registrar/RegistrarProyecto';
+import Mapa from './components/RomeoComp/Mapa/Mapa';
+import AdministrarUsuarios from './components/WilfredoComp/AdministrarUsuarios';
+import AdministrarRE from './components/WilfredoComp/AdministrarRE';
+
+
 
 /* Importaciones CSS de Ionic */
 import '@ionic/react/css/core.css';
@@ -30,29 +35,35 @@ import './theme/variables.css';
 setupIonicReact();
 
 const App: React.FC = () => {
-  // Estado para manejar si el usuario está autenticado
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [userName, setUserName] = useState('');
+  const [userRole, setUserRole] = useState('');
 
-  // Función que se llamará cuando el login sea exitoso
-  const handleLoginSuccess = () => {
-    setIsAuthenticated(true); // Establecer el estado como autenticado
+  const handleLoginSuccess = (name: string, role: string) => {
+    setIsAuthenticated(true);
+    setUserName(name);
+    setUserRole(role);
+  };
+
+  const handleLogout = () => {
+    setIsAuthenticated(false);
+    setUserName('');
+    setUserRole('');
   };
 
   return (
     <IonApp>
       <IonReactRouter>
         {!isAuthenticated ? (
-          // Mostrar solo el login si no está autenticado
           <IonRouterOutlet>
             <Route path="/" exact>
-              <Login onLoginSuccess={handleLoginSuccess} /> {/* Pasar la función como prop */}
+              <Login onLoginSuccess={handleLoginSuccess} />
             </Route>
             <Redirect to="/" />
           </IonRouterOutlet>
         ) : (
-          // Mostrar el menú y rutas de la aplicación cuando el usuario está autenticado
           <IonSplitPane contentId="main">
-            <Menu />
+            <Menu userName={userName} userRole={userRole} onLogout={handleLogout} />
             <IonRouterOutlet id="main">
               <Route path="/" exact={true}>
                 <Redirect to="/panel" />
@@ -63,8 +74,8 @@ const App: React.FC = () => {
               <Route path="/listadogeneral" exact={true}>
                 <ListadoGeneral />
               </Route>
-              <Route path="/Visualizar" exact={true}>
-                <Visualizar />
+              <Route path="/InformacionComunitaria" exact={true}>
+                <InformacionComunitaria />
               </Route>
               <Route path="/panel" exact={true}>
                 <Panel />
@@ -78,11 +89,20 @@ const App: React.FC = () => {
               <Route path="/Configuraciones" exact={true}>
                 <Configuraciones />
               </Route>
-              <Route path="/Registrar" exact={true}>
-                <Registrar />
-              </Route>
               <Route path="/Departamentos" exact={true}>
                 <Departamentos />
+              </Route>
+              <Route path="/AdministrarUsuarios" exact={true}>
+                <AdministrarUsuarios />
+              </Route>
+              <Route path="/roles-especialidades" exact={true}>
+                <AdministrarRE />
+              </Route>
+              <Route path="/RegistrarProyecto" exact={true}>
+                <RegistrarProyecto/>
+              </Route>
+              <Route path="/Mapa" exact={true}>
+              <Mapa />
               </Route>
             </IonRouterOutlet>
           </IonSplitPane>

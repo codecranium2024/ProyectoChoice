@@ -1,0 +1,99 @@
+/* Estilos generales */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    color: #333;
+  }
+  
+  /* Contenedor principal */
+  ion-content {
+    padding: 20px;
+  }
+  
+  /* Encabezado */
+  h1 {
+    text-align: center;
+    color: #4a90e2;
+  }
+  
+  /* Formulario */
+  form {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+  }
+  
+  form ion-item {
+    margin: 10px 0;
+  }
+  
+  form ion-label {
+    color: #4a4a4a;
+  }
+  
+  form input[type="file"] {
+    margin-top: 10px;
+  }
+  
+  form ion-button {
+    margin-top: 20px;
+    width: 100%;
+    background-color: #4a90e2;
+  }
+  
+  /* Tabla de proyectos */
+  ion-list {
+    margin-top: 20px;
+  }
+  
+  ion-item {
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 15px;
+    align-items: center;
+  }
+  
+  ion-thumbnail {
+    width: 60px;
+    height: 60px;
+  }
+  
+  ion-label {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  ion-label ion-input {
+    width: 100%;
+  }
+  
+  ion-button {
+    margin-left: 10px;
+  }
+  
+  ion-select,
+  ion-input {
+    width: 100%;
+    max-width: 200px;
+  }
+  
+  ion-button {
+    --background: #4a90e2;
+    --border-radius: 4px;
+    color: white;
+  }
+  
+  ion-button:disabled {
+    --background: #ccc;
+    color: #666;
+  }
+  
+  ion-button:hover {
+    --background: #357ab8;
+  }
+  

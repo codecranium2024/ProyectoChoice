@@ -7,22 +7,24 @@ import {
   IonList,
   IonMenu,
   IonMenuToggle,
-  IonNote,
-  IonHeader,
-  IonToolbar,
-  IonTitle,
+  IonButton
 } from '@ionic/react';
 import {
-  chevronDownOutline, chevronDownSharp, peopleCircleOutline, peopleCircleSharp,
+  peopleCircleOutline,
   appsOutline, appsSharp, statsChartOutline, statsChartSharp, peopleOutline, peopleSharp,
-  documentOutline, documentSharp, settingsOutline, settingsSharp, albumsOutline, albumsSharp,
-  addOutline, addSharp,
-  locateOutline,
-  locateSharp
+  documentOutline, documentSharp, settingsOutline, settingsSharp, locateOutline, locateSharp, logOut,
+  peopleOutline as usersOutline, peopleSharp as usersSharp
 } from 'ionicons/icons';
 import { useLocation } from 'react-router-dom';
 import './Menu.css';
 import { Logo } from './MarcoComp/Logo';
+
+// Props del componente para manejar la información del usuario y la función de logout
+interface MenuProps {
+  userName: string;
+  userRole: string;
+  onLogout: () => void;
+}
 
 interface AppPage {
   title: string;
@@ -32,6 +34,7 @@ interface AppPage {
   subPages?: { title: string; url: string }[];
 }
 
+// Configuración de páginas para el menú, con "Roles y Especialidades" combinados en un solo submenú
 const appPages: AppPage[] = [
   {
     title: 'Panel',
@@ -43,15 +46,14 @@ const appPages: AppPage[] = [
     ]
   },
   {
-    title: 'Reportes',
-    url: '/folder/Reportes',
-    iosIcon: statsChartOutline,
-    mdIcon: statsChartSharp,
+    title: 'Proyectos',
+    url: '/Proyectos',
+    iosIcon: documentOutline,
+    mdIcon: documentSharp,
     subPages: [
-      { title: 'Visualizar', url: '' },
-      { title: 'C', url: '/Com' },
-      { title: 'subtest3', url: '' },
-      { title: 'Mapa', url: '' },
+      { title: 'Registrar Proyecto', url: '/RegistrarProyecto' },
+      { title: 'Informacion Comunitaria', url: '/InformacionComunitaria' },
+      { title: 'Mapa', url: '/Mapa' },
     ]
   },
   {
@@ -63,27 +65,33 @@ const appPages: AppPage[] = [
       { title: 'Comunidades', url: '/Comunidad' },
       { title: 'Listado General', url: '/ListadoGeneral' },
       { title: 'Agregar', url: '/AgregarComunidades' },
-      { title: 'Registrar', url: '/Registrar' },
-      { title: 'Mapa', url: '' },
     ]
   },
   {
-    title: 'Proyectos',
-    url: '/folder/Proyectos',
-    iosIcon: documentOutline,
-    mdIcon: documentSharp,
+    title: 'Reportes',
+    url: '/folder/Reportes',
+    iosIcon: statsChartOutline,
+    mdIcon: statsChartSharp,
     subPages: [
-      { title: 'Visualizar', url: '/Visualizar' },
-      { title: 'Comunidades', url: '/Comunidad' },
-      { title: 'subtest3', url: '' },
-      { title: 'Mapa', url: '' },
+      { title: 'Visualizar', url: '' },
     ]
   },
-  { title: 'Regiones'
-    , url: '/Regiones',
+  {
+    title: 'Usuarios',
+    url: '/Usuarios',
+    iosIcon: usersOutline,
+    mdIcon: usersSharp,
+    subPages: [
+      { title: 'Administrar Usuarios', url: '/AdministrarUsuarios' },
+      { title: 'Roles y Especialidades', url: '/roles-especialidades' }, // URL corregida
+    ]
+  },
+  {
+    title: 'Regiones',
+    url: '/Regiones',
     iosIcon: locateOutline,
     mdIcon: locateSharp,
-    subPages:[
+    subPages: [
       { title: 'Departamentos', url: '/Departamentos' },
     ]
   },
@@ -95,14 +103,9 @@ const appPages: AppPage[] = [
   },
 ];
 
-interface HideSubMenu {
-  [key: string]: boolean;
-}
-
-const Menu: React.FC = () => {
+const Menu: React.FC<MenuProps> = ({ userName, userRole, onLogout }) => {
   const location = useLocation();
   const [openSubMenu, setOpenSubMenu] = useState<string | null>(null);
-  const [subMenu, setSubMenu] = useState<HideSubMenu>({});
 
   const toggleSubMenu = (title: string) => {
     setOpenSubMenu(openSubMenu === title ? null : title);
@@ -113,6 +116,7 @@ const Menu: React.FC = () => {
       <IonContent>
         <br />
         <IonList id="inbox-list">
+          {/* Logo del menú */}
           <Logo />
 
           {/* Mapeo del menú principal y submenús */}
@@ -152,6 +156,21 @@ const Menu: React.FC = () => {
               )}
             </div>
           ))}
+        </IonList>
+
+        {/* Información del usuario y botón de cerrar sesión */}
+        <IonList>
+          <IonItem lines="none">
+            <IonIcon slot="start" icon={peopleCircleOutline} />
+            <IonLabel>
+              <h3>{userName}</h3>
+              <p>{userRole}</p>
+            </IonLabel>
+          </IonItem>
+          <IonButton expand="block" fill="clear" color="danger" onClick={onLogout}>
+            <IonIcon slot="start" icon={logOut} />
+            Cerrar Sesión
+          </IonButton>
         </IonList>
       </IonContent>
     </IonMenu>

@@ -1,183 +1,296 @@
-import React from "react";
-import {IonSelectOption, IonSelect,IonText,IonPage,IonHeader,IonTab,IonContent,IonTabBar,IonTabButton,IonTabs,IonToolbar,IonTitle,IonIcon,IonButton, IonRow,IonCheckbox,IonList,IonItem,IonInput} from "@ionic/react";
-import './../../components/MarcoComp/style.css';
+import React, { useState } from "react";
+//import { IonPage, IonContent, IonTabs, IonTab, IonTabBar, IonTabButton, IonIcon, IonButton, IonRow, IonCheckbox } from "@ionic/react";
+//import { earthOutline, cogOutline, bookOutline, waterOutline, fitnessOutline, peopleOutline, leafOutline } from 'ionicons/icons';
+import {IonAlert, IonSelectOption, IonSelect,IonText,IonPage,IonHeader,IonTab,IonContent,IonTabBar,IonTabButton,IonTabs,IonToolbar,IonTitle,IonIcon,IonButton, IonRow,IonCheckbox,IonList,IonItem,IonInput} from "@ionic/react";
 import { bookOutline, cog, cogOutline, earthOutline, fitnessOutline, globeOutline, leafOutline, peopleOutline, waterOutline } from 'ionicons/icons';
-import { useState } from "react";
-/* Basic CSS for apps built with Ionic */
 
 function AgregarComunidades() {
-  
-  let [Comunidad, setComunidad] = useState('Comunidad')
-  let [Municipio, setMunicipio] = useState('Municipio');
-  let [Aldea, setAldea] = useState('Aldea');
-  let [PresidenteCOCODE, setPresidenteCOCODE] = useState('Presidente de COCODE');
-  let [TelefonoContacto, setTelefonoContacto] = useState('Teléfono de contacto');
-  let [OtroLider, setOtroLider] = useState('Otro líder');
-  let [TelefonoOtroLider, setTelefonoOtroLider] = useState('Teléfono de contacto otro líder');
-  let [Transporte, setTransporte] = useState('Tipo de transporte');
-  let [NumeroFamilias, setNumeroFamilias] = useState('Número de familias');
-  let [NumeroViviendas, setNumeroViviendas] = useState('Número de viviendas');
-  let [NumeroPersonas, setNumeroPersonas] = useState('Número de personas');
-  let [CertezaJuridica, setCertezaJuridica] = useState('Certeza jurídica de la tierra');
-  let [ConflictosTierra, setConflictosTierra] = useState('Conflictos de acceso o tenencia');
-  let [DimensionesLotes, setDimensionesLotes] = useState('Dimensiones de los lotes');
-  let [DimensionesTrabajaderos, setDimensionesTrabajaderos] = useState('Dimensiones de los trabajaderos');
-  let [TierraComunitaria, setTierraComunitaria] = useState('Cantidad de tierra comunitaria');
-  let [Idiomas, setIdiomas] = useState('Idiomas que se hablan en la comunidad');
-  let [FuentesEmpleo, setFuentesEmpleo] = useState('Fuentes de empleo');
-  let [Recreacion, setRecreacion] = useState('Recreación en la comunidad');
-  let [PotencialTuristico, setPotencialTuristico] = useState('Potencial turístico');
-  let [EdificiosPublicos, setEdificiosPublicos] = useState('Edificios públicos');
-  let [Inseguridad, setInseguridad] = useState<boolean>(false); 
-  let [TipoInseguridad, setTipoInseguridad] = useState('Tipo de inseguridad');
-  let [GruposDelincuenciales, setGruposDelincuenciales] = useState('Grupos delincuenciales');
-  let [PersonasOtrosMunicipios, setPersonasOtrosMunicipios] = useState('Personas que trabajan en otros municipios');
-  let [TipoTrabajo, setTipoTrabajo] = useState('Tipo de trabajo');
-  let [PersonasEEUU, setPersonasEEUU] = useState<boolean>(false); 
-  let [CantidadPersonasEEUU, setCantidadPersonasEEUU] = useState('Cantidad de personas en EE. UU.');
-  let [MenoresEEUU, setMenoresEEUU] = useState<boolean>(false); 
-  let [EdadTrabajoHombres, setEdadTrabajoHombres] = useState('Edad de trabajo hombres');
-  let [EdadTrabajoMujeres, setEdadTrabajoMujeres] = useState('Edad de trabajo mujeres');
-  let [Ocupaciones, setOcupaciones] = useState('Ocupaciones en las que trabajan');
-  let [Jubilados, setJubilados] = useState<boolean>(false); 
-  let [CantidadJubilados, setCantidadJubilados] = useState('Cantidad de jubilados');
-  let [InstitucionJubilados, setInstitucionJubilados] = useState('Institución de jubilados');
-  let [OcupacionesMujeres, setOcupacionesMujeres] = useState('Ocupaciones tradicionales de mujeres');
-  let [OcupacionesHombres, setOcupacionesHombres] = useState('Ocupaciones tradicionales de hombres');
+  const [showSuccessAlert, setShowSuccessAlert] = useState(false);
+  const [showValidationAlert, setShowValidationAlert] = useState(false);
+
+  // estructura de formularios
+  let [Comunidad, setComunidad] = useState('');
+  let [Municipio, setMunicipio] = useState(''); // campo para guardar el municipio
+  let [Aldea, setAldea] = useState(''); // para la aldea
+  let [Ubicacion, setUbicacion] = useState(''); // para la ubicacion
+  let [PresidenteCOCODE, setPresidenteCOCODE] = useState('');
+  let [TelefonoContacto, setTelefonoContacto] = useState('');
+  let [OtroLider, setOtroLider] = useState('');
+  let [TelefonoOtroLider, setTelefonoOtroLider] = useState('');
+  let [Transporte, setTransporte] = useState('');
+  let [NumeroFamilias, setNumeroFamilias] = useState('');
+  let [NumeroViviendas, setNumeroViviendas] = useState('');
+  let [NumeroPersonas, setNumeroPersonas] = useState('');
+  let [CertezaJuridica, setCertezaJuridica] = useState('');  // Checkbox, true o false
+  let [ConflictosTierra, setConflictosTierra] = useState('');
+  let [DimensionesLotes, setDimensionesLotes] = useState('');
+  let [DimensionesTrabajaderos, setDimensionesTrabajaderos] = useState('');
+  let [TierraComunitaria, setTierraComunitaria] = useState('');
+  let [Idiomas, setIdiomas] = useState('');
+  let [FuentesEmpleo, setFuentesEmpleo] = useState('');
+  let [Recreacion, setRecreacion] = useState('');
+  let [PotencialTuristico, setPotencialTuristico] = useState('');
+  let [EdificiosPublicos, setEdificiosPublicos] = useState('');
+  let [Inseguridad, setInseguridad] = useState(false);  // Checkbox
+  let [TipoInseguridad, setTipoInseguridad] = useState('');
+  let [GruposDelincuenciales, setGruposDelincuenciales] = useState('');
+  let [PersonasOtrosMunicipios, setPersonasOtrosMunicipios] = useState('');
+  let [TipoTrabajo, setTipoTrabajo] = useState('');
+  let [PersonasEEUU, setPersonasEEUU] = useState(false);  // Checkbox
+  let [CantidadPersonasEEUU, setCantidadPersonasEEUU] = useState('');
+  let [MenoresEEUU, setMenoresEEUU] = useState(false);  // Checkbox
+  let [EdadTrabajoHombres, setEdadTrabajoHombres] = useState('');
+  let [EdadTrabajoMujeres, setEdadTrabajoMujeres] = useState('');
+  let [Ocupaciones, setOcupaciones] = useState('');
+  let [Jubilados, setJubilados] = useState(false);  // Checkbox
+  let [CantidadJubilados, setCantidadJubilados] = useState('');
+  let [InstitucionJubilados, setInstitucionJubilados] = useState('');
+  let [OcupacionesMujeres, setOcupacionesMujeres] = useState('');
+  let [OcupacionesHombres, setOcupacionesHombres] = useState('');
+
+  //variables para las nuevas paginas
   const [energiaElectrica, setEnergiaElectrica] = useState(false); // Checkbox
-const [tipoServicio, setTipoServicio] = useState('');            // Campo de texto
-const [calidadServicio, setCalidadServicio] = useState('');       // Campo de texto
-const [costosServicio, setCostosServicio] = useState('');         // Campo de texto
-const [prestadorServicio, setPrestadorServicio] = useState('');   // Campo de texto
-const [familiasConServicio, setFamiliasConServicio] = useState(''); // Campo de texto
-const [senalTelefono, setSenalTelefono] = useState(false);        // Checkbox
-const [senalInternet, setSenalInternet] = useState(false);        // Checkbox
-const [senalTV, setSenalTV] = useState(false);                    // Checkbox
-const [cable, setCable] = useState(false);                        // Checkbox
-const [prestadorServicios, setPrestadorServicios] = useState(''); // Campo de texto
-const [institucionesEducativas, setInstitucionesEducativas] = useState('');   // Campo de texto
-const [edificiosEducativos, setEdificiosEducativos] = useState('');           // Campo de texto
-const [constructorEdificios, setConstructorEdificios] = useState('');         // Campo de texto
-const [materialesConstruccion, setMaterialesConstruccion] = useState('');     // Campo de texto
-const [duenoTerreno, setDuenoTerreno] = useState('');                         // Campo de texto
-const [deseoPreparacion, setDeseoPreparacion] = useState(false);              // Checkbox
-const [limitantesEstudio, setLimitantesEstudio] = useState('');               // Campo de texto
-const [personasCarreraMedioH, setPersonasCarreraMedioH] = useState('');       // Campo de texto
-const [personasCarreraMedioM, setPersonasCarreraMedioM] = useState('');       // Campo de texto
-const [personasConcluyeronMedio, setPersonasConcluyeronMedio] = useState(''); // Campo de texto
-const [personasUniversidadH, setPersonasUniversidadH] = useState('');         // Campo de texto
-const [personasUniversidadM, setPersonasUniversidadM] = useState('');         // Campo de texto
-const [abandonoEstudios, setAbandonoEstudios] = useState(false);              // Checkbox
-const [carrerasNivelMedio, setCarrerasNivelMedio] = useState('');             // Campo de texto
-const [carrerasUniversidad, setCarrerasUniversidad] = useState('');           // Campo de texto
-const [aguaEntubada, setAguaEntubada] = useState(false);          // Checkbox
-const [pozo, setPozo] = useState(false);                          // Checkbox
-const [aguaLluvia, setAguaLluvia] = useState(false);              // Checkbox
-const [rio, setRio] = useState(false);                            // Checkbox
-const [laguna, setLaguna] = useState(false);                      // Checkbox
-const [estanque, setEstanque] = useState(false);                  // Checkbox
-const [compraAgua, setCompraAgua] = useState(false);              // Checkbox
-const [inodoroLavable, setInodoroLavable] = useState(false);      // Checkbox
-const [letrina, setLetrina] = useState(false);                    // Checkbox
-const [pozoVentilado, setPozoVentilado] = useState(false);        // Checkbox
-const [campoExcretas, setCampoExcretas] = useState(false);        // Checkbox
-const [manejoBasura, setManejoBasura] = useState('');             // Campo de texto
-const [tipoBasura, setTipoBasura] = useState('');                 // Campo de texto
-const [fuenteEnergiaLenia, setFuenteEnergiaLenia] = useState(false);  // Checkbox
-const [fuenteEnergiaGas, setFuenteEnergiaGas] = useState(false);      // Checkbox
-const [fuenteEnergiaCarbon, setFuenteEnergiaCarbon] = useState(false); // Checkbox
-const [fuenteEnergiaOtros, setFuenteEnergiaOtros] = useState('');      // Campo de texto
-const [estufaAhorradora, setEstufaAhorradora] = useState(false);   // Checkbox
-const [estufaGas, setEstufaGas] = useState(false);                 // Checkbox
-const [polleton, setPolleton] = useState(false);                   // Checkbox
-const [sueloCocina, setSueloCocina] = useState(false);             // Checkbox
-const [capacitacionesSaneamiento, setCapacitacionesSaneamiento] = useState(false); // Checkbox
-const [detalleCapacitaciones, setDetalleCapacitaciones] = useState('');  // Campo de texto
-const [polloCongelado, setPolloCongelado] = useState(false);  // Checkbox
-const [polloCriollo, setPolloCriollo] = useState(false);      // Checkbox
-const [cerdo, setCerdo] = useState(false);                    // Checkbox
-const [res, setRes] = useState(false);                        // Checkbox
-const [carneMonte, setCarneMonte] = useState(false);          // Checkbox
-const [pescado, setPescado] = useState(false);                // Checkbox
-const [maiz, setMaiz] = useState(false);                      // Checkbox
-const [frijol, setFrijol] = useState(false);                  // Checkbox
-const [verduras, setVerduras] = useState(false);              // Checkbox
-const [legumbres, setLegumbres] = useState(false);            // Checkbox
-const [pastas, setPastas] = useState(false);                  // Checkbox
-const [sopas, setSopas] = useState(false);                    // Checkbox
-const [arroz, setArroz] = useState(false);                    // Checkbox
-const [papa, setPapa] = useState(false);                      // Checkbox
-const [malanga, setMalanga] = useState(false);                // Checkbox
-const [camote, setCamote] = useState(false);                  // Checkbox
-const [yuca, setYuca] = useState(false);                      // Checkbox
-const [otroTuberculo, setOtroTuberculo] = useState('');       // Input de texto
-const [puestoSalud, setPuestoSalud] = useState(false);        // Checkbox
-const [frecuenciaDoctor, setFrecuenciaDoctor] = useState('');  // Input de texto
-const [hayEnfermero, setHayEnfermero] = useState(false);      // Checkbox
-const [centroConvergencia, setCentroConvergencia] = useState(false);  // Checkbox
-const [usoCentroConvergencia, setUsoCentroConvergencia] = useState('');  // Input de texto
-const [Emergencia, setEmergencia] = useState('');  // Input de texto
-const [tiposEmergencias, setTiposEmergencias] = useState('');  // Input de texto
-const [vacunasNinos, setVacunasNinos] = useState(false);      // Checkbox
-const [frecuenciaVacunacion, setFrecuenciaVacunacion] = useState('');  // Input de texto
-const [mayores60, setMayores60] = useState('');               // Input de texto
-const [personasCapacidadesDiferentes, setPersonasCapacidadesDiferentes] = useState(''); // Input de texto
-const [personasAbandono, setPersonasAbandono] = useState('');  // Input de texto
-const [ninos0a5, setNinos0a5] = useState('');                 // Input de texto
-const [ninos6a10, setNinos6a10] = useState('');               // Input de texto
-const [ninos11a15, setNinos11a15] = useState('');             // Input de texto
-const [ninos16a18, setNinos16a18] = useState('');             // Input de texto
-const [recienNacidos, setRecienNacidos] = useState('');        // Input de texto
-const [ninosMuertos, setNinosMuertos] = useState(false);      // Checkbox
-const [ninosDesnutridos, setNinosDesnutridos] = useState(false);  // Checkbox
-const [mujeresEmbarazadas, setMujeresEmbarazadas] = useState(''); // Input de texto
-const [embarazosAlAnio, setEmbarazosAlAnio] = useState('');     // Input de texto
-const [tipoEnfermedades, setTipoEnfermedades] = useState(''); // Input de texto
-const [numComadronas, setNumComadronas] = useState('');       // Input de texto
-const [numPromotoresSalud, setNumPromotoresSalud] = useState(''); // Input de texto
-const [numCuranderos, setNumCuranderos] = useState('');       // Input de texto
-const [botiquinComunitario, setBotiquinComunitario] = useState(false); // Checkbox
-const [jardinesMedicinales, setJardinesMedicinales] = useState(false); // Checkbox
-const [ventaMedicina, setVentaMedicina] = useState(false);    // Checkbox
-const [ventaBebidasAlcoholicas, setVentaBebidasAlcoholicas] = useState(false); // Checkbox
-const [numPuntosVentaBebidas, setNumPuntosVentaBebidas] = useState('');  // Input de texto
-const [tiposBebidasAlcoholicas, setTiposBebidasAlcoholicas] = useState(''); // Input de texto
-const [consumoTabaco, setConsumoTabaco] = useState(false);   // Checkbox
-const [otrosConsumo, setOtrosConsumo] = useState('');         // Input de texto
-// Pregunta 70 - Instituciones
-const [maga, setMaga] = useState(false);
-const [fodes, setFodes] = useState(false);
-const [mides, setMides] = useState(false);
-const [sesan, setSesan] = useState(false);
+  const [tipoServicio, setTipoServicio] = useState('');            // Campo de texto
+  const [calidadServicio, setCalidadServicio] = useState('');       // Campo de texto
+  const [costosServicio, setCostosServicio] = useState('');         // Campo de texto
+  const [prestadorServicio, setPrestadorServicio] = useState('');   // Campo de texto
+  const [familiasConServicio, setFamiliasConServicio] = useState(''); // Campo de texto
+  const [senalTelefono, setSenalTelefono] = useState(false);        // Checkbox
+  const [senalInternet, setSenalInternet] = useState(false);        // Checkbox
+  const [senalTV, setSenalTV] = useState(false);                    // Checkbox
+  const [cable, setCable] = useState(false);                        // Checkbox
+  const [prestadorServicios, setPrestadorServicios] = useState(''); // Campo de texto
+  const [institucionesEducativas, setInstitucionesEducativas] = useState('');   // Campo de texto
+  const [edificiosEducativos, setEdificiosEducativos] = useState('');           // Campo de texto
+  const [constructorEdificios, setConstructorEdificios] = useState('');         // Campo de texto
+  const [materialesConstruccion, setMaterialesConstruccion] = useState('');     // Campo de texto
+  const [duenoTerreno, setDuenoTerreno] = useState('');                         // Campo de texto
+  const [deseoPreparacion, setDeseoPreparacion] = useState(false);              // Checkbox
+  const [limitantesEstudio, setLimitantesEstudio] = useState('');               // Campo de texto
+  const [personasCarreraMedioH, setPersonasCarreraMedioH] = useState('');       // Campo de texto
+  const [personasCarreraMedioM, setPersonasCarreraMedioM] = useState('');       // Campo de texto
+  const [personasConcluyeronMedio, setPersonasConcluyeronMedio] = useState(''); // Campo de texto
+  const [personasUniversidadH, setPersonasUniversidadH] = useState('');         // Campo de texto
+  const [personasUniversidadM, setPersonasUniversidadM] = useState('');         // Campo de texto
+  const [abandonoEstudios, setAbandonoEstudios] = useState(false);              // Checkbox
+  const [carrerasNivelMedio, setCarrerasNivelMedio] = useState('');             // Campo de texto
+  const [carrerasUniversidad, setCarrerasUniversidad] = useState('');           // Campo de texto
+  const [aguaEntubada, setAguaEntubada] = useState(false);          // Checkbox
+  const [pozo, setPozo] = useState(false);                          // Checkbox
+  const [aguaLluvia, setAguaLluvia] = useState(false);              // Checkbox
+  const [rio, setRio] = useState(false);                            // Checkbox
+  const [laguna, setLaguna] = useState(false);                      // Checkbox
+  const [estanque, setEstanque] = useState(false);                  // Checkbox
+  const [compraAgua, setCompraAgua] = useState(false);              // Checkbox
+  const [inodoroLavable, setInodoroLavable] = useState(false);      // Checkbox
+  const [letrina, setLetrina] = useState(false);                    // Checkbox
+  const [pozoVentilado, setPozoVentilado] = useState(false);        // Checkbox
+  const [campoExcretas, setCampoExcretas] = useState(false);        // Checkbox
+  const [manejoBasura, setManejoBasura] = useState('');             // Campo de texto
+  const [tipoBasura, setTipoBasura] = useState('');                 // Campo de texto
+  const [fuenteEnergiaLenia, setFuenteEnergiaLenia] = useState(false);  // Checkbox
+  const [fuenteEnergiaGas, setFuenteEnergiaGas] = useState(false);      // Checkbox
+  const [fuenteEnergiaCarbon, setFuenteEnergiaCarbon] = useState(false); // Checkbox
+  const [fuenteEnergiaOtros, setFuenteEnergiaOtros] = useState('');      // Campo de texto
+  const [estufaAhorradora, setEstufaAhorradora] = useState(false);   // Checkbox
+  const [estufaGas, setEstufaGas] = useState(false);                 // Checkbox
+  const [polleton, setPolleton] = useState(false);                   // Checkbox
+  const [sueloCocina, setSueloCocina] = useState(false);             // Checkbox
+  const [capacitacionesSaneamiento, setCapacitacionesSaneamiento] = useState(false); // Checkbox
+  const [detalleCapacitaciones, setDetalleCapacitaciones] = useState('');  // Campo de texto
+  const [polloCongelado, setPolloCongelado] = useState(false);  // Checkbox
+  const [polloCriollo, setPolloCriollo] = useState(false);      // Checkbox
+  const [cerdo, setCerdo] = useState(false);                    // Checkbox
+  const [res, setRes] = useState(false);                        // Checkbox
+  const [carneMonte, setCarneMonte] = useState(false);          // Checkbox
+  const [pescado, setPescado] = useState(false);                // Checkbox
+  const [maiz, setMaiz] = useState(false);                      // Checkbox
+  const [frijol, setFrijol] = useState(false);                  // Checkbox
+  const [verduras, setVerduras] = useState(false);              // Checkbox
+  const [legumbres, setLegumbres] = useState(false);            // Checkbox
+  const [pastas, setPastas] = useState(false);                  // Checkbox
+  const [sopas, setSopas] = useState(false);                    // Checkbox
+  const [arroz, setArroz] = useState(false);                    // Checkbox
+  const [papa, setPapa] = useState(false);                      // Checkbox
+  const [malanga, setMalanga] = useState(false);                // Checkbox
+  const [camote, setCamote] = useState(false);                  // Checkbox
+  const [yuca, setYuca] = useState(false);                      // Checkbox
+  const [otroTuberculo, setOtroTuberculo] = useState('');       // Input de texto
+  const [puestoSalud, setPuestoSalud] = useState(false);        // Checkbox
+  const [frecuenciaDoctor, setFrecuenciaDoctor] = useState('');  // Input de texto
+  const [hayEnfermero, setHayEnfermero] = useState(false);      // Checkbox
+  const [centroConvergencia, setCentroConvergencia] = useState(false);  // Checkbox
+  const [usoCentroConvergencia, setUsoCentroConvergencia] = useState('');  // Input de texto
+  const [Emergencia, setEmergencia] = useState('');  // Input de texto
+  const [tiposEmergencias, setTiposEmergencias] = useState('');  // Input de texto
+  const [vacunasNinos, setVacunasNinos] = useState(false);      // Checkbox
+  const [frecuenciaVacunacion, setFrecuenciaVacunacion] = useState('');  // Input de texto
+  const [mayores60, setMayores60] = useState('');               // Input de texto
+  const [personasCapacidadesDiferentes, setPersonasCapacidadesDiferentes] = useState(''); // Input de texto
+  const [personasAbandono, setPersonasAbandono] = useState('');  // Input de texto
+  const [ninos0a5, setNinos0a5] = useState('');                 // Input de texto
+  const [ninos6a10, setNinos6a10] = useState('');               // Input de texto
+  const [ninos11a15, setNinos11a15] = useState('');             // Input de texto
+  const [ninos16a18, setNinos16a18] = useState('');             // Input de texto
+  const [recienNacidos, setRecienNacidos] = useState('');        // Input de texto
+  const [ninosMuertos, setNinosMuertos] = useState(false);      // Checkbox
+  const [ninosDesnutridos, setNinosDesnutridos] = useState(false);  // Checkbox
+  const [mujeresEmbarazadas, setMujeresEmbarazadas] = useState(''); // Input de texto
+  const [embarazosAlAnio, setEmbarazosAlAnio] = useState('');     // Input de texto
+  const [tipoEnfermedades, setTipoEnfermedades] = useState(''); // Input de texto
+  const [numComadronas, setNumComadronas] = useState('');       // Input de texto
+  const [numPromotoresSalud, setNumPromotoresSalud] = useState(''); // Input de texto
+  const [numCuranderos, setNumCuranderos] = useState('');       // Input de texto
+  const [botiquinComunitario, setBotiquinComunitario] = useState(false); // Checkbox
+  const [jardinesMedicinales, setJardinesMedicinales] = useState(false); // Checkbox
+  const [ventaMedicina, setVentaMedicina] = useState(false);    // Checkbox
+  const [ventaBebidasAlcoholicas, setVentaBebidasAlcoholicas] = useState(false); // Checkbox
+  const [numPuntosVentaBebidas, setNumPuntosVentaBebidas] = useState('');  // Input de texto
+  const [tiposBebidasAlcoholicas, setTiposBebidasAlcoholicas] = useState(''); // Input de texto
+  const [consumoTabaco, setConsumoTabaco] = useState(false);   // Checkbox
+  const [otrosConsumo, setOtrosConsumo] = useState('');         // Input de texto
+  // Pregunta 70 - Instituciones
+  const [maga, setMaga] = useState(false);
+  const [fodes, setFodes] = useState(false);
+  const [mides, setMides] = useState(false);
+  const [sesan, setSesan] = useState(false);
 
-// Pregunta 71 - Policía y comités
-const [llegaPolicia, setLlegaPolicia] = useState(false);
-const [comites, setComites] = useState(false);
+  // Pregunta 71 - Policía y comités
+  const [llegaPolicia, setLlegaPolicia] = useState(false);
+  const [comites, setComites] = useState(false);
 
-// Pregunta 72 y 73 - ONG
-const [ongList, setOngList] = useState([{ nombre: '', trabajo: '' }]);
-const addOng = () => {
-  setOngList([...ongList, { nombre: '', trabajo: '' }]);
+  // Pregunta 72 y 73 - ONG
+  const [ongList, setOngList] = useState([{ nombre: '', trabajo: '' }]);
+  const addOng = () => {
+    setOngList([...ongList, { nombre: '', trabajo: '' }]);
+  };
+
+  // Pregunta 74 - Religiones
+  const [religion, setReligion] = useState('');
+
+  interface Actor {
+    nombre: string;
+    aceptacion: string;
+    importancia: string;
+    presencia: string;
+  }
+  const [actors, setActors] = useState<Actor[]>([]);  // Definimos que el estado será un arreglo de objetos tipo Actor
+  const addActor = (nombre: string) => {
+    setActors([...actors, { nombre, aceptacion: '', importancia: '', presencia: '' }]);
+  };
+
+  const removeActor = (nombre: string) => {
+    setActors(actors.filter(actor => actor.nombre !== nombre));
+  };
+  
+  // Función para enviar los datos al backend
+  const handleGuardarComunidad = async () => {
+  // Validar campos obligatorios
+  if (!Comunidad || !Municipio || !Aldea || !Ubicacion || !PresidenteCOCODE || !TelefonoContacto) {
+    setShowValidationAlert(true);
+    return;
+  }
+  const data = {
+    nombre_comunidad: Comunidad,
+    //se agregan campos para guardar los datos
+    nombre_municipio: Municipio,
+    nombre_aldea: Aldea,
+    ubicacion_real: Ubicacion, //hasta aca
+    presidente_cocode: PresidenteCOCODE,
+    telefono_contacto1: TelefonoContacto,
+    otro_lider: OtroLider,
+    telefono_contacto2: TelefonoOtroLider,
+    tipo_transporte: Transporte,
+    numero_familias: parseInt(NumeroFamilias, 10),
+    numero_viviendas: parseInt(NumeroViviendas, 10),
+    numero_personas: parseInt(NumeroPersonas, 10),
+    certeza_juridica_tierra: CertezaJuridica,
+    conflictos_tierra: ConflictosTierra,
+    dimension_lotes: DimensionesLotes,
+    dimension_trabajadores: DimensionesTrabajaderos,
+    tierra_comunitaria: TierraComunitaria,
+    idiomas_comunidad: Idiomas,
+    fuentes_empleo: FuentesEmpleo,
+    recreacion_comunidad: Recreacion,
+    potencial_turistico: PotencialTuristico,
+    tipo_edificios_publicos: EdificiosPublicos,
+    hay_inseguridad: Inseguridad ? 1 : 0,
+    tipo_inseguridad: Inseguridad ? TipoInseguridad : null,
+    grupos_delincuenciales: Inseguridad ? GruposDelincuenciales : null,
+    personas_otro_lugar: parseInt(PersonasOtrosMunicipios, 10),
+    ocupacion_otro_lugar: TipoTrabajo,
+    personas_en_eeuu: PersonasEEUU ? 1 : 0,
+    cantidad_personas_eeuu: PersonasEEUU ? parseInt(CantidadPersonasEEUU, 10) : null,
+    menores_en_eeuu: MenoresEEUU ? 1 : 0,
+    edad_empieza_trabajar_hombres: parseInt(EdadTrabajoHombres, 10),
+    edad_empieza_trabajar_mujeres: parseInt(EdadTrabajoMujeres, 10),
+    tipo_empleo: Ocupaciones,
+    existen_jubilados: Jubilados ? 1 : 0,
+    cantidad_jubilados: Jubilados ? parseInt(CantidadJubilados, 10) : null,
+    institucion_jubilados: Jubilados ? InstitucionJubilados : null,
+    ocupaciones_tradicionales_mujeres: OcupacionesMujeres,
+    ocupaciones_tradicionales_hombres: OcupacionesHombres
+  };
+
+  // Verificar los datos antes de enviar
+  console.log('Datos a enviar:', data);
+
+  try {
+    const response = await fetch('http://localhost:3000/comunidad', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    });
+
+    if (response.ok) {
+      setShowSuccessAlert(true); // Mostrar la alerta de éxito
+      // Limpiar todos los campos de texto y checkbox
+      setComunidad('');
+      setMunicipio('');
+      setAldea('');
+      setUbicacion('');
+      setPresidenteCOCODE('');
+      setTelefonoContacto('');
+      setOtroLider('');
+      setTelefonoOtroLider('');
+      setTransporte('');
+      setNumeroFamilias('');
+      setNumeroViviendas('');
+      setNumeroPersonas('');
+      setCertezaJuridica('');  // Si el campo es texto, limpiar a cadena vacía
+      setConflictosTierra('');
+      setDimensionesLotes('');
+      setDimensionesTrabajaderos('');
+      setTierraComunitaria('');
+      setIdiomas('');
+      setFuentesEmpleo('');
+      setRecreacion('');
+      setPotencialTuristico('');
+      setEdificiosPublicos('');
+      setInseguridad(false);  // Reiniciar checkbox a desmarcado
+      setTipoInseguridad('');
+      setGruposDelincuenciales('');
+      setPersonasOtrosMunicipios('');
+      setTipoTrabajo('');
+      setPersonasEEUU(false);  // Reiniciar checkbox a desmarcado
+      setCantidadPersonasEEUU('');
+      setMenoresEEUU(false);  // Reiniciar checkbox a desmarcado
+      setEdadTrabajoHombres('');
+      setEdadTrabajoMujeres('');
+      setOcupaciones('');
+      setJubilados(false);  // Reiniciar checkbox a desmarcado
+      setCantidadJubilados('');
+      setInstitucionJubilados('');
+      setOcupacionesMujeres('');
+      setOcupacionesHombres('');
+    } else {
+      alert('Error al registrar la comunidad');
+    }
+  } catch (error) {
+    console.error('Error:', error);
+    alert('Error al registrar la comunidad');
+  }
 };
-
-// Pregunta 74 - Religiones
-const [religion, setReligion] = useState('');
-
-interface Actor {
-  nombre: string;
-  aceptacion: string;
-  importancia: string;
-  presencia: string;
-}
-const [actors, setActors] = useState<Actor[]>([]);  // Definimos que el estado será un arreglo de objetos tipo Actor
-const addActor = (nombre: string) => {
-  setActors([...actors, { nombre, aceptacion: '', importancia: '', presencia: '' }]);
-};
-
-const removeActor = (nombre: string) => {
-  setActors(actors.filter(actor => actor.nombre !== nombre));
-};
-
 
 
   return (
@@ -187,42 +300,45 @@ const removeActor = (nombre: string) => {
         <IonTabs className="tabs">
           <IonTab tab="DatosGenerales">
             <div className="PanelSecundario">
-              <IonRow className="FilaTextBox">
-                <h2 className="TituloN2">Información General</h2>
-                <h3 style={{color: "GrayText", fontSize: "14px", paddingLeft: "10px"}}>(Los campos subrayados son obligatorios)</h3>
-              </IonRow>
+              <h2 className="TituloN2">Información General</h2>
 
               {/* Preguntas independientes */}
               <IonRow className="FilaTextBox">
-                <h3 style={{textDecoration: "underline"}} className="labelForm">1. Nombre de la comunidad:</h3>
+                <h3 className="labelForm">1. Nombre de la comunidad:</h3>
                 <input onChange={e => setComunidad(e.target.value)} type="text" className='TextBox' />
               </IonRow>
 
+              {/* Nuevos campos*/}
               <IonRow className="FilaTextBox">
                 <IonList>
-                <IonItem>
-                  <IonSelect className="ListBox" placeholder="Seleccionar" cancelText="Cancelar">
-                    <div slot="label" style={{textDecoration: "underline"}}>2. Municipio:</div>
-                      <IonSelectOption value="1">Cobán</IonSelectOption>
-                      <IonSelectOption value="2">Chisec</IonSelectOption>
-                      <IonSelectOption value="3">Carchá</IonSelectOption>
+                  <IonItem>
+                    <IonSelect
+                      className="ListBox"
+                      placeholder="Seleccionar Municipio"
+                      cancelText="Cancelar"
+                      onIonChange={e => setMunicipio(e.detail.value)} // Captura el valor seleccionado
+                    >
+                      <IonSelectOption value="Cobán">Cobán</IonSelectOption>
+                      <IonSelectOption value="Chisec">Chisec</IonSelectOption>
+                      <IonSelectOption value="Carchá">Carchá</IonSelectOption>
                     </IonSelect>
                   </IonItem>
                 </IonList>
-
-                <h3 className="labelForm">3. Aldea:</h3>
-                <input onChange={e => setAldea(e.target.value)} type="text" className='TextBox'/>
               </IonRow>
 
-              <div>
-                <h3 className="labelForm" style={{textDecoration: "underline"}}>4. Ubicación bicación</h3>
-                <div className="Mapa">
-                  <IonText className="TextoMapa">Mapa</IonText>
-                </div>
-              </div>
+              <IonRow className="FilaTextBox">
+                <h3 className="labelForm">3. Aldea:</h3>
+                <input onChange={e => setAldea(e.target.value || '')} type="text" className='TextBox' />
+              </IonRow>
 
               <IonRow className="FilaTextBox">
-                <h3 className="labelForm" style={{textDecoration: "underline"}}>5. Nombre del presidente de COCODE:</h3>
+                <h3 className="labelForm">4. Ubicación:</h3>
+                <input onChange={e => setUbicacion(e.target.value || '')} type="text" className='TextBox' />
+              </IonRow>
+
+
+              <IonRow className="FilaTextBox">
+                <h3 className="labelForm">5. Nombre del presidente de COCODE:</h3>
                 <input onChange={e => setPresidenteCOCODE(e.target.value)} type="text" className='TextBox' />
               </IonRow>
 
@@ -314,85 +430,83 @@ const removeActor = (nombre: string) => {
               {/* Preguntas dependientes */}
               <IonRow className="FilaTextBox">
                 <h3 className="labelForm">23. ¿Hay inseguridad?</h3>
-                <IonCheckbox className="CheckBox" checked={Inseguridad} onIonChange={(e) => setInseguridad(e.target.checked)}/>
+                <IonCheckbox className="CheckBox" checked={Inseguridad} onIonChange={(e) => setInseguridad(e.detail.checked)} />
                 {Inseguridad && (
                   <>
                     <h3 className="labelForm">Tipo de inseguridad:</h3>
-                    <input onChange={e => setTipoInseguridad(e.target.value)} type="text" className='TextBox' />
+                    <input onChange={e => setTipoInseguridad(e.target.value)} type="text" className='TextBoxPeq' />
                   </>
                 )}
               </IonRow>
-              
+
               <IonRow className="FilaTextBox">
                 <h3 className="labelForm">Grupos delincuenciales:</h3>
                 <input onChange={e => setGruposDelincuenciales(e.target.value)} type="text" className='TextBoxPeq' />
               </IonRow>
-              
+
               {/* Preguntas relacionadas */}
               <IonRow className="FilaTextBox">
                 <h3 className="labelForm">24. ¿Cuántas personas trabajan en otros municipios o departamentos?:</h3>
-                <input onChange={e => setPersonasOtrosMunicipios(e.target.value)} type="text" className='TextBoxPeq' />                
-              </IonRow>
-
-              <IonRow className="FilaTextBox">
+                <input onChange={e => setPersonasOtrosMunicipios(e.target.value)} type="text" className='TextBoxPeq' />
                 <h3 className="labelForm">¿En qué?</h3>
                 <input onChange={e => setTipoTrabajo(e.target.value)} type="text" className='TextBox' />
               </IonRow>
-              
+
               <IonRow className="FilaTextBox">
-                <h3 className="labelForm">25. ¿Hay personas que están en EE. UU.?</h3>
-                <IonCheckbox className="CheckBox" checked={PersonasEEUU} onIonChange={(e) => setPersonasEEUU(e.target.checked)}/>
+                <h3 className="labelForm">25. ¿Hay personas en EE. UU.?</h3>
+                <IonCheckbox className="CheckBox" checked={PersonasEEUU} onIonChange={(e) => setPersonasEEUU(e.detail.checked)} />
                 {PersonasEEUU && (
                   <>
                     <h3 className="labelForm">¿Cuántas?</h3>
                     <input onChange={e => setCantidadPersonasEEUU(e.target.value)} type="text" className='TextBoxPeq' />
                     <h3 className="labelForm">¿Hay menores de edad en EE. UU.?</h3>
-                    <IonCheckbox className="CheckBox" checked={MenoresEEUU} onIonChange={(e) => setMenoresEEUU(e.target.checked)}/>
+                    <IonCheckbox className="CheckBox" checked={MenoresEEUU} onIonChange={(e) => setMenoresEEUU(e.detail.checked)} />
                   </>
                 )}
               </IonRow>
-              
+
               {/* Preguntas con múltiples campos */}
               <IonRow className="FilaTextBox">
                 <h3 className="labelForm">26. ¿A qué edad empiezan a trabajar en la comunidad?</h3>
                 <h3 className="labelForm">Hombres:</h3>
-                <input onChange={e => setEdadTrabajoHombres(e.target.value)} type="text" className='TextBoxPeq' />
+                <input onChange={e => setEdadTrabajoHombres(e.target.value)} type="text" className='TextBox' />
                 <h3 className="labelForm">Mujeres:</h3>
-                <input onChange={e => setEdadTrabajoMujeres(e.target.value)} type="text" className='TextBoxPeq' />
+                <input onChange={e => setEdadTrabajoMujeres(e.target.value)} type="text" className='TextBox' />
               </IonRow>
-              
+
               <IonRow className="FilaTextBox">
                 <h3 className="labelForm">¿En qué?</h3>
                 <input onChange={e => setOcupaciones(e.target.value)} type="text" className='TextBox' />
               </IonRow>
-              
+
               {/* Jubilados */}
               <IonRow className="FilaTextBox">
                 <h3 className="labelForm">27. ¿Existen jubilados en la comunidad?</h3>
-                <IonCheckbox className="CheckBox" checked={Jubilados} onIonChange={(e) => setJubilados(e.target.checked)}/>
-                  </IonRow>
-                  <IonRow className="FilaTextBox">  
+                <IonCheckbox className="CheckBox" checked={Jubilados} onIonChange={(e) => setJubilados(e.detail.checked)} />
                 {Jubilados && (
                   <>
                     <h3 className="labelForm">¿Cuántos?</h3>
-                    <input onChange={e => setCantidadJubilados(e.target.value)} type="text" className='TextBoxPeq' />
+                    <input onChange={e => setCantidadJubilados(e.target.value)} type="text" className='TextBox' />
                     <h3 className="labelForm">¿De cuál institución?</h3>
                     <input onChange={e => setInstitucionJubilados(e.target.value)} type="text" className='TextBox' />
                   </>
                 )}
-                </IonRow>
+              </IonRow>
+
               {/* Ocupaciones tradicionales */}
               <IonRow className="FilaTextBox">
                 <h3 className="labelForm">28. Ocupaciones tradicionales más importantes de las mujeres:</h3>
                 <input onChange={e => setOcupacionesMujeres(e.target.value)} type="text" className='TextBox' />
               </IonRow>
-              
+
               <IonRow className="FilaTextBox">
-                <h3 className="labelForm">29. Ocupaciones tradicionales más importantes de los hombres:</h3>
+                <h3 className="labelForm">Ocupaciones tradicionales más importantes de los hombres:</h3>
                 <input onChange={e => setOcupacionesHombres(e.target.value)} type="text" className='TextBox' />
               </IonRow>
             </div>
           </IonTab>
+          
+          {/* Inician las nuevas ---------------------------------*/}
           {/* Tab de Servicios */}
           <IonTab tab="Servicios">
             <div className="PanelSecundario">
@@ -1230,9 +1344,9 @@ const removeActor = (nombre: string) => {
                 </h3>
               </IonRow>
             </div>
-          </IonTab>
+          </IonTab>      
+          {/* Hasta aca ---------------------------------*/}
 
-          {/*Pestañas*/} 
           <IonTabBar className="TabBarConf" slot="top">
             <IonTabButton tab="DatosGenerales"> <IonIcon size="large" icon={earthOutline} /> </IonTabButton>
             <IonTabButton tab="Servicios"> <IonIcon size="large" icon={cogOutline} /> </IonTabButton>
@@ -1245,14 +1359,33 @@ const removeActor = (nombre: string) => {
             <IonTabButton tab="Ecologia"> <IonIcon size="large" icon={cogOutline} /> </IonTabButton>
           </IonTabBar>
 
-        </IonTabs>    
+        </IonTabs>
       </IonContent>
 
       <IonRow>
-        <IonButton className="Boton" color="success">Guardar</IonButton>   
-        <IonButton className="Boton" color="danger">Cancelar</IonButton>   
+        <IonButton className="Boton" color="success" onClick={handleGuardarComunidad}>Guardar</IonButton>
+        <IonButton className="Boton" color="danger">Cancelar</IonButton>
       </IonRow>
+      
+      {/* Alerta de validación */}
+      <IonAlert
+        isOpen={showValidationAlert}
+        onDidDismiss={() => setShowValidationAlert(false)}
+        header={'Campos incompletos'}
+        message={'Por favor, completa todos los campos obligatorios'}
+        buttons={['Aceptar']}
+      />
+
+      <IonAlert
+        isOpen={showSuccessAlert}
+        onDidDismiss={() => setShowSuccessAlert(false)}
+        header={'Registro Exitoso'}
+        message={'La comunidad ha sido registrada correctamente.'}
+        buttons={['Aceptar']}
+      />
     </IonPage>
+
   );
 }
+
 export default AgregarComunidades;
