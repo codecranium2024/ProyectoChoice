@@ -16,6 +16,8 @@ import RegistrarProyecto from './components/RomeoComp/Registrar/RegistrarProyect
 import Mapa from './components/RomeoComp/Mapa/Mapa';
 import AdministrarUsuarios from './components/WilfredoComp/AdministrarUsuarios';
 import AdministrarRE from './components/WilfredoComp/AdministrarRE';
+import Historial from './components/RomeoComp/Historial/Historial';
+import Reporte from './components/RomeoComp/Reportes/Reporte';
 
 
 
@@ -35,7 +37,7 @@ import './theme/variables.css';
 setupIonicReact();
 
 const App: React.FC = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(true);
   const [userName, setUserName] = useState('');
   const [userRole, setUserRole] = useState('');
 
@@ -103,6 +105,12 @@ const App: React.FC = () => {
               </Route>
               <Route path="/Mapa" exact={true}>
               <Mapa />
+              </Route>
+              <Route path="/Historial" exact={true}>
+              <Historial />
+              </Route>
+              <Route path="/Reporte" exact={true}>
+                <Reporte/>
               </Route>
             </IonRouterOutlet>
           </IonSplitPane>

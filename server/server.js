@@ -22,7 +22,7 @@ const dbConfig = {
 // Middleware para parsear JSON y permitir CORS
 app.use(express.json());
 const corsOptions = {
-  origin: 'http://localhost:8100',
+  origin: 'http://localhost:8103',
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true
 };

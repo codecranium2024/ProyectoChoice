@@ -1,0 +1,11 @@
+.grafica-container {
+    max-height: 100vh; /* Limita la altura máxima del contenedor */
+    overflow-y: auto; /* Agrega un scroll vertical */
+    padding: 20px; /* Espaciado interno */
+    /* Borde para destacar el contenedor */
+    /* border: 1px solid #ccc;  */  
+    border-radius: 8px; /* Bordes redondeados */
+     /* Color de fondo */
+    /* background-color: #f9f9f9; */
+  }
+  
