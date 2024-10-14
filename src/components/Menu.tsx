@@ -70,7 +70,7 @@ const appPages: AppPage[] = [
   },
   {
     title: 'Reportes',
-    url: '/folder/Reportes',
+    url: '/Reportes',
     iosIcon: statsChartOutline,
     mdIcon: statsChartSharp,
     subPages: [

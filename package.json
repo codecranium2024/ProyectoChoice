@@ -1,5 +1,5 @@
 {
-  "name": "ProyectoChoice",
+  "name": "proyectochoice",
   "private": true,
   "version": "0.0.1",
   "type": "module",
@@ -9,12 +9,13 @@
     "preview": "vite preview",
     "test.e2e": "cypress run",
     "test.unit": "vitest",
-    "lint": "eslint"
+    "lint": "eslint",
+    "build-electron": "electron-builder --windows"
   },
   "dependencies": {
     "@capacitor-community/electron": "^5.0.1",
     "@capacitor/app": "6.0.1",
-    "@capacitor/core": "6.1.2",
+    "@capacitor/core": "^6.1.2",
     "@capacitor/haptics": "6.0.1",
     "@capacitor/keyboard": "6.0.2",
     "@capacitor/status-bar": "6.0.1",
@@ -32,7 +33,7 @@
     "react-router-dom": "^5.3.0"
   },
   "devDependencies": {
-    "@capacitor/cli": "6.1.2",
+    "@capacitor/cli": "^6.1.2",
     "@testing-library/dom": ">=7.21.4",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^14.0.0",
@@ -42,6 +43,8 @@
     "@vitejs/plugin-legacy": "^5.0.0",
     "@vitejs/plugin-react": "^4.0.1",
     "cypress": "^13.5.0",
+    "electron": "^32.2.0",
+    "electron-builder": "^25.1.8",
     "eslint": "^8.35.0",
     "eslint-plugin-react": "^7.32.2",
     "jsdom": "^22.1.0",
@@ -50,5 +53,5 @@
     "vite": "~5.2.0",
     "vitest": "^0.34.6"
   },
-  "description": "An Ionic project"
+  "description": "Proyecto sistema Choice Humanitarian"
 }
