@@ -54,6 +54,7 @@ const appPages: AppPage[] = [
     subPages: [
       { title: 'Registrar Proyecto', url: '/RegistrarProyecto' },
       { title: 'Informacion Comunitaria', url: '/InformacionComunitaria' },
+      { title: 'Historial Proyectos', url: '/Historial' },
       { title: 'Mapa', url: '/Mapa' },
     ]
   },
@@ -69,12 +70,12 @@ const appPages: AppPage[] = [
     ]
   },
   {
-    title: 'Reportes',
-    url: '/folder/Reportes',
+    title: 'Reporte',
+    url: '/Reportes por cada componete',
     iosIcon: statsChartOutline,
     mdIcon: statsChartSharp,
     subPages: [
-      { title: 'Visualizar', url: '' },
+      { title: 'Reportes', url: '/Reporte' },
     ]
   },
   {

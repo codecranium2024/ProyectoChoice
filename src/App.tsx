@@ -16,6 +16,8 @@ import RegistrarProyecto from './components/RomeoComp/Registrar/RegistrarProyect
 import Mapa from './components/RomeoComp/Mapa/Mapa';
 import AdministrarUsuarios from './components/WilfredoComp/AdministrarUsuarios';
 import AdministrarRE from './components/WilfredoComp/AdministrarRE';
+import Historial from './components/RomeoComp/Historial/Historial';
+import Reporte from './components/RomeoComp/Reportes/Reporte';
 
 
 
@@ -103,6 +105,12 @@ const App: React.FC = () => {
               </Route>
               <Route path="/Mapa" exact={true}>
               <Mapa />
+              </Route>
+              <Route path="/Historial" exact={true}>
+              <Historial />
+              </Route>
+              <Route path="/Reporte" exact={true}>
+                <Reporte/>
               </Route>
             </IonRouterOutlet>
           </IonSplitPane>
