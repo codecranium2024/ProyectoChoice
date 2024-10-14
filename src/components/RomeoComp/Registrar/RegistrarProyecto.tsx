@@ -1,14 +1,35 @@
 import React, { useState } from 'react';
-import { IonContent, IonHeader, IonPage, IonToolbar, IonTitle, IonList, IonItem, IonButton, IonModal, IonInput, IonLabel, IonRow, IonCol, IonSelect, IonSelectOption } from '@ionic/react';
+import {
+  IonContent,
+  IonHeader,
+  IonPage,
+  IonToolbar,
+  IonTitle,
+  IonList,
+  IonItem,
+  IonButton,
+  IonModal,
+  IonInput,
+  IonLabel,
+  IonRow,
+  IonCol,
+  IonSelect,
+  IonSelectOption,
+} from '@ionic/react';
+import { useHistory } from 'react-router-dom';
 import './RegistrarP.css';
 
 const proyectosIniciales = [
   { id: 1, nombre: 'Proyecto A', responsable: 'Juan Pérez', estado: 'En Ejecucion' },
-  { id: 2, nombre: 'Proyecto B', responsable: 'Ana Gómez', estado: 'Finalizado' },
+  { id: 2, nombre: 'Proyecto B', responsable: 'Ana Gómez', estado: 'En Ejecucion' },
   { id: 3, nombre: 'Proyecto C', responsable: 'Luis Martínez', estado: 'Sin Aprobar' },
 ];
 
-const RegistrarListadoProyectos: React.FC<{ onEdit: (id: number) => void, onDelete: (id: number) => void, proyectos: any[] }> = ({ onEdit, onDelete, proyectos }) => (
+const RegistrarListadoProyectos: React.FC<{
+  onEdit: (id: number) => void;
+  onDelete: (id: number) => void;
+  proyectos: any[];
+}> = ({ onEdit, onDelete, proyectos }) => (
   <IonList>
     <table className="table">
       <thead>
@@ -21,15 +42,19 @@ const RegistrarListadoProyectos: React.FC<{ onEdit: (id: number) => void, onDele
         </tr>
       </thead>
       <tbody>
-        {proyectos.map((proyecto: any) => (
+        {proyectos.map((proyecto) => (
           <tr key={proyecto.id}>
             <td>{proyecto.id}</td>
             <td>{proyecto.nombre}</td>
             <td>{proyecto.responsable}</td>
             <td>{proyecto.estado}</td>
             <td>
-              <IonButton color="warning" onClick={() => onEdit(proyecto.id)}>Editar</IonButton>
-              <IonButton color="danger" onClick={() => onDelete(proyecto.id)}>Eliminar</IonButton>
+              {proyecto.estado !== 'Finalizado' && (
+                <>
+                  <IonButton color="warning" onClick={() => onEdit(proyecto.id)}>Editar</IonButton>
+                  {/* <IonButton color="danger" onClick={() => onDelete(proyecto.id)}>Eliminar</IonButton> */}
+                </>
+              )}
             </td>
           </tr>
         ))}
@@ -42,22 +67,25 @@ const RegistrarProyecto: React.FC = () => {
   const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [proyectos, setProyectos] = useState(proyectosIniciales);
+  const [proyectosFinalizados, setProyectosFinalizados] = useState<any[]>([]);
   const [estado, setEstado] = useState('');
   const [nombre, setNombre] = useState('');
   const [responsable, setResponsable] = useState('');
-  const [editProyecto, setEditProyecto] = useState<{ id: number, nombre: string, responsable: string, estado: string } | null>(null);
+  const [editProyecto, setEditProyecto] = useState<{ id: number; nombre: string; responsable: string; estado: string } | null>(null);
 
-  const openRegisterModal = () => {
-    setIsRegisterModalOpen(true);
-  };
+  const history = useHistory();
+
+  const openRegisterModal = () => setIsRegisterModalOpen(true);
 
   const openEditModal = (id: number) => {
-    const proyectoToEdit = proyectos.find(p => p.id === id);
-    setEditProyecto(proyectoToEdit || null);
-    setEstado(proyectoToEdit?.estado || '');
-    setNombre(proyectoToEdit?.nombre || '');
-    setResponsable(proyectoToEdit?.responsable || '');
-    setIsEditModalOpen(true);
+    const proyectoToEdit = proyectos.find((p) => p.id === id);
+    if (proyectoToEdit) {
+      setEditProyecto(proyectoToEdit);
+      setEstado(proyectoToEdit.estado);
+      setNombre(proyectoToEdit.nombre);
+      setResponsable(proyectoToEdit.responsable);
+      setIsEditModalOpen(true);
+    }
   };
 
   const closeModal = () => {
@@ -84,16 +112,26 @@ const RegistrarProyecto: React.FC = () => {
 
   const handleEditProyecto = () => {
     if (editProyecto) {
-      const updatedProyectos = proyectos.map(proyecto =>
+      const updatedProyectos = proyectos.map((proyecto) =>
         proyecto.id === editProyecto.id ? { ...editProyecto, nombre, responsable, estado } : proyecto
       );
-      setProyectos(updatedProyectos);
+
+      if (estado === 'Finalizado') {
+        const proyectoFinalizado = updatedProyectos.find((p) => p.id === editProyecto.id);
+        if (proyectoFinalizado) {
+          setProyectosFinalizados([...proyectosFinalizados, proyectoFinalizado]);
+        }
+        setProyectos(updatedProyectos.filter((p) => p.id !== editProyecto.id));
+        history.push('/historial');
+      } else {
+        setProyectos(updatedProyectos);
+      }
       closeModal();
     }
   };
 
   const handleDeleteProyecto = (id: number) => {
-    setProyectos(proyectos.filter(proyecto => proyecto.id !== id));
+    setProyectos(proyectos.filter((proyecto) => proyecto.id !== id));
   };
 
   return (
@@ -124,15 +162,15 @@ const RegistrarProyecto: React.FC = () => {
               <IonList>
                 <IonItem>
                   <IonLabel position="stacked">Nombre del Proyecto</IonLabel>
-                  <IonInput value={nombre} onIonChange={e => setNombre(e.detail.value!)} placeholder="Nombre del proyecto"></IonInput>
+                  <IonInput value={nombre} onIonChange={(e) => setNombre(e.detail.value!)} placeholder="Nombre del proyecto" />
                 </IonItem>
                 <IonItem>
                   <IonLabel position="stacked">Responsable</IonLabel>
-                  <IonInput value={responsable} onIonChange={e => setResponsable(e.detail.value!)} placeholder="Nombre del responsable"></IonInput>
+                  <IonInput value={responsable} onIonChange={(e) => setResponsable(e.detail.value!)} placeholder="Nombre del responsable" />
                 </IonItem>
                 <IonItem>
                   <IonLabel position="stacked">Estado</IonLabel>
-                  <IonSelect value={estado} placeholder="Seleccionar Estado" onIonChange={e => setEstado(e.detail.value)}>
+                  <IonSelect value={estado} placeholder="Seleccionar Estado" onIonChange={(e) => setEstado(e.detail.value)}>
                     <IonSelectOption value="Sin Aprobar">Sin Aprobar</IonSelectOption>
                     <IonSelectOption value="En Ejecucion">En Ejecucion</IonSelectOption>
                     <IonSelectOption value="Finalizado">Finalizado</IonSelectOption>
@@ -164,15 +202,15 @@ const RegistrarProyecto: React.FC = () => {
               <IonList>
                 <IonItem>
                   <IonLabel position="stacked">Nombre del Proyecto</IonLabel>
-                  <IonInput value={nombre} onIonChange={e => setNombre(e.detail.value!)} placeholder="Nombre del proyecto" />
+                  <IonInput value={nombre} onIonChange={(e) => setNombre(e.detail.value!)} placeholder="Nombre del proyecto" />
                 </IonItem>
                 <IonItem>
                   <IonLabel position="stacked">Responsable</IonLabel>
-                  <IonInput value={responsable} onIonChange={e => setResponsable(e.detail.value!)} placeholder="Nombre del responsable" />
+                  <IonInput value={responsable} onIonChange={(e) => setResponsable(e.detail.value!)} placeholder="Nombre del responsable" />
                 </IonItem>
                 <IonItem>
                   <IonLabel position="stacked">Estado</IonLabel>
-                  <IonSelect value={estado} placeholder="Seleccionar Estado" onIonChange={e => setEstado(e.detail.value)}>
+                  <IonSelect value={estado} placeholder="Seleccionar Estado" onIonChange={(e) => setEstado(e.detail.value)}>
                     <IonSelectOption value="Sin Aprobar">Sin Aprobar</IonSelectOption>
                     <IonSelectOption value="En Ejecucion">En Ejecucion</IonSelectOption>
                     <IonSelectOption value="Finalizado">Finalizado</IonSelectOption>
@@ -182,7 +220,7 @@ const RegistrarProyecto: React.FC = () => {
               </IonList>
               <IonRow>
                 <IonCol>
-                  <IonButton expand="block" onClick={handleEditProyecto}>Guardar Cambios</IonButton>
+                  <IonButton expand="block" onClick={handleEditProyecto}>Actualizar</IonButton>
                 </IonCol>
                 <IonCol>
                   <IonButton expand="block" color="medium" onClick={closeModal}>Cancelar</IonButton>

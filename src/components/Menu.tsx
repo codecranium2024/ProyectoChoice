@@ -1,3 +1,4 @@
+//supuestemante deberia de arreglarse
 import React, { useState } from 'react';
 import {
   IonContent,
@@ -53,6 +54,7 @@ const appPages: AppPage[] = [
     subPages: [
       { title: 'Registrar Proyecto', url: '/RegistrarProyecto' },
       { title: 'Informacion Comunitaria', url: '/InformacionComunitaria' },
+      { title: 'Historial Proyectos', url: '/Historial' },
       { title: 'Mapa', url: '/Mapa' },
     ]
   },
@@ -68,12 +70,12 @@ const appPages: AppPage[] = [
     ]
   },
   {
-    title: 'Reportes',
-    url: '/folder/Reportes',
+    title: 'Reporte',
+    url: '/Reportes por cada componete',
     iosIcon: statsChartOutline,
     mdIcon: statsChartSharp,
     subPages: [
-      { title: 'Visualizar', url: '' },
+      { title: 'Reportes', url: '/Reporte' },
     ]
   },
   {
@@ -158,7 +160,7 @@ const Menu: React.FC<MenuProps> = ({ userName, userRole, onLogout }) => {
           ))}
         </IonList>
 
-        {/* Información del usuario y botón de cerrar sesión */}
+        {/* Información del usuario y  se agrega el botón de cerrar sesión */}
         <IonList>
           <IonItem lines="none">
             <IonIcon slot="start" icon={peopleCircleOutline} />

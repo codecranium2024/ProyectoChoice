@@ -15,19 +15,22 @@ const Mapa = () => {
     });
 
     const getWeatherData = async (lat: number, lon: number) => {
-      const apiKey = '87b0a1f0-85a0-11ef-8d8d-0242ac130003-87b0a27c-85a0-11ef-8d8d-0242ac13000';
-      const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}`;
+      const url = `https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=${lat}&lon=${lon}`;
 
       try {
-        const response = await axios.get(url);
+        const response = await axios.get(url, {
+          headers: {
+            'User-Agent': 'TuAplicacion/1.0' // Cambia 'TuAplicacion' por el nombre de tu aplicación
+          }
+        });
         const weatherData = response.data;
 
         // Agregar marcador en el mapa
         new mapboxgl.Marker()
           .setLngLat([lon, lat])
           .setPopup(new mapboxgl.Popup().setHTML(`
-            <h3>Clima: ${weatherData.weather[0].description}</h3>
-            <p>Temperatura: ${(weatherData.main.temp - 273.15).toFixed(2)}°C</p>
+            <h3>Clima: ${weatherData.properties.timeseries[0].data.next_1_hours.summary.symbol_code}</h3>
+            <p>Temperatura: ${weatherData.properties.timeseries[0].data.instant.details.air_temperature.toFixed(2)}°C</p>
           `))
           .addTo(map);
       } catch (error) {
