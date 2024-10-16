@@ -3,7 +3,8 @@ import React, { useState } from "react";
 //import { earthOutline, cogOutline, bookOutline, waterOutline, fitnessOutline, peopleOutline, leafOutline } from 'ionicons/icons';
 import {IonGrid, IonCol, IonAlert, IonSelectOption, IonSelect,IonText,IonPage,IonHeader,IonTab,IonContent,IonTabBar,IonTabButton,IonTabs,IonToolbar,IonTitle,IonIcon,IonButton, IonRow,IonCheckbox,IonList,IonItem,IonInput} from "@ionic/react";
 import { add, bookOutline, cog, cogOutline, earthOutline, fitnessOutline, globeOutline, leafOutline, peopleOutline, waterOutline } from 'ionicons/icons';
-
+import { FaRecycle } from "react-icons/fa";
+import { PiCowFill, PiPlantFill} from "react-icons/pi";
 function AgregarComunidades() {
 
   const [showSuccessAlert, setShowSuccessAlert] = useState(false);
@@ -469,8 +470,9 @@ setRows2(newRows2);
         <IonTabs className="tabs">
           <IonTab tab="DatosGenerales">
             <div className="PanelSecundario">
-              <h2 className="TituloN2">Información General</h2>
-
+              <IonRow className="FilaTextBox">
+                <h2 className="TituloN2">Información General</h2>
+              </IonRow>  
               {/* Preguntas independientes */}
               <IonRow className="FilaTextBox">
                 <h3 className="labelForm">1. Nombre de la comunidad:</h3>
@@ -1738,7 +1740,7 @@ setRows2(newRows2);
                       </IonCol>
                       <IonCol>
                         <IonInput
-                          value={rows.precio}
+                          value={row.precio}
                           placeholder="Precio"
                           onIonChange={(e) => handleInputChange(index, 'precio', e.detail.value!)}
                         />
@@ -1985,9 +1987,9 @@ setRows2(newRows2);
                           <IonTabButton tab="Agua&Sane"> <IonIcon size="large" icon={waterOutline} /> </IonTabButton>
                           <IonTabButton tab="Salud&Nut"> <IonIcon size="large" icon={fitnessOutline} /> </IonTabButton>
                           <IonTabButton tab="MapadeActores"> <IonIcon size="large" icon={peopleOutline} /> </IonTabButton>
-                          <IonTabButton tab="Agricultura"> <IonIcon size="large" icon={leafOutline} /> </IonTabButton>
-                          <IonTabButton tab="ActividadesPec"> <IonIcon size="large" icon={cogOutline} /> </IonTabButton>
-                          <IonTabButton tab="Ecologia"> <IonIcon size="large" icon={cogOutline} /> </IonTabButton>
+                          <IonTabButton tab="Agricultura"> <PiPlantFill size={28}   /> </IonTabButton>
+                          <IonTabButton tab="ActividadesPec"><PiCowFill size={28} /></IonTabButton>
+                          <IonTabButton tab="Ecologia"><FaRecycle size={25} /></IonTabButton>
           </IonTabBar>
 
         </IonTabs>
