@@ -70,13 +70,8 @@ const appPages: AppPage[] = [
     ]
   },
   {
-<<<<<<< HEAD
-    title: 'Reportes',
-    url: '/Reportes',
-=======
     title: 'Reporte',
     url: '/Reportes por cada componete',
->>>>>>> main
     iosIcon: statsChartOutline,
     mdIcon: statsChartSharp,
     subPages: [
