@@ -1,16 +1,15 @@
 import React, { useState } from "react";
 //import { IonPage, IonContent, IonTabs, IonTab, IonTabBar, IonTabButton, IonIcon, IonButton, IonRow, IonCheckbox } from "@ionic/react";
 //import { earthOutline, cogOutline, bookOutline, waterOutline, fitnessOutline, peopleOutline, leafOutline } from 'ionicons/icons';
-import {IonAlert, IonSelectOption, IonSelect,IonText,IonPage,IonHeader,IonTab,IonContent,IonTabBar,IonTabButton,IonTabs,IonToolbar,IonTitle,IonIcon,IonButton, IonRow,IonCheckbox,IonList,IonItem,IonInput} from "@ionic/react";
-import { bookOutline, cog, cogOutline, earthOutline, fitnessOutline, globeOutline, leafOutline, peopleOutline, waterOutline } from 'ionicons/icons';
-
+import {IonGrid, IonCol, IonAlert, IonSelectOption, IonSelect,IonText,IonPage,IonHeader,IonTab,IonContent,IonTabBar,IonTabButton,IonTabs,IonToolbar,IonTitle,IonIcon,IonButton, IonRow,IonCheckbox,IonList,IonItem,IonInput} from "@ionic/react";
+import { add, bookOutline, cog, cogOutline, earthOutline, fitnessOutline, globeOutline, leafOutline, peopleOutline, waterOutline } from 'ionicons/icons';
+import { FaRecycle } from "react-icons/fa";
+import { PiCowFill, PiPlantFill} from "react-icons/pi";
 function AgregarComunidades() {
 
   const [showSuccessAlert, setShowSuccessAlert] = useState(false);
   const [showValidationAlert, setShowValidationAlert] = useState(false);
-
   const [seccionActual, setSeccionActual] = useState('DatosGenerales'); // Por defecto, empieza en DatosGenerales
-
   // estructura de formularios
   let [Comunidad, setComunidad] = useState('');
   let [Municipio, setMunicipio] = useState(''); // campo para guardar el municipio
@@ -185,7 +184,124 @@ function AgregarComunidades() {
   const removeActor = (nombre: string) => {
     setActors(actors.filter(actor => actor.nombre !== nombre));
   };
-  
+
+  /* Tabla de pestaña agricultura*/
+  const [rows, setRows] = useState([{ cultivo: '', area: '', rendimientos: '', destino: '', precio: '', siembra: '', cosecha: '' }]);
+
+  // Función para agregar una nueva fila
+  const addRow = () => {
+    setRows([...rows, { cultivo: '', area: '', rendimientos: '', destino: '', precio: '', siembra: '', cosecha: '' }]);
+  };
+
+  // Función para manejar cambios en los campos de entrada
+  const handleInputChange = (index: number, field: string, value: string) => {
+    const newRows = [...rows];
+    newRows[index][field] = value;
+    setRows(newRows);
+  };
+  /*Fin tabla de agricultura*/ 
+
+
+  /*Actividades Pecuarias*/
+  const [rows2, setRows2] = useState([{ tipo: 'Aves', frecuencia: '', alimento: '', area: '', venta: '', precio: '', donde: '' },
+    { tipo: 'Cerdos', frecuencia: '', alimento: '', area: '', venta: '', precio: '', donde: '' },
+    { tipo: 'Vacas/toros', frecuencia: '', alimento: '', area: '', venta: '', precio: '', donde: '' }]);
+
+// Función para agregar una nueva fila
+const addRow2 = () => {
+setRows2([...rows2, { tipo: '', frecuencia: '', alimento: '', area: '', venta: '', precio: '', donde: '' }]);
+};
+
+// Función para manejar cambios en los campos de entrada
+const handleInputChange2 = (index: number, field: string, value: string) => {
+const newRows = [...rows2];
+newRows[index][field] = value;
+setRows2(newRows);
+};
+
+const handleCheckboxChange2 = (index: number, field: string, value: boolean) => {
+const newRows2 = [...rows2];
+newRows2[index][field] = value;
+setRows2(newRows2);
+};
+  /*Fin Actividades Pecuarias*/
+   const [comercializacionProductos, setComercializacionProductos] = useState(''); // Campo de texto
+   const [terrenoPropio, setTerrenoPropio] = useState(false);  // Checkbox
+   const [terrenoPrestado, setTerrenoPrestado] = useState(false);  // Checkbox
+   const [terrenoArrendado, setTerrenoArrendado] = useState(false);  // Checkbox
+   const [costoArrendamiento, setCostoArrendamiento] = useState(''); // Campo de texto
+   const [periodoArrendamiento, setPeriodoArrendamiento] = useState(''); // Campo de texto
+   const [momentoSiembra, setMomentoSiembra] = useState('');  // Campo de texto
+   const [plagasEnfermedades, setPlagasEnfermedades] = useState('');  // Campo de texto
+   const [mesesPlagas, setMesesPlagas] = useState('');  // Campo de texto
+   const [cultivosAnteriores, setCultivosAnteriores] = useState('');  // Campo de texto
+   const [razonNoSiembra, setRazonNoSiembra] = useState('');  // Campo de texto
+   const [nuevosCultivos, setNuevosCultivos] = useState('');  // Campo de texto
+   const [sistemasProductivos, setSistemasProductivos] = useState('');  // Campo de texto
+   const [accionesSequía, setAccionesSequía] = useState('');  // Campo de texto
+   const [accionesLluvia, setAccionesLluvia] = useState('');  // Campo de texto
+   const [perdidaCosechas, setPerdidaCosechas] = useState(false);  // Checkbox
+   const [añoPerdidaCosechas, setAñoPerdidaCosechas] = useState('');  // Campo de texto
+   const [causaPerdidaCosechas, setCausaPerdidaCosechas] = useState('');  // Campo de texto
+   const [capacitacionesAgricultura, setCapacitacionesAgricultura] = useState(false);  // Checkbox
+   const [tipoCapacitacion, setTipoCapacitacion] = useState('');  // Campo de texto
+   const [organizacionCapacitacion, setOrganizacionCapacitacion] = useState('');  // Campo de texto
+   const [actividadSinSiembra, setActividadSinSiembra] = useState('');  // Campo de texto
+   const [usoPesticidas, setUsoPesticidas] = useState(false);  // Checkbox
+   const [usoInsecticidas, setUsoInsecticidas] = useState(false);  // Checkbox
+   const [usoHerbicidas, setUsoHerbicidas] = useState(false);  // Checkbox
+   const [usoFungicidas, setUsoFungicidas] = useState(false);  // Campo de texto
+   const [usoFertilizantes, setUsoFertilizantes] = useState(false);  // Campo de texto
+   const [usoOtros, setUsoOtros] = useState('');  // Campo de texto
+
+   const [alimentoAnimales, setAlimentoAnimales] = useState('');  // Campo de texto
+   const [planesProfilacticos, setPlanesProfilacticos] = useState(false);  // Checkbox
+   const [enfermedadesAnimales, setEnfermedadesAnimales] = useState('');  // Campo de texto
+   const [mesesEnfermedad, setMesesEnfermedad] = useState('');  // Campo de texto
+   const [capacitacionesAnimales, setCapacitacionesAnimales] = useState(false);  // Checkbox
+   const [tipoCapacitacionAnimales, setTipoCapacitacionAnimales] = useState('');  // Campo de texto
+
+   const [bosqueComunitario, setBosqueComunitario] = useState(false);  // Checkbox
+   const [dimensionesBosque, setDimensionesBosque] = useState('');  // Campo de texto
+   const [especiesArboles, setEspeciesArboles] = useState('');  // Campo de texto
+   const [especiesPlantas, setEspeciesPlantas] = useState('');  // Campo de texto
+   const [incentivosForestales, setIncentivosForestales] = useState(false);  // Checkbox
+   const [bosquesPotenciales, setBosquesPotenciales] = useState('');  // Campo de texto
+   const [viveros, setViveros] = useState(false);  // Checkbox
+   const [reforestado, setReforestado] = useState(false);  // Checkbox
+   const [areaReforestada, setAreaReforestada] = useState('');  // Campo de texto
+   const [impulsorReforestacion, setImpulsorReforestacion] = useState('');  // Campo de texto
+   const [duenoTierraBosque, setDuenoTierraBosque] = useState('');  // Campo de texto
+   const [duenosMotosierras, setDuenosMotosierras] = useState(false);  // Checkbox
+   const [talaParaCultivar, setTalaParaCultivar] = useState(false);  // Checkbox
+   const [rozasQuemas, setRozasQuemas] = useState('');  // Campo de texto
+   const [incendiosForestales, setIncendiosForestales] = useState(false);  // Checkbox
+   const [razonIncendios, setRazonIncendios] = useState('');  // Campo de texto
+   const [areaIncendio, setAreaIncendio] = useState('');  // Campo de texto
+   const [fechaIncendio, setFechaIncendio] = useState('');  // Campo de texto
+   const [fuentesAgua, setFuentesAgua] = useState(false);  // Checkbox
+   const [numNacimientos, setNumNacimientos] = useState('');  // Campo de texto
+   const [duenoTierraFuentes, setDuenoTierraFuentes] = useState('');  // Campo de texto
+   const [accionesConservacionAgua, setAccionesConservacionAgua] = useState('');  // Campo de texto
+   const [numPozos, setNumPozos] = useState('');  // Campo de texto
+   const [numRios, setNumRios] = useState('');  // Campo de texto
+   const [numLagunas, setNumLagunas] = useState('');  // Campo de texto
+   const [otrasFuentesAgua, setOtrasFuentesAgua] = useState('');  // Campo de texto
+   const [proyectoMedioAmbiental, setProyectoMedioAmbiental] = useState(false);  // Checkbox
+   const [accionesProyecto, setAccionesProyecto] = useState('');  // Campo de texto
+   const [accionesConservacionAmbiente, setAccionesConservacionAmbiente] = useState('');  // Campo de texto
+   const [animalesSilvestres, setAnimalesSilvestres] = useState('');  // Campo de texto
+   const [animalesPorTemporada, setAnimalesPorTemporada] = useState('');  // Campo de texto
+   const [plantasExtintas, setPlantasExtintas] = useState('');  // Campo de texto
+   const [plantasDificiles, setPlantasDificiles] = useState('');  // Campo de texto
+   const [desastreNatural, setDesastreNatural] = useState(false);  // Checkbox
+   const [anioDesastre, setAnioDesastre] = useState('');  // Campo de texto
+   const [tipoDesastre, setTipoDesastre] = useState('');  // Campo de texto
+   const [respuestaDesastre, setRespuestaDesastre] = useState('');  // Campo de texto
+   const [colred, setColred] = useState(false);  // Checkbox
+   const [otrasInstituciones, setOtrasInstituciones] = useState('');  // Campo de texto
+   const [amenazaDesastre, setAmenazaDesastre] = useState('');  // Campo de texto
+
   // Función para enviar los datos al backend
   const handleGuardarComunidad = async () => {
     // Verificar la sección actual y validar los campos requeridos
@@ -354,8 +470,9 @@ function AgregarComunidades() {
         <IonTabs className="tabs">
           <IonTab tab="DatosGenerales">
             <div className="PanelSecundario">
-              <h2 className="TituloN2">Información General</h2>
-
+              <IonRow className="FilaTextBox">
+                <h2 className="TituloN2">Información General</h2>
+              </IonRow>  
               {/* Preguntas independientes */}
               <IonRow className="FilaTextBox">
                 <h3 className="labelForm">1. Nombre de la comunidad:</h3>
@@ -523,9 +640,9 @@ function AgregarComunidades() {
               <IonRow className="FilaTextBox">
                 <h3 className="labelForm">26. ¿A qué edad empiezan a trabajar en la comunidad?</h3>
                 <h3 className="labelForm">Hombres:</h3>
-                <input onChange={e => setEdadTrabajoHombres(e.target.value)} type="text" className='TextBox' />
+                <input onChange={e => setEdadTrabajoHombres(e.target.value)} type="text" className='TextBoxPeq' />
                 <h3 className="labelForm">Mujeres:</h3>
-                <input onChange={e => setEdadTrabajoMujeres(e.target.value)} type="text" className='TextBox' />
+                <input onChange={e => setEdadTrabajoMujeres(e.target.value)} type="text" className='TextBoxPeq' />
               </IonRow>
 
               <IonRow className="FilaTextBox">
@@ -961,13 +1078,7 @@ function AgregarComunidades() {
               </IonRow>
 
               {/* Pregunta 52: ¿Hubo o hay capacitaciones sobre saneamiento ambiental? */}
-              <IonRow className="FilaTextBox">
-                <h3 className="labelForm">52. ¿Hubo o hay capacitaciones sobre saneamiento ambiental?</h3>
-                <IonCheckbox
-                  checked={capacitacionesSaneamiento}
-                  onIonChange={(e) => setCapacitacionesSaneamiento(e.target.checked)}
-                />
-              </IonRow>
+              
               {capacitacionesSaneamiento && (
                   <>
                     {/* Pregunta 52.1: ¿De qué se trata o trató? */}
@@ -1298,11 +1409,10 @@ function AgregarComunidades() {
                 ))}
                 <IonButton onClick={addOng}>Añadir ONG</IonButton>
 
-
                 <IonRow className="FilaTextBox">
-                  <h3 className="labelForm">75. Mapeo de actores</h3>
-                  <table className="TableActores">
-                    <thead>
+                  <h3 className="labelForm">73. Mapeo de actores</h3>
+                  <table className="TablaActores">
+                    <thead className="FilaTabla">
                       <tr>
                         <th>Nombre del actor</th>
                         <th>Aceptación en la comunidad (alta, media, baja)</th>
@@ -1313,8 +1423,8 @@ function AgregarComunidades() {
                     <tbody>
                       {actors.map((actor, index) => (
                         <tr key={index}>
-                          <td>{actor.nombre}</td>
-                          <td>
+                          <td className="celda">{actor.nombre}</td>
+                          <td className="celda">
                             <IonSelect
                               value={actor.aceptacion}
                               onIonChange={(e) => {
@@ -1325,10 +1435,10 @@ function AgregarComunidades() {
                             >
                               <IonSelectOption value="alta">Alta</IonSelectOption>
                               <IonSelectOption value="media">Media</IonSelectOption>
-                              <IonSelectOption value="baja">Baja</IonSelectOption>
+                              <IonSelectOption className="celda" value="baja">Baja</IonSelectOption>
                             </IonSelect>
                           </td>
-                          <td>
+                          <td className="celda">
                             <IonSelect
                               value={actor.importancia}
                               onIonChange={(e) => {
@@ -1373,6 +1483,200 @@ function AgregarComunidades() {
                   (Los campos subrayados son obligatorios)
                 </h3>
               </IonRow>
+
+            <IonRow className="FilaTextBox">
+              <h3 className="labelForm">74. ¿Qué cultivos existen en la comunidad?</h3>
+              </IonRow>
+              <IonRow className="FilaTextBox">  
+              <IonGrid>
+                <IonRow>
+                  <IonCol>Tipo de Cultivo</IonCol>
+                  <IonCol>Área Promedio Cultivada</IonCol>
+                  <IonCol>Rendimientos</IonCol>
+                  <IonCol>Destino (Consumo/Venta)</IonCol>
+                  <IonCol>Precios de Venta</IonCol>
+                  <IonCol>Mes de Siembra</IonCol>
+                  <IonCol>Mes de Cosecha</IonCol>
+                </IonRow>
+
+                {rows.map((row, index) => (
+                  <IonRow key={index}>
+                    <IonCol>
+                      <IonInput
+                        value={row.cultivo}
+                        placeholder="Tipo de Cultivo"
+                        onIonChange={(e) => handleInputChange(index, 'cultivo', e.detail.value!)}
+                        />
+                    </IonCol>
+                    <IonCol>
+                      <IonInput
+                        value={row.area}
+                        placeholder="Área Cultivada"
+                        onIonChange={(e) => handleInputChange(index, 'area', e.detail.value!)}
+                      />
+                    </IonCol>
+                    <IonCol>
+                      <IonInput
+                        value={row.rendimientos}
+                        placeholder="Rendimientos"
+                        onIonChange={(e) => handleInputChange(index, 'rendimientos', e.detail.value!)}
+                      />
+                    </IonCol>
+                    <IonCol>
+                      <IonInput
+                        value={row.destino}
+                        placeholder="Destino"
+                        onIonChange={(e) => handleInputChange(index, 'destino', e.detail.value!)}
+                        />
+                    </IonCol>
+                    <IonCol>
+                      <IonInput
+                        value={row.precio}
+                        placeholder="Precio de Venta"
+                        onIonChange={(e) => handleInputChange(index, 'precio', e.detail.value!)}
+                      />
+                    </IonCol>
+                    <IonCol>
+                      <IonInput
+                        value={row.siembra}
+                        placeholder="Mes de Siembra"
+                        onIonChange={(e) => handleInputChange(index, 'siembra', e.detail.value!)}
+                        />
+                    </IonCol>
+                    <IonCol>
+                      <IonInput
+                        value={row.cosecha}
+                        placeholder="Mes de Cosecha"
+                        onIonChange={(e) => handleInputChange(index, 'cosecha', e.detail.value!)}
+                      />
+                    </IonCol>
+                  </IonRow>
+                ))}
+                  <IonRow>
+                    <IonCol>
+                      <IonButton  color='secondary' onClick={addRow}><IonIcon slot="start" icon={add}></IonIcon>Agregar Fila</IonButton>
+                    </IonCol>
+                  </IonRow>
+                </IonGrid>
+              </IonRow>
+
+              {/*Preguntas*/}
+              <IonRow className="FilaTextBox">
+                <h3 className="labelForm">75. ¿Dónde comercializan los productos?</h3>
+                <input type="text" value={comercializacionProductos} onChange={e => setComercializacionProductos(e.target.value!)} className="TextBox" />
+              </IonRow>
+
+              <IonRow className="FilaTextBox">
+                <h3 className="labelForm">76. ¿El terreno donde se cultiva es?</h3>
+                <IonCheckbox checked={terrenoPropio} onIonChange={e => setTerrenoPropio(e.target.checked)} /> Propio
+                <IonCheckbox checked={terrenoPrestado} onIonChange={e => setTerrenoPrestado(e.target.checked)} /> Prestado
+                <IonCheckbox checked={terrenoArrendado} onIonChange={e => setTerrenoArrendado(e.target.checked)} /> Arrendado
+              </IonRow>
+
+              <IonRow className="FilaTextBox">
+                <h3 className="labelForm">77. ¿Costo del arrendamiento?</h3>
+                <input type="text" value={costoArrendamiento} onChange={e => setCostoArrendamiento(e.target.value!)} className="TextBoxPeq" />
+                <h3 className="labelForm">Período</h3>
+                <input type="text" value={periodoArrendamiento} onChange={e => setPeriodoArrendamiento(e.target.value!)} className="TextBoxPeq" />
+              </IonRow>
+
+              <IonRow className="FilaTextBox">
+                <h3 className="labelForm">78. ¿Cómo saben en qué momento sembrar?</h3>
+                <input type="text" value={momentoSiembra} onChange={e => setMomentoSiembra(e.target.value!)} className="TextBox" />
+              </IonRow>
+
+              <IonRow className="FilaTextBox">
+                <h3 className="labelForm">79. ¿Cuáles son las principales plagas y enfermedades de los cultivos?</h3>
+                <input type="text" value={plagasEnfermedades} onChange={e => setPlagasEnfermedades(e.target.value!)} className="TextBox" />
+              </IonRow>
+
+              <IonRow className="FilaTextBox">
+                <h3 className="labelForm">80. ¿Cuáles son los meses en que aparecen las plagas y enfermedades?</h3>
+                <input type="text" value={mesesPlagas} onChange={e => setMesesPlagas(e.target.value!)} className="TextBox" />
+              </IonRow>
+
+              <IonRow className="FilaTextBox">
+                <h3 className="labelForm">81. ¿Recuerda algunos cultivos que sembraban y que ahora ya no se siembran?</h3>
+                <input type="text" value={cultivosAnteriores} onChange={e => setCultivosAnteriores(e.target.value!)} className="TextBox" />
+              </IonRow>
+
+              <IonRow className="FilaTextBox">
+                <h3 className="labelForm">82. ¿Por qué ya no se siembran?</h3>
+                <input type="text" value={razonNoSiembra} onChange={e => setRazonNoSiembra(e.target.value!)} className="TextBox" />
+              </IonRow>
+
+              <IonRow className="FilaTextBox">
+                <h3 className="labelForm">83. ¿Hay nuevos cultivos en la comunidad?</h3>
+                <input type="text" value={nuevosCultivos} onChange={e => setNuevosCultivos(e.target.value!)} className="TextBox" />
+              </IonRow>
+
+              <IonRow className="FilaTextBox">
+                <h3 className="labelForm">84. Sistemas productivos tradicionales:</h3>
+                <input type="text" value={sistemasProductivos} onChange={e => setSistemasProductivos(e.target.value!)} className="TextBox" />
+              </IonRow>
+
+              <IonRow className="FilaTextBox">
+                <h3 className="labelForm">85. ¿Qué se hace con los cultivos cuando hay sequía?</h3>
+                <input type="text" value={accionesSequía} onChange={e => setAccionesSequía(e.target.value!)} className="TextBox" />
+              </IonRow>
+
+              <IonRow className="FilaTextBox">
+                <h3 className="labelForm">86. ¿Qué se hace con los cultivos cuando hay mucha lluvia?</h3>
+                <input type="text" value={accionesLluvia} onChange={e => setAccionesLluvia(e.target.value!)} className="TextBox" />
+              </IonRow>
+
+              {/* Pregunta dependiente */}
+              <IonRow className="FilaTextBox">
+                <h3 className="labelForm">87. ¿Algunos años se han perdido las cosechas?</h3>
+                <IonCheckbox className="CheckBox" checked={perdidaCosechas} onIonChange={(e) => setPerdidaCosechas(e.detail.checked)} />
+                {perdidaCosechas && (
+                  <>
+                    <h3 className="labelForm">¿En qué año?</h3>
+                    <input type="text" value={añoPerdidaCosechas} onChange={e => setAñoPerdidaCosechas(e.target.value!)} className="TextBoxPeq" />
+                    <h3 className="labelForm">¿A causa de qué?</h3>
+                    <input type="text" value={causaPerdidaCosechas} onChange={e => setCausaPerdidaCosechas(e.target.value!)} className="TextBox" />
+                  </>
+                )}
+              </IonRow>
+              
+              <IonRow className="FilaTextBox">
+                <h3 className="labelForm">88. ¿Han recibido capacitaciones sobre agricultura?</h3>
+                <IonCheckbox checked={capacitacionesAgricultura} onIonChange={(e) => setCapacitacionesAgricultura(e.target.checked)} />
+                {capacitacionesAgricultura && (
+                  <>
+                    <h3 className="labelForm">¿Qué tipo?</h3>
+                    <input type="text" value={tipoCapacitacion} onChange={e => setTipoCapacitacion(e.target.value!)} className="TextBoxPeq" />
+                  </>
+                )}
+                
+              </IonRow>
+              
+              <IonRow className="FilaTextBox">
+                <h3 className="labelForm">89. ¿Qué organización las imparte o impartió?</h3>
+                <input type="text" value={organizacionCapacitacion} onChange={e => setOrganizacionCapacitacion(e.target.value!)} className="TextBox" />
+              </IonRow>
+              
+              <IonRow className="FilaTextBox">
+                <h3 className="labelForm">90. ¿Qué actividad realiza cuando no hay siembra ni cosecha?</h3>
+                <input type="text" value={actividadSinSiembra} onChange={e => setActividadSinSiembra(e.target.value!)} className="TextBox" />
+              </IonRow>
+              
+              <IonRow className="FilaTextBox">
+                <h3 className="labelForm">91. Uso de productos químicos:</h3>
+                <h3 className="labelForm">Pesticidas</h3>
+                <IonCheckbox checked={usoPesticidas} onIonChange={e => setUsoPesticidas(e.target.checked)} /> 
+                <h3 className="labelForm">Insecticidas</h3>
+                <IonCheckbox checked={usoInsecticidas} onIonChange={e => setUsoInsecticidas(e.target.checked)} /> 
+                <h3 className="labelForm">Herbicidas</h3>
+                <IonCheckbox checked={usoHerbicidas} onIonChange={e => setUsoHerbicidas(e.target.checked)} />
+                <h3 className="labelForm">Fungicidas</h3>
+                <IonCheckbox checked={usoFungicidas} onIonChange={e => setUsoFungicidas(e.target.checked)} />
+                <h3 className="labelForm">Fertilizantes</h3>
+                <IonCheckbox checked={usoFertilizantes} onIonChange={e => setUsoFertilizantes(e.target.checked)} />
+                <h3 className="labelForm">Otros:</h3>
+                <input type="text" value={usoOtros} onChange={e => setUsoOtros(e.target.value!)} className="TextBox" />
+              </IonRow>
+
             </div>
           </IonTab>
 
@@ -1384,6 +1688,115 @@ function AgregarComunidades() {
                 <h3 style={{ color: "GrayText", fontSize: "14px", paddingLeft: "10px" }}>
                   (Los campos subrayados son obligatorios)
                 </h3>
+              </IonRow>
+              <h3 className="labelForm">92. Actividades</h3>
+              <IonGrid>
+                <IonRow>
+                  <IonCol>Tipo de Producción</IonCol>
+                  <IonCol>Frecuencia en la Crianza (años, meses, semanas)</IonCol>
+                  <IonCol>Tipo de Alimento que Consume</IonCol>
+                  <IonCol>En qué Área se Crían</IonCol>
+                  <IonCol>Venta</IonCol>
+                  <IonCol>Precio de Venta</IonCol>
+                  <IonCol>Donde se Venden</IonCol>
+                </IonRow>
+
+                  {rows2.map((row, index) => (
+                    <IonRow key={index}>
+                      <IonCol>
+            <IonInput
+              value={row.tipo}
+              placeholder="Tipo de Producción"
+              onIonChange={(e) => handleInputChange(index, 'tipo', e.detail.value!)}
+            />
+          </IonCol>
+                      <IonCol>
+                        <IonInput
+                          value={row.frecuencia}
+                          placeholder="Frecuencia"
+                          onIonChange={(e) => handleInputChange(index, 'frecuencia', e.detail.value!)}
+                        />
+                      </IonCol>
+                      <IonCol>
+                        <IonInput
+                          value={row.alimento}
+                          placeholder="Alimento"
+                          onIonChange={(e) => handleInputChange(index, 'alimento', e.detail.value!)}
+                        />
+                      </IonCol>
+                      <IonCol>
+                        <IonInput
+                          value={row.area}
+                          placeholder="Área"
+                          onIonChange={(e) => handleInputChange(index, 'area', e.detail.value!)}
+                        />
+                      </IonCol>
+                      <IonCol>
+                        <IonInput
+                          value={row.venta}
+                          placeholder="Venta"
+                          onIonChange={(e) => handleInputChange(index, 'venta', e.detail.value!)}
+                        />
+                      </IonCol>
+                      <IonCol>
+                        <IonInput
+                          value={row.precio}
+                          placeholder="Precio"
+                          onIonChange={(e) => handleInputChange(index, 'precio', e.detail.value!)}
+                        />
+                      </IonCol>
+                      <IonCol>
+                        <IonInput
+                          value={row.donde}
+                          placeholder="Donde se Venden"
+                          onIonChange={(e) => handleInputChange(index, 'donde', e.detail.value!)}
+                        />
+                      </IonCol>
+                    </IonRow>
+                  ))}
+                <IonRow>
+                  <IonCol>
+                    <IonButton color="secondary"  onClick={addRow2}><IonIcon slot="start" icon={add}></IonIcon>Agregar Fila</IonButton>
+                  </IonCol>
+                </IonRow>
+             </IonGrid>
+
+              {/*Preguntas*/}
+              <IonRow className="FilaTextBox">
+                <h3 className="labelForm">93. ¿Cómo se consigue el alimento para los animales?</h3>
+                <input type="text" value={alimentoAnimales} onChange={e => setAlimentoAnimales(e.target.value!)} className="TextBox" />
+              </IonRow>
+
+              <IonRow className="FilaTextBox">
+                <h3 className="labelForm">94. ¿Se implementan planes profilácticos?</h3>
+                <IonCheckbox
+                  checked={planesProfilacticos}
+                  onIonChange={e => setPlanesProfilacticos(e.target.checked)}
+                />
+              </IonRow>
+
+              <IonRow className="FilaTextBox">
+                <h3 className="labelForm">95. ¿Qué enfermedades les afectan?</h3>
+                <input type="text" value={enfermedadesAnimales} onChange={e => setEnfermedadesAnimales(e.target.value!)} className="TextBox" />
+              </IonRow>
+
+              <IonRow className="FilaTextBox">
+                <h3 className="labelForm">96. ¿En qué meses se enferman?</h3>
+                <input type="text" value={mesesEnfermedad} onChange={e => setMesesEnfermedad(e.target.value!)} className="TextBox" />
+              </IonRow>
+
+              <IonRow className="FilaTextBox">
+                <h3 className="labelForm">97. ¿Reciben capacitaciones?</h3>
+                <IonCheckbox
+                  checked={capacitacionesAnimales}
+                  onIonChange={e => setCapacitacionesAnimales(e.target.checked)}
+                />
+                {capacitacionesAnimales && (
+                  <>
+                    <h3 className="labelForm">¿De qué tipo?</h3>
+                    <input type="text" value={tipoCapacitacionAnimales} onChange={e => setTipoCapacitacionAnimales(e.target.value!)} className="TextBox" />
+                  </>
+                )}
               </IonRow>
             </div>
           </IonTab>
@@ -1397,20 +1810,186 @@ function AgregarComunidades() {
                   (Los campos subrayados son obligatorios)
                 </h3>
               </IonRow>
-            </div>
-          </IonTab>      
-          {/* Hasta aca ---------------------------------*/}
 
-          <IonTabBar className="TabBarConf" slot="top">
-            <IonTabButton tab="DatosGenerales" onClick={() => setSeccionActual('DatosGenerales')}> <IonIcon size="large" icon={earthOutline} /> </IonTabButton>
-            <IonTabButton tab="Servicios" onClick={() => setSeccionActual('Servicios')}> <IonIcon size="large" icon={cogOutline} /> </IonTabButton>
-            <IonTabButton tab="Educacion"> <IonIcon size="large" icon={bookOutline} /> </IonTabButton>
-            <IonTabButton tab="Agua&Sane"> <IonIcon size="large" icon={waterOutline} /> </IonTabButton>
-            <IonTabButton tab="Salud&Nut"> <IonIcon size="large" icon={fitnessOutline} /> </IonTabButton>
-            <IonTabButton tab="MapadeActores"> <IonIcon size="large" icon={peopleOutline} /> </IonTabButton>
-            <IonTabButton tab="Agricultura"> <IonIcon size="large" icon={leafOutline} /> </IonTabButton>
-            <IonTabButton tab="ActividadesPec"> <IonIcon size="large" icon={cogOutline} /> </IonTabButton>
-            <IonTabButton tab="Ecologia"> <IonIcon size="large" icon={cogOutline} /> </IonTabButton>
+              <IonRow className="FilaTextBox">
+                <h3 className="labelForm">99. ¿Hay algún bosque comunitario?</h3>
+                <IonCheckbox checked={bosqueComunitario} onIonChange={(e) => setBosqueComunitario(e.target.checked)} />
+                <h3 className="labelForm">¿Qué dimensiones tiene?</h3>
+                <input type="text" value={dimensionesBosque} onChange={e => setDimensionesBosque(e.target.value!)} className="TextBoxPeq" />
+              </IonRow>
+
+              <IonRow className="FilaTextBox">
+                <h3 className="labelForm">100. ¿Qué especies de árboles tiene?</h3>
+                <input type="text" value={especiesArboles} onChange={e => setEspeciesArboles(e.target.value!)} className="TextBox" />
+              </IonRow>
+
+              <IonRow className="FilaTextBox">
+                <h3 className="labelForm">101. ¿Qué otras especies de plantas tienen?</h3>
+                <input type="text" value={especiesPlantas} onChange={e => setEspeciesPlantas(e.target.value!)} className="TextBox" />
+              </IonRow>
+
+              <IonRow className="FilaTextBox">
+                <h3 className="labelForm">102. ¿Existen un programa de incentivos forestales?</h3>
+                <IonCheckbox checked={incentivosForestales} onIonChange={(e) => setIncentivosForestales(e.target.checked)} />
+                <h3 className="labelForm">¿Bosques potenciales para incentivos forestales?</h3>
+                <input type="text" value={bosquesPotenciales} onChange={e => setBosquesPotenciales(e.target.value!)} className="TextBox" />
+              </IonRow>
+
+              <IonRow className="FilaTextBox">
+                <h3 className="labelForm">103. ¿Hay viveros?</h3>
+                <IonCheckbox checked={viveros} onIonChange={(e) => setViveros(e.target.checked)} />
+                <h3 className="labelForm">¿Han reforestado?</h3>
+                <IonCheckbox checked={reforestado} onIonChange={(e) => setReforestado(e.target.checked)} />
+                <h3 className="labelForm">Área:</h3>
+                <input type="text" value={areaReforestada} onChange={e => setAreaReforestada(e.target.value!)} className="TextBoxPeq" />
+              </IonRow>
+
+              <IonRow className="FilaTextBox">
+                <h3 className="labelForm">104. ¿Quién la impulsó?</h3>
+                <input type="text" value={impulsorReforestacion} onChange={e => setImpulsorReforestacion(e.target.value!)} className="TextBox" />
+              </IonRow>
+
+              <IonRow className="FilaTextBox">
+                <h3 className="labelForm">105. ¿Quién es el dueño de la tierra donde hay bosque?</h3>
+                <input type="text" value={duenoTierraBosque} onChange={e => setDuenoTierraBosque(e.target.value!)} className="TextBox" />
+              </IonRow>
+
+              <IonRow className="FilaTextBox">
+                <h3 className="labelForm">106. ¿Hay personas que son dueñas de motosierras en la comunidad?</h3>
+                <IonCheckbox checked={duenosMotosierras} onIonChange={(e) => setDuenosMotosierras(e.target.checked)} />
+              </IonRow>
+
+              <IonRow className="FilaTextBox">
+                <h3 className="labelForm">107. ¿Se tala para cultivar?</h3>
+                <IonCheckbox checked={talaParaCultivar} onIonChange={(e) => setTalaParaCultivar(e.target.checked)} />
+                <h3 className="labelForm">¿Se hacen rozas o quemas?</h3>
+                <input type="text" value={rozasQuemas} onChange={e => setRozasQuemas(e.target.value!)} className="TextBox" />
+              </IonRow>
+
+              {/* Preguntas dependientes */}
+              <IonRow className="FilaTextBox">
+                <h3 className="labelForm">108. ¿Han ocurrido incendios forestales?</h3>
+                <IonCheckbox checked={incendiosForestales} onIonChange={(e) => setIncendiosForestales(e.detail.checked)} />
+                {incendiosForestales && (
+                  <>
+                    <h3 className="labelForm">¿Por qué razón?</h3>
+                    <input type="text" value={razonIncendios} onChange={e => setRazonIncendios(e.target.value!)} className="TextBoxPeq" />
+                    <h3 className="labelForm">¿Qué área?</h3>
+                    <input type="text" value={areaIncendio} onChange={e => setAreaIncendio(e.target.value!)} className="TextBoxPeq" />
+                    <h3 className="labelForm">¿Cuándo?</h3>
+                    <input type="text" value={fechaIncendio} onChange={e => setFechaIncendio(e.target.value!)} className="TextBoxPeq" />
+                  </>
+                )}
+              </IonRow>
+              
+              <IonRow className="FilaTextBox">
+                <h3 className="labelForm">110. ¿Hay fuentes de agua?</h3>
+                <IonCheckbox checked={fuentesAgua} onIonChange={(e) => setFuentesAgua(e.target.checked)} />
+                <h3 className="labelForm">¿Cuántos nacimientos?</h3>
+                <input type="text" value={numNacimientos} onChange={e => setNumNacimientos(e.target.value!)} className="TextBoxPeq" />
+              </IonRow>
+              
+              <IonRow className="FilaTextBox">
+                <h3 className="labelForm">111. ¿Quién es el propietario de la tierra en donde están las fuentes de agua o nacimientos?</h3>
+                <input type="text" value={duenoTierraFuentes} onChange={e => setDuenoTierraFuentes(e.target.value!)} className="TextBox" />
+              </IonRow>
+              
+              <IonRow className="FilaTextBox">
+                <h3 className="labelForm">112. ¿Qué acciones se realizan para conservar las fuentes de agua?</h3>
+                <input type="text" value={accionesConservacionAgua} onChange={e => setAccionesConservacionAgua(e.target.value!)} className="TextBox" />
+              </IonRow>
+              
+              <IonRow className="FilaTextBox">
+                <h3 className="labelForm">113. ¿Cuántos pozos?</h3>
+                <input type="text" value={numPozos} onChange={e => setNumPozos(e.target.value!)} className="TextBoxPeq" />
+                <h3 className="labelForm">¿Cuántos ríos hay cerca?</h3>
+                <input type="text" value={numRios} onChange={e => setNumRios(e.target.value!)} className="TextBoxPeq" />
+                <h3 className="labelForm">¿Cuántas lagunas?</h3>
+                <input type="text" value={numLagunas} onChange={e => setNumLagunas(e.target.value!)} className="TextBoxPeq" />
+              </IonRow>
+              
+              <IonRow className="FilaTextBox">
+                <h3 className="labelForm">114. Otras fuentes de agua</h3>
+                <input type="text" value={otrasFuentesAgua} onChange={e => setOtrasFuentesAgua(e.target.value!)} className="TextBox" />
+              </IonRow>
+              
+              <IonRow className="FilaTextBox">
+                <h3 className="labelForm">115. ¿Hubo algún proyecto medio ambiental?</h3>
+                <IonCheckbox checked={proyectoMedioAmbiental} onIonChange={(e) => setProyectoMedioAmbiental(e.target.checked)} />
+                <h3 className="labelForm">¿Qué se hizo?</h3>
+                <input type="text" value={accionesProyecto} onChange={e => setAccionesProyecto(e.target.value!)} className="TextBox" />
+              </IonRow>
+              
+              <IonRow className="FilaTextBox">
+                <h3 className="labelForm">116. ¿Qué acciones se realizan para conservar el medio ambiente?</h3>
+                <input type="text" value={accionesConservacionAmbiente} onChange={e => setAccionesConservacionAmbiente(e.target.value!)} className="TextBox" />
+              </IonRow>
+              
+              <IonRow className="FilaTextBox">
+                <h3 className="labelForm">117. ¿Cuáles animales silvestres se ven?</h3>
+                <input type="text" value={animalesSilvestres} onChange={e => setAnimalesSilvestres(e.target.value!)} className="TextBox" />
+              </IonRow>
+              
+              <IonRow className="FilaTextBox">
+                <h3 className="labelForm">118. ¿Cuáles animales se ven por temporadas?</h3>
+                <input type="text" value={animalesPorTemporada} onChange={e => setAnimalesPorTemporada(e.target.value!)} className="TextBox" />
+              </IonRow>
+              
+              <IonRow className="FilaTextBox">
+                <h3 className="labelForm">119. ¿Qué plantas ya no existen en la comunidad?</h3>
+                <input type="text" value={plantasExtintas} onChange={e => setPlantasExtintas(e.target.value!)} className="TextBox" />
+              </IonRow>
+              
+              <IonRow className="FilaTextBox">
+                <h3 className="labelForm">120. ¿Qué plantas son difíciles de ver ahora?</h3>
+                <input type="text" value={plantasDificiles} onChange={e => setPlantasDificiles(e.target.value!)} className="TextBox" />
+              </IonRow>
+              
+              {/* Preguntas dependientes */}
+              <IonRow className="FilaTextBox">
+                <h3 className="labelForm">121. ¿La comunidad ha sido afectada por algún desastre natural?</h3>
+                <IonCheckbox checked={desastreNatural} onIonChange={(e) => setDesastreNatural(e.detail.checked)} />
+                {desastreNatural && (
+                  <>
+                    <h3 className="labelForm">¿En qué año?</h3>
+                    <input type="text" value={anioDesastre} onChange={e => setAnioDesastre(e.target.value!)} className="TextBoxPeq" />
+                    <h3 className="labelForm">¿Qué tipo de desastre ha ocurrido?</h3>
+                    <input type="text" value={tipoDesastre} onChange={e => setTipoDesastre(e.target.value!)} className="TextBoxPeq" />
+                  </>
+                )}
+              </IonRow>
+              
+              <IonRow className="FilaTextBox">
+                <h3 className="labelForm">122. ¿Cómo se responde ante un desastre?</h3>
+                <input type="text" value={respuestaDesastre} onChange={e => setRespuestaDesastre(e.target.value!)} className="TextBox" />
+              </IonRow>
+              
+              <IonRow className="FilaTextBox">
+                <h3 className="labelForm">123. ¿Hay COLRED?</h3>
+                <IonCheckbox checked={colred} onIonChange={(e) => setColred(e.target.checked)} />
+                <h3 className="labelForm">Otras instituciones de atención a desastres</h3>
+                <input type="text" value={otrasInstituciones} onChange={e => setOtrasInstituciones(e.target.value!)} className="TextBox" />
+              </IonRow>
+              
+              <IonRow className="FilaTextBox">
+                <h3 className="labelForm">124. ¿Qué amenaza de desastre existe en la comunidad?</h3>
+                <input type="text" value={amenazaDesastre} onChange={e => setAmenazaDesastre(e.target.value!)} className="TextBox" />
+              </IonRow>
+              
+              </div>
+            </IonTab>      
+                        {/* Hasta aca ---------------------------------*/}
+              
+                        <IonTabBar className="TabBarConf" slot="top">
+                          <IonTabButton tab="DatosGenerales" onClick={() => setSeccionActual('DatosGenerales')}> <IonIcon size="large" icon={earthOutline} /> </IonTabButton>
+                          <IonTabButton tab="Servicios" onClick={() => setSeccionActual('Servicios')}> <IonIcon size="large" icon={cogOutline} /> </IonTabButton>
+                          <IonTabButton tab="Educacion"> <IonIcon size="large" icon={bookOutline} /> </IonTabButton>
+                          <IonTabButton tab="Agua&Sane"> <IonIcon size="large" icon={waterOutline} /> </IonTabButton>
+                          <IonTabButton tab="Salud&Nut"> <IonIcon size="large" icon={fitnessOutline} /> </IonTabButton>
+                          <IonTabButton tab="MapadeActores"> <IonIcon size="large" icon={peopleOutline} /> </IonTabButton>
+                          <IonTabButton tab="Agricultura"> <PiPlantFill size={28}   /> </IonTabButton>
+                          <IonTabButton tab="ActividadesPec"><PiCowFill size={28} /></IonTabButton>
+                          <IonTabButton tab="Ecologia"><FaRecycle size={25} /></IonTabButton>
           </IonTabBar>
 
         </IonTabs>
