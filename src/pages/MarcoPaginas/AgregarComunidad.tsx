@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 //import { IonPage, IonContent, IonTabs, IonTab, IonTabBar, IonTabButton, IonIcon, IonButton, IonRow, IonCheckbox } from "@ionic/react";
 //import { earthOutline, cogOutline, bookOutline, waterOutline, fitnessOutline, peopleOutline, leafOutline } from 'ionicons/icons';
-import {IonGrid, IonCol, IonAlert, IonSelectOption, IonSelect,IonText,IonPage,IonHeader,IonTab,IonContent,IonTabBar,IonTabButton,IonTabs,IonToolbar,IonTitle,IonIcon,IonButton, IonRow,IonCheckbox,IonList,IonItem,IonInput} from "@ionic/react";
 import { add, bookOutline, cog, cogOutline, earthOutline, fitnessOutline, globeOutline, leafOutline, peopleOutline, waterOutline } from 'ionicons/icons';
 import { FaRecycle } from "react-icons/fa";
 import { PiCowFill, PiPlantFill} from "react-icons/pi";
