@@ -298,10 +298,10 @@ const AdministrarUsuarios: React.FC = () => {
             Agregar Usuario
           </IonButton>
           <IonButton color="warning" onClick={() => setShowModal(true)}>
-            Actualizar
+            Editar Usuario
           </IonButton>
           <IonButton color="danger" onClick={() => setShowDeleteModal(true)}>
-            Eliminar
+            Eliminar Usuario
           </IonButton>
         </div>
 
@@ -387,7 +387,8 @@ const AdministrarUsuarios: React.FC = () => {
               </IonSelect>
               {/* Checkbox para decidir si usar una contraseña personalizada */}
               <IonItem>
-                <IonLabel>Ingresar usuario y contraseña manualmente</IonLabel>
+                <IonLabel>Haz clic si deseas crear el usuario y la contraseña manualmente.</IonLabel>
+                <IonLabel>De lo contrario generara uno de manera aleatoria.</IonLabel>
                 <IonCheckbox checked={customPassword} onIonChange={() => setCustomPassword(!customPassword)} />
               </IonItem>
               {customPassword && (
