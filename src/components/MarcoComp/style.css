@@ -13,17 +13,14 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100%;
-    width: 100%;
-    border-radius: 10px;
     background-color: transparent;
   }
   
   .LogoImg {
     width: 50%;
     height: auto;
-    
   }
+
 
   /*Logo panel style*/
 
