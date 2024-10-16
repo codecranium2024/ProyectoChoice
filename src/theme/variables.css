@@ -21,7 +21,7 @@ http://ionicframework.com/docs/theming/ */
     --ion-color-primary-shade: #273e8a; /*Color de animaciones*/
     --ion-color-primary-tint: #3a5bb5; /*Color de animaciones*/
     --checkbox-background-checked: var(--ion-logo-azul);
-
+    /*Color botón principal*/
   /*Colores de fondo modo claro*/
     --ion-background-color: #ffffff;
     --ion-background-secondary: #cccccc;

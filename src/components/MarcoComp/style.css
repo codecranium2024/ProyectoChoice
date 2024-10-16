@@ -145,6 +145,13 @@
     color: var(--ion-color-primary);
   }
 
+  /*Celdas de las tablas*/
+  .celda {
+    text-align: center;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
   /* Componentes formularios */
   
   /*Configuraciones*/
