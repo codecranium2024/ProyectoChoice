@@ -1,0 +1,6 @@
+{
+  "appId": "com.codecranium.app",
+  "appName": "proyectochoice",
+  "bundledWebRuntime": false,
+  "webDir": "dist"
+}
