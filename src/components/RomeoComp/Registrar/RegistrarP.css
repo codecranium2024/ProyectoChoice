@@ -1,99 +1,134 @@
 /* Estilos generales */
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f9f9f9;
-    color: #333;
-  }
-  
-  /* Contenedor principal */
-  ion-content {
-    padding: 20px;
-  }
-  
-  /* Encabezado */
-  h1 {
-    text-align: center;
-    color: #4a90e2;
-  }
-  
-  /* Formulario */
-  form {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    margin-bottom: 20px;
-  }
-  
-  form ion-item {
-    margin: 10px 0;
-  }
-  
-  form ion-label {
-    color: #4a4a4a;
-  }
-  
-  form input[type="file"] {
-    margin-top: 10px;
-  }
-  
-  form ion-button {
-    margin-top: 20px;
-    width: 100%;
-    background-color: #4a90e2;
-  }
-  
-  /* Tabla de proyectos */
-  ion-list {
-    margin-top: 20px;
-  }
-  
-  ion-item {
-    background-color: #ffffff;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    margin-bottom: 15px;
-    align-items: center;
-  }
-  
-  ion-thumbnail {
-    width: 60px;
-    height: 60px;
-  }
-  
-  ion-label {
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
-  
-  ion-label ion-input {
-    width: 100%;
-  }
-  
-  ion-button {
-    margin-left: 10px;
-  }
-  
-  ion-select,
-  ion-input {
-    width: 100%;
-    max-width: 200px;
-  }
-  
-  ion-button {
-    --background: #4a90e2;
-    --border-radius: 4px;
-    color: white;
-  }
-  
-  ion-button:disabled {
-    --background: #ccc;
-    color: #666;
-  }
-  
-  ion-button:hover {
-    --background: #357ab8;
-  }
-  
+  font-family: Arial, sans-serif;
+  background-color: #f9f9f9;
+  color: #333;
+}
+
+/* Contenedor principal */
+ion-content {
+  padding: 20px;
+}
+
+/* Encabezado */
+h1 {
+  text-align: center;
+  color: #4a90e2;
+}
+
+/* Formulario */
+form {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+form ion-item {
+  margin: 10px 0;
+}
+
+form ion-label {
+  color: #4a4a4a;
+}
+
+form input[type="file"] {
+  margin-top: 10px;
+}
+
+form ion-button {
+  margin-top: 20px;
+  width: 100%;
+  background-color: #4a90e2;
+}
+
+/* Tabla de proyectos */
+.table-container {
+  overflow-x: auto; /* Permitir desplazamiento horizontal */
+  /* Espacio superior para la tabla */
+  /* margin-top: 20px;  */
+}
+
+.table {
+  width: 100%; /* Ancho completo */
+  border-collapse: collapse;
+}
+
+.table th, .table td {
+  padding: 16px; /* Aumenta el relleno en las celdas */
+  border: 1px solid #ccc; /* Borde de las celdas */
+  text-align: left; /* Alinear texto a la izquierda */
+  min-height: 50px; /* Establece una altura mínima para las filas */
+}
+
+.table th {
+  background-color: #f2f2f2; /* Color de fondo del encabezado */
+  width: 300px; /* Establece un ancho fijo para las columnas de encabezado */
+}
+
+.table td {
+  width: 150px; /* Establece un ancho fijo para las celdas */
+}
+
+ion-list {
+  margin-top: 20px; /* Margen superior para la lista de proyectos */
+}
+
+ion-item {
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 15px;
+  align-items: center;
+}
+
+ion-thumbnail {
+  width: 60px;
+  height: 60px;
+}
+
+ion-label {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+ion-label ion-input {
+  width: 100%;
+}
+
+ion-button {
+  margin-left: 10px;
+}
+
+ion-select,
+ion-input {
+  width: 100%;
+  max-width: 200px;
+}
+
+ion-button {
+  --background: #4a90e2;
+  --border-radius: 4px;
+  color: white;
+}
+
+ion-button:disabled {
+  --background: #ccc;
+  color: #666;
+}
+
+ion-button:hover {
+  --background: #357ab8;
+}
+.button-container {
+  display: flex;
+  justify-content: space-between; /* Espacio entre botones */
+  margin-top: 1em; /* Espacio superior para separación */
+}
+.label {
+  font-size: 1.2em; /* Ajusta el tamaño según sea necesario */
+  margin-bottom: 0.5em; /* Espacio entre el label y el input */
+}

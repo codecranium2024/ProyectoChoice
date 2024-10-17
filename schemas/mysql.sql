@@ -191,3 +191,36 @@ ADD COLUMN senal_internet BOOLEAN DEFAULT 0,
 ADD COLUMN senal_tv BOOLEAN DEFAULT 0,
 ADD COLUMN cable BOOLEAN DEFAULT 0,
 ADD COLUMN prestador_servicios VARCHAR(255);
+
+
+---------------------------------------------------
+CREATE TABLE tb_categoriaPr (
+    idCategoriaProyecto INT AUTO_INCREMENT PRIMARY KEY,
+    Categoria VARCHAR(35) NOT NULL
+);
+
+CREATE TABLE tb_registrarpr (
+    idRegistrarProyecto INT AUTO_INCREMENT PRIMARY KEY,
+    idCategoriaProyecto INT NOT NULL,
+    Nombreclatura VARCHAR(25) NOT NULL,
+    Nombre VARCHAR(50) NOT NULL,
+    idUsuario INT NOT NULL,  
+    idestado INT NOT NULL,  
+    FechaInicio DATE NOT NULL,
+    FechaFinalizacion DATE NOT NULL,
+    FOREIGN KEY (idCategoriaProyecto) REFERENCES tb_categoriaPr(idCategoriaProyecto),
+    FOREIGN KEY (idUsuario) REFERENCES tb_Usuario(idUsuario),
+    FOREIGN KEY (idestado) REFERENCES tb_estadoP(idestado)
+);
+
+CREATE TABLE tb_estadoP (
+    idestado INT AUTO_INCREMENT PRIMARY KEY,
+    Estadoproyecto VARCHAR(30) NOT NULL
+);
+
+--------------------------------------------------
+ALTER TABLE tb_registrarpr
+ADD CONSTRAINT fk_registrarpr_categoria
+FOREIGN KEY (idCategoriaProyecto) REFERENCES tb_categoriaPr(idCategoriaProyecto);
+
+---------------------------------------------------

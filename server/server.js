@@ -6,6 +6,8 @@ const cors = require('cors');
 // Configuración del servidor y puerto
 const app = express();
 const port = 3000;
+app.use(express.json())
+
 
 // Configuración de la conexión a la base de datos MySQL
 const dbConfig = {
@@ -435,9 +437,152 @@ app.post('/comunidad', async (req, res) => {
     res.status(500).send('Error al registrar comunidad');
   }
 });
+// ------------------------------------------------------------------
+// Registrar un nuevo proyecto usando el procedimiento almacenado
+// Endpoint para obtener categorías
+app.get('/categorias', async (req, res) => {
+  try {
+    const connection = await mysql.createConnection(dbConfig);
+    const [rows] = await connection.execute('SELECT idCategoriaProyecto, Categoria FROM tb_categoriaPr');
+    res.json(rows);
+    await connection.end();
+  } catch (err) {
+    console.error('Error al obtener categorías:', err);
+    res.status(500).send('Error al obtener categorías');
+  }
+});
+
+// Endpoint para obtener estados de proyecto
+app.get('/estados', async (req, res) => {
+  try {
+    const connection = await mysql.createConnection(dbConfig);
+    const [rows] = await connection.execute('SELECT idestado, Estadoproyecto FROM tb_estadop');
+    res.json(rows);
+    await connection.end();
+  } catch (err) {
+    console.error('Error al obtener estados de proyecto:', err);
+    res.status(500).send('Error al obtener estados de proyecto');
+  }
+});
+
+// Endpoint para obtener nombres de usuarios
+app.get('/responsables', async (req, res) => {
+  try {
+    const connection = await mysql.createConnection(dbConfig);
+    const [rows] = await connection.execute('SELECT idUsuario, Nombre FROM tb_usuario');
+    res.json(rows);
+    await connection.end();
+  } catch (err) {
+    console.error('Error al obtener nombres de usuarios:', err);
+    res.status(500).send('Error al obtener nombres de usuarios');
+  }
+});
+
+// Endpoint para registrar un proyecto
+app.post('/RegistrarProyecto', async (req, res) => {
+  const { idCategoriaProyecto, Nombreclatura, Nombre, idUsuario, idestado, FechaInicio, FechaFinalizacion } = req.body;
+
+  // Consulta SQL para insertar el nuevo registro
+  const sql = `
+      INSERT INTO tb_registrarpr (
+          idCategoriaProyecto, Nombreclatura, Nombre, idUsuario, idestado, FechaInicio, FechaFinalizacion
+      ) VALUES (?, ?, ?, ?, ?, ?, ?)
+  `;
+
+  let connection;
+
+  try {
+      // Crear una conexión única
+      connection = await mysql.createConnection(dbConfig);
+      
+      // Ejecutar la consulta
+      const [result] = await connection.execute(sql, [idCategoriaProyecto, Nombreclatura, Nombre, idUsuario, idestado, FechaInicio, FechaFinalizacion]);
+      
+      res.status(201).json({ message: 'Registro creado exitosamente', id: result.insertId });
+  } catch (err) {
+      console.error('Error al insertar el registro:', err.message); // Muestra el mensaje de error
+      res.status(500).json({ error: 'Error al insertar el registro', details: err.message }); // Muestra el mensaje de error en la respuesta
+  } finally {
+      // Cerrar la conexión si existe
+      if (connection) {
+          await connection.end();
+      }
+  }
+});
 
 
 
+app.get('/proyectos', async (req, res) => {
+  try {
+    const connection = await mysql.createConnection(dbConfig);
+    const query = `
+      SELECT 
+        r.idRegistrarProyecto, 
+        r.Nombreclatura, 
+        r.Nombre, 
+        r.FechaInicio, 
+        r.FechaFinalizacion, 
+        c.categoria AS Categoria, 
+        u.Nombre AS Responsable, 
+        e.estadoproyecto AS Estado
+      FROM 
+        tb_registrarpr r
+      JOIN 
+        tb_categoriaPr c ON r.idCategoriaProyecto = c.idCategoriaProyecto
+      JOIN 
+        tb_usuario u ON r.idUsuario = u.idUsuario
+      JOIN 
+        tb_estadop e ON r.idestado = e.idestado;
+    `;
+    const [rows] = await connection.execute(query);
+    res.json(rows);
+    await connection.end();
+  } catch (err) {
+    console.error('Error al obtener proyectos:', err);
+    res.status(500).send('Error al obtener proyectos');
+  }
+});
+
+app.put('/proyectos/:id', async (req, res) => {
+  const { id } = req.params;
+  const { Nombreclatura, Nombre, FechaInicio, FechaFinalizacion, idCategoriaProyecto, idUsuario, idestado } = req.body;
+
+  if (!Nombreclatura || !Nombre || !FechaInicio || !FechaFinalizacion || !idCategoriaProyecto || !idUsuario || !idestado) {
+    return res.status(400).send('Todos los campos son requeridos');
+  }
+
+  // Convertir las fechas al formato YYYY-MM-DD
+  const fechaInicioFormatted = new Date(FechaInicio).toISOString().split('T')[0];
+  const fechaFinalizacionFormatted = new Date(FechaFinalizacion).toISOString().split('T')[0];
+
+  try {
+    const connection = await mysql.createConnection(dbConfig);
+    const query = `
+      UPDATE tb_registrarpr
+      SET 
+        Nombreclatura = ?, 
+        Nombre = ?, 
+        FechaInicio = ?, 
+        FechaFinalizacion = ?, 
+        idCategoriaProyecto = ?, 
+        idUsuario = ?, 
+        idestado = ?
+      WHERE idRegistrarProyecto = ?;
+    `;
+    const [result] = await connection.execute(query, [Nombreclatura, Nombre, fechaInicioFormatted, fechaFinalizacionFormatted, idCategoriaProyecto, idUsuario, idestado, id]);
+
+    if (result.affectedRows === 0) {
+      res.status(404).send('Proyecto no encontrado');
+    } else {
+      res.send('Proyecto actualizado con éxito');
+    }
+
+    await connection.end();
+  } catch (err) {
+    console.error('Error al actualizar proyecto:', err);
+    res.status(500).send('Error al actualizar proyecto: ' + err.message);
+  }
+});
 
 
 
