@@ -180,8 +180,6 @@ app.get('/usuarios', async (req, res) => {
   }
 });
 
-
-
 // Endpoint para eliminar usuario
 app.delete('/eliminarUsuario/:idUsuario', async (req, res) => {
   const { idUsuario } = req.params;
@@ -510,8 +508,6 @@ app.post('/RegistrarProyecto', async (req, res) => {
   }
 });
 
-
-
 app.get('/proyectos', async (req, res) => {
   try {
     const connection = await mysql.createConnection(dbConfig);
@@ -583,6 +579,269 @@ app.put('/proyectos/:id', async (req, res) => {
     res.status(500).send('Error al actualizar proyecto: ' + err.message);
   }
 });
+
+app.get('/historial', async (req, res) => {
+  try {
+    const connection = await mysql.createConnection(dbConfig);
+    const query = `
+      SELECT 
+        r.idRegistrarProyecto, 
+        r.Nombreclatura, 
+        r.Nombre, 
+        DATE(r.FechaInicio) AS FechaInicio,  -- Recuperar solo la fecha
+        DATE(r.FechaFinalizacion) AS FechaFinalizacion,  -- Recuperar solo la fecha
+        c.categoria AS Categoria, 
+        u.Nombre AS Responsable, 
+        e.estadoproyecto AS Estado,
+        e.idestado AS EstadoID
+      FROM 
+        tb_registrarpr r
+      JOIN 
+        tb_categoriaPr c ON r.idCategoriaProyecto = c.idCategoriaProyecto
+      JOIN 
+        tb_usuario u ON r.idUsuario = u.idUsuario
+      JOIN 
+        tb_estadop e ON r.idestado = e.idestado
+      WHERE 
+        e.idestado = 2;
+    `;
+    const [rows] = await connection.execute(query);
+    res.json(rows);
+    await connection.end();
+  } catch (err) {
+    console.error('Error al obtener proyectos:', err);
+    res.status(500).send('Error al obtener proyectos');
+  }
+});
+
+//Departamentos y municipios
+// Endpoint para registrar un departamento
+app.post('/departamentos', async (req, res) => {
+  const { nombredepartamento } = req.body;
+
+  if (!nombredepartamento) {
+    return res.status(400).json({ error: 'El nombre del departamento es requerido' });
+  }
+
+  const sql = 'INSERT INTO tb_departamento (nombredepartamento) VALUES (?)';
+  let connection;
+
+  try {
+    // Crear una conexión única
+    connection = await mysql.createConnection(dbConfig);
+    
+    // Ejecutar la consulta
+    const [result] = await connection.execute(sql, [nombredepartamento]);
+
+    res.status(201).json({ message: 'Departamento registrado con éxito', id: result.insertId });
+  } catch (err) {
+    console.error('Error al registrar el departamento:', err.message);
+    res.status(500).json({ error: 'Error al registrar el departamento', details: err.message });
+  } finally {
+    // Cerrar la conexión si existe
+    if (connection) {
+      await connection.end();
+    }
+  }
+});
+
+app.post('/municipios', async (req, res) => {
+  const { nombremunicipio, departamento_id } = req.body;
+
+  if (!nombremunicipio || !departamento_id) {
+    return res.status(400).json({ error: 'El nombre del municipio y el departamento_id son requeridos' });
+  }
+
+  const sql = 'INSERT INTO tb_municipio (nombremunicipio, departamento_id) VALUES (?, ?)';
+  let connection;
+
+  try {
+    // Crear una conexión única
+    connection = await mysql.createConnection(dbConfig);
+
+    // Ejecutar la consulta
+    const [result] = await connection.execute(sql, [nombremunicipio, departamento_id]);
+
+    res.status(201).json({ message: 'Municipio registrado con éxito', id: result.insertId });
+  } catch (err) {
+    console.error('Error al registrar el municipio:', err.message);
+    res.status(500).json({ error: 'Error al registrar el municipio', details: err.message });
+  } finally {
+    // Cerrar la conexión si existe
+    if (connection) {
+      await connection.end();
+    }
+  }
+});
+
+// Obtener todos los departamentos
+app.get('/departamentos', async (req, res) => {
+  const sql = 'SELECT * FROM tb_departamento';
+  let connection;
+
+  try {
+    // Crear una conexión única
+    connection = await mysql.createConnection(dbConfig);
+    
+    // Ejecutar la consulta
+    const [rows] = await connection.execute(sql);
+
+    res.status(200).json(rows);
+  } catch (err) {
+    console.error('Error al obtener los departamentos:', err.message);
+    res.status(500).json({ error: 'Error al obtener los departamentos', details: err.message });
+  } finally {
+    // Cerrar la conexión si existe
+    if (connection) {
+      await connection.end();
+    }
+  }
+});
+
+// Obtener todos los municipios
+app.get('/municipios', async (req, res) => {
+  const sql = 'SELECT * FROM tb_municipio';
+  let connection;
+
+  try {
+    // Crear una conexión única
+    connection = await mysql.createConnection(dbConfig);
+    
+    // Ejecutar la consulta
+    const [rows] = await connection.execute(sql);
+
+    res.status(200).json(rows);
+  } catch (err) {
+    console.error('Error al obtener los municipios:', err.message);
+    res.status(500).json({ error: 'Error al obtener los municipios', details: err.message });
+  } finally {
+    // Cerrar la conexión si existe
+    if (connection) {
+      await connection.end();
+    }
+  }
+});
+
+// Actualizar un departamento por ID
+app.put('/departamentos/:id', async (req, res) => {
+  const { id } = req.params;
+  const { nombredepartamento } = req.body;
+  const sql = 'UPDATE tb_departamento SET nombredepartamento = ? WHERE id = ?';
+  let connection;
+
+  try {
+    // Crear una conexión única
+    connection = await mysql.createConnection(dbConfig);
+    
+    // Ejecutar la consulta
+    const [result] = await connection.execute(sql, [nombredepartamento, id]);
+
+    // Verificar si se actualizó algún registro
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ error: 'Departamento no encontrado' });
+    }
+
+    res.status(200).json({ message: 'Departamento actualizado exitosamente' });
+  } catch (err) {
+    console.error('Error al actualizar el departamento:', err.message);
+    res.status(500).json({ error: 'Error al actualizar el departamento', details: err.message });
+  } finally {
+    // Cerrar la conexión si existe
+    if (connection) {
+      await connection.end();
+    }
+  }
+});
+// Actualizar un municipio por ID
+app.put('/municipios/:id', async (req, res) => {
+  const { id } = req.params;
+  const { nombremunicipio, departamento_id } = req.body;
+  const sql = 'UPDATE tb_municipio SET nombremunicipio = ?, departamento_id = ? WHERE id = ?';
+  let connection;
+
+  try {
+    // Crear una conexión única
+    connection = await mysql.createConnection(dbConfig);
+    
+    // Ejecutar la consulta
+    const [result] = await connection.execute(sql, [nombremunicipio, departamento_id, id]);
+
+    // Verificar si se actualizó algún registro
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ error: 'Municipio no encontrado' });
+    }
+
+    res.status(200).json({ message: 'Municipio actualizado exitosamente' });
+  } catch (err) {
+    console.error('Error al actualizar el municipio:', err.message);
+    res.status(500).json({ error: 'Error al actualizar el municipio', details: err.message });
+  } finally {
+    // Cerrar la conexión si existe
+    if (connection) {
+      await connection.end();
+    }
+  }
+});
+//Endpoint Eliminar registros
+app.delete('/departamentos/:id', async (req, res) => {
+  const { id } = req.params;  // Obtener el ID de los parámetros de la URL
+
+  const sql = 'DELETE FROM tb_departamento WHERE id = ?';
+  let connection;
+
+  try {
+    // Crear una conexión única
+    connection = await mysql.createConnection(dbConfig);
+
+    // Ejecutar la consulta
+    const [result] = await connection.execute(sql, [id]);
+
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ error: 'Departamento no encontrado' });
+    }
+
+    res.status(200).json({ message: 'Departamento eliminado con éxito' });
+  } catch (err) {
+    console.error('Error al eliminar el departamento:', err.message);
+    res.status(500).json({ error: 'Error al eliminar el departamento', details: err.message });
+  } finally {
+    // Cerrar la conexión si existe
+    if (connection) {
+      await connection.end();
+    }
+  }
+});
+app.delete('/municipios/:id', async (req, res) => {
+  const { id } = req.params;  // Obtener el ID de los parámetros de la URL
+
+  const sql = 'DELETE FROM tb_municipio WHERE id = ?';
+  let connection;
+
+  try {
+    // Crear una conexión única
+    connection = await mysql.createConnection(dbConfig);
+
+    // Ejecutar la consulta
+    const [result] = await connection.execute(sql, [id]);
+
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ error: 'Municipio no encontrado' });
+    }
+
+    res.status(200).json({ message: 'Municipio eliminado con éxito' });
+  } catch (err) {
+    console.error('Error al eliminar el municipio:', err.message);
+    res.status(500).json({ error: 'Error al eliminar el municipio', details: err.message });
+  } finally {
+    // Cerrar la conexión si existe
+    if (connection) {
+      await connection.end();
+    }
+  }
+});
+
+
+
 
 
 

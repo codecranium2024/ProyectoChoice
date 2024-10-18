@@ -1,0 +1,84 @@
+/* ListadoGeneral.css */
+
+/* Estilo para la tabla */
+.table {
+  width: 80%; /* Reducir la anchura general de la tabla */
+  max-width: 800px; /* Limitar la anchura máxima de la tabla */
+  border-collapse: collapse;
+  margin: 15px auto; /* Centrar la tabla y reducir margen superior e inferior */
+  font-size: 0.9em; /* Reducir tamaño de fuente */
+  text-align: left;
+}
+
+.table th,
+.table td {
+  padding: 8px 10px; /* Reducir el padding en las celdas */
+  border: 1px solid #ccc;
+  max-width: 150px; /* Limitar la anchura máxima de las celdas */
+  word-wrap: break-word; /* Permitir que el texto se ajuste dentro de las celdas */
+}
+
+.table th {
+  background-color: #f2f2f2;
+}
+
+/* Estilo para los botones */
+ion-button {
+  margin-top: 8px; /* Reducir margen superior */
+  font-size: 0.9em; /* Reducir el tamaño de fuente de los botones */
+  padding: 6px 12px; /* Reducir el padding del botón */
+}
+
+/* Estilo para los modales */
+ion-modal {
+  --background: #ffffff;
+  --color: #333;
+}
+
+ion-header {
+  background: #f7f7f7;
+}
+
+/* Estilo para los inputs y selects */
+ion-input,
+ion-select {
+  margin: 8px 0; /* Reducir margen superior e inferior */
+}
+
+/* Estilo para la lista de departamentos */
+ion-list {
+  margin: 15px; /* Reducir margen */
+}
+
+ion-item {
+  margin-bottom: 8px; /* Reducir margen inferior */
+}
+
+/* Estilo para el título de la página */
+ion-title {
+  font-size: 1.4em; /* Reducir tamaño de fuente */
+  text-align: center;
+  font-weight: bold;
+}
+
+/* Estilo para el contenido */
+ion-content {
+  padding: 15px; /* Reducir padding */
+}
+
+/* Ajuste de márgenes para las filas */
+ion-row {
+  margin-bottom: 10px; /* Reducir margen inferior */
+}
+
+/* Estilo para los encabezados de las columnas */
+th {
+  text-align: left;
+  font-weight: bold;
+}
+/* Estilo general para inputs y selects */
+ion-input,
+ion-select {
+  margin: 8px 0;
+}
+
