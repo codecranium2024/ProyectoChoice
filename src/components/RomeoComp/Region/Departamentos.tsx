@@ -1,30 +1,50 @@
-import React, { useState } from 'react';
-import { IonContent, IonHeader, IonPage, IonToolbar, IonTitle, IonList, IonItem, IonButton, IonModal, IonInput, IonLabel, IonRow, IonCol, IonSelect, IonSelectOption } from '@ionic/react';
-// import './Departamentos.css';
-import '../Comunidad/ListadoGeneral.css'
-const departamentosIniciales = [
-  { id: 1, departamento: 'Alta Verapaz', municipio: 'Chisec' },
-  { id: 2, departamento: 'Baja Verapaz', municipio: 'Salamá' },
-  { id: 3, departamento: 'Quiché', municipio: 'Santa Cruz' },
-];
+import React, { useState, useEffect } from 'react';
+import {
+  IonContent,
+  IonHeader,
+  IonPage,
+  IonToolbar,
+  IonTitle,
+  IonList,
+  IonItem,
+  IonButton,
+  IonModal,
+  IonInput,
+  IonLabel,
+  IonRow,
+  IonCol,
+  IonSelect,
+  IonSelectOption
+} from '@ionic/react';
+import axios from 'axios';
+import './Departamento.css';
 
-const RegistrarDepartamentos: React.FC<{ onEdit: (id: number) => void, departamentos: any[] }> = ({ onEdit, departamentos }) => (
+// Definir las interfaces
+interface Municipio {
+  id: number;
+  nombremunicipio: string;
+  departamento_id: number;
+}
+
+interface Departamento {
+  id: number;
+  nombredepartamento: string;
+  municipios: Municipio[];
+}
+
+const RegistrarDepartamentos: React.FC<{ onEdit: (id: number) => void; departamentos: Departamento[] }> = ({ onEdit, departamentos }) => (
   <IonList>
     <table className="table">
       <thead>
         <tr>
-          <th>ID Departamento</th>
           <th>Departamento</th>
-          <th>Municipio</th>
           <th>Acción</th>
         </tr>
       </thead>
       <tbody>
-        {departamentos.map((dep: any) => (
+        {departamentos.map((dep: Departamento) => (
           <tr key={dep.id}>
-            <td>{dep.id}</td>
-            <td>{dep.departamento}</td>
-            <td>{dep.municipio}</td>
+            <td>{dep.nombredepartamento}</td>
             <td>
               <IonButton color="warning" onClick={() => onEdit(dep.id)}>Editar</IonButton>
             </td>
@@ -35,61 +55,137 @@ const RegistrarDepartamentos: React.FC<{ onEdit: (id: number) => void, departame
   </IonList>
 );
 
+const RegistrarMunicipios: React.FC<{ municipios: Municipio[]; onEdit: (id: number) => void }> = ({ municipios, onEdit }) => (
+  <IonList>
+    <table className="table">
+      <thead>
+        <tr>
+          <th>Municipio</th>
+          <th>Acción</th>
+        </tr>
+      </thead>
+      <tbody>
+        {municipios.map((mun: Municipio) => (
+          <tr key={mun.id}>
+            <td>{mun.nombremunicipio}</td>
+            <td>
+              <IonButton color="warning" onClick={() => onEdit(mun.id)}>Editar</IonButton>
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </IonList>
+);
+
 const Departamentos: React.FC = () => {
   const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false);
-  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isRegisterMunicipioModalOpen, setIsRegisterMunicipioModalOpen] = useState(false);
-  const [isDeleteMunicipioModalOpen, setIsDeleteMunicipioModalOpen] = useState(false);
+  const [isEditMunicipioModalOpen, setIsEditMunicipioModalOpen] = useState(false);
 
-  const [departamentos, setDepartamentos] = useState(departamentosIniciales);
-  const [selectedDept, setSelectedDept] = useState<string | null>(null);
-  const [municipio, setMunicipio] = useState('');
-  const [editDept, setEditDept] = useState<{ id: number, departamento: string, municipio: string } | null>(null);
+  const [departamentos, setDepartamentos] = useState<Departamento[]>([]);
+  const [municipios, setMunicipios] = useState<Municipio[]>([]);
+  const [selectedDept, setSelectedDept] = useState<number | null>(null);
+  const [editDept, setEditDept] = useState<{ id: number; nombredepartamento: string } | null>(null);
+  const [editMunicipio, setEditMunicipio] = useState<{ id: number; nombremunicipio: string; departamento_id: number } | null>(null);
 
-  const openRegisterModal = () => {
-    setIsRegisterModalOpen(true);
-  };
+  useEffect(() => {
+    fetchData();
+  }, []);
 
-  const openDeleteModal = () => {
-    setIsDeleteModalOpen(true);
-  };
-
-  const openRegisterMunicipioModal = () => {
-    setIsRegisterMunicipioModalOpen(true);
-  };
-
-  const openDeleteMunicipioModal = () => {
-    setIsDeleteMunicipioModalOpen(true);
-  };
-
-  const openEditModal = (id: number) => {
-    const deptToEdit = departamentos.find(d => d.id === id);
-    setEditDept(deptToEdit || null);
-    setIsEditModalOpen(true);
+  const fetchData = async () => {
+    try {
+      const departamentosResponse = await axios.get<Departamento[]>('http://localhost:3000/departamentos');
+      const municipiosResponse = await axios.get<Municipio[]>('http://localhost:3000/municipios');
+      setDepartamentos(departamentosResponse.data);
+      setMunicipios(municipiosResponse.data);
+    } catch (error) {
+      // console.error('Error fetching data:', error);
+    }
   };
 
   const closeModal = () => {
     setIsRegisterModalOpen(false);
-    setIsDeleteModalOpen(false);
     setIsEditModalOpen(false);
     setIsRegisterMunicipioModalOpen(false);
-    setIsDeleteMunicipioModalOpen(false);
+    setIsEditMunicipioModalOpen(false);
     setSelectedDept(null);
-    setMunicipio('');
     setEditDept(null);
+    setEditMunicipio(null);
   };
 
-  const handleEditDept = () => {
+  const handleRegisterDept = async () => {
+    const nombreDepartamento = (document.getElementById('nombreDepartamento') as HTMLInputElement).value;
+    if (nombreDepartamento) {
+      try {
+        await axios.post('http://localhost:3000/departamentos', { nombredepartamento: nombreDepartamento });
+        closeModal();
+        fetchData();  // Refrescar los datos después de la acción
+      } catch (error) {
+        // console.error('Error registrando departamento:', error);
+      }
+    }
+  };
+
+  const handleRegisterMunicipio = async () => {
+    const nombreMunicipio = (document.getElementById('nombreMunicipio') as HTMLInputElement).value;
+    if (nombreMunicipio && selectedDept) {
+      try {
+        await axios.post('http://localhost:3000/municipios', { nombremunicipio: nombreMunicipio, departamento_id: selectedDept });
+        closeModal();
+        fetchData();  // Refrescar los datos después de la acción
+      } catch (error) {
+        // console.error('Error registrando municipio:', error);
+      }
+    }
+  };
+
+  const openEditModal = (id: number) => {
+    const deptToEdit = departamentos.find(d => d.id === id);
+    if (deptToEdit) {
+      setEditDept({ id: deptToEdit.id, nombredepartamento: deptToEdit.nombredepartamento });
+    }
+    setIsEditModalOpen(true);
+  };
+
+  const handleEditDept = async () => {
     if (editDept) {
-      const updatedDepartamentos = departamentos.map(departamento => {
-        if (departamento.id === editDept.id) {
-          return { ...departamento, departamento: editDept.departamento, municipio };
-        }
-        return departamento;
-      });
-      setDepartamentos(updatedDepartamentos);
-      closeModal();
+      try {
+        await axios.put(`http://localhost:3000/departamentos/${editDept.id}`, { nombredepartamento: editDept.nombredepartamento });
+        closeModal();
+        fetchData();  // Refrescar los datos después de la acción
+      } catch (error) {
+        // console.error('Error editando departamento:', error);
+      }
+    }
+  };
+
+  const openEditMunicipioModal = (id: number) => {
+    const municipioToEdit = municipios.find(m => m.id === id);
+    if (municipioToEdit) {
+      setEditMunicipio({ 
+        id: municipioToEdit.id, 
+        nombremunicipio: municipioToEdit.nombremunicipio, 
+        departamento_id: municipioToEdit.departamento_id });
+    }
+    setIsEditMunicipioModalOpen(true);
+  };
+
+  const handleEditMunicipio = async () => {
+    if (editMunicipio) {
+      try {
+        await axios.put(`http://localhost:3000/municipios/${editMunicipio.id}`, { 
+          nombremunicipio: editMunicipio.nombremunicipio,
+          departamento_id: editMunicipio.departamento_id
+        });
+        closeModal();
+        fetchData();  // Refrescar los datos después de la acción
+      } catch (error) {
+        // console.error('Error editando municipio:', error);
+      }
+    }else{
+      
     }
   };
 
@@ -97,28 +193,25 @@ const Departamentos: React.FC = () => {
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>Departamentos</IonTitle>
+          <IonTitle>Departamentos y Municipios</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent>
         <IonRow>
           <IonCol>
-            <IonButton expand="block" size="default" fill="solid" onClick={openRegisterModal}>Registrar Departamento</IonButton>
+            <IonButton expand="block" onClick={() => setIsRegisterModalOpen(true)}>Registrar Departamento</IonButton>
           </IonCol>
           <IonCol>
-            <IonButton expand="block" size="default" fill="solid" color="danger" onClick={openDeleteModal}>Eliminar Departamento</IonButton>
-          </IonCol>
-        </IonRow>
-        <IonRow>
-          <IonCol>
-            <IonButton expand="block" size="default" fill="solid" onClick={openRegisterMunicipioModal}>Registrar Municipio</IonButton>
-          </IonCol>
-          <IonCol>
-            <IonButton expand="block" size="default" fill="solid" color="danger" onClick={openDeleteMunicipioModal}>Eliminar Municipio</IonButton>
+            <IonButton expand="block" onClick={() => setIsRegisterMunicipioModalOpen(true)}>Registrar Municipio</IonButton>
           </IonCol>
         </IonRow>
 
+        {/* Tabla de Departamentos */}
         <RegistrarDepartamentos onEdit={openEditModal} departamentos={departamentos} />
+
+        {/* Tabla de Municipios */}
+        <IonTitle style={{ marginTop: '20px' }}>Municipios</IonTitle>
+        <RegistrarMunicipios municipios={municipios} onEdit={openEditMunicipioModal} />
 
         {/* Modal para registrar departamento */}
         <IonModal isOpen={isRegisterModalOpen} onDidDismiss={closeModal}>
@@ -128,61 +221,20 @@ const Departamentos: React.FC = () => {
             </IonToolbar>
           </IonHeader>
           <IonContent>
-            <form>
-              <IonList>
-                <IonItem>
-                  <IonLabel position="stacked">Nombre del Departamento</IonLabel>
-                  <IonInput type="text" placeholder="Nombre del departamento"></IonInput>
-                </IonItem>
-                {/* <IonItem>
-                  <IonLabel position="stacked">Municipio</IonLabel>
-                  <IonInput type="text" placeholder="Nombre del municipio"></IonInput>
-                </IonItem> */}
-              </IonList>
+            <IonList>
+              <IonItem>
+                <IonLabel>Nombre del Departamento</IonLabel>
+                <IonInput id="nombreDepartamento" type="text" />
+              </IonItem>
               <IonRow>
                 <IonCol>
-                  <IonButton expand="block" onClick={closeModal}>Guardar</IonButton>
+                  <IonButton expand="block" onClick={handleRegisterDept}>Guardar</IonButton>
                 </IonCol>
                 <IonCol>
                   <IonButton expand="block" color="medium" onClick={closeModal}>Cancelar</IonButton>
                 </IonCol>
               </IonRow>
-            </form>
-          </IonContent>
-        </IonModal>
-
-        {/* Modal para eliminar departamento */}
-        <IonModal isOpen={isDeleteModalOpen} onDidDismiss={closeModal}>
-          <IonHeader>
-            <IonToolbar>
-              <IonTitle>Eliminar Departamento</IonTitle>
-            </IonToolbar>
-          </IonHeader>
-          <IonContent>
-            <IonList>
-              <IonItem>
-                <IonLabel position="stacked">Seleccionar Departamento</IonLabel>
-                <IonSelect
-                  value={selectedDept}
-                  placeholder="Seleccionar Departamento"
-                  onIonChange={e => setSelectedDept(e.detail.value)}
-                >
-                  {departamentos.map(departamento => (
-                    <IonSelectOption key={departamento.id} value={departamento.departamento}>
-                      {departamento.departamento}
-                    </IonSelectOption>
-                  ))}
-                </IonSelect>
-              </IonItem>
             </IonList>
-            <IonRow>
-              <IonCol>
-                <IonButton expand="block" color="danger" onClick={closeModal}>Eliminar</IonButton>
-              </IonCol>
-              <IonCol>
-                <IonButton expand="block" color="medium" onClick={closeModal}>Cancelar</IonButton>
-              </IonCol>
-            </IonRow>
           </IonContent>
         </IonModal>
 
@@ -194,104 +246,96 @@ const Departamentos: React.FC = () => {
             </IonToolbar>
           </IonHeader>
           <IonContent>
-            <form>
-              <IonList>
-                <IonItem>
-                  <IonLabel position="stacked">Nombre del Municipio</IonLabel>
-                  <IonInput type="text" placeholder="Nombre del municipio"></IonInput>
-                </IonItem>
-              </IonList>
-              <IonRow>
-                <IonCol>
-                  <IonButton expand="block" onClick={closeModal}>Guardar</IonButton>
-                </IonCol>
-                <IonCol>
-                  <IonButton expand="block" color="medium" onClick={closeModal}>Cancelar</IonButton>
-                </IonCol>
-              </IonRow>
-            </form>
-          </IonContent>
-        </IonModal>
-
-        {/* Modal para eliminar municipio */}
-        <IonModal isOpen={isDeleteMunicipioModalOpen} onDidDismiss={closeModal}>
-          <IonHeader>
-            <IonToolbar>
-              <IonTitle>Eliminar Municipio</IonTitle>
-            </IonToolbar>
-          </IonHeader>
-          <IonContent>
             <IonList>
               <IonItem>
-                <IonLabel position="stacked">Seleccionar Municipio</IonLabel>
-                <IonSelect
-                  value={municipio}
-                  placeholder="Seleccionar Municipio"
-                  onIonChange={e => setMunicipio(e.detail.value)}
-                >
-                  {departamentos.map(departamento => (
-                    <IonSelectOption key={departamento.id} value={departamento.municipio}>
-                      {departamento.municipio}
+                <IonLabel>Nombre del Municipio</IonLabel>
+                <IonInput id="nombreMunicipio" type="text" />
+              </IonItem>
+              <IonItem>
+                <IonLabel>Departamento</IonLabel>
+                <IonSelect onIonChange={e => setSelectedDept(parseInt(e.detail.value))}>
+                  {departamentos.map(dept => (
+                    <IonSelectOption key={dept.id} value={dept.id}>
+                      {dept.nombredepartamento}
                     </IonSelectOption>
                   ))}
                 </IonSelect>
               </IonItem>
-            </IonList>
-            <IonRow>
-              <IonCol>
-                <IonButton expand="block" color="danger" onClick={closeModal}>Eliminar</IonButton>
-              </IonCol>
-              <IonCol>
-                <IonButton expand="block" color="medium" onClick={closeModal}>Cancelar</IonButton>
-              </IonCol>
-            </IonRow>
-          </IonContent>
-        </IonModal>
-
-        {/* Modal para editar departamento */}
-        <IonModal isOpen={isEditModalOpen} onDidDismiss={closeModal}>
-          <IonHeader>
-            <IonToolbar>
-              <IonTitle>Editar Departamento</IonTitle>
-            </IonToolbar>
-          </IonHeader>
-          <IonContent>
-            <form>
-              <IonList>
-                <IonItem>
-                  <IonLabel position="stacked">Nombre del Departamento</IonLabel>
-                  <IonInput
-                    type="text"
-                    value={editDept?.departamento || ''}
-                    placeholder="Nombre del departamento"
-                    onIonChange={e => setEditDept({ ...editDept!, departamento: e.detail.value! })}
-                  />
-                </IonItem>
-                <IonItem>
-                  <IonLabel position="stacked">Municipio</IonLabel>
-                  <IonSelect
-                    value={municipio}
-                    placeholder="Seleccionar Municipio"
-                    onIonChange={e => setMunicipio(e.detail.value)}
-                  >
-                    <IonSelectOption value="Chisec">Chisec</IonSelectOption>
-                    <IonSelectOption value="Salamá">Salamá</IonSelectOption>
-                    <IonSelectOption value="Santa Cruz">Santa Cruz</IonSelectOption>
-                  </IonSelect>
-                </IonItem>
-              </IonList>
               <IonRow>
                 <IonCol>
-                  <IonButton expand="block" onClick={handleEditDept}>Guardar Cambios</IonButton>
+                  <IonButton expand="block" onClick={handleRegisterMunicipio}>Guardar</IonButton>
                 </IonCol>
                 <IonCol>
                   <IonButton expand="block" color="medium" onClick={closeModal}>Cancelar</IonButton>
                 </IonCol>
               </IonRow>
-            </form>
+            </IonList>
           </IonContent>
         </IonModal>
 
+        {/* Modal para editar departamento */}
+        {editDept && (
+          <IonModal isOpen={isEditModalOpen} onDidDismiss={closeModal}>
+            <IonHeader>
+              <IonToolbar>
+                <IonTitle>Editar Departamento</IonTitle>
+              </IonToolbar>
+            </IonHeader>
+            <IonContent>
+              <IonList>
+                <IonItem>
+                  <IonLabel>Nombre del Departamento</IonLabel>
+                  <IonInput value={editDept.nombredepartamento} onIonChange={e => setEditDept({ ...editDept, nombredepartamento: e.detail.value! })} />
+                </IonItem>
+                <IonRow>
+                  <IonCol>
+                    <IonButton expand="block" onClick={handleEditDept}>Guardar</IonButton>
+                  </IonCol>
+                  <IonCol>
+                    <IonButton expand="block" color="medium" onClick={closeModal}>Cancelar</IonButton>
+                  </IonCol>
+                </IonRow>
+              </IonList>
+            </IonContent>
+          </IonModal>
+        )}
+
+        {/* Modal para editar municipio */}
+        {editMunicipio && (
+          <IonModal isOpen={isEditMunicipioModalOpen} onDidDismiss={closeModal}>
+            <IonHeader>
+              <IonToolbar>
+                <IonTitle>Editar Municipio</IonTitle>
+              </IonToolbar>
+            </IonHeader>
+            <IonContent>
+              <IonList>
+                <IonItem>
+                  <IonLabel>Nombre del Municipio</IonLabel>
+                  <IonInput value={editMunicipio.nombremunicipio} onIonChange={e => setEditMunicipio({ ...editMunicipio, nombremunicipio: e.detail.value! })} />
+                </IonItem>
+                <IonItem>
+                  <IonLabel>Departamento</IonLabel>
+                  <IonSelect value={editMunicipio.departamento_id} onIonChange={e => setEditMunicipio({ ...editMunicipio, departamento_id: parseInt(e.detail.value) })}>
+                    {departamentos.map(dept => (
+                      <IonSelectOption key={dept.id} value={dept.id}>
+                        {dept.nombredepartamento}
+                      </IonSelectOption>
+                    ))}
+                  </IonSelect>
+                </IonItem>
+                <IonRow>
+                  <IonCol>
+                    <IonButton expand="block" onClick={handleEditMunicipio}>Guardar</IonButton>
+                  </IonCol>
+                  <IonCol>
+                    <IonButton expand="block" color="medium" onClick={closeModal}>Cancelar</IonButton>
+                  </IonCol>
+                </IonRow>
+              </IonList>
+            </IonContent>
+          </IonModal>
+        )}
       </IonContent>
     </IonPage>
   );

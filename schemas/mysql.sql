@@ -223,4 +223,18 @@ ALTER TABLE tb_registrarpr
 ADD CONSTRAINT fk_registrarpr_categoria
 FOREIGN KEY (idCategoriaProyecto) REFERENCES tb_categoriaPr(idCategoriaProyecto);
 
----------------------------------------------------
+-------------------------------------------------------------------------------------------
+--Departamentos y municipios
+CREATE TABLE tb_departamento (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombredepartamento VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE tb_municipio (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombremunicipio VARCHAR(50) NOT NULL,
+    departamento_id INT,
+    FOREIGN KEY (departamento_id) REFERENCES tb_departamento(id) ON DELETE CASCADE
+);
+
+---------------------------------------------------------------------------------------------
