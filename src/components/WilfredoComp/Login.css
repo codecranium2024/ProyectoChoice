@@ -13,11 +13,11 @@
 }
 
 .titulo {
-  color: chocolate;
+  color: var(--ion-color-primary);
 }
 
 .Login {
-  color: black;
+  color: var(--ion-text-color);
 }
 
 .left-side {
@@ -35,7 +35,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #fff;
+  background: var(--ion-background-primary); /* Cambiar el color de fondo */
   padding: 2rem; /* Ajustar padding para mayor tamaño */
   flex: 1;
 }
@@ -65,6 +65,7 @@
   box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1); /* Agrega una sombra sutil */
   border-radius: 8px; /* Bordes redondeados */
   text-align: center;
+  background-color: var(--ion-background-secondary); /* Cambiar el color de fondo */
 }
 
 .login-form h2 {
