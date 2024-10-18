@@ -471,7 +471,7 @@ setRows2(newRows2);
             <div className="PanelSecundario">
               <IonRow className="FilaTextBox">
                 <h2 className="TituloN2">Información General</h2>
-              </IonRow>  
+              </IonRow>  1
               {/* Preguntas independientes */}
               <IonRow className="FilaTextBox">
                 <h3 className="labelForm">1. Nombre de la comunidad:</h3>

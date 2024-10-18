@@ -125,7 +125,7 @@ const Menu: React.FC<MenuProps> = ({ userName, userRole, onLogout }) => {
           {appPages.map((appPage, index) => (
             <div key={index}>
               <IonMenuToggle autoHide={false}>
-                <IonItem
+                <IonItem style={{background: 'var(--ion-background-color)'}}
                   className={location.pathname === appPage.url ? 'selected' : ''}
                   routerLink={appPage.url}
                   routerDirection="none"
@@ -143,7 +143,7 @@ const Menu: React.FC<MenuProps> = ({ userName, userRole, onLogout }) => {
                 <IonList className="subpage-list">
                   {appPage.subPages.map((subPage, subIndex) => (
                     <IonMenuToggle key={subIndex} autoHide={false}>
-                      <IonItem
+                      <IonItem style={{background: 'var(--ion-background-secondary)'}}
                         className={location.pathname === subPage.url ? 'selected' : ''}
                         routerLink={subPage.url}
                         routerDirection="none"
@@ -161,8 +161,8 @@ const Menu: React.FC<MenuProps> = ({ userName, userRole, onLogout }) => {
         </IonList>
 
         {/* Información del usuario y  se agrega el botón de cerrar sesión */}
-        <IonList>
-          <IonItem lines="none">
+        <IonList >
+          <IonItem lines="none" style={{background: 'var(--ion-background-color)'}}>
             <IonIcon slot="start" icon={peopleCircleOutline} />
             <IonLabel>
               <h3>{userName}</h3>

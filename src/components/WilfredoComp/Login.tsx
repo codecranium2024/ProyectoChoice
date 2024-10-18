@@ -60,14 +60,14 @@ const Login: React.FC<{ onLoginSuccess: (name: string, role: string) => void }> 
                   alt="Choice Humanitarian"
                   className="welcome-image"
                 />
-                <h1 className='titulo'>Bienvenidos.</h1>
+                <h1 className='titulo'>Bienvenidos</h1>
               </div>
             </IonCol>
 
             <IonCol size="12" size-md="6" className="right-side">
               <div className="login-form">
                 <h2 className="Login">Iniciar Sesión</h2>
-                <form onSubmit={handleLogin} autoComplete="off">
+                <form onSubmit={handleLogin} autoComplete="off" style={{background: 'var(--ion-background-secondary)', boxShadow: 'none'}}>
                   <IonInput
                     type="text"
                     placeholder="Usuario"
