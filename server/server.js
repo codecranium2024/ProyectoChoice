@@ -839,6 +839,133 @@ app.delete('/municipios/:id', async (req, res) => {
     }
   }
 });
+//obtener todas las comunidades
+app.get('/listadocomunidades', async (req, res) => {
+  const query = `
+    SELECT lc.id, lc.nombrecomunidad, m.nombremunicipio 
+    FROM tb_listadocomunidad lc
+    JOIN tb_municipio m ON lc.municipio_id = m.id
+  `;
+  
+  let connection;
+
+  try {
+    // Crear una conexión única
+    connection = await mysql.createConnection(dbConfig);
+    
+    // Ejecutar la consulta
+    const [rows] = await connection.execute(query);
+
+    res.status(200).json(rows);
+  } catch (err) {
+    console.error('Error al obtener las comunidades:', err.message);
+    res.status(500).json({ error: 'Error al obtener las comunidades', details: err.message });
+  } finally {
+    // Cerrar la conexión si existe
+    if (connection) {
+      await connection.end();
+    }
+  }
+});
+// Registrar comunidad
+app.post('/listadocomunidad', async (req, res) => {
+  const { nombrecomunidad, municipio_id } = req.body; // Datos del cuerpo de la solicitud
+  const query = 'INSERT INTO tb_listadocomunidad (nombrecomunidad, municipio_id) VALUES (?, ?)';
+
+  let connection;
+
+  try {
+    // Crear una conexión única
+    connection = await mysql.createConnection(dbConfig);
+    
+    // Ejecutar la consulta
+    const [result] = await connection.execute(query, [nombrecomunidad, municipio_id]);
+
+    res.status(201).json({
+      message: 'Comunidad insertada correctamente.',
+      id: result.insertId // Devolver el ID de la nueva comunidad insertada
+    });
+  } catch (err) {
+    // Mostrar el error completo en la consola
+    console.error('Error al insertar la comunidad:', err);
+    
+    // Devolver el error en la respuesta
+    res.status(500).json({ 
+      error: 'Error al insertar la comunidad', 
+      details: err.message 
+    });
+  } finally {
+    // Cerrar la conexión si existe
+    if (connection) {
+      await connection.end();
+    }
+  }
+});
+// Eliminar comunidad
+app.delete('/listadocomunidad/:id', async (req, res) => {
+  const { id } = req.params; // Obtener el ID de la comunidad desde los parámetros de la ruta
+
+  const query = 'DELETE FROM tb_listadocomunidad WHERE id = ?';
+
+  let connection;
+
+  try {
+    // Crear una conexión única
+    connection = await mysql.createConnection(dbConfig);
+    
+    // Ejecutar la consulta
+    const [result] = await connection.execute(query, [id]);
+
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ error: 'Comunidad no encontrada' });
+    }
+
+    res.status(200).json({ message: 'Comunidad eliminada correctamente.' });
+  } catch (err) {
+    console.error('Error al eliminar la comunidad:', err.message);
+    res.status(500).json({ error: 'Error al eliminar la comunidad', details: err.message });
+  } finally {
+    // Cerrar la conexión si existe
+    if (connection) {
+      await connection.end();
+    }
+  }
+});
+// Actualizar comunidad
+app.put('/listadocomunidad/:id', async (req, res) => {
+  const { id } = req.params; // Obtener el ID de la comunidad desde los parámetros de la ruta
+  const { nombrecomunidad, municipio_id } = req.body; // Obtener los nuevos datos del cuerpo de la solicitud
+
+  const query = 'UPDATE tb_listadocomunidad SET nombrecomunidad = ?, municipio_id = ? WHERE id = ?';
+
+  let connection;
+
+  try {
+    // Crear una conexión única
+    connection = await mysql.createConnection(dbConfig);
+    
+    // Ejecutar la consulta
+    const [result] = await connection.execute(query, [nombrecomunidad, municipio_id, id]);
+
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ error: 'Comunidad no encontrada' });
+    }
+
+    res.status(200).json({ message: 'Comunidad actualizada correctamente.' });
+  } catch (err) {
+    console.error('Error al actualizar la comunidad:', err.message);
+    res.status(500).json({ error: 'Error al actualizar la comunidad', details: err.message });
+  } finally {
+    // Cerrar la conexión si existe
+    if (connection) {
+      await connection.end();
+    }
+  }
+});
+
+
+
+
 
 
 
