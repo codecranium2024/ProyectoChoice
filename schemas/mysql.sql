@@ -236,5 +236,11 @@ CREATE TABLE tb_municipio (
     departamento_id INT,
     FOREIGN KEY (departamento_id) REFERENCES tb_departamento(id) ON DELETE CASCADE
 );
+CREATE TABLE tb_listadocomunidad (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombrecomunidad VARCHAR(50) NOT NULL,
+    municipio_id INT,
+    FOREIGN KEY (municipio_id) REFERENCES tb_municipio(id) ON DELETE CASCADE
+);
 
 ---------------------------------------------------------------------------------------------
