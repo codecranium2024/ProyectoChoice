@@ -213,6 +213,13 @@ CREATE TABLE tb_registrarpr (
     FOREIGN KEY (idestado) REFERENCES tb_estadoP(idestado)
 );
 
+ALTER TABLE tb_registrarpr
+ADD idComunidad INT;
+
+ALTER TABLE tb_registrarpr
+ADD CONSTRAINT fk_comunidad FOREIGN KEY (idComunidad) REFERENCES tb_Comunidad(idComunidad);
+
+
 CREATE TABLE tb_estadoP (
     idestado INT AUTO_INCREMENT PRIMARY KEY,
     Estadoproyecto VARCHAR(30) NOT NULL
@@ -236,11 +243,11 @@ CREATE TABLE tb_municipio (
     departamento_id INT,
     FOREIGN KEY (departamento_id) REFERENCES tb_departamento(id) ON DELETE CASCADE
 );
-CREATE TABLE tb_listadocomunidad (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    nombrecomunidad VARCHAR(50) NOT NULL,
-    municipio_id INT,
-    FOREIGN KEY (municipio_id) REFERENCES tb_municipio(id) ON DELETE CASCADE
-);
+-- CREATE TABLE tb_listadocomunidad (
+--     id INT AUTO_INCREMENT PRIMARY KEY,
+--     nombrecomunidad VARCHAR(50) NOT NULL,
+--     municipio_id INT,
+--     FOREIGN KEY (municipio_id) REFERENCES tb_municipio(id) ON DELETE CASCADE
+-- );
 
 ---------------------------------------------------------------------------------------------

@@ -91,90 +91,90 @@ const ListadoGeneral: React.FC = () => {
     setEditComunidad(null);
   };
 
-  const handleRegisterComunidad = async () => {
-    const newComunidad: Omit<Comunidad, 'id'> = {
-      nombrecomunidad: nombreComunidad,
-      municipio_id: municipioId,
-    };
+  // const handleRegisterComunidad = async () => {
+  //   const newComunidad: Omit<Comunidad, 'id'> = {
+  //     nombrecomunidad: nombreComunidad,
+  //     municipio_id: municipioId,
+  //   };
 
-    try {
-      const response = await fetch('http://localhost:3000/listadocomunidad', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(newComunidad),
-      });
+  //   try {
+  //     const response = await fetch('http://localhost:3000/listadocomunidad', {
+  //       method: 'POST',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //       },
+  //       body: JSON.stringify(newComunidad),
+  //     });
 
-      if (!response.ok) {
-        throw new Error('Error al registrar la comunidad');
-      }
+  //     if (!response.ok) {
+  //       throw new Error('Error al registrar la comunidad');
+  //     }
 
-      const result = await response.json();
-      const municipio = municipios.find(m => m.id === municipioId);
-      setComunidades([...comunidades, { id: result.id, ...newComunidad, municipio: municipio ? municipio.nombremunicipio : '' }]);
-      closeModal();
-    } catch (error) {
-      console.error('Error al registrar la comunidad:', error);
-    }
-  };
+  //     const result = await response.json();
+  //     const municipio = municipios.find(m => m.id === municipioId);
+  //     setComunidades([...comunidades, { id: result.id, ...newComunidad, municipio: municipio ? municipio.nombremunicipio : '' }]);
+  //     closeModal();
+  //   } catch (error) {
+  //     console.error('Error al registrar la comunidad:', error);
+  //   }
+  // };
 
-  const handleDeleteComunidad = async () => {
-    if (selectedComunidad) {
-      try {
-        const response = await fetch(`http://localhost:3000/listadocomunidad/${selectedComunidad}`, {
-          method: 'DELETE',
-        });
+  // const handleDeleteComunidad = async () => {
+  //   if (selectedComunidad) {
+  //     try {
+  //       const response = await fetch(`http://localhost:3000/listadocomunidad/${selectedComunidad}`, {
+  //         method: 'DELETE',
+  //       });
 
-        if (!response.ok) {
-          throw new Error('Error al eliminar la comunidad');
-        }
+  //       if (!response.ok) {
+  //         throw new Error('Error al eliminar la comunidad');
+  //       }
 
-        const updatedComunidades = comunidades.filter(comunidad => comunidad.id !== selectedComunidad);
-        setComunidades(updatedComunidades);
-        closeModal();
-      } catch (error) {
-        console.error('Error al eliminar la comunidad:', error);
-      }
-    }
-  };
+  //       const updatedComunidades = comunidades.filter(comunidad => comunidad.id !== selectedComunidad);
+  //       setComunidades(updatedComunidades);
+  //       closeModal();
+  //     } catch (error) {
+  //       console.error('Error al eliminar la comunidad:', error);
+  //     }
+  //   }
+  // };
 
-  const handleEditComunidad = async () => {
-    if (editComunidad) {
-      const updatedComunidad: Comunidad = {
-        ...editComunidad,
-        nombrecomunidad: editComunidad.nombrecomunidad,
-        municipio_id: municipioId,
-      };
+  // const handleEditComunidad = async () => {
+  //   if (editComunidad) {
+  //     const updatedComunidad: Comunidad = {
+  //       ...editComunidad,
+  //       nombrecomunidad: editComunidad.nombrecomunidad,
+  //       municipio_id: municipioId,
+  //     };
 
-      try {
-        const response = await fetch(`http://localhost:3000/listadocomunidad/${editComunidad.id}`, {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(updatedComunidad),
-        });
+  //     try {
+  //       const response = await fetch(`http://localhost:3000/listadocomunidad/${editComunidad.id}`, {
+  //         method: 'PUT',
+  //         headers: {
+  //           'Content-Type': 'application/json',
+  //         },
+  //         body: JSON.stringify(updatedComunidad),
+  //       });
 
-        if (!response.ok) {
-          throw new Error('Error al actualizar la comunidad');
-        }
+  //       if (!response.ok) {
+  //         throw new Error('Error al actualizar la comunidad');
+  //       }
 
-        const municipio = municipios.find(m => m.id === municipioId);
-        const updatedComunidades = comunidades.map(comunidad => {
-          if (comunidad.id === editComunidad.id) {
-            return { ...comunidad, ...updatedComunidad, municipio: municipio ? municipio.nombremunicipio : '' };
-          }
-          return comunidad;
-        });
+  //       const municipio = municipios.find(m => m.id === municipioId);
+  //       const updatedComunidades = comunidades.map(comunidad => {
+  //         if (comunidad.id === editComunidad.id) {
+  //           return { ...comunidad, ...updatedComunidad, municipio: municipio ? municipio.nombremunicipio : '' };
+  //         }
+  //         return comunidad;
+  //       });
 
-        setComunidades(updatedComunidades);
-        closeModal();
-      } catch (error) {
-        console.error('Error al editar la comunidad:', error);
-      }
-    }
-  };
+  //       setComunidades(updatedComunidades);
+  //       closeModal();
+  //     } catch (error) {
+  //       console.error('Error al editar la comunidad:', error);
+  //     }
+  //   }
+  // };
 
   return (
     <IonPage>
@@ -254,7 +254,8 @@ const ListadoGeneral: React.FC = () => {
               </IonList>
               <IonRow>
                 <IonCol>
-                  <IonButton expand="block" onClick={handleRegisterComunidad}>Guardar</IonButton>
+                  {/* <IonButton expand="block" onClick={handleRegisterComunidad}>Guardar</IonButton> */}
+                  <IonButton expand="block">Guardar</IonButton>
                 </IonCol>
                 <IonCol>
                   <IonButton expand="block" color="medium" onClick={closeModal}>Cancelar</IonButton>
@@ -290,7 +291,8 @@ const ListadoGeneral: React.FC = () => {
             </IonList>
             <IonRow>
               <IonCol>
-                <IonButton expand="block" color="danger" onClick={handleDeleteComunidad}>Eliminar</IonButton>
+                {/* <IonButton expand="block" color="danger" onClick={handleDeleteComunidad}>Eliminar</IonButton> */}
+                <IonButton expand="block" color="danger">Eliminar</IonButton>
               </IonCol>
               <IonCol>
                 <IonButton expand="block" color="medium" onClick={closeModal}>Cancelar</IonButton>
@@ -335,7 +337,8 @@ const ListadoGeneral: React.FC = () => {
               </IonList>
               <IonRow>
                 <IonCol>
-                  <IonButton expand="block" onClick={handleEditComunidad}>Actualizar</IonButton>
+                  {/* <IonButton expand="block" onClick={handleEditComunidad}>Actualizar</IonButton> */}
+                  <IonButton expand="block">Actualizar</IonButton>
                 </IonCol>
                 <IonCol>
                   <IonButton expand="block" color="medium" onClick={closeModal}>Cancelar</IonButton>
