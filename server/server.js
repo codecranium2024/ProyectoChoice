@@ -436,8 +436,7 @@ app.post('/comunidad', async (req, res) => {
   }
 });
 // ------------------------------------------------------------------
-// Registrar un nuevo proyecto usando el procedimiento almacenado
-// Endpoint para obtener categorías
+// Registrar un nuevo proyecto 
 app.get('/categorias', async (req, res) => {
   try {
     const connection = await mysql.createConnection(dbConfig);
@@ -450,7 +449,6 @@ app.get('/categorias', async (req, res) => {
   }
 });
 
-// Endpoint para obtener estados de proyecto
 app.get('/estados', async (req, res) => {
   try {
     const connection = await mysql.createConnection(dbConfig);
@@ -463,7 +461,6 @@ app.get('/estados', async (req, res) => {
   }
 });
 
-// Endpoint para obtener nombres de usuarios
 app.get('/responsables', async (req, res) => {
   try {
     const connection = await mysql.createConnection(dbConfig);
@@ -674,12 +671,13 @@ app.get('/historial', async (req, res) => {
         r.idRegistrarProyecto, 
         r.Nombreclatura, 
         r.Nombre, 
-        DATE(r.FechaInicio) AS FechaInicio,  -- Recuperar solo la fecha
-        DATE(r.FechaFinalizacion) AS FechaFinalizacion,  -- Recuperar solo la fecha
+        r.FechaInicio, 
+        r.FechaFinalizacion, 
         c.categoria AS Categoria, 
         u.Nombre AS Responsable, 
         e.estadoproyecto AS Estado,
-        e.idestado AS EstadoID
+        co.nombre_comunidad AS Comunidad,
+        r.idComunidad  -- Añadir esta línea para incluir idComunidad
       FROM 
         tb_registrarpr r
       JOIN 
@@ -688,20 +686,22 @@ app.get('/historial', async (req, res) => {
         tb_usuario u ON r.idUsuario = u.idUsuario
       JOIN 
         tb_estadop e ON r.idestado = e.idestado
+      LEFT JOIN 
+        tb_Comunidad co ON r.idComunidad = co.idComunidad
       WHERE 
-        e.idestado = 2;
+        r.idestado = 2;  -- Filtrar solo proyectos finalizados
     `;
     const [rows] = await connection.execute(query);
     res.json(rows);
     await connection.end();
   } catch (err) {
-    console.error('Error al obtener proyectos:', err);
-    res.status(500).send('Error al obtener proyectos');
+    console.error('Error al obtener historial de proyectos:', err);
+    res.status(500).send('Error al obtener historial de proyectos');
   }
 });
 
+
 //Departamentos y municipios
-// Endpoint para registrar un departamento
 app.post('/departamentos', async (req, res) => {
   const { nombredepartamento } = req.body;
 
@@ -918,129 +918,6 @@ app.delete('/municipios/:id', async (req, res) => {
   } catch (err) {
     console.error('Error al eliminar el municipio:', err.message);
     res.status(500).json({ error: 'Error al eliminar el municipio', details: err.message });
-  } finally {
-    // Cerrar la conexión si existe
-    if (connection) {
-      await connection.end();
-    }
-  }
-});
-//obtener todas las comunidades
-app.get('/listadocomunidades', async (req, res) => {
-  const query = `
-    SELECT lc.id, lc.nombrecomunidad, m.nombremunicipio 
-    FROM tb_listadocomunidad lc
-    JOIN tb_municipio m ON lc.municipio_id = m.id
-  `;
-  
-  let connection;
-
-  try {
-    // Crear una conexión única
-    connection = await mysql.createConnection(dbConfig);
-    
-    // Ejecutar la consulta
-    const [rows] = await connection.execute(query);
-
-    res.status(200).json(rows);
-  } catch (err) {
-    console.error('Error al obtener las comunidades:', err.message);
-    res.status(500).json({ error: 'Error al obtener las comunidades', details: err.message });
-  } finally {
-    // Cerrar la conexión si existe
-    if (connection) {
-      await connection.end();
-    }
-  }
-});
-// Registrar comunidad
-app.post('/listadocomunidad', async (req, res) => {
-  const { nombrecomunidad, municipio_id } = req.body; // Datos del cuerpo de la solicitud
-  const query = 'INSERT INTO tb_listadocomunidad (nombrecomunidad, municipio_id) VALUES (?, ?)';
-
-  let connection;
-
-  try {
-    // Crear una conexión única
-    connection = await mysql.createConnection(dbConfig);
-    
-    // Ejecutar la consulta
-    const [result] = await connection.execute(query, [nombrecomunidad, municipio_id]);
-
-    res.status(201).json({
-      message: 'Comunidad insertada correctamente.',
-      id: result.insertId // Devolver el ID de la nueva comunidad insertada
-    });
-  } catch (err) {
-    // Mostrar el error completo en la consola
-    console.error('Error al insertar la comunidad:', err);
-    
-    // Devolver el error en la respuesta
-    res.status(500).json({ 
-      error: 'Error al insertar la comunidad', 
-      details: err.message 
-    });
-  } finally {
-    // Cerrar la conexión si existe
-    if (connection) {
-      await connection.end();
-    }
-  }
-});
-// Eliminar comunidad
-app.delete('/listadocomunidad/:id', async (req, res) => {
-  const { id } = req.params; // Obtener el ID de la comunidad desde los parámetros de la ruta
-
-  const query = 'DELETE FROM tb_listadocomunidad WHERE id = ?';
-
-  let connection;
-
-  try {
-    // Crear una conexión única
-    connection = await mysql.createConnection(dbConfig);
-    
-    // Ejecutar la consulta
-    const [result] = await connection.execute(query, [id]);
-
-    if (result.affectedRows === 0) {
-      return res.status(404).json({ error: 'Comunidad no encontrada' });
-    }
-
-    res.status(200).json({ message: 'Comunidad eliminada correctamente.' });
-  } catch (err) {
-    console.error('Error al eliminar la comunidad:', err.message);
-    res.status(500).json({ error: 'Error al eliminar la comunidad', details: err.message });
-  } finally {
-    // Cerrar la conexión si existe
-    if (connection) {
-      await connection.end();
-    }
-  }
-});
-// Actualizar comunidad
-app.put('/listadocomunidad/:id', async (req, res) => {
-  const { id } = req.params; // Obtener el ID de la comunidad desde los parámetros de la ruta
-  const { nombrecomunidad, municipio_id } = req.body; // Obtener los nuevos datos del cuerpo de la solicitud
-
-  const query = 'UPDATE tb_listadocomunidad SET nombrecomunidad = ?, municipio_id = ? WHERE id = ?';
-
-  let connection;
-
-  try {
-    // Crear una conexión única
-    connection = await mysql.createConnection(dbConfig);
-    
-    // Ejecutar la consulta
-    const [result] = await connection.execute(query, [nombrecomunidad, municipio_id, id]);
-
-    if (result.affectedRows === 0) {
-      return res.status(404).json({ error: 'Comunidad no encontrada' });
-    }
-
-    res.status(200).json({ message: 'Comunidad actualizada correctamente.' });
-  } catch (err) {
-    console.error('Error al actualizar la comunidad:', err.message);
-    res.status(500).json({ error: 'Error al actualizar la comunidad', details: err.message });
   } finally {
     // Cerrar la conexión si existe
     if (connection) {
