@@ -65,7 +65,7 @@ const appPages: AppPage[] = [
     mdIcon: peopleSharp,
     subPages: [
       { title: 'Comunidades', url: '/Comunidad' },
-      { title: 'Listado General', url: '/ListadoGeneral' },
+      // { title: 'Listado General', url: '/ListadoGeneral' },
       { title: 'Agregar', url: '/AgregarComunidades' },
     ]
   },

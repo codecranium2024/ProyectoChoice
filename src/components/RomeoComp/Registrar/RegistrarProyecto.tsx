@@ -31,6 +31,7 @@ interface Proyecto {
   FechaInicio: string;
   FechaFinalizacion: string;
   Categoria: string;
+  idComunidad: string;
   Responsable: string;
   Estado: string;
 }
@@ -52,37 +53,38 @@ interface Estado {
 
 const RegistrarProyecto: React.FC = () => {
   const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false);
-  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [proyectos, setProyectos] = useState<Proyecto[]>([]);
   const [categorias, setCategorias] = useState<Categoria[]>([]);
   const [responsables, setResponsables] = useState<Responsable[]>([]);
   const [estados, setEstados] = useState<Estado[]>([]);
-  const [selectedProyecto, setSelectedProyecto] = useState<Proyecto | null>(null);
+  const [comunidades, setComunidades] = useState<any[]>([]); // Define el estado para comunidades
   const [categoria, setCategoria] = useState<number | undefined>();
   const [nombreclatura, setNombreclatura] = useState<string>('');
   const [nombre, setNombre] = useState<string>('');
   const [responsable, setResponsable] = useState<number | undefined>();
+  const [idComunidad, setIdComunidad] = useState<string | undefined>();
   const [estado, setEstado] = useState<number | undefined>();
   const [fechainicio, setFechaInicio] = useState<string>('');
   const [fechaFinal, setFechaFinal] = useState<string>('');
+  const [proyectoAEditar, setProyectoAEditar] = useState<Proyecto | null>(null);
   const [showToast, setShowToast] = useState<{ show: boolean; message: string }>({
     show: false,
     message: '',
   });
-
-  const history = useHistory();
 
   useEffect(() => {
     fetchProyectos();
     fetchCategorias();
     fetchResponsables();
     fetchEstados();
+    fetchComunidades(); // Llama a la función para obtener comunidades
   }, []);
 
   const fetchProyectos = async () => {
     try {
       const response = await axios.get('http://localhost:3000/proyectos');
       setProyectos(response.data);
+       console.log(response.data)
     } catch (error) {
       setShowToast({ show: true, message: 'Error al obtener los proyectos.' });
     }
@@ -115,26 +117,37 @@ const RegistrarProyecto: React.FC = () => {
     }
   };
 
+  const fetchComunidades = async () => {
+    try {
+      const response = await axios.get('http://localhost:3000/comunidades');
+      setComunidades(response.data); 
+      console.log(response.data);// Almacena las comunidades
+    } catch (error) {
+      setShowToast({ show: true, message: 'Error al obtener las comunidades.' });
+    }
+  };
+
   const openRegisterModal = () => setIsRegisterModalOpen(true);
 
   const openEditModal = (proyecto: Proyecto) => {
-    setSelectedProyecto(proyecto);
-
+    setProyectoAEditar(proyecto);
+    setIsRegisterModalOpen(true); // Reutiliza el mismo modal
+    // Rellena el formulario con los datos del proyecto
     setCategoria(proyecto.idCategoriaProyecto);
     setNombreclatura(proyecto.Nombreclatura);
     setNombre(proyecto.Nombre);
     setResponsable(proyecto.idUsuario);
+    setIdComunidad(proyecto.idComunidad);
     setEstado(proyecto.idestado);
-    setFechaInicio(formatFecha(proyecto.FechaInicio, true));
-    setFechaFinal(formatFecha(proyecto.FechaFinalizacion, true));
-
-    setIsEditModalOpen(true);
+    setFechaInicio(proyecto.FechaInicio);
+    setFechaFinal(proyecto.FechaFinalizacion);
   };
+  
 
   const closeModal = () => {
     setIsRegisterModalOpen(false);
-    setIsEditModalOpen(false);
     resetForm();
+    setProyectoAEditar(null);
   };
 
   const resetForm = () => {
@@ -142,10 +155,10 @@ const RegistrarProyecto: React.FC = () => {
     setNombreclatura('');
     setNombre('');
     setResponsable(undefined);
+    setIdComunidad(undefined);
     setEstado(undefined);
     setFechaInicio('');
     setFechaFinal('');
-    setSelectedProyecto(null);
   };
 
   const handleAddProyecto = async () => {
@@ -156,13 +169,15 @@ const RegistrarProyecto: React.FC = () => {
       estado &&
       categoria &&
       fechainicio &&
-      fechaFinal
+      fechaFinal &&
+      idComunidad // Asegúrate de que este campo se envía
     ) {
       const newProyecto = {
         idCategoriaProyecto: categoria,
         Nombreclatura: nombreclatura,
         Nombre: nombre,
         idUsuario: responsable,
+        idComunidad: idComunidad,
         idestado: estado,
         FechaInicio: formatFecha(fechainicio),
         FechaFinalizacion: formatFecha(fechaFinal),
@@ -170,7 +185,7 @@ const RegistrarProyecto: React.FC = () => {
 
       try {
         await axios.post('http://localhost:3000/RegistrarProyecto', newProyecto);
-        fetchProyectos(); // Actualiza la lista de proyectos
+        await fetchProyectos(); // Actualiza la lista de proyectos
         setShowToast({ show: true, message: 'Proyecto agregado con éxito.' });
         closeModal();
       } catch (error: unknown) {
@@ -185,71 +200,96 @@ const RegistrarProyecto: React.FC = () => {
     }
   };
 
-  const handleEditProyecto = async () => {
-    if (
-      selectedProyecto &&
-      nombreclatura &&
-      nombre &&
-      responsable &&
-      estado &&
-      categoria &&
-      fechainicio &&
-      fechaFinal
-    ) {
-      const updatedProyecto = {
-        idCategoriaProyecto: categoria,
-        Nombreclatura: nombreclatura,
-        Nombre: nombre,
-        idUsuario: responsable,
-        idestado: estado,
-        FechaInicio: formatFecha(fechainicio),
-        FechaFinalizacion: formatFecha(fechaFinal),
-      };
-
-      try {
-        await axios.put(`http://localhost:3000/proyectos/${selectedProyecto.idRegistrarProyecto}`, updatedProyecto);
-        fetchProyectos(); // Actualiza la lista de proyectos
-        setShowToast({ show: true, message: 'Proyecto actualizado con éxito.' });
-        closeModal();
-      } catch (error: unknown) {
-        if (axios.isAxiosError(error)) {
-          setShowToast({ show: true, message: 'Error al actualizar proyecto: ' + (error.response?.data?.error || error.message) });
-        } else {
-          setShowToast({ show: true, message: 'Error al actualizar proyecto: Ocurrió un error desconocido.' });
-        }
-      }
-    } else {
-      setShowToast({ show: true, message: 'Por favor, completa todos los campos.' });
-    }
-  };
-
-  // Formatea la fecha en el formato correcto (yyyy-mm-dd o dd/mm/yyyy)
-  // const formatFecha = (fecha: string, forDisplay: boolean = false) => {
-  //   if (!fecha) return '';
-  //   if (forDisplay) {
-  //     const date = new Date(fecha);
-  //     return `${date.getDate().toString().padStart(2, '0')}/${(date.getMonth() + 1)
-  //       .toString()
-  //       .padStart(2, '0')}/${date.getFullYear()}`;
-  //   } else {
-  //     const [year, month, day] = fecha.split('-');
-  //     return `${year}-${month}-${day}`;
-  //   }
-  // };
+  
 
   const formatFecha = (fecha: string, forDisplay: boolean = false) => {
     if (!fecha) return '';
     const date = new Date(fecha);
     if (forDisplay) {
-      // Mostrar en formato dd/mm/yyyy
       return `${date.getDate().toString().padStart(2, '0')}/${(date.getMonth() + 1).toString().padStart(2, '0')}/${date.getFullYear()}`;
     } else {
-      // Para los inputs de tipo 'date' (formato yyyy-mm-dd)
       return `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`;
     }
   };
-  
 
+  
+  const handleEditProyecto = async () => {
+    // Verificar si los campos necesarios tienen valores (ya sea editados o preexistentes)
+    if (
+      nombreclatura?.trim() ||
+      proyectoAEditar?.Nombreclatura &&
+      nombre?.trim() ||
+      proyectoAEditar?.Nombre &&
+      responsable ||
+      proyectoAEditar?.idUsuario &&
+      estado ||
+      proyectoAEditar?.idestado &&
+      categoria ||
+      proyectoAEditar?.idCategoriaProyecto &&
+      fechainicio ||
+      proyectoAEditar?.FechaInicio &&
+      fechaFinal ||
+      proyectoAEditar?.FechaFinalizacion &&
+      idComunidad ||
+      proyectoAEditar?.idComunidad
+    ) {
+      const updatedProyecto = {
+        idRegistrarProyecto: proyectoAEditar?.idRegistrarProyecto, // Incluye el ID del proyecto
+        idCategoriaProyecto: categoria || proyectoAEditar?.idCategoriaProyecto,
+        Nombreclatura: nombreclatura || proyectoAEditar?.Nombreclatura,
+        Nombre: nombre || proyectoAEditar?.Nombre,
+        idUsuario: responsable || proyectoAEditar?.idUsuario,
+        idComunidad: idComunidad || proyectoAEditar?.idComunidad,
+        idestado: estado || proyectoAEditar?.idestado,
+        FechaInicio: formatFecha(fechainicio ?? ''),
+        FechaFinalizacion: formatFecha(fechaFinal ?? ''),
+      };
+  
+      try {
+        await axios.put(`http://localhost:3000/proyectos/${proyectoAEditar?.idRegistrarProyecto}`, updatedProyecto);
+        await fetchProyectos(); // Actualiza la lista de proyectos
+        setShowToast({ show: true, message: 'Proyecto editado con éxito.' });
+        closeModal();
+      } catch (error: unknown) {
+        if (axios.isAxiosError(error)) {
+          setShowToast({ show: true, message: 'Error al editar proyecto: ' + (error.response?.data?.error || error.message) });
+        } else {
+          setShowToast({ show: true, message: 'Error al editar proyecto: Ocurrió un error desconocido.' });
+        }
+      }
+    } else {
+      setShowToast({ show: true, message: 'Por favor, completa todos los campos obligatorios.' });
+    }
+  };
+  
+  const renderProyectos = () => {
+    return proyectos.map((proyecto) => {
+      console.log('Buscando comunidad para idComunidad:', proyecto.idComunidad);
+      return (
+        <tr key={proyecto.idRegistrarProyecto}>
+          <td>{proyecto.Categoria}</td>
+          <td>{proyecto.Nombreclatura}</td>
+          <td>{proyecto.Nombre}</td>
+          <td>{proyecto.Responsable}</td>
+          <td>
+            {comunidades.find((com) => com.idComunidad === proyecto.idComunidad)?.nombre_comunidad || 'No asignada'}
+          </td>
+          <td>{formatFecha(proyecto.FechaInicio, true)}</td>
+          <td>{formatFecha(proyecto.FechaFinalizacion, true)}</td>
+          <td>
+            <IonButton fill="clear" size="small" onClick={() => openEditModal(proyecto)}>Editar</IonButton>
+          </td>
+        </tr>
+      );
+    });
+  };
+  
+  // Luego, en tu return, llamas a esta función
+  <tbody>
+    {renderProyectos()}
+  </tbody>
+  
+  
   return (
     <IonPage>
       <IonHeader>
@@ -267,11 +307,11 @@ const RegistrarProyecto: React.FC = () => {
           <table className="table">
             <thead>
               <tr>
-                {/* <th>ID</th> */}
                 <th>Categoría</th>
                 <th>Nomenclatura</th>
                 <th>Nombre</th>
                 <th>Responsable</th>
+                <th>Comunidad</th>
                 <th>Estado</th>
                 <th>Fecha de Inicio</th>
                 <th>Fecha de Finalización</th>
@@ -281,22 +321,16 @@ const RegistrarProyecto: React.FC = () => {
             <tbody>
               {proyectos.map((proyecto) => (
                 <tr key={proyecto.idRegistrarProyecto}>
-                  {/* <td>{proyecto.idRegistrarProyecto}</td> */}
                   <td>{proyecto.Categoria}</td>
                   <td>{proyecto.Nombreclatura}</td>
                   <td>{proyecto.Nombre}</td>
                   <td>{proyecto.Responsable}</td>
                   <td>{proyecto.Estado}</td>
+                  <td> {comunidades.find(com => com.idComunidad === proyecto.idComunidad)?.nombre_comunidad || 'No asignada'}</td>
                   <td>{formatFecha(proyecto.FechaInicio, true)}</td>
                   <td>{formatFecha(proyecto.FechaFinalizacion, true)}</td>
                   <td>
-                    <IonButton
-                      onClick={() => openEditModal(proyecto)}
-                      fill="clear"
-                      size="small"
-                    >
-                      Editar
-                    </IonButton>
+                    <IonButton fill="clear" size="small"onClick={() => openEditModal(proyecto)}>Editar</IonButton>
                   </td>
                 </tr>
               ))}
@@ -314,112 +348,11 @@ const RegistrarProyecto: React.FC = () => {
           <IonContent>
             <IonList>
               <IonItem>
-                <IonLabel position="stacked" className="label">Categoría</IonLabel>
-                <IonSelect
-                  value={categoria}
-                  placeholder="Selecciona una categoría"
-                  onIonChange={(e) => setCategoria(e.detail.value)}
-                >
-                  {categorias.map((cat) => (
-                    <IonSelectOption key={cat.idCategoriaProyecto} value={cat.idCategoriaProyecto}>
-                      {cat.Categoria}
-                    </IonSelectOption>
-                  ))}
-                </IonSelect>
-              </IonItem>
-
-              <IonItem>
-                <IonLabel position="stacked" className="label">Nomenclatura</IonLabel>
-                <IonInput
-                  value={nombreclatura}
-                  onIonChange={(e) => setNombreclatura(e.detail.value!)}
-                  placeholder="Escribe la nomenclatura"
-                />
-              </IonItem>
-
-              <IonItem>
-                <IonLabel position="stacked" className="label">Nombre</IonLabel>
-                <IonInput
-                  value={nombre}
-                  onIonChange={(e) => setNombre(e.detail.value!)}
-                  placeholder="Escribe el nombre del proyecto"
-                />
-              </IonItem>
-
-              <IonItem>
-                <IonLabel position="stacked"className="label">Responsable</IonLabel>
-                <IonSelect
-                  value={responsable}
-                  placeholder="Selecciona un responsable"
-                  onIonChange={(e) => setResponsable(e.detail.value)}
-                >
-                  {responsables.map((res) => (
-                    <IonSelectOption key={res.idUsuario} value={res.idUsuario}>
-                      {res.Nombre}
-                    </IonSelectOption>
-                  ))}
-                </IonSelect>
-              </IonItem>
-
-              <IonItem>
-                <IonLabel position="stacked" className="label">Estado</IonLabel>
-                <IonSelect
-                  value={estado}
-                  placeholder="Selecciona un estado"
-                  onIonChange={(e) => setEstado(e.detail.value)}
-                >
-                  {estados.map((est) => (
-                    <IonSelectOption key={est.idestado} value={est.idestado}>
-                      {est.Estadoproyecto}
-                    </IonSelectOption>
-                  ))}
-                </IonSelect>
-              </IonItem>
-
-              <IonItem>
-                <IonLabel position="stacked" className="label">Fecha de Inicio</IonLabel>
-                <IonInput
-                  value={fechainicio}
-                  type="date"
-                  onIonChange={(e) => setFechaInicio(e.detail.value!)}
-                />
-              </IonItem>
-
-              <IonItem>
-                <IonLabel position="stacked"className="label">Fecha de Finalización</IonLabel>
-                <IonInput
-                  value={fechaFinal}
-                  type="date"
-                  onIonChange={(e) => setFechaFinal(e.detail.value!)}
-                />
-              </IonItem>
-            </IonList>
-            <div className="button-container"> 
-            <IonButton expand="block" onClick={handleAddProyecto}>
-              Registrar
-            </IonButton>
-            <IonButton expand="block" color="danger" onClick={closeModal}>
-              Cancelar
-            </IonButton>
-            </div>
-          </IonContent>
-        </IonModal>
-
-        {/* Modal para Editar Proyecto */}
-        <IonModal isOpen={isEditModalOpen} onDidDismiss={closeModal}>
-          <IonHeader>
-            <IonToolbar>
-              <IonTitle>Editar Proyecto</IonTitle>
-            </IonToolbar>
-          </IonHeader>
-          <IonContent>
-            <IonList>
-              <IonItem>
                 <IonLabel position="stacked">Categoría</IonLabel>
                 <IonSelect
                   value={categoria}
                   placeholder="Selecciona una categoría"
-                  onIonChange={(e) => setCategoria(e.detail.value)}
+                  onIonChange={(e) => setCategoria(Number(e.detail.value))}
                 >
                   {categorias.map((cat) => (
                     <IonSelectOption key={cat.idCategoriaProyecto} value={cat.idCategoriaProyecto}>
@@ -431,20 +364,12 @@ const RegistrarProyecto: React.FC = () => {
 
               <IonItem>
                 <IonLabel position="stacked">Nomenclatura</IonLabel>
-                <IonInput
-                  value={nombreclatura}
-                  onIonChange={(e) => setNombreclatura(e.detail.value!)}
-                  placeholder="Escribe la nomenclatura"
-                />
+                <IonInput value={nombreclatura} onIonChange={(e) => setNombreclatura(e.detail.value!)} />
               </IonItem>
 
               <IonItem>
                 <IonLabel position="stacked">Nombre</IonLabel>
-                <IonInput
-                  value={nombre}
-                  onIonChange={(e) => setNombre(e.detail.value!)}
-                  placeholder="Escribe el nombre del proyecto"
-                />
+                <IonInput value={nombre} onIonChange={(e) => setNombre(e.detail.value!)} />
               </IonItem>
 
               <IonItem>
@@ -452,11 +377,26 @@ const RegistrarProyecto: React.FC = () => {
                 <IonSelect
                   value={responsable}
                   placeholder="Selecciona un responsable"
-                  onIonChange={(e) => setResponsable(e.detail.value)}
+                  onIonChange={(e) => setResponsable(Number(e.detail.value))}
                 >
-                  {responsables.map((res) => (
-                    <IonSelectOption key={res.idUsuario} value={res.idUsuario}>
-                      {res.Nombre}
+                  {responsables.map((resp) => (
+                    <IonSelectOption key={resp.idUsuario} value={resp.idUsuario}>
+                      {resp.Nombre}
+                    </IonSelectOption>
+                  ))}
+                </IonSelect>
+              </IonItem>
+
+              <IonItem>
+                <IonLabel position="stacked">Comunidad</IonLabel>
+                <IonSelect
+                  value={idComunidad}
+                  placeholder="Selecciona una comunidad"
+                  onIonChange={(e) => setIdComunidad(e.detail.value)}
+                >
+                  {comunidades.map((com) => (
+                    <IonSelectOption key={com.idComunidad} value={com.idComunidad}>
+                      {com.nombre_comunidad}
                     </IonSelectOption>
                   ))}
                 </IonSelect>
@@ -467,7 +407,7 @@ const RegistrarProyecto: React.FC = () => {
                 <IonSelect
                   value={estado}
                   placeholder="Selecciona un estado"
-                  onIonChange={(e) => setEstado(e.detail.value)}
+                  onIonChange={(e) => setEstado(Number(e.detail.value))}
                 >
                   {estados.map((est) => (
                     <IonSelectOption key={est.idestado} value={est.idestado}>
@@ -479,39 +419,32 @@ const RegistrarProyecto: React.FC = () => {
 
               <IonItem>
                 <IonLabel position="stacked">Fecha de Inicio</IonLabel>
-                <IonInput
-                  value={fechainicio}
-                  type="date"
-                  onIonChange={(e) => setFechaInicio(e.detail.value!)}
-                />
+                <IonInput type="date" value={fechainicio} onIonChange={(e) => setFechaInicio(e.detail.value!)} />
               </IonItem>
 
               <IonItem>
                 <IonLabel position="stacked">Fecha de Finalización</IonLabel>
-                <IonInput
-                  value={fechaFinal}
-                  type="date"
-                  onIonChange={(e) => setFechaFinal(e.detail.value!)}
-                />
+                <IonInput type="date" value={fechaFinal} onIonChange={(e) => setFechaFinal(e.detail.value!)} />
               </IonItem>
             </IonList>
-            <div className="button-container">
-            <IonButton expand="block" onClick={handleEditProyecto}>
-              Actualizar
+            <IonButton expand="full" onClick={proyectoAEditar ? handleEditProyecto : handleAddProyecto}>
+              {proyectoAEditar ? 'Guardar Cambios' : 'Agregar Proyecto'}
             </IonButton>
-            <IonButton expand="block" color="danger" onClick={closeModal}>
+            {/* <IonButton expand="full" onClick={handleAddProyecto}>
+              Agregar Proyecto
+            </IonButton> */}
+            <IonButton expand="full" color="light" onClick={closeModal}>
               Cancelar
             </IonButton>
-            </div>
+
+            <IonToast
+              isOpen={showToast.show}
+              onDidDismiss={() => setShowToast({ show: false, message: '' })}
+              message={showToast.message}
+              duration={2000}
+            />
           </IonContent>
         </IonModal>
-
-        <IonToast
-          isOpen={showToast.show}
-          message={showToast.message}
-          duration={3000}
-          onDidDismiss={() => setShowToast({ show: false, message: '' })}
-        />
       </IonContent>
     </IonPage>
   );

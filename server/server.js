@@ -476,15 +476,23 @@ app.get('/responsables', async (req, res) => {
   }
 });
 
-// Endpoint para registrar un proyecto
 app.post('/RegistrarProyecto', async (req, res) => {
-  const { idCategoriaProyecto, Nombreclatura, Nombre, idUsuario, idestado, FechaInicio, FechaFinalizacion } = req.body;
+  const { 
+    idCategoriaProyecto, 
+    Nombreclatura, 
+    Nombre, 
+    idUsuario, 
+    idestado, 
+    FechaInicio, 
+    FechaFinalizacion, 
+    idComunidad // Asegúrate de que este campo se envía en la solicitud
+  } = req.body;
 
   // Consulta SQL para insertar el nuevo registro
   const sql = `
       INSERT INTO tb_registrarpr (
-          idCategoriaProyecto, Nombreclatura, Nombre, idUsuario, idestado, FechaInicio, FechaFinalizacion
-      ) VALUES (?, ?, ?, ?, ?, ?, ?)
+          idCategoriaProyecto, Nombreclatura, Nombre, idUsuario, idestado, FechaInicio, FechaFinalizacion, idComunidad
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
   `;
 
   let connection;
@@ -494,17 +502,132 @@ app.post('/RegistrarProyecto', async (req, res) => {
       connection = await mysql.createConnection(dbConfig);
       
       // Ejecutar la consulta
-      const [result] = await connection.execute(sql, [idCategoriaProyecto, Nombreclatura, Nombre, idUsuario, idestado, FechaInicio, FechaFinalizacion]);
+      const [result] = await connection.execute(sql, [idCategoriaProyecto, Nombreclatura, Nombre, idUsuario, idestado, FechaInicio, FechaFinalizacion, idComunidad]);
       
       res.status(201).json({ message: 'Registro creado exitosamente', id: result.insertId });
   } catch (err) {
-      console.error('Error al insertar el registro:', err.message); // Muestra el mensaje de error
-      res.status(500).json({ error: 'Error al insertar el registro', details: err.message }); // Muestra el mensaje de error en la respuesta
+      console.error('Error al insertar el registro:', err.message);
+      res.status(500).json({ error: 'Error al insertar el registro', details: err.message });
   } finally {
       // Cerrar la conexión si existe
       if (connection) {
           await connection.end();
       }
+  }
+});
+
+app.put('/proyectos/:id', async (req, res) => {
+  const { id } = req.params; // Obtener el ID del proyecto desde los parámetros de la ruta
+  const {
+    Nombreclatura,
+    Nombre,
+    FechaInicio,
+    FechaFinalizacion,
+    idCategoriaProyecto, // Asegúrate de que envías idCategoriaProyecto en lugar de Categoria
+    idUsuario, // Asegúrate de que envías idUsuario en lugar de Responsable
+    idestado, // Asegúrate de que envías idestado en lugar de Estado
+    idComunidad // Si es necesario
+  } = req.body; // Obtener los nuevos datos del cuerpo de la solicitud
+
+  // Crear el array de updates y values
+  const updates = [];
+  const values = [];
+
+  if (Nombreclatura !== undefined) {
+    updates.push('Nombreclatura = ?');
+    values.push(Nombreclatura);
+  }
+  if (Nombre !== undefined) {
+    updates.push('Nombre = ?');
+    values.push(Nombre);
+  }
+  if (FechaInicio !== undefined) {
+    const fechaInicioFormatted = new Date(FechaInicio).toISOString().split('T')[0];
+    updates.push('FechaInicio = ?');
+    values.push(fechaInicioFormatted);
+  }
+  if (FechaFinalizacion !== undefined) {
+    const fechaFinalizacionFormatted = new Date(FechaFinalizacion).toISOString().split('T')[0];
+    updates.push('FechaFinalizacion = ?');
+    values.push(fechaFinalizacionFormatted);
+  }
+  if (idCategoriaProyecto !== undefined) {
+    updates.push('idCategoriaProyecto = ?');
+    values.push(idCategoriaProyecto);
+  }
+  if (idUsuario !== undefined) {
+    updates.push('idUsuario = ?');
+    values.push(idUsuario);
+  }
+  if (idestado !== undefined) {
+    updates.push('idestado = ?');
+    values.push(idestado);
+  }
+  if (idComunidad !== undefined) {
+    updates.push('idComunidad = ?');
+    values.push(idComunidad);
+  }
+
+  // Asegúrate de que al menos un campo ha sido proporcionado para actualizar
+  if (updates.length === 0) {
+    return res.status(400).send('No se proporcionaron campos para actualizar');
+  }
+
+  // Agregar el ID al final de los valores para la cláusula WHERE
+  values.push(id);
+
+  // Crear la consulta SQL
+  const query = `
+    UPDATE tb_registrarpr 
+    SET ${updates.join(', ')} 
+    WHERE idRegistrarProyecto = ?;
+  `;
+
+  let connection;
+
+  try {
+    // Crear una conexión única
+    connection = await mysql.createConnection(dbConfig);
+
+    // Ejecutar la consulta
+    const [result] = await connection.execute(query, values);
+
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ error: 'Proyecto no encontrado' });
+    }
+
+    res.status(200).json({ message: 'Proyecto actualizado con éxito.' });
+  } catch (err) {
+    console.error('Error al actualizar el proyecto:', err.message);
+    res.status(500).json({ error: 'Error al actualizar el proyecto', details: err.message });
+  } finally {
+    // Cerrar la conexión si existe
+    if (connection) {
+      await connection.end();
+    }
+  }
+});
+
+app.get('/comunidades', async (req, res) => {
+  const sql = 'SELECT idComunidad, nombre_comunidad FROM tb_comunidad';
+  let connection;
+
+  try {
+    // Crear una conexión única
+    connection = await mysql.createConnection(dbConfig);
+    
+    // Ejecutar la consulta
+    const [rows] = await connection.execute(sql);
+
+    res.status(200).json(rows);
+  } catch (err) {
+    console.error('Error al obtener los nombres de la comunidad:', err.message);
+    res.status(500).json({ error: 'Error al obtener los comunidades', details: err.message });
+  } finally {
+    // Cerrar la conexión si existe
+    if (connection) {
+      await connection.end();
+    }
   }
 });
 
@@ -520,7 +643,9 @@ app.get('/proyectos', async (req, res) => {
         r.FechaFinalizacion, 
         c.categoria AS Categoria, 
         u.Nombre AS Responsable, 
-        e.estadoproyecto AS Estado
+        e.estadoproyecto AS Estado,
+        co.nombre_comunidad AS Comunidad,
+        r.idComunidad  -- Añadir esta línea para incluir idComunidad
       FROM 
         tb_registrarpr r
       JOIN 
@@ -528,7 +653,9 @@ app.get('/proyectos', async (req, res) => {
       JOIN 
         tb_usuario u ON r.idUsuario = u.idUsuario
       JOIN 
-        tb_estadop e ON r.idestado = e.idestado;
+        tb_estadop e ON r.idestado = e.idestado
+      LEFT JOIN 
+        tb_Comunidad co ON r.idComunidad = co.idComunidad;
     `;
     const [rows] = await connection.execute(query);
     res.json(rows);
@@ -536,47 +663,6 @@ app.get('/proyectos', async (req, res) => {
   } catch (err) {
     console.error('Error al obtener proyectos:', err);
     res.status(500).send('Error al obtener proyectos');
-  }
-});
-
-app.put('/proyectos/:id', async (req, res) => {
-  const { id } = req.params;
-  const { Nombreclatura, Nombre, FechaInicio, FechaFinalizacion, idCategoriaProyecto, idUsuario, idestado } = req.body;
-
-  if (!Nombreclatura || !Nombre || !FechaInicio || !FechaFinalizacion || !idCategoriaProyecto || !idUsuario || !idestado) {
-    return res.status(400).send('Todos los campos son requeridos');
-  }
-
-  // Convertir las fechas al formato YYYY-MM-DD
-  const fechaInicioFormatted = new Date(FechaInicio).toISOString().split('T')[0];
-  const fechaFinalizacionFormatted = new Date(FechaFinalizacion).toISOString().split('T')[0];
-
-  try {
-    const connection = await mysql.createConnection(dbConfig);
-    const query = `
-      UPDATE tb_registrarpr
-      SET 
-        Nombreclatura = ?, 
-        Nombre = ?, 
-        FechaInicio = ?, 
-        FechaFinalizacion = ?, 
-        idCategoriaProyecto = ?, 
-        idUsuario = ?, 
-        idestado = ?
-      WHERE idRegistrarProyecto = ?;
-    `;
-    const [result] = await connection.execute(query, [Nombreclatura, Nombre, fechaInicioFormatted, fechaFinalizacionFormatted, idCategoriaProyecto, idUsuario, idestado, id]);
-
-    if (result.affectedRows === 0) {
-      res.status(404).send('Proyecto no encontrado');
-    } else {
-      res.send('Proyecto actualizado con éxito');
-    }
-
-    await connection.end();
-  } catch (err) {
-    console.error('Error al actualizar proyecto:', err);
-    res.status(500).send('Error al actualizar proyecto: ' + err.message);
   }
 });
 
@@ -962,7 +1048,48 @@ app.put('/listadocomunidad/:id', async (req, res) => {
     }
   }
 });
+//tecnico/comunidad
+app.get('/tecnicocomunidad', async (req, res) => {
+  const query = `
+    SELECT 
+      u.Nombre AS nombre_usuario,
+      c.nombre_comunidad,
+      c.presidente_cocode AS nombre_lider_comunitario,
+      c.numero_personas AS cantidad_habitantes,
+      m.nombremunicipio AS nombre_municipio,
+      ep.Estadoproyecto AS estado_proyecto
+    FROM 
+      tb_Usuario u
+    JOIN 
+      tb_registrarpr rp ON u.idUsuario = rp.idUsuario
+    JOIN 
+      tb_Comunidad c ON rp.idUsuario = c.idComunidad
+    JOIN 
+      tb_municipio m ON c.nombre_municipio = m.id
+    JOIN 
+      tb_estadoP ep ON rp.idestado = ep.idestado
+  `;
 
+  let connection;
+
+  try {
+    // Crear una conexión única
+    connection = await mysql.createConnection(dbConfig);
+    
+    // Ejecutar la consulta
+    const [rows] = await connection.execute(query);
+
+    res.status(200).json(rows);
+  } catch (err) {
+    console.error('Error al obtener las comunidades:', err.message);
+    res.status(500).json({ error: 'Error al obtener las comunidades', details: err.message });
+  } finally {
+    // Cerrar la conexión si existe
+    if (connection) {
+      await connection.end();
+    }
+  }
+});
 
 
 

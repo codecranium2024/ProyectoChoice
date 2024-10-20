@@ -87,7 +87,7 @@ const Historial: React.FC = () => {
                   <td>{formatFecha(proyecto.FechaFinalizacion)}</td>
                   <td>
                     <IonButton color="primary" size="small" onClick={() => handleViewInfo(proyecto)}>
-                      Información Completa
+                      Ver Datos
                     </IonButton>
                   </td>
                 </tr>
