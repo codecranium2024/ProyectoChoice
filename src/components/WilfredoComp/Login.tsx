@@ -28,6 +28,10 @@ const Login: React.FC<{ onLoginSuccess: (name: string, role: string) => void }> 
       const data = await response.json();
   
       if (response.ok && data.success) {
+        // Guarda el nombre y rol en Electron Store
+        window.electron.setStore('nombreUsuario', data.nombre);
+        window.electron.setStore('rolUsuario', data.rol);
+
         // Ahora `data` contiene `{ nombre: 'Nombre Apellido', rol: 'nombreRol' }`
         onLoginSuccess(data.nombre, data.rol); // Llama a la función con el nombre completo y rol
         history.push('/panel');
