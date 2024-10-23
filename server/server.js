@@ -52,6 +52,7 @@ async function testDBConnection() {
 testDBConnection();
 
 // Endpoint para el login
+// Endpoint para el login
 app.post('/login', async (req, res) => {
   const { usuario, password } = req.body;
 
@@ -59,7 +60,7 @@ app.post('/login', async (req, res) => {
     const connection = await mysql.createConnection(dbConfig);
 
     const [rows] = await connection.execute(
-      `SELECT tb_Usuario.Nombre, tb_Usuario.Apellido, tb_Rol.Rol AS nombreRol 
+      `SELECT tb_Usuario.Nombre, tb_Usuario.Apellido, tb_Usuario.Usuario, tb_Rol.Rol AS nombreRol 
        FROM tb_Usuario 
        INNER JOIN tb_Rol ON tb_Usuario.idRol = tb_Rol.idRol 
        WHERE tb_Usuario.Usuario = ?`, [usuario]
@@ -75,7 +76,8 @@ app.post('/login', async (req, res) => {
       const decryptedPassword = decryptionRows[0].decryptedPassword;
 
       if (decryptedPassword && decryptedPassword === password) {
-        res.json({ success: true, nombre: `${user.Nombre} ${user.Apellido}`, rol: user.nombreRol });
+        // Devolver el nombre, rol y el usuario para almacenar correctamente en el frontend
+        res.json({ success: true, nombre: `${user.Nombre} ${user.Apellido}`, rol: user.nombreRol, usuario: user.Usuario });
       } else {
         res.status(401).json({ success: false, message: 'Contraseña incorrecta' });
       }
@@ -89,6 +91,7 @@ app.post('/login', async (req, res) => {
     res.status(500).json({ success: false, message: 'Error en el servidor' });
   }
 });
+
 
 // Endpoint para obtener roles
 app.get('/roles', async (req, res) => {
