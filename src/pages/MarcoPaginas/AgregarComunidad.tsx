@@ -4,11 +4,8 @@ import { IonPage, IonContent, IonTabs, IonTab, IonTabBar, IonTabButton, IonIcon,
 import { add, bookOutline, cog, cogOutline, earthOutline, fitnessOutline, globeOutline, leafOutline, peopleOutline, waterOutline } from 'ionicons/icons';
 import { FaRecycle } from "react-icons/fa";
 import { PiCowFill, PiPlantFill} from "react-icons/pi";
-function AgregarComunidades() {
 
-  const [showSuccessAlert, setShowSuccessAlert] = useState(false);
-  const [showValidationAlert, setShowValidationAlert] = useState(false);
-  const [seccionActual, setSeccionActual] = useState('DatosGenerales'); // Por defecto, empieza en DatosGenerales
+function AgregarComunidades() {
   // estructura de formularios
   let [Comunidad, setComunidad] = useState('');
   let [Municipio, setMunicipio] = useState(''); // campo para guardar el municipio
@@ -206,23 +203,23 @@ function AgregarComunidades() {
     { tipo: 'Cerdos', frecuencia: '', alimento: '', area: '', venta: '', precio: '', donde: '' },
     { tipo: 'Vacas/toros', frecuencia: '', alimento: '', area: '', venta: '', precio: '', donde: '' }]);
 
-// Función para agregar una nueva fila
-const addRow2 = () => {
-setRows2([...rows2, { tipo: '', frecuencia: '', alimento: '', area: '', venta: '', precio: '', donde: '' }]);
-};
+  // Función para agregar una nueva fila
+  const addRow2 = () => {
+  setRows2([...rows2, { tipo: '', frecuencia: '', alimento: '', area: '', venta: '', precio: '', donde: '' }]);
+  };
 
-// Función para manejar cambios en los campos de entrada
-const handleInputChange2 = (index: number, field: string, value: string) => {
-const newRows = [...rows2];
-newRows[index][field] = value;
-setRows2(newRows);
-};
+  // Función para manejar cambios en los campos de entrada
+  const handleInputChange2 = (index: number, field: string, value: string) => {
+  const newRows = [...rows2];
+  newRows[index][field] = value;
+  setRows2(newRows);
+  };
 
-const handleCheckboxChange2 = (index: number, field: string, value: boolean) => {
-const newRows2 = [...rows2];
-newRows2[index][field] = value;
-setRows2(newRows2);
-};
+  const handleCheckboxChange2 = (index: number, field: string, value: boolean) => {
+  const newRows2 = [...rows2];
+  newRows2[index][field] = value;
+  setRows2(newRows2);
+  };
   /*Fin Actividades Pecuarias*/
    const [comercializacionProductos, setComercializacionProductos] = useState(''); // Campo de texto
    const [terrenoPropio, setTerrenoPropio] = useState(false);  // Checkbox
@@ -301,167 +298,108 @@ setRows2(newRows2);
    const [otrasInstituciones, setOtrasInstituciones] = useState('');  // Campo de texto
    const [amenazaDesastre, setAmenazaDesastre] = useState('');  // Campo de texto
 
-  // Función para enviar los datos al backend
-  const handleGuardarComunidad = async () => {
-    // Verificar la sección actual y validar los campos requeridos
-    if (seccionActual === 'DatosGenerales') {
-      // Validar campos obligatorios de Datos Generales
-      if (!Comunidad || !Municipio || !Aldea || !Ubicacion || !PresidenteCOCODE || !TelefonoContacto) {
-        setShowValidationAlert(true);
-        return;
-      }
-      // Construir los datos específicos de Datos Generales
-      const data = {
-        nombre_comunidad: Comunidad,
-        nombre_municipio: Municipio,
-        nombre_aldea: Aldea,
-        ubicacion_real: Ubicacion,
-        presidente_cocode: PresidenteCOCODE,
-        telefono_contacto1: TelefonoContacto,
-        otro_lider: OtroLider,
-        telefono_contacto2: TelefonoOtroLider,
-        tipo_transporte: Transporte,
-        numero_familias: parseInt(NumeroFamilias, 10),
-        numero_viviendas: parseInt(NumeroViviendas, 10),
-        numero_personas: parseInt(NumeroPersonas, 10),
-        certeza_juridica_tierra: CertezaJuridica,
-        conflictos_tierra: ConflictosTierra,
-        dimension_lotes: DimensionesLotes,
-        dimension_trabajadores: DimensionesTrabajaderos,
-        tierra_comunitaria: TierraComunitaria,
-        idiomas_comunidad: Idiomas,
-        fuentes_empleo: FuentesEmpleo,
-        recreacion_comunidad: Recreacion,
-        potencial_turistico: PotencialTuristico,
-        tipo_edificios_publicos: EdificiosPublicos,
-        hay_inseguridad: Inseguridad ? 1 : 0,
-        tipo_inseguridad: Inseguridad ? TipoInseguridad : null,
-        grupos_delincuenciales: Inseguridad ? GruposDelincuenciales : null,
-        personas_otro_lugar: parseInt(PersonasOtrosMunicipios, 10),
-        ocupacion_otro_lugar: TipoTrabajo,
-        personas_en_eeuu: PersonasEEUU ? 1 : 0,
-        cantidad_personas_eeuu: PersonasEEUU ? parseInt(CantidadPersonasEEUU, 10) : null,
-        menores_en_eeuu: MenoresEEUU ? 1 : 0,
-        edad_empieza_trabajar_hombres: parseInt(EdadTrabajoHombres, 10),
-        edad_empieza_trabajar_mujeres: parseInt(EdadTrabajoMujeres, 10),
-        tipo_empleo: Ocupaciones,
-        existen_jubilados: Jubilados ? 1 : 0,
-        cantidad_jubilados: Jubilados ? parseInt(CantidadJubilados, 10) : null,
-        institucion_jubilados: Jubilados ? InstitucionJubilados : null,
-        ocupaciones_tradicionales_mujeres: OcupacionesMujeres,
-        ocupaciones_tradicionales_hombres: OcupacionesHombres
-      };
-  
-      // Guardar los datos
-      await guardarDatosEnBackend(data);
-      
-    } else if (seccionActual === 'Servicios') {
-      // Validar campos obligatorios de Servicios
-      if (!tipoServicio || !calidadServicio || !costosServicio || !prestadorServicio) {
-        setShowValidationAlert(true);
-        return;
-      }
-      // Construir los datos específicos de Servicios
-      const data = {
-        energia_electrica: energiaElectrica,
-        tipo_servicio: tipoServicio,
-        calidad_servicio: calidadServicio,
-        costos_servicio: costosServicio,
-        prestador_servicio: prestadorServicio,
-        familias_con_servicio: familiasConServicio,
-        senal_telefono: senalTelefono ? 1 : 0,
-        senal_internet: senalInternet ? 1 : 0,
-        senal_tv: senalTV ? 1 : 0,
-        cable: cable ? 1 : 0,
-        prestador_servicios: prestadorServicios
-      };
-  
-      // Guardar los datos
-      await guardarDatosEnBackend(data);
-    } else {
-      // Si la sección no es reconocida, mostrar alerta de validación
-      setShowValidationAlert(true);
-      return;
-    }
+  // Estado para la alerta
+const [showAlert, setShowAlert] = useState(false);
+const [continueEditing, setContinueEditing] = useState(false);
+
+// Función para guardar los datos en el localStorage
+const guardarEnLocalStorage = () => {
+  const data = {
+    nombre_comunidad: Comunidad,
+    nombre_municipio: Municipio,
+    nombre_aldea: Aldea,
+    ubicacion_real: Ubicacion,
+    presidente_cocode: PresidenteCOCODE,
+    telefono_contacto1: TelefonoContacto,
+    otro_lider: OtroLider,
+    telefono_contacto2: TelefonoOtroLider,
+    tipo_transporte: Transporte,
+    numero_familias: NumeroFamilias,
+    numero_viviendas: NumeroViviendas,
+    numero_personas: NumeroPersonas,
+    certeza_juridica_tierra: CertezaJuridica,
+    conflictos_tierra: ConflictosTierra,
+    dimension_lotes: DimensionesLotes,
+    dimension_trabajadores: DimensionesTrabajaderos,
+    tierra_comunitaria: TierraComunitaria,
+    idiomas_comunidad: Idiomas,
+    fuentes_empleo: FuentesEmpleo,
+    recreacion_comunidad: Recreacion,
+    potencial_turistico: PotencialTuristico,
+    tipo_edificios_publicos: EdificiosPublicos,
+    hay_inseguridad: Inseguridad,
+    tipo_inseguridad: TipoInseguridad,
+    grupos_delincuenciales: GruposDelincuenciales,
+    personas_otro_lugar: PersonasOtrosMunicipios,
+    ocupacion_otro_lugar: TipoTrabajo,  // Este estaba faltando
+    personas_en_eeuu: PersonasEEUU,
+    cantidad_personas_eeuu: CantidadPersonasEEUU,
+    menores_en_eeuu: MenoresEEUU,
+    edad_empieza_trabajar_hombres: EdadTrabajoHombres,
+    edad_empieza_trabajar_mujeres: EdadTrabajoMujeres,
+    tipo_empleo: TipoTrabajo,
+    existen_jubilados: Jubilados,
+    cantidad_jubilados: CantidadJubilados,
+    institucion_jubilados: InstitucionJubilados,
+    ocupaciones_tradicionales_mujeres: OcupacionesMujeres,
+    ocupaciones_tradicionales_hombres: OcupacionesHombres
   };
   
-  // Función para enviar los datos al backend
-  const guardarDatosEnBackend = async (data: any) => {
+  // Guardar los datos en el localStorage
+  localStorage.setItem('formData', JSON.stringify(data));
+  console.log("Datos guardados en localStorage:", data);
+};
+
+// Función para enviar los datos a la base de datos
+const enviarABaseDeDatos = async () => {
+  const datosGuardados = localStorage.getItem('formData');
+
+  if (datosGuardados) {
+    const data = JSON.parse(datosGuardados);
+    console.log("Datos que se enviarán:", data);
+
     try {
-      const response = await fetch('http://localhost:3000/comunidad', {
+      const response = await fetch('http://localhost:3000/comunidadr', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
       });
-  
+
       if (response.ok) {
-        setShowSuccessAlert(true);
-        // Limpieza de los campos después de guardar
-        limpiarCampos();
+        console.log("Datos enviados a la base de datos correctamente.");
+        localStorage.removeItem('formData');
+        console.log("Datos borrados de localStorage.");
       } else {
-        alert('Error al registrar los datos');
+        const errorMsg = await response.text();
+        console.error("Error al enviar los datos a la base de datos:", errorMsg);
       }
     } catch (error) {
-      console.error('Error:', error);
-      alert('Error al registrar los datos');
+      console.error("Error en la solicitud:", error);
     }
-  };
-  
-  // Función para limpiar los campos
-  const limpiarCampos = () => {
-    setComunidad('');
-    setMunicipio('');
-    setAldea('');
-    setUbicacion('');
-    setPresidenteCOCODE('');
-    setTelefonoContacto('');
-    setOtroLider('');
-    setTelefonoOtroLider('');
-    setTransporte('');
-    setNumeroFamilias('');
-    setNumeroViviendas('');
-    setNumeroPersonas('');
-    setCertezaJuridica('');
-    setConflictosTierra('');
-    setDimensionesLotes('');
-    setDimensionesTrabajaderos('');
-    setTierraComunitaria('');
-    setIdiomas('');
-    setFuentesEmpleo('');
-    setRecreacion('');
-    setPotencialTuristico('');
-    setEdificiosPublicos('');
-    setInseguridad(false);
-    setTipoInseguridad('');
-    setGruposDelincuenciales('');
-    setPersonasOtrosMunicipios('');
-    setTipoTrabajo('');
-    setPersonasEEUU(false);
-    setCantidadPersonasEEUU('');
-    setMenoresEEUU(false);
-    setEdadTrabajoHombres('');
-    setEdadTrabajoMujeres('');
-    setOcupaciones('');
-    setJubilados(false);
-    setCantidadJubilados('');
-    setInstitucionJubilados('');
-    setOcupacionesMujeres('');
-    setOcupacionesHombres('');
-    setEnergiaElectrica(false);
-    setTipoServicio('');
-    setCalidadServicio('');
-    setCostosServicio('');
-    setPrestadorServicio('');
-    setFamiliasConServicio('');
-    setSenalTelefono(false);
-    setSenalInternet(false);
-    setSenalTV(false);
-    setCable(false);
-    setPrestadorServicios('');
-  };
-  
+  } else {
+    console.log("No hay datos en localStorage para enviar.");
+  }
+};
 
+// Manejar el clic en el botón 'Guardar'
+const handleGuardarClick = () => {
+  guardarEnLocalStorage();
+  setShowAlert(true);  // Mostrar la alerta para preguntar si quiere continuar
+};
 
+// Manejar la respuesta de la alerta
+const handleAlertResponse = (continueEditing) => {
+  setContinueEditing(continueEditing);
+  setShowAlert(false);
+
+  if (!continueEditing) {
+    enviarABaseDeDatos();  // Si el usuario elige no continuar editando, enviar datos a la base de datos
+  }
+};
+
+   
   return (
     <IonPage className="pg">
       <h1 className='TituloPagina'>Crear comunidad</h1>
@@ -471,7 +409,7 @@ setRows2(newRows2);
             <div className="PanelSecundario">
               <IonRow className="FilaTextBox">
                 <h2 className="TituloN2">Información General</h2>
-              </IonRow>  1
+              </IonRow>
               {/* Preguntas independientes */}
               <IonRow className="FilaTextBox">
                 <h3 className="labelForm">1. Nombre de la comunidad:</h3>
@@ -1977,47 +1915,64 @@ setRows2(newRows2);
               
               </div>
             </IonTab>      
-                        {/* Hasta aca ---------------------------------*/}
-              
-                        <IonTabBar className="TabBarConf" slot="top">
-                          <IonTabButton tab="DatosGenerales" onClick={() => setSeccionActual('DatosGenerales')}> <IonIcon size="large" icon={earthOutline} /> </IonTabButton>
-                          <IonTabButton tab="Servicios" onClick={() => setSeccionActual('Servicios')}> <IonIcon size="large" icon={cogOutline} /> </IonTabButton>
-                          <IonTabButton tab="Educacion"> <IonIcon size="large" icon={bookOutline} /> </IonTabButton>
-                          <IonTabButton tab="Agua&Sane"> <IonIcon size="large" icon={waterOutline} /> </IonTabButton>
-                          <IonTabButton tab="Salud&Nut"> <IonIcon size="large" icon={fitnessOutline} /> </IonTabButton>
-                          <IonTabButton tab="MapadeActores"> <IonIcon size="large" icon={peopleOutline} /> </IonTabButton>
-                          <IonTabButton tab="Agricultura"> <PiPlantFill size={28}   /> </IonTabButton>
-                          <IonTabButton tab="ActividadesPec"><PiCowFill size={28} /></IonTabButton>
-                          <IonTabButton tab="Ecologia"><FaRecycle size={25} /></IonTabButton>
+            {/* Hasta aca ---------------------------------*/}
+            <IonTabBar className="TabBarConf" slot="top">
+            <IonTabButton tab="DatosGenerales">
+              <IonIcon size="large" icon={earthOutline} />
+            </IonTabButton>
+            <IonTabButton tab="Servicios">
+              <IonIcon size="large" icon={cogOutline} />
+            </IonTabButton>
+            <IonTabButton tab="Educacion">
+              <IonIcon size="large" icon={bookOutline} />
+            </IonTabButton>
+            <IonTabButton tab="Agua&Sane">
+              <IonIcon size="large" icon={waterOutline} />
+            </IonTabButton>
+            <IonTabButton tab="Salud&Nut">
+              <IonIcon size="large" icon={fitnessOutline} />
+            </IonTabButton>
+            <IonTabButton tab="MapadeActores">
+              <IonIcon size="large" icon={peopleOutline} />
+            </IonTabButton>
+            <IonTabButton tab="Agricultura">
+              <PiPlantFill size={28} />
+            </IonTabButton>
+            <IonTabButton tab="ActividadesPec">
+              <PiCowFill size={28} />
+            </IonTabButton>
+            <IonTabButton tab="Ecologia">
+              <FaRecycle size={25} />
+            </IonTabButton>
           </IonTabBar>
-
         </IonTabs>
       </IonContent>
 
       <IonRow>
-        <IonButton className="Boton" color="success" onClick={handleGuardarComunidad}>Guardar</IonButton>
-        <IonButton className="Boton" color="danger">Cancelar</IonButton>
-      </IonRow>
-      
-      {/* Alerta de validación */}
-      <IonAlert
-        isOpen={showValidationAlert}
-        onDidDismiss={() => setShowValidationAlert(false)}
-        header={'Campos incompletos'}
-        message={'Por favor, completa todos los campos obligatorios'}
-        buttons={['Aceptar']}
-      />
+          <IonButton onClick={handleGuardarClick}>Guardar</IonButton>
+          <IonButton color="danger" onClick={() => { /* Lógica de cancelación */ }}>
+            Cancelar
+          </IonButton>
+        </IonRow>
 
-      <IonAlert
-        isOpen={showSuccessAlert}
-        onDidDismiss={() => setShowSuccessAlert(false)}
-        header={'Registro Exitoso'}
-        message={'La comunidad ha sido registrada correctamente.'}
-        buttons={['Aceptar']}
-      />
+        {/* Alerta que se muestra cuando el usuario presiona 'Guardar' */}
+        <IonAlert
+          isOpen={showAlert}
+          onDidDismiss={() => setShowAlert(false)}
+          header={'¿Desea continuar?'}
+          message={'¿Quieres seguir editando o registrar la información?'}
+          buttons={[
+            {
+              text: 'Seguir editando',
+              handler: () => handleAlertResponse(true),
+            },
+            {
+              text: 'Registrar',
+              handler: () => handleAlertResponse(false),
+            },
+          ]}
+        />
     </IonPage>
-
   );
 }
-
 export default AgregarComunidades;
