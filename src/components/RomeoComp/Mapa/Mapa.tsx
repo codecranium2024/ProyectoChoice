@@ -59,6 +59,8 @@ const Mapa = () => {
       }
     });
 
+    // romeo estuvo aqui
+
     return () => map.remove(); // Limpieza al desmontar el componente
   }, []);
 
