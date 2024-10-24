@@ -1,191 +1,108 @@
-import React, { useState } from 'react';
-import { IonContent, IonHeader, IonPage, IonToolbar, IonTitle, IonList, IonButton, IonModal, IonInput, IonLabel, IonRow, IonCol, IonItem, IonSelect, IonSelectOption, IonInfiniteScroll, IonInfiniteScrollContent } from '@ionic/react';
+import React, { useEffect, useState } from 'react';
+import {
+  IonContent,
+  IonHeader,
+  IonPage,
+  IonToolbar,
+  IonTitle,
+  IonSpinner,
+  IonAlert,
+  IonButton, // Importa IonButton
+} from '@ionic/react';
+import { useHistory } from 'react-router-dom'; // Importa useHistory
+import axios from 'axios';
 import './Comunidad1.css';
 
-const todasLasComunidades = [
-  { id: 1, nombreTecnico: 'Martin Choc', comunidad: 'Cubiquitz', lider: 'juan matalbatz', habitantes: 100, municipio: 'Chisec', estado: 'Sin Aprobar' },
-  { id: 2, nombreTecnico: 'Martin Choc', comunidad: 'Semococh', lider: 'juan matalbatz', habitantes: 100, municipio: 'Chisec', estado: 'En Ejecucion' },
-  { id: 3, nombreTecnico: 'Martin Choc', comunidad: 'Salaquin', lider: 'juan matalbatz', habitantes: 100, municipio: 'Coban', estado: 'Sin Asignar' },
-];
+interface Comunidad {
+  nombre_comunidad: string;
+  presidente_cocode: string;
+  numero_personas: number;
+  nombre_municipio: string;
+  nombre_usuario: string;
+}
 
-// Lista de municipios
-const municipios = ['Chisec', 'Coban', 'Raxruhá', 'Fray Bartolomé', 'San Pedro Carchá'];
+const Comunidad1: React.FC = () => {
+  const [comunidades, setComunidades] = useState<Comunidad[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+  const history = useHistory(); // Inicializa useHistory
 
-// Lista de estados
-const estados = ['Sin Aprobar', 'En Ejecucion', 'Finalizado', 'Sin Asignar'];
-
-const RegistrarComunidad: React.FC<{ onEdit: (comunidad: any) => void, comunidades: any[], cargarMasDatos: () => void }> = ({ onEdit, comunidades, cargarMasDatos }) => {
-  return (
-    <IonList>
-      <table className="table">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Nombre Técnico</th>
-            <th>Comunidad</th>
-            <th>Líder</th>
-            <th>Habitantes</th>
-            <th>Municipio</th>
-            <th>Estado</th>
-            <th>Acción</th>
-          </tr>
-        </thead>
-        <tbody>
-          {comunidades.map((comunidad) => (
-            <tr key={comunidad.id}>
-              <td>{comunidad.id}</td>
-              <td>{comunidad.nombreTecnico}</td>
-              <td>{comunidad.comunidad}</td>
-              <td>{comunidad.lider}</td>
-              <td>{comunidad.habitantes}</td>
-              <td>{comunidad.municipio}</td>
-              <td>{comunidad.estado}</td>
-              <td>
-                <IonButton color="warning" onClick={() => onEdit(comunidad)}>Editar</IonButton>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-
-      {/* Scroll Infinito */}
-      <IonInfiniteScroll threshold="100px" onIonInfinite={(e) => cargarMasDatos(e)}>
-        <IonInfiniteScrollContent loadingText="Cargando más datos..."></IonInfiniteScrollContent>
-      </IonInfiniteScroll>
-    </IonList>
-  );
-};
-
-const Comunidad: React.FC = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedComunidad, setSelectedComunidad] = useState<any>(null);
-  const [comunidades, setComunidades] = useState(todasLasComunidades.slice(0, 5)); // Mostrar las primeras 5 inicialmente
-  const [hasMoreData, setHasMoreData] = useState(true);
-
-  const openEditModal = (comunidad: any) => {
-    setSelectedComunidad(comunidad);
-    setIsModalOpen(true);
-  };
-
-  const closeEditModal = () => {
-    setIsModalOpen(false);
-    setSelectedComunidad(null);
-  };
-
-  const handleSave = () => {
-    console.log('Comunidad guardada:', selectedComunidad);
-    closeEditModal();
-  };
-
-  const cargarMasDatos = (event: any) => {
-    setTimeout(() => {
-      const nuevasComunidades = todasLasComunidades.slice(comunidades.length, comunidades.length + 5);
-      if (nuevasComunidades.length > 0) {
-        setComunidades([...comunidades, ...nuevasComunidades]);
-      } else {
-        setHasMoreData(false); // Si no hay más datos, deshabilitamos el scroll infinito
+  useEffect(() => {
+    const fetchComunidades = async () => {
+      try {
+        const response = await axios.get('http://localhost:3000/tecnicocomunidad'); // Asegúrate de que la URL sea correcta
+        setComunidades(response.data);
+      } catch (error) {
+        console.error('Error al obtener las comunidades:', error);
+        setError('Error al obtener las comunidades. Inténtalo de nuevo más tarde.');
+      } finally {
+        setLoading(false);
       }
-      event.target.complete(); // Finalizamos el evento de scroll infinito
-    }, 1000);
+    };
+
+    fetchComunidades();
+  }, []);
+
+  // Función para manejar la navegación
+  const handleViewInfo = (nombreComunidad: string) => {
+    // history.push(`/InformacionComunitaria/${nombreComunidad}`);
+     history.push(`/InformacionComunitaria`);
   };
 
   return (
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>Técnico / Comunidad</IonTitle>
+          <IonTitle>Comunidades</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent>
-        <RegistrarComunidad onEdit={openEditModal} comunidades={comunidades} cargarMasDatos={cargarMasDatos} />
-
-        {/* Modal para editar la comunidad */}
-        <IonModal isOpen={isModalOpen} onDidDismiss={closeEditModal}>
-          <IonHeader>
-            <IonToolbar>
-              <IonTitle>Editar Comunidad</IonTitle>
-            </IonToolbar>
-          </IonHeader>
-          <IonContent>
-            {selectedComunidad && (
-              <IonList>
-                <IonItem>
-                  <IonLabel position="stacked">Nombre Técnico</IonLabel>
-                  <IonInput
-                    value={selectedComunidad.nombreTecnico}
-                    onIonChange={(e) => setSelectedComunidad({ ...selectedComunidad, nombreTecnico: e.detail.value! })}
-                  />
-                </IonItem>
-                <IonItem>
-                  <IonLabel position="stacked">Comunidad</IonLabel>
-                  <IonInput
-                    value={selectedComunidad.comunidad}
-                    onIonChange={(e) => setSelectedComunidad({ ...selectedComunidad, comunidad: e.detail.value! })}
-                  />
-                </IonItem>
-                <IonItem>
-                  <IonLabel position="stacked">Líder</IonLabel>
-                  <IonInput
-                    value={selectedComunidad.lider}
-                    onIonChange={(e) => setSelectedComunidad({ ...selectedComunidad, lider: e.detail.value! })}
-                  />
-                </IonItem>
-                <IonItem>
-                  <IonLabel position="stacked">Habitantes</IonLabel>
-                  <IonInput
-                    type="number"
-                    value={selectedComunidad.habitantes}
-                    onIonChange={(e) => setSelectedComunidad({ ...selectedComunidad, habitantes: parseInt(e.detail.value!, 10) })}
-                  />
-                </IonItem>
-
-                {/* Selector para el Municipio */}
-                <IonItem>
-                  <IonLabel position="stacked">Municipio</IonLabel>
-                  <IonSelect
-                    value={selectedComunidad.municipio}
-                    placeholder="Selecciona un Municipio"
-                    onIonChange={(e) => setSelectedComunidad({ ...selectedComunidad, municipio: e.detail.value })}
-                  >
-                    {municipios.map((municipio, index) => (
-                      <IonSelectOption key={index} value={municipio}>
-                        {municipio}
-                      </IonSelectOption>
-                    ))}
-                  </IonSelect>
-                </IonItem>
-
-                {/* Selector para el Estado */}
-                <IonItem>
-                  <IonLabel position="stacked">Estado</IonLabel>
-                  <IonSelect
-                    value={selectedComunidad.estado}
-                    placeholder="Selecciona un Estado"
-                    onIonChange={(e) => setSelectedComunidad({ ...selectedComunidad, estado: e.detail.value })}
-                  >
-                    {estados.map((estado, index) => (
-                      <IonSelectOption key={index} value={estado}>
-                        {estado}
-                      </IonSelectOption>
-                    ))}
-                  </IonSelect>
-                </IonItem>
-              </IonList>
-            )}
-
-            <IonRow>
-              <IonCol>
-                <IonButton expand="block" onClick={handleSave}>Guardar</IonButton>
-              </IonCol>
-              <IonCol>
-                <IonButton expand="block" color="medium" onClick={closeEditModal}>Cancelar</IonButton>
-              </IonCol>
-            </IonRow>
-          </IonContent>
-        </IonModal>
+        {loading ? (
+          <div style={{ textAlign: 'center', marginTop: '20px' }}>
+            <IonSpinner name="crescent" />
+            <p>Cargando comunidades...</p>
+          </div>
+        ) : error ? (
+          <IonAlert
+            isOpen={true}
+            onDidDismiss={() => setError(null)}
+            header={'Error'}
+            message={error}
+            buttons={['Aceptar']}
+          />
+        ) : (
+          <div className="table-container">
+            <table className="table">
+              <thead>
+                <tr>
+                  <th>Comunidad</th>
+                  <th>Líder comunitario</th>
+                  <th>Habitantes</th>
+                  <th>Municipio</th>
+                  <th>Accion</th>
+                </tr>
+              </thead>
+              <tbody>
+                {comunidades.map((comunidad, index) => (
+                  <tr key={index}>
+                    <td>{comunidad.nombre_comunidad}</td>
+                    <td>{comunidad.presidente_cocode}</td>
+                    <td>{comunidad.numero_personas}</td>
+                    <td>{comunidad.nombre_municipio}</td>
+                    <td>
+                      <IonButton color="primary" onClick={() => handleViewInfo(comunidad.nombre_comunidad)}>
+                        Ver más
+                      </IonButton>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
       </IonContent>
     </IonPage>
   );
 };
 
-export default Comunidad;
+export default Comunidad1;

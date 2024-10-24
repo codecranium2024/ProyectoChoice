@@ -249,5 +249,13 @@ CREATE TABLE tb_municipio (
 --     municipio_id INT,
 --     FOREIGN KEY (municipio_id) REFERENCES tb_municipio(id) ON DELETE CASCADE
 -- );
-
 ---------------------------------------------------------------------------------------------
+--Agregar la columna idUsuario
+ALTER TABLE tb_comunidad
+ADD idUsuario INT;
+
+-- Agregar la clave foránea que referencia tb_Usuario
+ALTER TABLE tb_comunidad
+ADD CONSTRAINT fk_comunidad_usuario
+FOREIGN KEY (idUsuario) REFERENCES tb_Usuario(idUsuario);
+

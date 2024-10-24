@@ -30,30 +30,32 @@ const Historial: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const history = useHistory();
 
+  // Formateo de la fecha
+  const formatFecha = (fecha: string) => {
+    return fecha.split('T')[0]; // Se queda solo con la parte 'YYYY-MM-DD'
+  };
+
+  // Obtener los proyectos finalizados
+  const fetchProyectos = async () => {
+    try {
+      const response = await axios.get('http://localhost:3000/historial');
+      setProyectos(response.data); // Guardar todos los proyectos finalizados directamente
+    } catch (error) {
+      console.error('Error al obtener los proyectos:', error);
+      setError('Error al obtener los proyectos. Inténtalo de nuevo más tarde.');
+    } finally {
+      setLoading(false);
+    }
+  };
+  
+  useEffect(() => {
+    fetchProyectos(); // Ejecuta la función cuando el componente se monta
+  }, []);
+
+  // Manejo de redirección para ver la información de un proyecto
   const handleViewInfo = (proyecto: Proyecto) => {
     history.push(`/proyecto/${proyecto.idRegistrarProyecto}`);
   };
-
-  const formatFecha = (fecha: string) => {
-    return fecha.split('T')[0];
-  };
-
-  useEffect(() => {
-    const fetchProyectos = async () => {
-      try {
-        const response = await axios.get('http://localhost:3000/historial');
-        const proyectosFinalizados = response.data.filter((proyecto: Proyecto) => proyecto.Estado.toLowerCase() === 'finalizado');
-        setProyectos(proyectosFinalizados);
-      } catch (error) {
-        console.error('Error al obtener los proyectos:', error);
-        setError('Error al obtener los proyectos. Inténtalo de nuevo más tarde.');
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchProyectos();
-  }, []);
 
   return (
     <IonPage>
@@ -92,22 +94,24 @@ const Historial: React.FC = () => {
                 </tr>
               </thead>
               <tbody>
-                {proyectos.map((proyecto) => (
-                  <tr key={proyecto.idRegistrarProyecto}>
-                    <td>{proyecto.Categoria}</td>
-                    <td>{proyecto.Nombreclatura}</td>
-                    <td>{proyecto.Nombre}</td>
-                    <td>{proyecto.Responsable}</td>
-                    <td>{proyecto.Estado}</td>
-                    <td style={{ width: '150px' }}>{formatFecha(proyecto.FechaInicio)}</td>
-                    <td>{formatFecha(proyecto.FechaFinalizacion)}</td>
-                    <td>
-                      <IonButton color="primary" size="small" onClick={() => handleViewInfo(proyecto)}>
-                        Ver
-                      </IonButton>
-                    </td>
-                  </tr>
-                ))}
+                {proyectos
+                  .filter((proyecto) => proyecto.Estado.toLowerCase() === 'finalizado') // Filtrando solo los finalizados
+                  .map((proyecto) => (
+                    <tr key={proyecto.idRegistrarProyecto}>
+                      <td>{proyecto.Categoria}</td>
+                      <td>{proyecto.Nombreclatura}</td>
+                      <td>{proyecto.Nombre}</td>
+                      <td>{proyecto.Responsable}</td>
+                      <td>{proyecto.Estado}</td>
+                      <td style={{ width: '150px' }}>{formatFecha(proyecto.FechaInicio)}</td>
+                      <td>{formatFecha(proyecto.FechaFinalizacion)}</td>
+                      <td>
+                        <IonButton color="primary" size="small" onClick={() => handleViewInfo(proyecto)}>
+                          Ver
+                        </IonButton>
+                      </td>
+                    </tr>
+                  ))}
               </tbody>
             </table>
           </div>

@@ -53,7 +53,7 @@ const appPages: AppPage[] = [
     mdIcon: documentSharp,
     subPages: [
       { title: 'Registrar Proyecto', url: '/RegistrarProyecto' },
-      { title: 'Informacion Comunitaria', url: '/InformacionComunitaria' },
+      // { title: 'Informacion Comunitaria', url: '/InformacionComunitaria' },
       { title: 'Historial Proyectos', url: '/Historial' },
       { title: 'Mapa', url: '/Mapa' },
     ]
