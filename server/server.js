@@ -463,8 +463,7 @@ app.post('/comunidadr', async (req, res) => {
 
 
 // ------------------------------------------------------------------
-// Registrar un nuevo proyecto usando el procedimiento almacenado
-// Endpoint para obtener categorías
+// Registrar un nuevo proyecto 
 app.get('/categorias', async (req, res) => {
   try {
     const connection = await mysql.createConnection(dbConfig);
@@ -477,7 +476,6 @@ app.get('/categorias', async (req, res) => {
   }
 });
 
-// Endpoint para obtener estados de proyecto
 app.get('/estados', async (req, res) => {
   try {
     const connection = await mysql.createConnection(dbConfig);
@@ -490,7 +488,6 @@ app.get('/estados', async (req, res) => {
   }
 });
 
-// Endpoint para obtener nombres de usuarios
 app.get('/responsables', async (req, res) => {
   try {
     const connection = await mysql.createConnection(dbConfig);
@@ -701,12 +698,13 @@ app.get('/historial', async (req, res) => {
         r.idRegistrarProyecto, 
         r.Nombreclatura, 
         r.Nombre, 
-        DATE(r.FechaInicio) AS FechaInicio,  -- Recuperar solo la fecha
-        DATE(r.FechaFinalizacion) AS FechaFinalizacion,  -- Recuperar solo la fecha
+        r.FechaInicio, 
+        r.FechaFinalizacion, 
         c.categoria AS Categoria, 
         u.Nombre AS Responsable, 
         e.estadoproyecto AS Estado,
-        e.idestado AS EstadoID
+        co.nombre_comunidad AS Comunidad,
+        r.idComunidad  -- Añadir esta línea para incluir idComunidad
       FROM 
         tb_registrarpr r
       JOIN 
@@ -715,20 +713,23 @@ app.get('/historial', async (req, res) => {
         tb_usuario u ON r.idUsuario = u.idUsuario
       JOIN 
         tb_estadop e ON r.idestado = e.idestado
+      LEFT JOIN 
+        tb_Comunidad co ON r.idComunidad = co.idComunidad
       WHERE 
-        e.idestado = 2;
+        r.idestado = 2;  -- Filtrar solo proyectos finalizados
     `;
     const [rows] = await connection.execute(query);
     res.json(rows);
     await connection.end();
   } catch (err) {
-    console.error('Error al obtener proyectos:', err);
-    res.status(500).send('Error al obtener proyectos');
+    console.error('Error al obtener historial de proyectos:', err);
+    res.status(500).send('Error al obtener historial de proyectos');
   }
 });
 
+
+
 //Departamentos y municipios
-// Endpoint para registrar un departamento
 app.post('/departamentos', async (req, res) => {
   const { nombredepartamento } = req.body;
 
@@ -952,12 +953,22 @@ app.delete('/municipios/:id', async (req, res) => {
     }
   }
 });
-//obtener todas las comunidades
-app.get('/listadocomunidades', async (req, res) => {
-  const query = `
-    SELECT lc.id, lc.nombrecomunidad, m.nombremunicipio 
-    FROM tb_listadocomunidad lc
-    JOIN tb_municipio m ON lc.municipio_id = m.id
+//tecnico/comunidad es para la comunidad1
+app.get('/tecnicocomunidad', async (req, res) => {
+  // Consulta SQL para obtener las comunidades asociadas a usuarios con idRol = 5
+  const sql = `
+    SELECT 
+      c.nombre_comunidad,
+      c.presidente_cocode,
+      c.numero_personas,
+      c.nombre_municipio,
+      u.Nombre AS nombre_usuario
+    FROM 
+      tb_comunidad AS c
+    JOIN 
+      tb_usuario AS u ON c.idUsuario = u.idUsuario
+    WHERE 
+      u.idRol = 5;
   `;
   
   let connection;
@@ -967,12 +978,13 @@ app.get('/listadocomunidades', async (req, res) => {
     connection = await mysql.createConnection(dbConfig);
     
     // Ejecutar la consulta
-    const [rows] = await connection.execute(query);
+    const [rows] = await connection.execute(sql);
 
+    // Enviar los datos obtenidos como respuesta
     res.status(200).json(rows);
   } catch (err) {
-    console.error('Error al obtener las comunidades:', err.message);
-    res.status(500).json({ error: 'Error al obtener las comunidades', details: err.message });
+    console.error('Error al obtener los datos de facilitadores:', err.message);
+    res.status(500).json({ error: 'Error al obtener los datos', details: err.message });
   } finally {
     // Cerrar la conexión si existe
     if (connection) {
@@ -980,123 +992,78 @@ app.get('/listadocomunidades', async (req, res) => {
     }
   }
 });
-// Registrar comunidad
-app.post('/listadocomunidad', async (req, res) => {
-  const { nombrecomunidad, municipio_id } = req.body; // Datos del cuerpo de la solicitud
-  const query = 'INSERT INTO tb_listadocomunidad (nombrecomunidad, municipio_id) VALUES (?, ?)';
+//para modulo donde estan los mapasp
+// app.get('/informacioncomunidades', async (req, res) => {
+//   // Consulta SQL para obtener los proyectos asociados a usuarios con idRol = 5
+//   const sql = `
+//     SELECT 
+//       r.Nombre AS NombreProyecto, 
+//       u.Nombre AS NombreUsuario, 
+//       c.nombre_comunidad AS NombreComunidad,  -- Agregado: nombre de la comunidad
+//       c.nombre_municipio AS NombreMunicipio, 
+//       c.numero_personas AS NumeroPersonas,
+//       c.numero_familias AS NumeroFamilias,
+//       c.numero_viviendas AS NumeroViviendas,
+//       c.presidente_cocode AS PresidenteCocode,  -- Agregado: presidente de la comunidad
+//       e.Estadoproyecto AS EstadoProyecto 
+//     FROM 
+//       tb_registrarpr AS r
+//     JOIN 
+//       tb_comunidad AS c ON r.idComunidad = c.idComunidad
+//     JOIN 
+//       tb_estadoP AS e ON r.idestado = e.idestado
+//     JOIN 
+//       tb_Usuario AS u ON r.idUsuario = u.idUsuario
+//     WHERE 
+//       u.idRol = 5; -- Filtrar solo los usuarios con rol Técnico (idRol = 5);
+//   `;
+//   let connection;
 
-  let connection;
-
-  try {
-    // Crear una conexión única
-    connection = await mysql.createConnection(dbConfig);
+//   try {
+//     // Crear una conexión única
+//     connection = await mysql.createConnection(dbConfig);
     
-    // Ejecutar la consulta
-    const [result] = await connection.execute(query, [nombrecomunidad, municipio_id]);
+//     // Ejecutar la consulta
+//     const [rows] = await connection.execute(sql);
 
-    res.status(201).json({
-      message: 'Comunidad insertada correctamente.',
-      id: result.insertId // Devolver el ID de la nueva comunidad insertada
-    });
-  } catch (err) {
-    // Mostrar el error completo en la consola
-    console.error('Error al insertar la comunidad:', err);
-    
-    // Devolver el error en la respuesta
-    res.status(500).json({ 
-      error: 'Error al insertar la comunidad', 
-      details: err.message 
-    });
-  } finally {
-    // Cerrar la conexión si existe
-    if (connection) {
-      await connection.end();
-    }
-  }
-});
-// Eliminar comunidad
-app.delete('/listadocomunidad/:id', async (req, res) => {
-  const { id } = req.params; // Obtener el ID de la comunidad desde los parámetros de la ruta
+//     // Enviar los datos obtenidos como respuesta
+//     res.status(200).json(rows);
+//   } catch (err) {
+//     console.error('Error al obtener los datos de proyectos técnicos:', err.message);
+//     res.status(500).json({ error: 'Error al obtener los datos', details: err.message });
+//   } finally {
+//     // Cerrar la conexión si existe
+//     if (connection) {
+//       await connection.end();
+//     }
+//   }
+// });
 
-  const query = 'DELETE FROM tb_listadocomunidad WHERE id = ?';
-
-  let connection;
-
-  try {
-    // Crear una conexión única
-    connection = await mysql.createConnection(dbConfig);
-    
-    // Ejecutar la consulta
-    const [result] = await connection.execute(query, [id]);
-
-    if (result.affectedRows === 0) {
-      return res.status(404).json({ error: 'Comunidad no encontrada' });
-    }
-
-    res.status(200).json({ message: 'Comunidad eliminada correctamente.' });
-  } catch (err) {
-    console.error('Error al eliminar la comunidad:', err.message);
-    res.status(500).json({ error: 'Error al eliminar la comunidad', details: err.message });
-  } finally {
-    // Cerrar la conexión si existe
-    if (connection) {
-      await connection.end();
-    }
-  }
-});
-// Actualizar comunidad
-app.put('/listadocomunidad/:id', async (req, res) => {
-  const { id } = req.params; // Obtener el ID de la comunidad desde los parámetros de la ruta
-  const { nombrecomunidad, municipio_id } = req.body; // Obtener los nuevos datos del cuerpo de la solicitud
-
-  const query = 'UPDATE tb_listadocomunidad SET nombrecomunidad = ?, municipio_id = ? WHERE id = ?';
-
-  let connection;
-
-  try {
-    // Crear una conexión única
-    connection = await mysql.createConnection(dbConfig);
-    
-    // Ejecutar la consulta
-    const [result] = await connection.execute(query, [nombrecomunidad, municipio_id, id]);
-
-    if (result.affectedRows === 0) {
-      return res.status(404).json({ error: 'Comunidad no encontrada' });
-    }
-
-    res.status(200).json({ message: 'Comunidad actualizada correctamente.' });
-  } catch (err) {
-    console.error('Error al actualizar la comunidad:', err.message);
-    res.status(500).json({ error: 'Error al actualizar la comunidad', details: err.message });
-  } finally {
-    // Cerrar la conexión si existe
-    if (connection) {
-      await connection.end();
-    }
-  }
-});
-//tecnico/comunidad
-app.get('/tecnicocomunidad', async (req, res) => {
-  const query = `
+app.get('/informacioncomunidades', async (req, res) => {
+  // Consulta SQL para obtener los proyectos asociados a usuarios con idRol = 5
+  const sql = `
     SELECT 
-      u.Nombre AS nombre_usuario,
-      c.nombre_comunidad,
-      c.presidente_cocode AS nombre_lider_comunitario,
-      c.numero_personas AS cantidad_habitantes,
-      m.nombremunicipio AS nombre_municipio,
-      ep.Estadoproyecto AS estado_proyecto
+      r.Nombre AS NombreProyecto, 
+      u.Nombre AS NombreUsuario, 
+      c.nombre_comunidad AS NombreComunidad,  -- Agregado: nombre de la comunidad
+      c.nombre_municipio AS NombreMunicipio, 
+      c.numero_personas AS NumeroPersonas,
+      c.numero_familias AS NumeroFamilias,
+      c.numero_viviendas AS NumeroViviendas,
+      c.presidente_cocode AS PresidenteCocode,  -- Agregado: presidente de la comunidad
+      e.Estadoproyecto AS EstadoProyecto 
     FROM 
-      tb_Usuario u
+      tb_registrarpr AS r
     JOIN 
-      tb_registrarpr rp ON u.idUsuario = rp.idUsuario
+      tb_comunidad AS c ON r.idComunidad = c.idComunidad
     JOIN 
-      tb_Comunidad c ON rp.idUsuario = c.idComunidad
+      tb_estadoP AS e ON r.idestado = e.idestado
     JOIN 
-      tb_municipio m ON c.nombre_municipio = m.id
-    JOIN 
-      tb_estadoP ep ON rp.idestado = ep.idestado
+      tb_Usuario AS u ON r.idUsuario = u.idUsuario
+    WHERE 
+      u.idRol = 5; -- Filtrar solo los usuarios con rol Técnico (idRol = 5)
   `;
-
+  
   let connection;
 
   try {
@@ -1104,12 +1071,13 @@ app.get('/tecnicocomunidad', async (req, res) => {
     connection = await mysql.createConnection(dbConfig);
     
     // Ejecutar la consulta
-    const [rows] = await connection.execute(query);
+    const [rows] = await connection.execute(sql);
 
+    // Enviar los datos obtenidos como respuesta
     res.status(200).json(rows);
   } catch (err) {
-    console.error('Error al obtener las comunidades:', err.message);
-    res.status(500).json({ error: 'Error al obtener las comunidades', details: err.message });
+    console.error('Error al obtener los datos de proyectos técnicos:', err.message);
+    res.status(500).json({ error: 'Error al obtener los datos', details: err.message });
   } finally {
     // Cerrar la conexión si existe
     if (connection) {
@@ -1123,10 +1091,6 @@ app.get('/tecnicocomunidad', async (req, res) => {
 
 
 
-
-
-
-// Inicializar el servidor
 app.listen(port, () => {
   console.log(`Servidor corriendo en http://localhost:${port}`);
 });

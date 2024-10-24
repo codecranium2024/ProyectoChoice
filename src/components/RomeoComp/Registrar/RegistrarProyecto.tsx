@@ -84,7 +84,7 @@ const RegistrarProyecto: React.FC = () => {
     try {
       const response = await axios.get('http://localhost:3000/proyectos');
       setProyectos(response.data);
-       console.log(response.data)
+      //  console.log(response.data)
     } catch (error) {
       setShowToast({ show: true, message: 'Error al obtener los proyectos.' });
     }
@@ -121,7 +121,7 @@ const RegistrarProyecto: React.FC = () => {
     try {
       const response = await axios.get('http://localhost:3000/comunidades');
       setComunidades(response.data); 
-      console.log(response.data);// Almacena las comunidades
+      // console.log(response.data);// Almacena las comunidades
     } catch (error) {
       setShowToast({ show: true, message: 'Error al obtener las comunidades.' });
     }
@@ -248,7 +248,7 @@ const RegistrarProyecto: React.FC = () => {
       try {
         await axios.put(`http://localhost:3000/proyectos/${proyectoAEditar?.idRegistrarProyecto}`, updatedProyecto);
         await fetchProyectos(); // Actualiza la lista de proyectos
-        setShowToast({ show: true, message: 'Proyecto editado con éxito.' });
+        // setShowToast({ show: true, message: 'Proyecto editado con éxito.' });
         closeModal();
       } catch (error: unknown) {
         if (axios.isAxiosError(error)) {
@@ -264,7 +264,7 @@ const RegistrarProyecto: React.FC = () => {
   
   const renderProyectos = () => {
     return proyectos.map((proyecto) => {
-      console.log('Buscando comunidad para idComunidad:', proyecto.idComunidad);
+      // console.log('Buscando comunidad para idComunidad:', proyecto.idComunidad);
       return (
         <tr key={proyecto.idRegistrarProyecto}>
           <td>{proyecto.Categoria}</td>
@@ -304,17 +304,19 @@ const RegistrarProyecto: React.FC = () => {
           </IonCol>
         </IonRow>
         <div className="table-container">
+        <div className="table-header">
+        {/* <div className="scroll-section" style={{ height: '300px', overflowY: 'auto' }}>  */}
           <table className="table">
             <thead>
               <tr>
                 <th>Categoría</th>
                 <th>Nomenclatura</th>
-                <th>Nombre</th>
+                <th>Proyecto</th>
                 <th>Responsable</th>
                 <th>Comunidad</th>
                 <th>Estado</th>
-                <th>Fecha de Inicio</th>
-                <th>Fecha de Finalización</th>
+                <th>F. Inicio</th>
+                <th>F. Finalización</th>
                 <th>Acción</th>
               </tr>
             </thead>
@@ -325,8 +327,8 @@ const RegistrarProyecto: React.FC = () => {
                   <td>{proyecto.Nombreclatura}</td>
                   <td>{proyecto.Nombre}</td>
                   <td>{proyecto.Responsable}</td>
-                  <td>{proyecto.Estado}</td>
                   <td> {comunidades.find(com => com.idComunidad === proyecto.idComunidad)?.nombre_comunidad || 'No asignada'}</td>
+                  <td>{proyecto.Estado}</td>
                   <td>{formatFecha(proyecto.FechaInicio, true)}</td>
                   <td>{formatFecha(proyecto.FechaFinalizacion, true)}</td>
                   <td>
@@ -336,6 +338,7 @@ const RegistrarProyecto: React.FC = () => {
               ))}
             </tbody>
           </table>
+          </div>
         </div>
 
         {/* Modal para Registrar Proyecto */}

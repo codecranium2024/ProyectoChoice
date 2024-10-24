@@ -7,7 +7,8 @@ body {
 
 /* Contenedor principal */
 ion-content {
-  padding: 20px;
+  /* padding: 20px; */
+  padding: 20px 20px 20px 40px
 }
 
 /* Encabezado */
@@ -45,9 +46,12 @@ form ion-button {
 
 /* Tabla de proyectos */
 .table-container {
-  overflow-x: auto; /* Permitir desplazamiento horizontal */
-  /* Espacio superior para la tabla */
-  /* margin-top: 20px;  */
+  height: 500px; /* Ajusta la altura según sea necesario */
+  overflow-y: auto; /* Permite el desplazamiento vertical */
+  border: 1px solid #ccc; /* Borde alrededor de la tabla */
+  border-radius: 8px; /* Bordes redondeados */
+  background-color: #fff; /* Fondo del contenedor de la tabla */
+  padding-left: 30px;
 }
 
 .table {
@@ -55,7 +59,8 @@ form ion-button {
   border-collapse: collapse;
 }
 
-.table th, .table td {
+.table th,
+.table td {
   padding: 16px; /* Aumenta el relleno en las celdas */
   border: 1px solid #ccc; /* Borde de las celdas */
   text-align: left; /* Alinear texto a la izquierda */
@@ -64,11 +69,13 @@ form ion-button {
 
 .table th {
   background-color: #f2f2f2; /* Color de fondo del encabezado */
-  width: 300px; /* Establece un ancho fijo para las columnas de encabezado */
+  position: sticky; /* Hacer que la cabecera sea fija */
+  top: 0; /* Coloca la cabecera en la parte superior */
+  z-index: 1; /* Asegúrate de que la cabecera esté por encima del contenido */
 }
 
 .table td {
-  width: 150px; /* Establece un ancho fijo para las celdas */
+  width: 150px; /* Ancho fijo para las celdas */
 }
 
 ion-list {
@@ -123,12 +130,50 @@ ion-button:disabled {
 ion-button:hover {
   --background: #357ab8;
 }
+
 .button-container {
   display: flex;
   justify-content: space-between; /* Espacio entre botones */
   margin-top: 1em; /* Espacio superior para separación */
 }
+
 .label {
   font-size: 1.2em; /* Ajusta el tamaño según sea necesario */
   margin-bottom: 0.5em; /* Espacio entre el label y el input */
+}
+
+.scroll-section {
+  margin-bottom: 16px; /* Espacio entre las secciones */
+  border: 1px solid #ccc; /* Borde para las secciones */
+  border-radius: 8px; /* Bordes redondeados */
+  background-color: #f9f9f9; /* Fondo claro */
+}
+/* Personalización de la barra de scroll verti.table-container cal */
+.table-container::-webkit-scrollbar {
+  width: 10px; /* Ancho de la barra de desplazamiento vertical */
+}
+
+.table-container::-webkit-scrollbar-thumb {
+  background-color: #4a90e2; 
+  /* Color de la barra */
+  border-radius: 10px; /* Bordes redondeados */
+  border: 3px solid #ffffff; 
+  /* Espacio alrededor del scrollbar */
+}
+
+.table-container::-webkit-scrollbar-track {
+  background-color: #f1f1f1; /* Color de fondo del track (donde se desplaza el thumb) */
+}
+.table-container::-webkit-scrollbar:horizontal {
+  height: 13px; /* Ancho de la barra de desplazamiento horizontal */
+}
+
+.table-container::-webkit-scrollbar-thumb:horizontal {
+  background-color: #4a90e2; /* Color de la barra horizontal */
+  border-radius: 10px; /* Bordes redondeados */
+  border: 3px solid #ffffff; /* Espacio alrededor del scrollbar horizontal */
+}
+
+.table-container::-webkit-scrollbar-track:horizontal {
+  background-color: #f1f1f1; /* Color de fondo del track horizontal */
 }
