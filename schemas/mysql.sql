@@ -258,4 +258,14 @@ ADD idUsuario INT;
 ALTER TABLE tb_comunidad
 ADD CONSTRAINT fk_comunidad_usuario
 FOREIGN KEY (idUsuario) REFERENCES tb_Usuario(idUsuario);
+-----------------------------------------------------------------------------------
 
+CREATE TABLE tb_mapacomunidad (
+    idmapa INT AUTO_INCREMENT PRIMARY KEY,
+    comunidad_id INT NOT NULL,
+ -- municipio_id INT NOT NULL,
+    latitud VARCHAR(100) NOT NULL, 
+    longitud VARCHAR(100) NOT NULL,
+    FOREIGN KEY (comunidad_id) REFERENCES tb_comunidad(idComunidad) ON DELETE CASCADE,
+    -- FOREIGN KEY (municipio_id) REFERENCES tb_municipio(id) ON DELETE CASCADE
+);

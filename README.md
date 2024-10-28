@@ -33,4 +33,5 @@ por interfaz grafica
  npm install ionicons
  npm install @ionic/react ionicons
 
- 
+ npm install @react-google-maps/api
+npm install @capacitor/geolocation

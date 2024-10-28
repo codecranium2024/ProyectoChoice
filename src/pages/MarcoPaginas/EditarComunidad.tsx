@@ -1,24 +1,17 @@
-import React, { useState } from "react";
-import { IonPage, IonContent, IonTabs, IonTab, IonTabBar, IonTabButton, IonIcon, IonButton, IonRow, IonCheckbox, IonList, IonItem, IonSelect, IonSelectOption, IonInput, IonCol, IonGrid, IonAlert } from "@ionic/react";
+import React, { useState, useEffect } from "react";
+import { IonPage, IonContent, IonTabs, IonTab, IonTabBar, IonTabButton, IonIcon, IonButton, IonRow, IonCheckbox,IonList,IonItem,IonSelect,IonSelectOption, IonInput,IonCol,IonGrid,IonAlert } from "@ionic/react";
 //import { earthOutline, cogOutline, bookOutline, waterOutline, fitnessOutline, peopleOutline, leafOutline } from 'ionicons/icons';
 import { add, bookOutline, cog, cogOutline, earthOutline, fitnessOutline, globeOutline, leafOutline, peopleOutline, waterOutline } from 'ionicons/icons';
 import { FaRecycle } from "react-icons/fa";
-<<<<<<< HEAD
-import { PiCowFill, PiPlantFill } from "react-icons/pi";
-=======
 import { PiCowFill, PiPlantFill} from "react-icons/pi";
-import { useHistory } from 'react-router-dom';
->>>>>>> e9ad74ead1b2fe2b74bb4126daf33b216b4d1d9b
+import { useParams } from 'react-router-dom';
 
-  
-function AgregarComunidades() {
+interface RouteParams {
+  id: string;
+}
+function EditarComunidades() {
+  const { id } = useParams<RouteParams>();
   // estructura de formularios
-  const id = '1';
-  const history = useHistory();
-
-  const handleEditarComunidad = (id: string) => {
-    history.push(`/EditarComunidad/${id}`);
-  };
   let [Comunidad, setComunidad] = useState('');
   let [Municipio, setMunicipio] = useState(''); // campo para guardar el municipio
   let [Aldea, setAldea] = useState(''); // para la aldea
@@ -225,167 +218,6 @@ const handleInputChange = (index: number, field: keyof AgriculturaRow, value: st
   setRows(newRows);
 };
 
-<<<<<<< HEAD
-  // Función para manejar cambios en los campos de entrada
-  const handleInputChange = (index: number, field: string, value: string) => {
-    const newRows = [...rows];
-    newRows[index][field] = value;
-    setRows(newRows);
-  };
-  /*Fin tabla de agricultura*/
-
-
-  /*Actividades Pecuarias*/
-  const [rows2, setRows2] = useState([{ tipo: 'Aves', frecuencia: '', alimento: '', area: '', venta: '', precio: '', donde: '' },
-  { tipo: 'Cerdos', frecuencia: '', alimento: '', area: '', venta: '', precio: '', donde: '' },
-  { tipo: 'Vacas/toros', frecuencia: '', alimento: '', area: '', venta: '', precio: '', donde: '' }]);
-
-  // Función para agregar una nueva fila
-  const addRow2 = () => {
-    setRows2([...rows2, { tipo: '', frecuencia: '', alimento: '', area: '', venta: '', precio: '', donde: '' }]);
-  };
-
-  // Función para manejar cambios en los campos de entrada
-  const handleInputChange2 = (index: number, field: string, value: string) => {
-    const newRows = [...rows2];
-    newRows[index][field] = value;
-    setRows2(newRows);
-  };
-
-  const handleCheckboxChange2 = (index: number, field: string, value: boolean) => {
-    const newRows2 = [...rows2];
-    newRows2[index][field] = value;
-    setRows2(newRows2);
-  };
-  /*Fin Actividades Pecuarias*/
-  const [comercializacionProductos, setComercializacionProductos] = useState(''); // Campo de texto
-  const [terrenoPropio, setTerrenoPropio] = useState(false);  // Checkbox
-  const [terrenoPrestado, setTerrenoPrestado] = useState(false);  // Checkbox
-  const [terrenoArrendado, setTerrenoArrendado] = useState(false);  // Checkbox
-  const [costoArrendamiento, setCostoArrendamiento] = useState(''); // Campo de texto
-  const [periodoArrendamiento, setPeriodoArrendamiento] = useState(''); // Campo de texto
-  const [momentoSiembra, setMomentoSiembra] = useState('');  // Campo de texto
-  const [plagasEnfermedades, setPlagasEnfermedades] = useState('');  // Campo de texto
-  const [mesesPlagas, setMesesPlagas] = useState('');  // Campo de texto
-  const [cultivosAnteriores, setCultivosAnteriores] = useState('');  // Campo de texto
-  const [razonNoSiembra, setRazonNoSiembra] = useState('');  // Campo de texto
-  const [nuevosCultivos, setNuevosCultivos] = useState('');  // Campo de texto
-  const [sistemasProductivos, setSistemasProductivos] = useState('');  // Campo de texto
-  const [accionesSequía, setAccionesSequía] = useState('');  // Campo de texto
-  const [accionesLluvia, setAccionesLluvia] = useState('');  // Campo de texto
-  const [perdidaCosechas, setPerdidaCosechas] = useState(false);  // Checkbox
-  const [añoPerdidaCosechas, setAñoPerdidaCosechas] = useState('');  // Campo de texto
-  const [causaPerdidaCosechas, setCausaPerdidaCosechas] = useState('');  // Campo de texto
-  const [capacitacionesAgricultura, setCapacitacionesAgricultura] = useState(false);  // Checkbox
-  const [tipoCapacitacion, setTipoCapacitacion] = useState('');  // Campo de texto
-  const [organizacionCapacitacion, setOrganizacionCapacitacion] = useState('');  // Campo de texto
-  const [actividadSinSiembra, setActividadSinSiembra] = useState('');  // Campo de texto
-  const [usoPesticidas, setUsoPesticidas] = useState(false);  // Checkbox
-  const [usoInsecticidas, setUsoInsecticidas] = useState(false);  // Checkbox
-  const [usoHerbicidas, setUsoHerbicidas] = useState(false);  // Checkbox
-  const [usoFungicidas, setUsoFungicidas] = useState(false);  // Campo de texto
-  const [usoFertilizantes, setUsoFertilizantes] = useState(false);  // Campo de texto
-  const [usoOtros, setUsoOtros] = useState('');  // Campo de texto
-
-  const [alimentoAnimales, setAlimentoAnimales] = useState('');  // Campo de texto
-  const [planesProfilacticos, setPlanesProfilacticos] = useState(false);  // Checkbox
-  const [enfermedadesAnimales, setEnfermedadesAnimales] = useState('');  // Campo de texto
-  const [mesesEnfermedad, setMesesEnfermedad] = useState('');  // Campo de texto
-  const [capacitacionesAnimales, setCapacitacionesAnimales] = useState(false);  // Checkbox
-  const [tipoCapacitacionAnimales, setTipoCapacitacionAnimales] = useState('');  // Campo de texto
-
-  const [bosqueComunitario, setBosqueComunitario] = useState(false);  // Checkbox
-  const [dimensionesBosque, setDimensionesBosque] = useState('');  // Campo de texto
-  const [especiesArboles, setEspeciesArboles] = useState('');  // Campo de texto
-  const [especiesPlantas, setEspeciesPlantas] = useState('');  // Campo de texto
-  const [incentivosForestales, setIncentivosForestales] = useState(false);  // Checkbox
-  const [bosquesPotenciales, setBosquesPotenciales] = useState('');  // Campo de texto
-  const [viveros, setViveros] = useState(false);  // Checkbox
-  const [reforestado, setReforestado] = useState(false);  // Checkbox
-  const [areaReforestada, setAreaReforestada] = useState('');  // Campo de texto
-  const [impulsorReforestacion, setImpulsorReforestacion] = useState('');  // Campo de texto
-  const [duenoTierraBosque, setDuenoTierraBosque] = useState('');  // Campo de texto
-  const [duenosMotosierras, setDuenosMotosierras] = useState(false);  // Checkbox
-  const [talaParaCultivar, setTalaParaCultivar] = useState(false);  // Checkbox
-  const [rozasQuemas, setRozasQuemas] = useState('');  // Campo de texto
-  const [incendiosForestales, setIncendiosForestales] = useState(false);  // Checkbox
-  const [razonIncendios, setRazonIncendios] = useState('');  // Campo de texto
-  const [areaIncendio, setAreaIncendio] = useState('');  // Campo de texto
-  const [fechaIncendio, setFechaIncendio] = useState('');  // Campo de texto
-  const [fuentesAgua, setFuentesAgua] = useState(false);  // Checkbox
-  const [numNacimientos, setNumNacimientos] = useState('');  // Campo de texto
-  const [duenoTierraFuentes, setDuenoTierraFuentes] = useState('');  // Campo de texto
-  const [accionesConservacionAgua, setAccionesConservacionAgua] = useState('');  // Campo de texto
-  const [numPozos, setNumPozos] = useState('');  // Campo de texto
-  const [numRios, setNumRios] = useState('');  // Campo de texto
-  const [numLagunas, setNumLagunas] = useState('');  // Campo de texto
-  const [otrasFuentesAgua, setOtrasFuentesAgua] = useState('');  // Campo de texto
-  const [proyectoMedioAmbiental, setProyectoMedioAmbiental] = useState(false);  // Checkbox
-  const [accionesProyecto, setAccionesProyecto] = useState('');  // Campo de texto
-  const [accionesConservacionAmbiente, setAccionesConservacionAmbiente] = useState('');  // Campo de texto
-  const [animalesSilvestres, setAnimalesSilvestres] = useState('');  // Campo de texto
-  const [animalesPorTemporada, setAnimalesPorTemporada] = useState('');  // Campo de texto
-  const [plantasExtintas, setPlantasExtintas] = useState('');  // Campo de texto
-  const [plantasDificiles, setPlantasDificiles] = useState('');  // Campo de texto
-  const [desastreNatural, setDesastreNatural] = useState(false);  // Checkbox
-  const [anioDesastre, setAnioDesastre] = useState('');  // Campo de texto
-  const [tipoDesastre, setTipoDesastre] = useState('');  // Campo de texto
-  const [respuestaDesastre, setRespuestaDesastre] = useState('');  // Campo de texto
-  const [colred, setColred] = useState(false);  // Checkbox
-  const [otrasInstituciones, setOtrasInstituciones] = useState('');  // Campo de texto
-  const [amenazaDesastre, setAmenazaDesastre] = useState('');  // Campo de texto
-
-  // Estado para la alerta
-  const [showAlert, setShowAlert] = useState(false);
-  const [continueEditing, setContinueEditing] = useState(false);
-
-  // Función para guardar los datos en el localStorage
-  const guardarEnLocalStorage = () => {
-    const data = {
-      nombre_comunidad: Comunidad,
-      nombre_municipio: Municipio,
-      nombre_aldea: Aldea,
-      ubicacion_real: Ubicacion,
-      presidente_cocode: PresidenteCOCODE,
-      telefono_contacto1: TelefonoContacto,
-      otro_lider: OtroLider,
-      telefono_contacto2: TelefonoOtroLider,
-      tipo_transporte: Transporte,
-      numero_familias: NumeroFamilias,
-      numero_viviendas: NumeroViviendas,
-      numero_personas: NumeroPersonas,
-      certeza_juridica_tierra: CertezaJuridica,
-      conflictos_tierra: ConflictosTierra,
-      dimension_lotes: DimensionesLotes,
-      dimension_trabajadores: DimensionesTrabajaderos,
-      tierra_comunitaria: TierraComunitaria,
-      idiomas_comunidad: Idiomas,
-      fuentes_empleo: FuentesEmpleo,
-      recreacion_comunidad: Recreacion,
-      potencial_turistico: PotencialTuristico,
-      tipo_edificios_publicos: EdificiosPublicos,
-      hay_inseguridad: Inseguridad,
-      tipo_inseguridad: TipoInseguridad,
-      grupos_delincuenciales: GruposDelincuenciales,
-      personas_otro_lugar: PersonasOtrosMunicipios,
-      ocupacion_otro_lugar: TipoTrabajo,  // Este estaba faltando
-      personas_en_eeuu: PersonasEEUU,
-      cantidad_personas_eeuu: CantidadPersonasEEUU,
-      menores_en_eeuu: MenoresEEUU,
-      edad_empieza_trabajar_hombres: EdadTrabajoHombres,
-      edad_empieza_trabajar_mujeres: EdadTrabajoMujeres,
-      tipo_empleo: TipoTrabajo,
-      existen_jubilados: Jubilados,
-      cantidad_jubilados: CantidadJubilados,
-      institucion_jubilados: InstitucionJubilados,
-      ocupaciones_tradicionales_mujeres: OcupacionesMujeres,
-      ocupaciones_tradicionales_hombres: OcupacionesHombres
-    };
-
-    // Guardar los datos en el localStorage
-    localStorage.setItem('formData', JSON.stringify(data));
-    console.log("Datos guardados en localStorage:", data);
-=======
   /*Fin tabla de agricultura*/ 
 
    const [comercializacionProductos, setComercializacionProductos] = useState(''); // Campo de texto
@@ -977,41 +809,30 @@ const guardarEnLocalStorage = () => {
     colred :colred, 
     otras_instituciones:otrasInstituciones,
     amenaza_desastre:amenazaDesastre,
->>>>>>> e9ad74ead1b2fe2b74bb4126daf33b216b4d1d9b
   };
+  
+  // Guardar los datos en el localStorage
+  localStorage.setItem('formData', JSON.stringify(data));
+  console.log("Datos guardados en localStorage:", data);
+};
 
-  // Función para enviar los datos a la base de datos
-  const enviarABaseDeDatos = async () => {
-    const datosGuardados = localStorage.getItem('formData');
+// Función para enviar los datos a la base de datos
+const enviarABaseDeDatos = async () => {
+  const datosGuardados = localStorage.getItem('formData');
 
-    if (datosGuardados) {
-      const data = JSON.parse(datosGuardados);
-      console.log("Datos que se enviarán:", data);
+  if (datosGuardados) {
+    const data = JSON.parse(datosGuardados);
+    console.log("Datos que se enviarán:", data);
 
-      try {
-        const response = await fetch('http://localhost:3000/comunidadr', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(data),
-        });
+    try {
+      const response = await fetch('http://localhost:3000/comunidadr', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
 
-<<<<<<< HEAD
-        if (response.ok) {
-          console.log("Datos enviados a la base de datos correctamente.");
-          localStorage.removeItem('formData');
-          console.log("Datos borrados de localStorage.");
-        } else {
-          const errorMsg = await response.text();
-          console.error("Error al enviar los datos a la base de datos:", errorMsg);
-        }
-      } catch (error) {
-        console.error("Error en la solicitud:", error);
-      }
-    } else {
-      console.log("No hay datos en localStorage para enviar.");
-=======
       if (response.ok) {
         setShowSuccessAlert(true); // Mostrar alerta de éxito
           // Limpiar el formulario
@@ -1026,29 +847,12 @@ const guardarEnLocalStorage = () => {
     } catch (error) {
       setShowErrorAlert(true); // Mostrar alerta de error en caso de excepción
       console.error("Error en la solicitud:", error);
->>>>>>> e9ad74ead1b2fe2b74bb4126daf33b216b4d1d9b
     }
-  };
+  } else {
+    console.log("No hay datos en localStorage para enviar.");
+  }
+};
 
-<<<<<<< HEAD
-  // Manejar el clic en el botón 'Guardar'
-  const handleGuardarClick = () => {
-    guardarEnLocalStorage();
-    setShowAlert(true);  // Mostrar la alerta para preguntar si quiere continuar
-  };
-
-  // Manejar la respuesta de la alerta
-  const handleAlertResponse = (continueEditing) => {
-    setContinueEditing(continueEditing);
-    setShowAlert(false);
-
-    if (!continueEditing) {
-      enviarABaseDeDatos();  // Si el usuario elige no continuar editando, enviar datos a la base de datos
-    }
-  };
-  //
-  
-=======
 
 // Manejar el clic en el botón 'Guardar'
 const handleGuardarClick = () => {
@@ -1065,11 +869,41 @@ const handleAlertResponse = (continueEditing: boolean) => {
     enviarABaseDeDatos(); // Si el usuario elige no continuar editando, enviar datos a la base de datos
   }
 };
->>>>>>> e9ad74ead1b2fe2b74bb4126daf33b216b4d1d9b
 
+useEffect(() => {
+  fetchComunidad();
+}, [id]);
+
+/*Intento de leer datos de comunidades :(*/
+const fetchComunidad = async () => {
+  try {
+    const response = await fetch(`http://localhost:3000/getComunidad/${id}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+console.log("ID EditarComunidad:",id);
+    if (response.ok) {
+      const data = await response.json();
+      setComunidad(data);
+    } else {
+      console.error('Error al obtener los datos de la comunidad');
+    }
+  } catch (error) {
+    console.error('Error en la solicitud:', error);
+  }
+};
+
+
+/*Fin */
+   
   return (
     <IonPage className="pg">
-      <h1 className='TituloPagina'>Crear comunidad</h1>
+      <IonRow>
+        <h1 className='TituloPagina'>Editar comunidad</h1>
+        <h2 className="TituloN2" >{Comunidad}</h2>
+      </IonRow>
       <IonContent>
         <IonTabs className="tabs">
           <IonTab tab="DatosGenerales">
@@ -1107,12 +941,6 @@ const handleAlertResponse = (continueEditing: boolean) => {
               </IonRow>
 
               <IonRow className="FilaTextBox">
-<<<<<<< HEAD
-                <h3 className="labelForm">4. Ubicación:</h3>
-                <input onChange={e => setUbicacion(e.target.value || '')} type="text" className='TextBox' />
-                
-              </IonRow>
-=======
   <h3 className="labelForm">4. Ubicación:</h3>
   <input 
     value={Ubicacion}  // Asigna el estado Ubicacion al valor del input
@@ -1123,7 +951,6 @@ const handleAlertResponse = (continueEditing: boolean) => {
   {/* Botón para capturar ubicación */}
   <IonButton onClick={capturarUbicacion} className="botonUbicacion">Capturar Ubicación</IonButton>
 </IonRow>
->>>>>>> e9ad74ead1b2fe2b74bb4126daf33b216b4d1d9b
 
 
               <IonRow className="FilaTextBox">
@@ -1294,17 +1121,17 @@ const handleAlertResponse = (continueEditing: boolean) => {
               </IonRow>
             </div>
           </IonTab>
-
+          
           {/* Inician las nuevas ---------------------------------*/}
           {/* Tab de Servicios */}
           <IonTab tab="Servicios">
             <div className="PanelSecundario">
               <IonRow className="FilaTextBox">
                 <h2 className="TituloN2">Servicios</h2>
-                <h3 style={{ color: "GrayText", fontSize: "14px", paddingLeft: "10px" }}>(Los campos subrayados son obligatorios)</h3>
-              </IonRow>
+                <h3 style={{color: "GrayText", fontSize: "14px", paddingLeft: "10px"}}>(Los campos subrayados son obligatorios)</h3>
+              </IonRow>                              
 
-              {/* Pregunta 30: ¿Hay energía eléctrica? y Tipo(s) de servicio */}
+               {/* Pregunta 30: ¿Hay energía eléctrica? y Tipo(s) de servicio */}
               <IonRow className="FilaTextBox">
                 <h3 className="labelForm">30. ¿Hay energía eléctrica?</h3>
                 <IonCheckbox
@@ -1540,8 +1367,8 @@ const handleAlertResponse = (continueEditing: boolean) => {
               </IonRow>
             </div>
           </IonTab>
-
-          {/* Tab agua y saneamiento */}
+            
+            {/* Tab agua y saneamiento */}
           <IonTab tab="Agua&Sane">
             <div className="PanelSecundario">
               <IonRow className="FilaTextBox">
@@ -1594,11 +1421,11 @@ const handleAlertResponse = (continueEditing: boolean) => {
               </IonRow>
 
               {/* Pregunta 45: Manejo de excretas */}
-              <IonRow className="FilaTextBox">
-                <h3 className="labelForm">45. Manejo de excretas:</h3>
-              </IonRow>
+                <IonRow className="FilaTextBox">
+                <h3 className="labelForm">45. Manejo de excretas:</h3>                  
+                </IonRow>
 
-              <IonRow class="FilaTextBox">
+                <IonRow class="FilaTextBox">
                 <h3 className="labelForm">Inodoro lavable</h3>
                 <IonCheckbox
                   checked={inodoroLavable}
@@ -1643,7 +1470,7 @@ const handleAlertResponse = (continueEditing: boolean) => {
               <IonRow className="FilaTextBox">
                 <h3 className="labelForm">48. Fuente de energía calórica para cocinar alimentos:</h3>
               </IonRow>
-              <IonRow className="FilaTextBox">
+              <IonRow className="FilaTextBox">                  
                 <h3 className="labelForm">Leña</h3>
                 <IonCheckbox
                   checked={fuenteEnergiaLenia}
@@ -1659,20 +1486,20 @@ const handleAlertResponse = (continueEditing: boolean) => {
                   checked={fuenteEnergiaCarbon}
                   onIonChange={(e) => setFuenteEnergiaCarbon(e.target.checked)}
                 />
-
-                <h3 className="labelForm">Otros:</h3>
+              
+                <h3 className="labelForm">Otros:</h3>      
                 <input
                   onChange={(e) => setFuenteEnergiaOtros(e.target.value)}
                   type="text"
                   className="TextBox"
-                />
+                  />              
               </IonRow>
 
               {/* Pregunta 49: ¿En donde cocina? */}
               <IonRow className="FilaTextBox">
                 <h3 className="labelForm">49. ¿En dónde cocina?</h3>
               </IonRow>
-              <IonRow className="FilaTextBox">
+              <IonRow className="FilaTextBox">                  
                 <h3 className="labelForm"> Estufa ahorradora</h3>
                 <IonCheckbox
                   checked={estufaAhorradora}
@@ -1692,26 +1519,26 @@ const handleAlertResponse = (continueEditing: boolean) => {
                 <IonCheckbox
                   checked={sueloCocina}
                   onIonChange={(e) => setSueloCocina(e.target.checked)}
-                />
+                /> 
               </IonRow>
 
               {/* Pregunta 52: ¿Hubo o hay capacitaciones sobre saneamiento ambiental? */}
-
+              
               {capacitacionesSaneamiento && (
-                <>
-                  {/* Pregunta 52.1: ¿De qué se trata o trató? */}
-                  <IonRow className="FilaTextBox">
-                    <h3 className="labelForm">¿De qué se trata o trató?</h3>
-                    <input
-                      onChange={(e) => setDetalleCapacitaciones(e.target.value)}
-                      className="TextBox"
-                    />
-                  </IonRow>
-                </>
+                  <>
+                    {/* Pregunta 52.1: ¿De qué se trata o trató? */}
+                    <IonRow className="FilaTextBox">
+                      <h3 className="labelForm">¿De qué se trata o trató?</h3>
+                      <input
+                        onChange={(e) => setDetalleCapacitaciones(e.target.value)}
+                        className="TextBox"
+                      />
+                    </IonRow>
+                  </>
               )}
             </div>
           </IonTab>
-
+                
           {/* Tab de Salud y Nutrición */}
           <IonTab tab="Salud&Nut">
             <div className="PanelSecundario">
@@ -1721,7 +1548,7 @@ const handleAlertResponse = (continueEditing: boolean) => {
                   (Los campos subrayados son obligatorios)
                 </h3>
               </IonRow>
-              {/* Pregunta 53 */}
+                {/* Pregunta 53 */}
               <IonRow className="FilaTextBox">
                 <h3 className="labelForm">53. Consumo de alimentos:</h3>
               </IonRow>
@@ -1738,7 +1565,7 @@ const handleAlertResponse = (continueEditing: boolean) => {
                 <IonCheckbox checked={carneMonte} onIonChange={e => setCarneMonte(e.target.checked)} />
                 <h3 className="labelForm">Pescado</h3>
                 <IonCheckbox checked={pescado} onIonChange={e => setPescado(e.target.checked)} />
-
+    
                 <h3 className="labelForm">Maíz</h3>
                 <IonCheckbox checked={maiz} onIonChange={e => setMaiz(e.target.checked)} />
                 <h3 className="labelForm">Frijol</h3>
@@ -1749,7 +1576,7 @@ const handleAlertResponse = (continueEditing: boolean) => {
                 <IonCheckbox checked={legumbres} onIonChange={e => setLegumbres(e.target.checked)} />
                 <h3 className="labelForm">Pastas</h3>
                 <IonCheckbox checked={pastas} onIonChange={e => setPastas(e.target.checked)} />
-
+  
                 <h3 className="labelForm">Sopas</h3>
                 <IonCheckbox checked={sopas} onIonChange={e => setSopas(e.target.checked)} />
                 <h3 className="labelForm">Arroz</h3>
@@ -1800,7 +1627,7 @@ const handleAlertResponse = (continueEditing: boolean) => {
               <IonRow className="FilaTextBox">
                 <h3 className="labelForm">57. ¿Llegan del centro de salud a vacunar a los niños y niñas?</h3>
                 <IonCheckbox checked={vacunasNinos} onIonChange={e => setVacunasNinos(e.target.checked)} />
-
+                
                 {vacunasNinos && (
                   <>
                     <h3 className="labelForm">¿Con qué frecuencia?</h3>
@@ -1896,7 +1723,7 @@ const handleAlertResponse = (continueEditing: boolean) => {
                 <input type="text" value={numPuntosVentaBebidas} onChange={e => setNumPuntosVentaBebidas(e.target.value!)} className="TextBoxPeq" />
               </IonRow>
 
-              <IonRow className="FilaTextBox">
+              <IonRow className="FilaTextBox">                
                 <h3 className="labelForm">¿Tipo de bebidas?</h3>
                 <input type="text" value={tiposBebidasAlcoholicas} onChange={e => setTiposBebidasAlcoholicas(e.target.value!)} className="TextBox" />
               </IonRow>
@@ -1908,7 +1735,7 @@ const handleAlertResponse = (continueEditing: boolean) => {
                 <h3 className="labelForm">Otros</h3>
                 <input type="text" value={otrosConsumo} onChange={e => setOtrosConsumo(e.target.value!)} className="TextBox" />
               </IonRow>
-            </div>
+            </div>            
           </IonTab>
 
           {/* Tab de Mapa de Actores */}
@@ -1974,7 +1801,7 @@ const handleAlertResponse = (continueEditing: boolean) => {
                   }}
                 />
               </IonRow>
-
+                
               <IonRow className="FilaTextBox">
                 <h3 className="labelForm">71. ¿Llega la Policía a la comunidad?</h3>
                 <IonCheckbox
@@ -1995,100 +1822,100 @@ const handleAlertResponse = (continueEditing: boolean) => {
               <IonRow className="FilaTextBox">
                 <h3 className="labelForm">72. ¿Cuáles ONG´s están presentes en la comunidad?</h3>
               </IonRow>
-              {ongList.map((ong, index) => (
-                <IonRow key={index} className="FilaTextBox">
-                  <IonInput
-                    type="text"
-                    placeholder="Nombre ONG"
-                    value={ong.nombre}
-                    onIonChange={(e) => {
-                      const newOngList = [...ongList];
-                      newOngList[index].nombre = e.detail.value!;
-                      setOngList(newOngList);
-                      if (e.detail.value) {
-                        addActor(e.detail.value!);
-                      } else {
-                        removeActor(ong.nombre);
-                      }
-                    }}
-                  />
-                  <IonInput
+                {ongList.map((ong, index) => (
+                  <IonRow key={index} className="FilaTextBox">
+                    <IonInput
+                      type="text"
+                      placeholder="Nombre ONG"
+                      value={ong.nombre}
+                      onIonChange={(e) => {
+                        const newOngList = [...ongList];
+                        newOngList[index].nombre = e.detail.value!;
+                        setOngList(newOngList);
+                        if (e.detail.value) {
+                          addActor(e.detail.value!);
+                        } else {
+                          removeActor(ong.nombre);
+                        }
+                      }}
+                    />
+                    <IonInput
                     style={{ marginbottom: "10px" }}
-                    type="text"
-                    placeholder="Trabajo en la comunidad"
-                    value={ong.trabajo}
-                    onIonChange={(e) => {
-                      const newOngList = [...ongList];
-                      newOngList[index].trabajo = e.detail.value!;
-                      setOngList(newOngList);
-                    }}
-                  />
-                </IonRow>
-              ))}
-              <IonButton onClick={addOng}>Añadir ONG</IonButton>
+                      type="text"
+                      placeholder="Trabajo en la comunidad"
+                      value={ong.trabajo}
+                      onIonChange={(e) => {
+                        const newOngList = [...ongList];
+                        newOngList[index].trabajo = e.detail.value!;
+                        setOngList(newOngList);
+                      }}
+                    />
+                  </IonRow>
+                ))}
+                <IonButton onClick={addOng}>Añadir ONG</IonButton>
 
-              <IonRow className="FilaTextBox">
-                <h3 className="labelForm">73. Mapeo de actores</h3>
-                <table className="TablaActores">
-                  <thead className="FilaTabla">
-                    <tr>
-                      <th>Nombre del actor</th>
-                      <th>Aceptación en la comunidad (alta, media, baja)</th>
-                      <th>Importancia en la comunidad (alta, media, baja)</th>
-                      <th>Presencia en la comunidad (alta, media, baja)</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {actors.map((actor, index) => (
-                      <tr key={index}>
-                        <td className="celda">{actor.nombre}</td>
-                        <td className="celda">
-                          <IonSelect
-                            value={actor.aceptacion}
-                            onIonChange={(e) => {
-                              const newActors = [...actors];
-                              newActors[index].aceptacion = e.detail.value!;
-                              setActors(newActors);
-                            }}
-                          >
-                            <IonSelectOption value="alta">Alta</IonSelectOption>
-                            <IonSelectOption value="media">Media</IonSelectOption>
-                            <IonSelectOption className="celda" value="baja">Baja</IonSelectOption>
-                          </IonSelect>
-                        </td>
-                        <td className="celda">
-                          <IonSelect
-                            value={actor.importancia}
-                            onIonChange={(e) => {
-                              const newActors = [...actors];
-                              newActors[index].importancia = e.detail.value!;
-                              setActors(newActors);
-                            }}
-                          >
-                            <IonSelectOption value="alta">Alta</IonSelectOption>
-                            <IonSelectOption value="media">Media</IonSelectOption>
-                            <IonSelectOption value="baja">Baja</IonSelectOption>
-                          </IonSelect>
-                        </td>
-                        <td>
-                          <IonSelect
-                            value={actor.presencia}
-                            onIonChange={(e) => {
-                              const newActors = [...actors];
-                              newActors[index].presencia = e.detail.value!;
-                              setActors(newActors);
-                            }}
-                          >
-                            <IonSelectOption value="alta">Alta</IonSelectOption>
-                            <IonSelectOption value="media">Media</IonSelectOption>
-                            <IonSelectOption value="baja">Baja</IonSelectOption>
-                          </IonSelect>
-                        </td>
+                <IonRow className="FilaTextBox">
+                  <h3 className="labelForm">73. Mapeo de actores</h3>
+                  <table className="TablaActores">
+                    <thead className="FilaTabla">
+                      <tr>
+                        <th>Nombre del actor</th>
+                        <th>Aceptación en la comunidad (alta, media, baja)</th>
+                        <th>Importancia en la comunidad (alta, media, baja)</th>
+                        <th>Presencia en la comunidad (alta, media, baja)</th>
                       </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </IonRow>
+                    </thead>
+                    <tbody>
+                      {actors.map((actor, index) => (
+                        <tr key={index}>
+                          <td className="celda">{actor.nombre}</td>
+                          <td className="celda">
+                            <IonSelect
+                              value={actor.aceptacion}
+                              onIonChange={(e) => {
+                                const newActors = [...actors];
+                                newActors[index].aceptacion = e.detail.value!;
+                                setActors(newActors);
+                              }}
+                            >
+                              <IonSelectOption value="alta">Alta</IonSelectOption>
+                              <IonSelectOption value="media">Media</IonSelectOption>
+                              <IonSelectOption className="celda" value="baja">Baja</IonSelectOption>
+                            </IonSelect>
+                          </td>
+                          <td className="celda">
+                            <IonSelect
+                              value={actor.importancia}
+                              onIonChange={(e) => {
+                                const newActors = [...actors];
+                                newActors[index].importancia = e.detail.value!;
+                                setActors(newActors);
+                              }}
+                            >
+                              <IonSelectOption value="alta">Alta</IonSelectOption>
+                              <IonSelectOption value="media">Media</IonSelectOption>
+                              <IonSelectOption value="baja">Baja</IonSelectOption>
+                            </IonSelect>
+                          </td>
+                          <td>
+                            <IonSelect
+                              value={actor.presencia}
+                              onIonChange={(e) => {
+                                const newActors = [...actors];
+                                newActors[index].presencia = e.detail.value!;
+                                setActors(newActors);
+                              }}
+                            >
+                              <IonSelectOption value="alta">Alta</IonSelectOption>
+                              <IonSelectOption value="media">Media</IonSelectOption>
+                              <IonSelectOption value="baja">Baja</IonSelectOption>
+                            </IonSelect>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </IonRow>
             </div>
           </IonTab>
 
@@ -2102,77 +1929,77 @@ const handleAlertResponse = (continueEditing: boolean) => {
                 </h3>
               </IonRow>
 
-              <IonRow className="FilaTextBox">
-                <h3 className="labelForm">74. ¿Qué cultivos existen en la comunidad?</h3>
+            <IonRow className="FilaTextBox">
+              <h3 className="labelForm">74. ¿Qué cultivos existen en la comunidad?</h3>
               </IonRow>
-              <IonRow className="FilaTextBox">
-                <IonGrid>
-                  <IonRow>
-                    <IonCol>Tipo de Cultivo</IonCol>
-                    <IonCol>Área Promedio Cultivada</IonCol>
-                    <IonCol>Rendimientos</IonCol>
-                    <IonCol>Destino (Consumo/Venta)</IonCol>
-                    <IonCol>Precios de Venta</IonCol>
-                    <IonCol>Mes de Siembra</IonCol>
-                    <IonCol>Mes de Cosecha</IonCol>
-                  </IonRow>
+              <IonRow className="FilaTextBox">  
+              <IonGrid>
+                <IonRow>
+                  <IonCol>Tipo de Cultivo</IonCol>
+                  <IonCol>Área Promedio Cultivada</IonCol>
+                  <IonCol>Rendimientos</IonCol>
+                  <IonCol>Destino (Consumo/Venta)</IonCol>
+                  <IonCol>Precios de Venta</IonCol>
+                  <IonCol>Mes de Siembra</IonCol>
+                  <IonCol>Mes de Cosecha</IonCol>
+                </IonRow>
 
-                  {rows.map((row, index) => (
-                    <IonRow key={index}>
-                      <IonCol>
-                        <IonInput
-                          value={row.cultivo}
-                          placeholder="Tipo de Cultivo"
-                          onIonChange={(e) => handleInputChange(index, 'cultivo', e.detail.value!)}
+                {rows.map((row, index) => (
+                  <IonRow key={index}>
+                    <IonCol>
+                      <IonInput
+                        value={row.cultivo}
+                        placeholder="Tipo de Cultivo"
+                        onIonChange={(e) => handleInputChange(index, 'cultivo', e.detail.value!)}
                         />
-                      </IonCol>
-                      <IonCol>
-                        <IonInput
-                          value={row.area}
-                          placeholder="Área Cultivada"
-                          onIonChange={(e) => handleInputChange(index, 'area', e.detail.value!)}
+                    </IonCol>
+                    <IonCol>
+                      <IonInput
+                        value={row.area}
+                        placeholder="Área Cultivada"
+                        onIonChange={(e) => handleInputChange(index, 'area', e.detail.value!)}
+                      />
+                    </IonCol>
+                    <IonCol>
+                      <IonInput
+                        value={row.rendimientos}
+                        placeholder="Rendimientos"
+                        onIonChange={(e) => handleInputChange(index, 'rendimientos', e.detail.value!)}
+                      />
+                    </IonCol>
+                    <IonCol>
+                      <IonInput
+                        value={row.destino}
+                        placeholder="Destino"
+                        onIonChange={(e) => handleInputChange(index, 'destino', e.detail.value!)}
                         />
-                      </IonCol>
-                      <IonCol>
-                        <IonInput
-                          value={row.rendimientos}
-                          placeholder="Rendimientos"
-                          onIonChange={(e) => handleInputChange(index, 'rendimientos', e.detail.value!)}
+                    </IonCol>
+                    <IonCol>
+                      <IonInput
+                        value={row.precio}
+                        placeholder="Precio de Venta"
+                        onIonChange={(e) => handleInputChange(index, 'precio', e.detail.value!)}
+                      />
+                    </IonCol>
+                    <IonCol>
+                      <IonInput
+                        value={row.siembra}
+                        placeholder="Mes de Siembra"
+                        onIonChange={(e) => handleInputChange(index, 'siembra', e.detail.value!)}
                         />
-                      </IonCol>
-                      <IonCol>
-                        <IonInput
-                          value={row.destino}
-                          placeholder="Destino"
-                          onIonChange={(e) => handleInputChange(index, 'destino', e.detail.value!)}
-                        />
-                      </IonCol>
-                      <IonCol>
-                        <IonInput
-                          value={row.precio}
-                          placeholder="Precio de Venta"
-                          onIonChange={(e) => handleInputChange(index, 'precio', e.detail.value!)}
-                        />
-                      </IonCol>
-                      <IonCol>
-                        <IonInput
-                          value={row.siembra}
-                          placeholder="Mes de Siembra"
-                          onIonChange={(e) => handleInputChange(index, 'siembra', e.detail.value!)}
-                        />
-                      </IonCol>
-                      <IonCol>
-                        <IonInput
-                          value={row.cosecha}
-                          placeholder="Mes de Cosecha"
-                          onIonChange={(e) => handleInputChange(index, 'cosecha', e.detail.value!)}
-                        />
-                      </IonCol>
-                    </IonRow>
-                  ))}
+                    </IonCol>
+                    <IonCol>
+                      <IonInput
+                        value={row.cosecha}
+                        placeholder="Mes de Cosecha"
+                        onIonChange={(e) => handleInputChange(index, 'cosecha', e.detail.value!)}
+                      />
+                    </IonCol>
+                  </IonRow>
+                ))}
                   <IonRow>
                     <IonCol>
-                      <IonButton color='secondary' onClick={addRow}><IonIcon slot="start" icon={add}></IonIcon>Agregar Fila</IonButton>
+                      <IonButton  color='secondary' onClick={addRow}><IonIcon slot="start" icon={add}></IonIcon>Agregar Fila</IonButton>
                     </IonCol>
                   </IonRow>
                 </IonGrid>
@@ -2256,7 +2083,7 @@ const handleAlertResponse = (continueEditing: boolean) => {
                   </>
                 )}
               </IonRow>
-
+              
               <IonRow className="FilaTextBox">
                 <h3 className="labelForm">88. ¿Han recibido capacitaciones sobre agricultura?</h3>
                 <IonCheckbox checked={capacitacionesAgricultura} onIonChange={(e) => setCapacitacionesAgricultura(e.target.checked)} />
@@ -2266,25 +2093,25 @@ const handleAlertResponse = (continueEditing: boolean) => {
                     <input type="text" value={tipoCapacitacion} onChange={e => setTipoCapacitacion(e.target.value!)} className="TextBoxPeq" />
                   </>
                 )}
-
+                
               </IonRow>
-
+              
               <IonRow className="FilaTextBox">
                 <h3 className="labelForm">89. ¿Qué organización las imparte o impartió?</h3>
                 <input type="text" value={organizacionCapacitacion} onChange={e => setOrganizacionCapacitacion(e.target.value!)} className="TextBox" />
               </IonRow>
-
+              
               <IonRow className="FilaTextBox">
                 <h3 className="labelForm">90. ¿Qué actividad realiza cuando no hay siembra ni cosecha?</h3>
                 <input type="text" value={actividadSinSiembra} onChange={e => setActividadSinSiembra(e.target.value!)} className="TextBox" />
               </IonRow>
-
+              
               <IonRow className="FilaTextBox">
                 <h3 className="labelForm">91. Uso de productos químicos:</h3>
                 <h3 className="labelForm">Pesticidas</h3>
-                <IonCheckbox checked={usoPesticidas} onIonChange={e => setUsoPesticidas(e.target.checked)} />
+                <IonCheckbox checked={usoPesticidas} onIonChange={e => setUsoPesticidas(e.target.checked)} /> 
                 <h3 className="labelForm">Insecticidas</h3>
-                <IonCheckbox checked={usoInsecticidas} onIonChange={e => setUsoInsecticidas(e.target.checked)} />
+                <IonCheckbox checked={usoInsecticidas} onIonChange={e => setUsoInsecticidas(e.target.checked)} /> 
                 <h3 className="labelForm">Herbicidas</h3>
                 <IonCheckbox checked={usoHerbicidas} onIonChange={e => setUsoHerbicidas(e.target.checked)} />
                 <h3 className="labelForm">Fungicidas</h3>
@@ -2319,61 +2146,6 @@ const handleAlertResponse = (continueEditing: boolean) => {
                   <IonCol>Donde se Venden</IonCol>
                 </IonRow>
 
-<<<<<<< HEAD
-                {rows2.map((row, index) => (
-                  <IonRow key={index}>
-                    <IonCol>
-                      <IonInput
-                        value={row.tipo}
-                        placeholder="Tipo de Producción"
-                        onIonChange={(e) => handleInputChange(index, 'tipo', e.detail.value!)}
-                      />
-                    </IonCol>
-                    <IonCol>
-                      <IonInput
-                        value={row.frecuencia}
-                        placeholder="Frecuencia"
-                        onIonChange={(e) => handleInputChange(index, 'frecuencia', e.detail.value!)}
-                      />
-                    </IonCol>
-                    <IonCol>
-                      <IonInput
-                        value={row.alimento}
-                        placeholder="Alimento"
-                        onIonChange={(e) => handleInputChange(index, 'alimento', e.detail.value!)}
-                      />
-                    </IonCol>
-                    <IonCol>
-                      <IonInput
-                        value={row.area}
-                        placeholder="Área"
-                        onIonChange={(e) => handleInputChange(index, 'area', e.detail.value!)}
-                      />
-                    </IonCol>
-                    <IonCol>
-                      <IonInput
-                        value={row.venta}
-                        placeholder="Venta"
-                        onIonChange={(e) => handleInputChange(index, 'venta', e.detail.value!)}
-                      />
-                    </IonCol>
-                    <IonCol>
-                      <IonInput
-                        value={row.precio}
-                        placeholder="Precio"
-                        onIonChange={(e) => handleInputChange(index, 'precio', e.detail.value!)}
-                      />
-                    </IonCol>
-                    <IonCol>
-                      <IonInput
-                        value={row.donde}
-                        placeholder="Donde se Venden"
-                        onIonChange={(e) => handleInputChange(index, 'donde', e.detail.value!)}
-                      />
-                    </IonCol>
-                  </IonRow>
-                ))}
-=======
                   {rows2.map((row, index) => (
                     <IonRow key={index}>
                       <IonCol>
@@ -2427,13 +2199,12 @@ const handleAlertResponse = (continueEditing: boolean) => {
                       </IonCol>
                     </IonRow>
                   ))}
->>>>>>> e9ad74ead1b2fe2b74bb4126daf33b216b4d1d9b
                 <IonRow>
                   <IonCol>
-                    <IonButton color="secondary" onClick={addRow2}><IonIcon slot="start" icon={add}></IonIcon>Agregar Fila</IonButton>
+                    <IonButton color="secondary"  onClick={addRow2}><IonIcon slot="start" icon={add}></IonIcon>Agregar Fila</IonButton>
                   </IonCol>
                 </IonRow>
-              </IonGrid>
+             </IonGrid>
 
               {/*Preguntas*/}
               <IonRow className="FilaTextBox">
@@ -2555,24 +2326,24 @@ const handleAlertResponse = (continueEditing: boolean) => {
                   </>
                 )}
               </IonRow>
-
+              
               <IonRow className="FilaTextBox">
                 <h3 className="labelForm">110. ¿Hay fuentes de agua?</h3>
                 <IonCheckbox checked={fuentesAgua} onIonChange={(e) => setFuentesAgua(e.target.checked)} />
                 <h3 className="labelForm">¿Cuántos nacimientos?</h3>
                 <input type="text" value={numNacimientos} onChange={e => setNumNacimientos(e.target.value!)} className="TextBoxPeq" />
               </IonRow>
-
+              
               <IonRow className="FilaTextBox">
                 <h3 className="labelForm">111. ¿Quién es el propietario de la tierra en donde están las fuentes de agua o nacimientos?</h3>
                 <input type="text" value={duenoTierraFuentes} onChange={e => setDuenoTierraFuentes(e.target.value!)} className="TextBox" />
               </IonRow>
-
+              
               <IonRow className="FilaTextBox">
                 <h3 className="labelForm">112. ¿Qué acciones se realizan para conservar las fuentes de agua?</h3>
                 <input type="text" value={accionesConservacionAgua} onChange={e => setAccionesConservacionAgua(e.target.value!)} className="TextBox" />
               </IonRow>
-
+              
               <IonRow className="FilaTextBox">
                 <h3 className="labelForm">113. ¿Cuántos pozos?</h3>
                 <input type="text" value={numPozos} onChange={e => setNumPozos(e.target.value!)} className="TextBoxPeq" />
@@ -2581,44 +2352,44 @@ const handleAlertResponse = (continueEditing: boolean) => {
                 <h3 className="labelForm">¿Cuántas lagunas?</h3>
                 <input type="text" value={numLagunas} onChange={e => setNumLagunas(e.target.value!)} className="TextBoxPeq" />
               </IonRow>
-
+              
               <IonRow className="FilaTextBox">
                 <h3 className="labelForm">114. Otras fuentes de agua</h3>
                 <input type="text" value={otrasFuentesAgua} onChange={e => setOtrasFuentesAgua(e.target.value!)} className="TextBox" />
               </IonRow>
-
+              
               <IonRow className="FilaTextBox">
                 <h3 className="labelForm">115. ¿Hubo algún proyecto medio ambiental?</h3>
                 <IonCheckbox checked={proyectoMedioAmbiental} onIonChange={(e) => setProyectoMedioAmbiental(e.target.checked)} />
                 <h3 className="labelForm">¿Qué se hizo?</h3>
                 <input type="text" value={accionesProyecto} onChange={e => setAccionesProyecto(e.target.value!)} className="TextBox" />
               </IonRow>
-
+              
               <IonRow className="FilaTextBox">
                 <h3 className="labelForm">116. ¿Qué acciones se realizan para conservar el medio ambiente?</h3>
                 <input type="text" value={accionesConservacionAmbiente} onChange={e => setAccionesConservacionAmbiente(e.target.value!)} className="TextBox" />
               </IonRow>
-
+              
               <IonRow className="FilaTextBox">
                 <h3 className="labelForm">117. ¿Cuáles animales silvestres se ven?</h3>
                 <input type="text" value={animalesSilvestres} onChange={e => setAnimalesSilvestres(e.target.value!)} className="TextBox" />
               </IonRow>
-
+              
               <IonRow className="FilaTextBox">
                 <h3 className="labelForm">118. ¿Cuáles animales se ven por temporadas?</h3>
                 <input type="text" value={animalesPorTemporada} onChange={e => setAnimalesPorTemporada(e.target.value!)} className="TextBox" />
               </IonRow>
-
+              
               <IonRow className="FilaTextBox">
                 <h3 className="labelForm">119. ¿Qué plantas ya no existen en la comunidad?</h3>
                 <input type="text" value={plantasExtintas} onChange={e => setPlantasExtintas(e.target.value!)} className="TextBox" />
               </IonRow>
-
+              
               <IonRow className="FilaTextBox">
                 <h3 className="labelForm">120. ¿Qué plantas son difíciles de ver ahora?</h3>
                 <input type="text" value={plantasDificiles} onChange={e => setPlantasDificiles(e.target.value!)} className="TextBox" />
               </IonRow>
-
+              
               {/* Preguntas dependientes */}
               <IonRow className="FilaTextBox">
                 <h3 className="labelForm">121. ¿La comunidad ha sido afectada por algún desastre natural?</h3>
@@ -2632,28 +2403,28 @@ const handleAlertResponse = (continueEditing: boolean) => {
                   </>
                 )}
               </IonRow>
-
+              
               <IonRow className="FilaTextBox">
                 <h3 className="labelForm">122. ¿Cómo se responde ante un desastre?</h3>
                 <input type="text" value={respuestaDesastre} onChange={e => setRespuestaDesastre(e.target.value!)} className="TextBox" />
               </IonRow>
-
+              
               <IonRow className="FilaTextBox">
                 <h3 className="labelForm">123. ¿Hay COLRED?</h3>
                 <IonCheckbox checked={colred} onIonChange={(e) => setColred(e.target.checked)} />
                 <h3 className="labelForm">Otras instituciones de atención a desastres</h3>
                 <input type="text" value={otrasInstituciones} onChange={e => setOtrasInstituciones(e.target.value!)} className="TextBox" />
               </IonRow>
-
+              
               <IonRow className="FilaTextBox">
                 <h3 className="labelForm">124. ¿Qué amenaza de desastre existe en la comunidad?</h3>
                 <input type="text" value={amenazaDesastre} onChange={e => setAmenazaDesastre(e.target.value!)} className="TextBox" />
               </IonRow>
-
-            </div>
-          </IonTab>
-          {/* Hasta aca ---------------------------------*/}
-          <IonTabBar className="TabBarConf" slot="top">
+              
+              </div>
+            </IonTab>      
+            {/* Hasta aca ---------------------------------*/}
+            <IonTabBar className="TabBarConf" slot="top">
             <IonTabButton tab="DatosGenerales">
               <IonIcon size="large" icon={earthOutline} />
             </IonTabButton>
@@ -2686,33 +2457,8 @@ const handleAlertResponse = (continueEditing: boolean) => {
       </IonContent>
 
       <IonRow>
-<<<<<<< HEAD
-        <IonButton onClick={handleGuardarClick}>Guardar</IonButton>
-        <IonButton color="danger" onClick={() => { /* Lógica de cancelación */ }}>
-          Cancelar
-        </IonButton>
-      </IonRow>
-
-      {/* Alerta que se muestra cuando el usuario presiona 'Guardar' */}
-      <IonAlert
-        isOpen={showAlert}
-        onDidDismiss={() => setShowAlert(false)}
-        header={'¿Desea continuar?'}
-        message={'¿Quieres seguir editando o registrar la información?'}
-        buttons={[
-          {
-            text: 'Seguir editando',
-            handler: () => handleAlertResponse(true),
-          },
-          {
-            text: 'Registrar',
-            handler: () => handleAlertResponse(false),
-          },
-        ]}
-      />
-=======
           <IonButton onClick={handleGuardarClick}>Guardar</IonButton>
-          <IonButton color="danger" onClick={() => handleEditarComunidad(id)}>
+          <IonButton color="danger" onClick={() => { /* Lógica de cancelación */ }}>
             Cancelar
           </IonButton>
         </IonRow>
@@ -2751,8 +2497,7 @@ const handleAlertResponse = (continueEditing: boolean) => {
           buttons={["OK"]}
         />
       </>
->>>>>>> e9ad74ead1b2fe2b74bb4126daf33b216b4d1d9b
     </IonPage>
   );
 }
-export default AgregarComunidades;
+export default EditarComunidades;
