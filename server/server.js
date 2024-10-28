@@ -529,10 +529,6 @@ app.post('/comunidadr', async (req, res) => {
   }
 });
 
-
-
-
-
 // ------------------------------------------------------------------
 // Registrar un nuevo proyecto 
 app.get('/categorias', async (req, res) => {

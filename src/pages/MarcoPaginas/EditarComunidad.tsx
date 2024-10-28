@@ -1,11 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { IonPage, IonContent, IonTabs, IonTab, IonTabBar, IonTabButton, IonIcon, IonButton, IonRow, IonCheckbox,IonList,IonItem,IonSelect,IonSelectOption, IonInput,IonCol,IonGrid,IonAlert } from "@ionic/react";
 //import { earthOutline, cogOutline, bookOutline, waterOutline, fitnessOutline, peopleOutline, leafOutline } from 'ionicons/icons';
 import { add, bookOutline, cog, cogOutline, earthOutline, fitnessOutline, globeOutline, leafOutline, peopleOutline, waterOutline } from 'ionicons/icons';
 import { FaRecycle } from "react-icons/fa";
 import { PiCowFill, PiPlantFill} from "react-icons/pi";
+import { useParams } from 'react-router-dom';
 
-function AgregarComunidades() {
+interface RouteParams {
+  id: string;
+}
+function EditarComunidades() {
+  const { id } = useParams<RouteParams>();
   // estructura de formularios
   let [Comunidad, setComunidad] = useState('');
   let [Municipio, setMunicipio] = useState(''); // campo para guardar el municipio
@@ -865,10 +870,40 @@ const handleAlertResponse = (continueEditing: boolean) => {
   }
 };
 
+useEffect(() => {
+  fetchComunidad();
+}, [id]);
+
+/*Intento de leer datos de comunidades :(*/
+const fetchComunidad = async () => {
+  try {
+    const response = await fetch(`http://localhost:3000/getComunidad/${id}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+console.log("ID EditarComunidad:",id);
+    if (response.ok) {
+      const data = await response.json();
+      setComunidad(data);
+    } else {
+      console.error('Error al obtener los datos de la comunidad');
+    }
+  } catch (error) {
+    console.error('Error en la solicitud:', error);
+  }
+};
+
+
+/*Fin */
    
   return (
     <IonPage className="pg">
-      <h1 className='TituloPagina'>Crear comunidad</h1>
+      <IonRow>
+        <h1 className='TituloPagina'>Editar comunidad</h1>
+        <h2 className="TituloN2" >{Comunidad}</h2>
+      </IonRow>
       <IonContent>
         <IonTabs className="tabs">
           <IonTab tab="DatosGenerales">
@@ -2465,4 +2500,4 @@ const handleAlertResponse = (continueEditing: boolean) => {
     </IonPage>
   );
 }
-export default AgregarComunidades;
+export default EditarComunidades;
