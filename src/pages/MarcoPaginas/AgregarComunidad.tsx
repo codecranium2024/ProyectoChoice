@@ -4,11 +4,8 @@ import { IonPage, IonContent, IonTabs, IonTab, IonTabBar, IonTabButton, IonIcon,
 import { add, bookOutline, cog, cogOutline, earthOutline, fitnessOutline, globeOutline, leafOutline, peopleOutline, waterOutline } from 'ionicons/icons';
 import { FaRecycle } from "react-icons/fa";
 import { PiCowFill, PiPlantFill} from "react-icons/pi";
-function AgregarComunidades() {
 
-  const [showSuccessAlert, setShowSuccessAlert] = useState(false);
-  const [showValidationAlert, setShowValidationAlert] = useState(false);
-  const [seccionActual, setSeccionActual] = useState('DatosGenerales'); // Por defecto, empieza en DatosGenerales
+function AgregarComunidades() {
   // estructura de formularios
   let [Comunidad, setComunidad] = useState('');
   let [Municipio, setMunicipio] = useState(''); // campo para guardar el municipio
@@ -61,6 +58,7 @@ function AgregarComunidades() {
   const [senalTV, setSenalTV] = useState(false);                    // Checkbox
   const [cable, setCable] = useState(false);                        // Checkbox
   const [prestadorServicios, setPrestadorServicios] = useState(''); // Campo de texto
+  //seccion de educacion
   const [institucionesEducativas, setInstitucionesEducativas] = useState('');   // Campo de texto
   const [edificiosEducativos, setEdificiosEducativos] = useState('');           // Campo de texto
   const [constructorEdificios, setConstructorEdificios] = useState('');         // Campo de texto
@@ -76,6 +74,7 @@ function AgregarComunidades() {
   const [abandonoEstudios, setAbandonoEstudios] = useState(false);              // Checkbox
   const [carrerasNivelMedio, setCarrerasNivelMedio] = useState('');             // Campo de texto
   const [carrerasUniversidad, setCarrerasUniversidad] = useState('');           // Campo de texto
+  //agua y saneamiento
   const [aguaEntubada, setAguaEntubada] = useState(false);          // Checkbox
   const [pozo, setPozo] = useState(false);                          // Checkbox
   const [aguaLluvia, setAguaLluvia] = useState(false);              // Checkbox
@@ -99,10 +98,11 @@ function AgregarComunidades() {
   const [sueloCocina, setSueloCocina] = useState(false);             // Checkbox
   const [capacitacionesSaneamiento, setCapacitacionesSaneamiento] = useState(false); // Checkbox
   const [detalleCapacitaciones, setDetalleCapacitaciones] = useState('');  // Campo de texto
+  //seccion de salud y nutricion
   const [polloCongelado, setPolloCongelado] = useState(false);  // Checkbox
   const [polloCriollo, setPolloCriollo] = useState(false);      // Checkbox
   const [cerdo, setCerdo] = useState(false);                    // Checkbox
-  const [res, setRes] = useState(false);                        // Checkbox
+  const [ress, setRes] = useState(false);                        // Checkbox
   const [carneMonte, setCarneMonte] = useState(false);          // Checkbox
   const [pescado, setPescado] = useState(false);                // Checkbox
   const [maiz, setMaiz] = useState(false);                      // Checkbox
@@ -185,45 +185,36 @@ function AgregarComunidades() {
   };
 
   /* Tabla de pestaña agricultura*/
-  const [rows, setRows] = useState([{ cultivo: '', area: '', rendimientos: '', destino: '', precio: '', siembra: '', cosecha: '' }]);
+  // Define el tipo de una fila de la tabla agricultura
+interface AgriculturaRow {
+  cultivo: string;
+  area: string;
+  rendimientos: string;
+  destino: string;
+  precio: string;
+  siembra: string;
+  cosecha: string;
+}
 
-  // Función para agregar una nueva fila
-  const addRow = () => {
-    setRows([...rows, { cultivo: '', area: '', rendimientos: '', destino: '', precio: '', siembra: '', cosecha: '' }]);
-  };
-
-  // Función para manejar cambios en los campos de entrada
-  const handleInputChange = (index: number, field: string, value: string) => {
-    const newRows = [...rows];
-    newRows[index][field] = value;
-    setRows(newRows);
-  };
-  /*Fin tabla de agricultura*/ 
-
-
-  /*Actividades Pecuarias*/
-  const [rows2, setRows2] = useState([{ tipo: 'Aves', frecuencia: '', alimento: '', area: '', venta: '', precio: '', donde: '' },
-    { tipo: 'Cerdos', frecuencia: '', alimento: '', area: '', venta: '', precio: '', donde: '' },
-    { tipo: 'Vacas/toros', frecuencia: '', alimento: '', area: '', venta: '', precio: '', donde: '' }]);
+// Estado de `rows` con el tipo `AgriculturaRow[]`
+const [rows, setRows] = useState<AgriculturaRow[]>([
+  { cultivo: '', area: '', rendimientos: '', destino: '', precio: '', siembra: '', cosecha: '' }
+]);
 
 // Función para agregar una nueva fila
-const addRow2 = () => {
-setRows2([...rows2, { tipo: '', frecuencia: '', alimento: '', area: '', venta: '', precio: '', donde: '' }]);
+const addRow = () => {
+  setRows([...rows, { cultivo: '', area: '', rendimientos: '', destino: '', precio: '', siembra: '', cosecha: '' }]);
 };
 
 // Función para manejar cambios en los campos de entrada
-const handleInputChange2 = (index: number, field: string, value: string) => {
-const newRows = [...rows2];
-newRows[index][field] = value;
-setRows2(newRows);
+const handleInputChange = (index: number, field: keyof AgriculturaRow, value: string) => {
+  const newRows = [...rows];
+  newRows[index][field] = value; // No se afecta la lógica, solo el tipo del `field`
+  setRows(newRows);
 };
 
-const handleCheckboxChange2 = (index: number, field: string, value: boolean) => {
-const newRows2 = [...rows2];
-newRows2[index][field] = value;
-setRows2(newRows2);
-};
-  /*Fin Actividades Pecuarias*/
+  /*Fin tabla de agricultura*/ 
+
    const [comercializacionProductos, setComercializacionProductos] = useState(''); // Campo de texto
    const [terrenoPropio, setTerrenoPropio] = useState(false);  // Checkbox
    const [terrenoPrestado, setTerrenoPrestado] = useState(false);  // Checkbox
@@ -253,13 +244,37 @@ setRows2(newRows2);
    const [usoFertilizantes, setUsoFertilizantes] = useState(false);  // Campo de texto
    const [usoOtros, setUsoOtros] = useState('');  // Campo de texto
 
+
+   /*Actividades Pecuarias*/
+   const [rows2, setRows2] = useState([
+    { tipo: 'Aves', frecuencia: '', alimento: '', area: '', venta: '', precio: '', donde: '' },
+    { tipo: 'Cerdos', frecuencia: '', alimento: '', area: '', venta: '', precio: '', donde: '' },
+    { tipo: 'Vacas/toros', frecuencia: '', alimento: '', area: '', venta: '', precio: '', donde: '' }
+  ]);
+  
+  // Función para agregar una nueva fila
+  const addRow2 = () => {
+    setRows2(prevRows => [...prevRows, { tipo: '', frecuencia: '', alimento: '', area: '', venta: '', precio: '', donde: '' }]);
+  };
+  
+  // Función general para manejar cambios en los campos de entrada
+  const handleInputChange2 = (index: number, field: string, value: string | boolean) => {
+    setRows2(prevRows => 
+      prevRows.map((row, i) => 
+        i === index ? { ...row, [field]: value } : row
+      )
+    );
+  };
+  
+  
+  /*Fin Actividades Pecuarias*/
    const [alimentoAnimales, setAlimentoAnimales] = useState('');  // Campo de texto
    const [planesProfilacticos, setPlanesProfilacticos] = useState(false);  // Checkbox
    const [enfermedadesAnimales, setEnfermedadesAnimales] = useState('');  // Campo de texto
    const [mesesEnfermedad, setMesesEnfermedad] = useState('');  // Campo de texto
    const [capacitacionesAnimales, setCapacitacionesAnimales] = useState(false);  // Checkbox
    const [tipoCapacitacionAnimales, setTipoCapacitacionAnimales] = useState('');  // Campo de texto
-
+    //seccion de ecoligia
    const [bosqueComunitario, setBosqueComunitario] = useState(false);  // Checkbox
    const [dimensionesBosque, setDimensionesBosque] = useState('');  // Campo de texto
    const [especiesArboles, setEspeciesArboles] = useState('');  // Campo de texto
@@ -301,167 +316,556 @@ setRows2(newRows2);
    const [otrasInstituciones, setOtrasInstituciones] = useState('');  // Campo de texto
    const [amenazaDesastre, setAmenazaDesastre] = useState('');  // Campo de texto
 
-  // Función para enviar los datos al backend
-  const handleGuardarComunidad = async () => {
-    // Verificar la sección actual y validar los campos requeridos
-    if (seccionActual === 'DatosGenerales') {
-      // Validar campos obligatorios de Datos Generales
-      if (!Comunidad || !Municipio || !Aldea || !Ubicacion || !PresidenteCOCODE || !TelefonoContacto) {
-        setShowValidationAlert(true);
-        return;
+  // Estado para la alerta
+const [showAlert, setShowAlert] = useState(false);
+const [continueEditing, setContinueEditing] = useState(false);
+const [showSuccessAlert, setShowSuccessAlert] = useState(false);
+const [showErrorAlert, setShowErrorAlert] = useState(false);
+
+const resetForm = () => {
+  setComunidad('');
+  setMunicipio('');
+  setAldea('');
+  setUbicacion('');
+  setPresidenteCOCODE('');
+  setTelefonoContacto('');
+  setOtroLider('');
+  setTelefonoOtroLider('');
+  setTransporte('');
+  setNumeroFamilias('');
+  setNumeroViviendas('');
+  setNumeroPersonas('');
+  setCertezaJuridica('');
+  setConflictosTierra('');
+  setDimensionesLotes('');
+  setDimensionesTrabajaderos('');
+  setTierraComunitaria('');
+  setIdiomas('');
+  setFuentesEmpleo('');
+  setRecreacion('');
+  setPotencialTuristico('');
+  setEdificiosPublicos('');
+  setInseguridad(false);
+  setTipoInseguridad('');
+  setGruposDelincuenciales('');
+  setPersonasOtrosMunicipios('');
+  setTipoTrabajo('');
+  setPersonasEEUU(false);
+  setCantidadPersonasEEUU('');
+  setMenoresEEUU(false);
+  setEdadTrabajoHombres('');
+  setEdadTrabajoMujeres('');
+  setOcupaciones('');
+  setJubilados(false);
+  setCantidadJubilados('');
+  setInstitucionJubilados('');
+  setOcupacionesMujeres('');
+  setOcupacionesHombres('');
+  setEnergiaElectrica(false);
+  setTipoServicio('');
+  setCalidadServicio('');
+  setCostosServicio('');
+  setPrestadorServicio('');
+  setFamiliasConServicio('');
+  setSenalTelefono(false);
+  setSenalInternet(false);
+  setSenalTV(false);
+  setCable(false);
+  setPrestadorServicios('');
+  setInstitucionesEducativas('');
+  setEdificiosEducativos('');
+  setConstructorEdificios('');
+  setMaterialesConstruccion('');
+  setDuenoTerreno('');
+  setDeseoPreparacion(false);
+  setLimitantesEstudio('');
+  setPersonasCarreraMedioH('');
+  setPersonasCarreraMedioM('');
+  setPersonasConcluyeronMedio('');
+  setPersonasUniversidadH('');
+  setPersonasUniversidadM('');
+  setAbandonoEstudios(false);
+  setCarrerasNivelMedio('');
+  setCarrerasUniversidad('');
+  setAguaEntubada(false);
+  setPozo(false);
+  setAguaLluvia(false);
+  setRio(false);
+  setLaguna(false);
+  setEstanque(false);
+  setCompraAgua(false);
+  setInodoroLavable(false);
+  setLetrina(false);
+  setPozoVentilado(false);
+  setCampoExcretas(false);
+  setManejoBasura('');
+  setTipoBasura('');
+  setFuenteEnergiaLenia(false);
+  setFuenteEnergiaGas(false);
+  setFuenteEnergiaCarbon(false);
+  setFuenteEnergiaOtros('');
+  setEstufaAhorradora(false);
+  setEstufaGas(false);
+  setPolleton(false);
+  setSueloCocina(false);
+  setCapacitacionesSaneamiento(false);
+  setDetalleCapacitaciones('');
+  setPolloCongelado(false);
+  setPolloCriollo(false);
+  setCerdo(false);
+  setRes(false);
+  setCarneMonte(false);
+  setPescado(false);
+  setMaiz(false);
+  setFrijol(false);
+  setVerduras(false);
+  setLegumbres(false);
+  setPastas(false);
+  setSopas(false);
+  setArroz(false);
+  setPapa(false);
+  setMalanga(false);
+  setCamote(false);
+  setYuca(false);
+  setOtroTuberculo('');
+  setPuestoSalud(false);
+  setFrecuenciaDoctor('');
+  setHayEnfermero(false);
+  setCentroConvergencia(false);
+  setUsoCentroConvergencia('');
+  setEmergencia('');
+  setTiposEmergencias('');
+  setVacunasNinos(false);
+  setFrecuenciaVacunacion('');
+  setMayores60('');
+  setPersonasCapacidadesDiferentes('');
+  setPersonasAbandono('');
+  setNinos0a5('');
+  setNinos6a10('');
+  setNinos11a15('');
+  setNinos16a18('');
+  setRecienNacidos('');
+  setNinosMuertos(false);
+  setNinosDesnutridos(false);
+  setMujeresEmbarazadas('');
+  setEmbarazosAlAnio('');
+  setTipoEnfermedades('');
+  setNumComadronas('');
+  setNumPromotoresSalud('');
+  setNumCuranderos('');
+  setBotiquinComunitario(false);
+  setJardinesMedicinales(false);
+  setVentaMedicina(false);
+  setVentaBebidasAlcoholicas(false);
+  setNumPuntosVentaBebidas('');
+  setTiposBebidasAlcoholicas('');
+  setConsumoTabaco(false);
+  setOtrosConsumo('');
+  setMaga(false);
+  setFodes(false);
+  setMides(false);
+  setSesan(false);
+  setLlegaPolicia(false);
+  setComites(false);
+  setOngList([{ nombre: '', trabajo: '' }]);
+  setReligion('');
+  setActors([]);
+  setRows([{ cultivo: '', area: '', rendimientos: '', destino: '', precio: '', siembra: '', cosecha: '' }]);
+  setComercializacionProductos('');
+  setTerrenoPropio(false);
+  setTerrenoPrestado(false);
+  setTerrenoArrendado(false);
+  setCostoArrendamiento('');
+  setPeriodoArrendamiento('');
+  setMomentoSiembra('');
+  setPlagasEnfermedades('');
+  setMesesPlagas('');
+  setCultivosAnteriores('');
+  setRazonNoSiembra('');
+  setNuevosCultivos('');
+  setSistemasProductivos('');
+  setAccionesSequía('');
+  setAccionesLluvia('');
+  setPerdidaCosechas(false);
+  setAñoPerdidaCosechas('');
+  setCausaPerdidaCosechas('');
+  setCapacitacionesAgricultura(false);
+  setTipoCapacitacion('');
+  setOrganizacionCapacitacion('');
+  setActividadSinSiembra('');
+  setUsoPesticidas(false);
+  setUsoInsecticidas(false);
+  setUsoHerbicidas(false);
+  setUsoFungicidas(false);
+  setUsoFertilizantes(false);
+  setUsoOtros('');
+  setRows2([{ tipo: 'Aves', frecuencia: '', alimento: '', area: '', venta: '', precio: '', donde: '' }]);
+  setAlimentoAnimales('');
+  setPlanesProfilacticos(false);
+  setEnfermedadesAnimales('');
+  setMesesEnfermedad('');
+  setCapacitacionesAnimales(false);
+  setTipoCapacitacionAnimales('');
+  setBosqueComunitario(false);
+  setDimensionesBosque('');
+  setEspeciesArboles('');
+  setEspeciesPlantas('');
+  setIncentivosForestales(false);
+  setBosquesPotenciales('');
+  setViveros(false);
+  setReforestado(false);
+  setAreaReforestada('');
+  setImpulsorReforestacion('');
+  setDuenoTierraBosque('');
+  setDuenosMotosierras(false);
+  setTalaParaCultivar(false);
+  setRozasQuemas('');
+  setIncendiosForestales(false);
+  setRazonIncendios('');
+  setAreaIncendio('');
+  setFechaIncendio('');
+  setFuentesAgua(false);
+  setNumNacimientos('');
+  setDuenoTierraFuentes('');
+  setAccionesConservacionAgua('');
+  setNumPozos('');
+  setNumRios('');
+  setNumLagunas('');
+  setOtrasFuentesAgua('');
+  setProyectoMedioAmbiental(false);
+  setAccionesProyecto('');
+  setAccionesConservacionAmbiente('');
+  setAnimalesSilvestres('');
+  setAnimalesPorTemporada('');
+  setPlantasExtintas('');
+  setPlantasDificiles('');
+  setDesastreNatural(false);
+  setAnioDesastre('');
+  setTipoDesastre('');
+  setRespuestaDesastre('');
+  setColred(false);
+  setOtrasInstituciones('');
+  setAmenazaDesastre('');
+};
+
+// Llama a resetForm() donde necesites limpiar todos los campos.
+
+
+
+// Función para capturar la ubicación
+const capturarUbicacion = () => {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const lat = position.coords.latitude;
+        const lon = position.coords.longitude;
+        const ubicacionActual = `${lat}, ${lon}`;
+        setUbicacion(ubicacionActual);  // Actualiza el estado de ubicación
+      },
+      (error) => {
+        console.error("Error obteniendo la ubicación:", error);
       }
-      // Construir los datos específicos de Datos Generales
-      const data = {
-        nombre_comunidad: Comunidad,
-        nombre_municipio: Municipio,
-        nombre_aldea: Aldea,
-        ubicacion_real: Ubicacion,
-        presidente_cocode: PresidenteCOCODE,
-        telefono_contacto1: TelefonoContacto,
-        otro_lider: OtroLider,
-        telefono_contacto2: TelefonoOtroLider,
-        tipo_transporte: Transporte,
-        numero_familias: parseInt(NumeroFamilias, 10),
-        numero_viviendas: parseInt(NumeroViviendas, 10),
-        numero_personas: parseInt(NumeroPersonas, 10),
-        certeza_juridica_tierra: CertezaJuridica,
-        conflictos_tierra: ConflictosTierra,
-        dimension_lotes: DimensionesLotes,
-        dimension_trabajadores: DimensionesTrabajaderos,
-        tierra_comunitaria: TierraComunitaria,
-        idiomas_comunidad: Idiomas,
-        fuentes_empleo: FuentesEmpleo,
-        recreacion_comunidad: Recreacion,
-        potencial_turistico: PotencialTuristico,
-        tipo_edificios_publicos: EdificiosPublicos,
-        hay_inseguridad: Inseguridad ? 1 : 0,
-        tipo_inseguridad: Inseguridad ? TipoInseguridad : null,
-        grupos_delincuenciales: Inseguridad ? GruposDelincuenciales : null,
-        personas_otro_lugar: parseInt(PersonasOtrosMunicipios, 10),
-        ocupacion_otro_lugar: TipoTrabajo,
-        personas_en_eeuu: PersonasEEUU ? 1 : 0,
-        cantidad_personas_eeuu: PersonasEEUU ? parseInt(CantidadPersonasEEUU, 10) : null,
-        menores_en_eeuu: MenoresEEUU ? 1 : 0,
-        edad_empieza_trabajar_hombres: parseInt(EdadTrabajoHombres, 10),
-        edad_empieza_trabajar_mujeres: parseInt(EdadTrabajoMujeres, 10),
-        tipo_empleo: Ocupaciones,
-        existen_jubilados: Jubilados ? 1 : 0,
-        cantidad_jubilados: Jubilados ? parseInt(CantidadJubilados, 10) : null,
-        institucion_jubilados: Jubilados ? InstitucionJubilados : null,
-        ocupaciones_tradicionales_mujeres: OcupacionesMujeres,
-        ocupaciones_tradicionales_hombres: OcupacionesHombres
-      };
-  
-      // Guardar los datos
-      await guardarDatosEnBackend(data);
-      
-    } else if (seccionActual === 'Servicios') {
-      // Validar campos obligatorios de Servicios
-      if (!tipoServicio || !calidadServicio || !costosServicio || !prestadorServicio) {
-        setShowValidationAlert(true);
-        return;
-      }
-      // Construir los datos específicos de Servicios
-      const data = {
-        energia_electrica: energiaElectrica,
-        tipo_servicio: tipoServicio,
-        calidad_servicio: calidadServicio,
-        costos_servicio: costosServicio,
-        prestador_servicio: prestadorServicio,
-        familias_con_servicio: familiasConServicio,
-        senal_telefono: senalTelefono ? 1 : 0,
-        senal_internet: senalInternet ? 1 : 0,
-        senal_tv: senalTV ? 1 : 0,
-        cable: cable ? 1 : 0,
-        prestador_servicios: prestadorServicios
-      };
-  
-      // Guardar los datos
-      await guardarDatosEnBackend(data);
-    } else {
-      // Si la sección no es reconocida, mostrar alerta de validación
-      setShowValidationAlert(true);
-      return;
-    }
+    );
+  } else {
+    console.error("Geolocalización no es soportada en este navegador.");
+  }
+};
+
+// Función para guardar los datos en el localStorage
+const guardarEnLocalStorage = () => {
+  const data = {
+    nombre_comunidad: Comunidad,
+    nombre_municipio: Municipio,
+    nombre_aldea: Aldea,
+    ubicacion_real: Ubicacion,
+    presidente_cocode: PresidenteCOCODE,
+    telefono_contacto1: TelefonoContacto,
+    otro_lider: OtroLider,
+    telefono_contacto2: TelefonoOtroLider,
+    tipo_transporte: Transporte,
+    numero_familias: NumeroFamilias,
+    numero_viviendas: NumeroViviendas,
+    numero_personas: NumeroPersonas,
+    certeza_juridica_tierra: CertezaJuridica,
+    conflictos_tierra: ConflictosTierra,
+    dimension_lotes: DimensionesLotes,
+    dimension_trabajadores: DimensionesTrabajaderos,
+    tierra_comunitaria: TierraComunitaria,
+    idiomas_comunidad: Idiomas,
+    fuentes_empleo: FuentesEmpleo,
+    recreacion_comunidad: Recreacion,
+    potencial_turistico: PotencialTuristico,
+    tipo_edificios_publicos: EdificiosPublicos,
+    hay_inseguridad: Inseguridad,
+    tipo_inseguridad: TipoInseguridad,
+    grupos_delincuenciales: GruposDelincuenciales,
+    personas_otro_lugar: PersonasOtrosMunicipios,
+    ocupacion_otro_lugar: TipoTrabajo,  // Este estaba faltando
+    personas_en_eeuu: PersonasEEUU,
+    cantidad_personas_eeuu: CantidadPersonasEEUU,
+    menores_en_eeuu: MenoresEEUU,
+    edad_empieza_trabajar_hombres: EdadTrabajoHombres,
+    edad_empieza_trabajar_mujeres: EdadTrabajoMujeres,
+    tipo_empleo: TipoTrabajo,
+    existen_jubilados: Jubilados,
+    cantidad_jubilados: CantidadJubilados,
+    institucion_jubilados: InstitucionJubilados,
+    ocupaciones_tradicionales_mujeres: OcupacionesMujeres,
+    ocupaciones_tradicionales_hombres: OcupacionesHombres,
+    //seccion de energia electrica
+    energia_electrica: energiaElectrica,
+    tipo_servicio: tipoServicio,
+    calidad_servicio: calidadServicio,
+    costos_servicio: costosServicio,
+    prestador_servicio1: prestadorServicio,
+    familias_con_servicio: familiasConServicio,
+    senal_telefono: senalTelefono,
+    senal_internet: senalInternet,
+    senal_tv: senalTV,
+    cable: cable,
+    prestador_servicios: prestadorServicios,
+    //seccion de educacion
+    instituciones_educativas: institucionesEducativas,
+    edificios_educativos: edificiosEducativos,
+    constructor_edificios: constructorEdificios,
+    materiales_construccion: materialesConstruccion,
+    dueno_terreno: duenoTerreno,
+    deseo_preparacion: deseoPreparacion,
+    limitantes_estudio: limitantesEstudio,
+    personas_carrera_medio_hombres: personasCarreraMedioH,
+    personas_carrera_medio_mujeres: personasCarreraMedioM,
+    personas_concluyeron_medio: personasConcluyeronMedio,
+    personas_universidad_hombres: personasUniversidadH,
+    personas_universidad_mujeres: personasUniversidadM,
+    abandono_estudios: abandonoEstudios,
+    carreras_nivel_medio: carrerasNivelMedio,
+    carreras_universidad: carrerasUniversidad,
+    //seccion de agua y saneamiento
+    agua_entubada:aguaEntubada,
+    pozo:pozo,
+    agua_lluvia:aguaLluvia,
+    rio:rio,
+    laguna:laguna,
+    estanque:estanque,
+    compra_agua:compraAgua,
+    inodoro_lavable:inodoroLavable,
+    letrina:letrina,
+    pozo_ventilado:pozoVentilado,
+    campo_excretas:campoExcretas,
+    manejo_basura:manejoBasura,
+    tipo_basura:tipoBasura,
+    fuente_energia_lenia:fuenteEnergiaLenia,
+    fuente_energia_gas:fuenteEnergiaGas,
+    fuente_energia_carbon:fuenteEnergiaCarbon,
+    fuente_energia_otros:fuenteEnergiaOtros,
+    estufa_ahorradora:estufaAhorradora,
+    estufa_gas:estufaGas,
+    polleton:polleton,
+    suelo_cocina:sueloCocina,
+    capacitaciones_saneamiento:capacitacionesSaneamiento,
+    detalle_capacitaciones: detalleCapacitaciones,
+    //seccion de salud y nutricion
+    pollo_congelado: polloCongelado, 
+    pollo_criollo: polloCriollo,  
+    cerdo: cerdo  ,
+    ress: ress,  
+    carne_monte: carneMonte  ,
+    pescado: pescado  ,
+    maiz: maiz  ,
+    frijol: frijol  ,
+    verduras: verduras  ,
+    legumbres: legumbres  ,
+    pastas: pastas  ,
+    sopas: sopas  ,
+    arroz: arroz  ,
+    papa: papa  ,
+    malanga: malanga  ,
+    camote: camote  ,
+    yuca: yuca  ,
+    otro_tuberculo: otroTuberculo  ,
+    puesto_salud: puestoSalud  ,
+    frecuencia_doctor: frecuenciaDoctor  ,
+    hay_enfermero: hayEnfermero  ,
+    centro_convergencia: centroConvergencia  ,
+    uso_centro_convergencia: usoCentroConvergencia  ,
+    emergencia: Emergencia  ,
+    tipos_emergencias: tiposEmergencias  ,
+    vacunas_ninos: vacunasNinos  ,
+    frecuencia_vacunacion: frecuenciaVacunacion  ,
+    mayores_60: mayores60  ,
+    personas_capacidades_diferentes: personasCapacidadesDiferentes  ,
+    personas_abandono: personasAbandono  ,
+    ninos_0a5: ninos0a5  ,
+    ninos_6a10: ninos6a10  ,
+    ninos_11a15: ninos11a15  ,
+    ninos_16a18: ninos16a18  ,
+    recien_nacidos: recienNacidos  ,
+    ninos_muertos: ninosMuertos  ,
+    ninos_desnutridos: ninosDesnutridos  ,
+    mujeres_embarazadas: mujeresEmbarazadas  ,
+    embarazos_al_anio: embarazosAlAnio  ,
+    tipo_enfermedades: tipoEnfermedades  ,
+    num_comadronas: numComadronas  ,
+    num_promotores_salud: numPromotoresSalud  ,
+    num_curanderos: numCuranderos  ,
+    botiquin_comunitario: botiquinComunitario  ,
+    jardines_medicinales: jardinesMedicinales  ,
+    venta_medicina: ventaMedicina  ,
+    venta_bebidas_alcoholicas: ventaBebidasAlcoholicas  ,
+    num_puntos_venta_bebidas: numPuntosVentaBebidas  ,
+    tipos_bebidas_alcoholicas: tiposBebidasAlcoholicas  ,
+    consumo_tabaco: consumoTabaco  ,
+    otros_consumo: otrosConsumo,
+    // seccion de mapa de actores / organizaciones
+    maga: maga,
+    fodes: fodes,
+    mides: mides,
+    sesan: sesan,
+    llega_policia: llegaPolicia,
+    comites: comites,
+    ongList: ongList,
+    actors: actors,
+    // seccion de agricultura
+    agricultura: rows,
+    comercializacion_productos: comercializacionProductos,
+    terreno_propio: terrenoPropio,
+    terreno_prestado: terrenoPrestado, 
+    terreno_arrendado:terrenoArrendado, 
+    costo_arrendamiento:costoArrendamiento, 
+    periodo_arrendamiento:periodoArrendamiento, 
+    momento_siembra:momentoSiembra,
+    plagas_enfermedades:plagasEnfermedades, 
+    meses_plagas: mesesPlagas, 
+    cultivos_anteriores:cultivosAnteriores, 
+    razon_no_siembra:razonNoSiembra, 
+    nuevos_cultivos:nuevosCultivos, 
+    sistemas_productivos:sistemasProductivos, 
+    acciones_sequia: accionesSequía, 
+    acciones_lluvia: accionesLluvia,
+    perdida_cosechas: perdidaCosechas, 
+    ano_perdida_cosechas: añoPerdidaCosechas,
+    causa_perdida_cosechas: causaPerdidaCosechas,
+    capacitaciones_agricultura: capacitacionesAgricultura,
+    tipo_capacitacion: tipoCapacitacion, 
+    organizacion_capacitacion: organizacionCapacitacion, 
+    actividad_sin_siembra: actividadSinSiembra, 
+    uso_pesticidas: usoPesticidas,
+    uso_insecticidas: usoInsecticidas, 
+    uso_herbicidas: usoHerbicidas, 
+    uso_fungicidas: usoFungicidas,
+    uso_fertilizantes: usoFertilizantes,
+    uso_otros: usoOtros,
+    //seccion de actividades pecuarias
+    pecuarias:rows2,
+    alimento_animales:alimentoAnimales,
+    planes_profilacticos:planesProfilacticos, 
+    enfermedades_animales:enfermedadesAnimales, 
+    meses_enfermedad:mesesEnfermedad, 
+    capacitaciones_animales:capacitacionesAnimales, 
+    tipo_capacitacion_animales:tipoCapacitacionAnimales,
+    //seccion de ecologia
+    bosque_comunitario:bosqueComunitario,
+    dimensiones_bosque:dimensionesBosque, 
+    especies_arboles:especiesArboles, 
+    especies_plantas:especiesPlantas, 
+    incentivos_forestales:incentivosForestales, 
+    bosques_potenciales:bosquesPotenciales,
+    viveros :viveros, 
+    reforestado:reforestado, 
+    area_reforestada:areaReforestada, 
+    impulsor_reforestacion:impulsorReforestacion, 
+    dueno_tierra_bosque:duenoTierraBosque, 
+    duenos_motosierras:duenosMotosierras, 
+    tala_para_cultivar:talaParaCultivar,
+    rozas_quemas :rozasQuemas, 
+    incendios_forestales :incendiosForestales, 
+    razon_incendios:razonIncendios, 
+    area_incendio:areaIncendio, 
+    fecha_incendio:fechaIncendio,
+    fuentes_agua:fuentesAgua,
+    num_nacimientos:numNacimientos,
+    dueno_tierra_fuentes:duenoTierraFuentes,
+    acciones_conservacion_agua:accionesConservacionAgua, 
+    num_pozos:numPozos, 
+    num_rios:numRios, 
+    num_lagunas:numLagunas, 
+    otras_fuentes_agua:otrasFuentesAgua, 
+    proyecto_medio_ambiental:proyectoMedioAmbiental, 
+    acciones_proyecto:accionesProyecto, 
+    acciones_conservacion_ambiente:accionesConservacionAmbiente, 
+    animales_silvestres:animalesSilvestres, 
+    animales_por_temporada:animalesPorTemporada,
+    plantas_extintas:plantasExtintas, 
+    plantas_dificiles:plantasDificiles, 
+    desastre_natural:desastreNatural, 
+    ano_desastre:anioDesastre,
+    tipo_desastre :tipoDesastre, 
+    respuesta_desastre :respuestaDesastre, 
+    colred :colred, 
+    otras_instituciones:otrasInstituciones,
+    amenaza_desastre:amenazaDesastre,
   };
   
-  // Función para enviar los datos al backend
-  const guardarDatosEnBackend = async (data: any) => {
+  // Guardar los datos en el localStorage
+  localStorage.setItem('formData', JSON.stringify(data));
+  console.log("Datos guardados en localStorage:", data);
+};
+
+// Función para enviar los datos a la base de datos
+const enviarABaseDeDatos = async () => {
+  const datosGuardados = localStorage.getItem('formData');
+
+  if (datosGuardados) {
+    const data = JSON.parse(datosGuardados);
+    console.log("Datos que se enviarán:", data);
+
     try {
-      const response = await fetch('http://localhost:3000/comunidad', {
+      const response = await fetch('http://localhost:3000/comunidadr', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
       });
-  
+
       if (response.ok) {
-        setShowSuccessAlert(true);
-        // Limpieza de los campos después de guardar
-        limpiarCampos();
+        setShowSuccessAlert(true); // Mostrar alerta de éxito
+          // Limpiar el formulario
+        localStorage.removeItem('formData');
+        console.log("Datos borrados de localStorage.");
+        resetForm();
       } else {
-        alert('Error al registrar los datos');
+        const errorMsg = await response.text();
+        console.error("Error al enviar los datos a la base de datos:", errorMsg);
+        setShowErrorAlert(true); // Mostrar alerta de error
       }
     } catch (error) {
-      console.error('Error:', error);
-      alert('Error al registrar los datos');
+      setShowErrorAlert(true); // Mostrar alerta de error en caso de excepción
+      console.error("Error en la solicitud:", error);
     }
-  };
-  
-  // Función para limpiar los campos
-  const limpiarCampos = () => {
-    setComunidad('');
-    setMunicipio('');
-    setAldea('');
-    setUbicacion('');
-    setPresidenteCOCODE('');
-    setTelefonoContacto('');
-    setOtroLider('');
-    setTelefonoOtroLider('');
-    setTransporte('');
-    setNumeroFamilias('');
-    setNumeroViviendas('');
-    setNumeroPersonas('');
-    setCertezaJuridica('');
-    setConflictosTierra('');
-    setDimensionesLotes('');
-    setDimensionesTrabajaderos('');
-    setTierraComunitaria('');
-    setIdiomas('');
-    setFuentesEmpleo('');
-    setRecreacion('');
-    setPotencialTuristico('');
-    setEdificiosPublicos('');
-    setInseguridad(false);
-    setTipoInseguridad('');
-    setGruposDelincuenciales('');
-    setPersonasOtrosMunicipios('');
-    setTipoTrabajo('');
-    setPersonasEEUU(false);
-    setCantidadPersonasEEUU('');
-    setMenoresEEUU(false);
-    setEdadTrabajoHombres('');
-    setEdadTrabajoMujeres('');
-    setOcupaciones('');
-    setJubilados(false);
-    setCantidadJubilados('');
-    setInstitucionJubilados('');
-    setOcupacionesMujeres('');
-    setOcupacionesHombres('');
-    setEnergiaElectrica(false);
-    setTipoServicio('');
-    setCalidadServicio('');
-    setCostosServicio('');
-    setPrestadorServicio('');
-    setFamiliasConServicio('');
-    setSenalTelefono(false);
-    setSenalInternet(false);
-    setSenalTV(false);
-    setCable(false);
-    setPrestadorServicios('');
-  };
-  
+  } else {
+    console.log("No hay datos en localStorage para enviar.");
+  }
+};
 
 
+// Manejar el clic en el botón 'Guardar'
+const handleGuardarClick = () => {
+  guardarEnLocalStorage();
+  setShowAlert(true);  // Mostrar la alerta para preguntar si quiere continuar
+};
+
+// Manejar la respuesta de la alerta
+const handleAlertResponse = (continueEditing: boolean) => {
+  setContinueEditing(continueEditing);
+  setShowAlert(false);
+
+  if (!continueEditing) {
+    enviarABaseDeDatos(); // Si el usuario elige no continuar editando, enviar datos a la base de datos
+  }
+};
+
+   
   return (
     <IonPage className="pg">
       <h1 className='TituloPagina'>Crear comunidad</h1>
@@ -471,7 +875,7 @@ setRows2(newRows2);
             <div className="PanelSecundario">
               <IonRow className="FilaTextBox">
                 <h2 className="TituloN2">Información General</h2>
-              </IonRow>  1
+              </IonRow>
               {/* Preguntas independientes */}
               <IonRow className="FilaTextBox">
                 <h3 className="labelForm">1. Nombre de la comunidad:</h3>
@@ -502,9 +906,16 @@ setRows2(newRows2);
               </IonRow>
 
               <IonRow className="FilaTextBox">
-                <h3 className="labelForm">4. Ubicación:</h3>
-                <input onChange={e => setUbicacion(e.target.value || '')} type="text" className='TextBox' />
-              </IonRow>
+  <h3 className="labelForm">4. Ubicación:</h3>
+  <input 
+    value={Ubicacion}  // Asigna el estado Ubicacion al valor del input
+    onChange={e => setUbicacion(e.target.value || '')} 
+    type="text" 
+    className='TextBox' 
+  />
+  {/* Botón para capturar ubicación */}
+  <IonButton onClick={capturarUbicacion} className="botonUbicacion">Capturar Ubicación</IonButton>
+</IonRow>
 
 
               <IonRow className="FilaTextBox">
@@ -1114,7 +1525,7 @@ setRows2(newRows2);
                 <h3 className="labelForm">Cerdo</h3>
                 <IonCheckbox checked={cerdo} onIonChange={e => setCerdo(e.target.checked)} />
                 <h3 className="labelForm">Res</h3>
-                <IonCheckbox checked={res} onIonChange={e => setRes(e.target.checked)} />
+                <IonCheckbox checked={ress} onIonChange={e => setRes(e.target.checked)} />
                 <h3 className="labelForm">Carne de monte</h3>
                 <IonCheckbox checked={carneMonte} onIonChange={e => setCarneMonte(e.target.checked)} />
                 <h3 className="labelForm">Pescado</h3>
@@ -1706,49 +2117,49 @@ setRows2(newRows2);
             <IonInput
               value={row.tipo}
               placeholder="Tipo de Producción"
-              onIonChange={(e) => handleInputChange(index, 'tipo', e.detail.value!)}
+              onIonChange={(e) => handleInputChange2(index, 'tipo', e.detail.value!)}
             />
           </IonCol>
                       <IonCol>
                         <IonInput
                           value={row.frecuencia}
                           placeholder="Frecuencia"
-                          onIonChange={(e) => handleInputChange(index, 'frecuencia', e.detail.value!)}
+                          onIonChange={(e) => handleInputChange2(index, 'frecuencia', e.detail.value!)}
                         />
                       </IonCol>
                       <IonCol>
                         <IonInput
                           value={row.alimento}
                           placeholder="Alimento"
-                          onIonChange={(e) => handleInputChange(index, 'alimento', e.detail.value!)}
+                          onIonChange={(e) => handleInputChange2(index, 'alimento', e.detail.value!)}
                         />
                       </IonCol>
                       <IonCol>
                         <IonInput
                           value={row.area}
                           placeholder="Área"
-                          onIonChange={(e) => handleInputChange(index, 'area', e.detail.value!)}
+                          onIonChange={(e) => handleInputChange2(index, 'area', e.detail.value!)}
                         />
                       </IonCol>
                       <IonCol>
                         <IonInput
                           value={row.venta}
                           placeholder="Venta"
-                          onIonChange={(e) => handleInputChange(index, 'venta', e.detail.value!)}
+                          onIonChange={(e) => handleInputChange2(index, 'venta', e.detail.value!)}
                         />
                       </IonCol>
                       <IonCol>
                         <IonInput
                           value={row.precio}
                           placeholder="Precio"
-                          onIonChange={(e) => handleInputChange(index, 'precio', e.detail.value!)}
+                          onIonChange={(e) => handleInputChange2(index, 'precio', e.detail.value!)}
                         />
                       </IonCol>
                       <IonCol>
                         <IonInput
                           value={row.donde}
                           placeholder="Donde se Venden"
-                          onIonChange={(e) => handleInputChange(index, 'donde', e.detail.value!)}
+                          onIonChange={(e) => handleInputChange2(index, 'donde', e.detail.value!)}
                         />
                       </IonCol>
                     </IonRow>
@@ -1977,47 +2388,81 @@ setRows2(newRows2);
               
               </div>
             </IonTab>      
-                        {/* Hasta aca ---------------------------------*/}
-              
-                        <IonTabBar className="TabBarConf" slot="top">
-                          <IonTabButton tab="DatosGenerales" onClick={() => setSeccionActual('DatosGenerales')}> <IonIcon size="large" icon={earthOutline} /> </IonTabButton>
-                          <IonTabButton tab="Servicios" onClick={() => setSeccionActual('Servicios')}> <IonIcon size="large" icon={cogOutline} /> </IonTabButton>
-                          <IonTabButton tab="Educacion"> <IonIcon size="large" icon={bookOutline} /> </IonTabButton>
-                          <IonTabButton tab="Agua&Sane"> <IonIcon size="large" icon={waterOutline} /> </IonTabButton>
-                          <IonTabButton tab="Salud&Nut"> <IonIcon size="large" icon={fitnessOutline} /> </IonTabButton>
-                          <IonTabButton tab="MapadeActores"> <IonIcon size="large" icon={peopleOutline} /> </IonTabButton>
-                          <IonTabButton tab="Agricultura"> <PiPlantFill size={28}   /> </IonTabButton>
-                          <IonTabButton tab="ActividadesPec"><PiCowFill size={28} /></IonTabButton>
-                          <IonTabButton tab="Ecologia"><FaRecycle size={25} /></IonTabButton>
+            {/* Hasta aca ---------------------------------*/}
+            <IonTabBar className="TabBarConf" slot="top">
+            <IonTabButton tab="DatosGenerales">
+              <IonIcon size="large" icon={earthOutline} />
+            </IonTabButton>
+            <IonTabButton tab="Servicios">
+              <IonIcon size="large" icon={cogOutline} />
+            </IonTabButton>
+            <IonTabButton tab="Educacion">
+              <IonIcon size="large" icon={bookOutline} />
+            </IonTabButton>
+            <IonTabButton tab="Agua&Sane">
+              <IonIcon size="large" icon={waterOutline} />
+            </IonTabButton>
+            <IonTabButton tab="Salud&Nut">
+              <IonIcon size="large" icon={fitnessOutline} />
+            </IonTabButton>
+            <IonTabButton tab="MapadeActores">
+              <IonIcon size="large" icon={peopleOutline} />
+            </IonTabButton>
+            <IonTabButton tab="Agricultura">
+              <PiPlantFill size={28} />
+            </IonTabButton>
+            <IonTabButton tab="ActividadesPec">
+              <PiCowFill size={28} />
+            </IonTabButton>
+            <IonTabButton tab="Ecologia">
+              <FaRecycle size={25} />
+            </IonTabButton>
           </IonTabBar>
-
         </IonTabs>
       </IonContent>
 
       <IonRow>
-        <IonButton className="Boton" color="success" onClick={handleGuardarComunidad}>Guardar</IonButton>
-        <IonButton className="Boton" color="danger">Cancelar</IonButton>
-      </IonRow>
-      
-      {/* Alerta de validación */}
-      <IonAlert
-        isOpen={showValidationAlert}
-        onDidDismiss={() => setShowValidationAlert(false)}
-        header={'Campos incompletos'}
-        message={'Por favor, completa todos los campos obligatorios'}
-        buttons={['Aceptar']}
-      />
+          <IonButton onClick={handleGuardarClick}>Guardar</IonButton>
+          <IonButton color="danger" onClick={() => { /* Lógica de cancelación */ }}>
+            Cancelar
+          </IonButton>
+        </IonRow>
 
-      <IonAlert
-        isOpen={showSuccessAlert}
-        onDidDismiss={() => setShowSuccessAlert(false)}
-        header={'Registro Exitoso'}
-        message={'La comunidad ha sido registrada correctamente.'}
-        buttons={['Aceptar']}
-      />
+        {/* Alerta que se muestra cuando el usuario presiona 'Guardar' */}
+        <IonAlert
+          isOpen={showAlert}
+          onDidDismiss={() => setShowAlert(false)}
+          header={'¿Desea continuar?'}
+          message={'¿Quieres seguir editando o registrar la información?'}
+          buttons={[
+            {
+              text: 'Seguir editando',
+              handler: () => handleAlertResponse(true),
+            },
+            {
+              text: 'Registrar',
+              handler: () => handleAlertResponse(false),
+            },
+          ]}
+        />
+        <>
+        <IonAlert
+          isOpen={showSuccessAlert}
+          onDidDismiss={() => setShowSuccessAlert(false)}
+          header={"Éxito"}
+          message={"Datos registrados exitosamente"}
+          buttons={["OK"]}
+        />
+
+        <IonAlert
+          isOpen={showErrorAlert}
+          onDidDismiss={() => setShowErrorAlert(false)}
+          header={"Error"}
+          message={"Error al registrar los datos, Por favor verifique si ingreso todos los campos obligatorios"}
+          buttons={["OK"]}
+        />
+      </>
     </IonPage>
-
   );
 }
-
 export default AgregarComunidades;
