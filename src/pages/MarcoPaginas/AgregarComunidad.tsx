@@ -185,19 +185,34 @@ function AgregarComunidades() {
   };
 
   /* Tabla de pestaña agricultura*/
-  const [rows, setRows] = useState([{ cultivo: '', area: '', rendimientos: '', destino: '', precio: '', siembra: '', cosecha: '' }]);
+  // Define el tipo de una fila de la tabla agricultura
+interface AgriculturaRow {
+  cultivo: string;
+  area: string;
+  rendimientos: string;
+  destino: string;
+  precio: string;
+  siembra: string;
+  cosecha: string;
+}
 
-  // Función para agregar una nueva fila
-  const addRow = () => {
-    setRows([...rows, { cultivo: '', area: '', rendimientos: '', destino: '', precio: '', siembra: '', cosecha: '' }]);
-  };
+// Estado de `rows` con el tipo `AgriculturaRow[]`
+const [rows, setRows] = useState<AgriculturaRow[]>([
+  { cultivo: '', area: '', rendimientos: '', destino: '', precio: '', siembra: '', cosecha: '' }
+]);
 
-  // Función para manejar cambios en los campos de entrada
-  const handleInputChange = (index: number, field: string, value: string) => {
-    const newRows = [...rows];
-    newRows[index][field] = value;
-    setRows(newRows);
-  };
+// Función para agregar una nueva fila
+const addRow = () => {
+  setRows([...rows, { cultivo: '', area: '', rendimientos: '', destino: '', precio: '', siembra: '', cosecha: '' }]);
+};
+
+// Función para manejar cambios en los campos de entrada
+const handleInputChange = (index: number, field: keyof AgriculturaRow, value: string) => {
+  const newRows = [...rows];
+  newRows[index][field] = value; // No se afecta la lógica, solo el tipo del `field`
+  setRows(newRows);
+};
+
   /*Fin tabla de agricultura*/ 
 
    const [comercializacionProductos, setComercializacionProductos] = useState(''); // Campo de texto
@@ -231,27 +246,27 @@ function AgregarComunidades() {
 
 
    /*Actividades Pecuarias*/
-  const [rows2, setRows2] = useState([{ tipo: 'Aves', frecuencia: '', alimento: '', area: '', venta: '', precio: '', donde: '' },
+   const [rows2, setRows2] = useState([
+    { tipo: 'Aves', frecuencia: '', alimento: '', area: '', venta: '', precio: '', donde: '' },
     { tipo: 'Cerdos', frecuencia: '', alimento: '', area: '', venta: '', precio: '', donde: '' },
-    { tipo: 'Vacas/toros', frecuencia: '', alimento: '', area: '', venta: '', precio: '', donde: '' }]);
-
+    { tipo: 'Vacas/toros', frecuencia: '', alimento: '', area: '', venta: '', precio: '', donde: '' }
+  ]);
+  
   // Función para agregar una nueva fila
   const addRow2 = () => {
-  setRows2([...rows2, { tipo: '', frecuencia: '', alimento: '', area: '', venta: '', precio: '', donde: '' }]);
+    setRows2(prevRows => [...prevRows, { tipo: '', frecuencia: '', alimento: '', area: '', venta: '', precio: '', donde: '' }]);
   };
-
-  // Función para manejar cambios en los campos de entrada
-  const handleInputChange2 = (index: number, field: string, value: string) => {
-  const newRows = [...rows2];
-  newRows[index][field] = value;
-  setRows2(newRows);
+  
+  // Función general para manejar cambios en los campos de entrada
+  const handleInputChange2 = (index: number, field: string, value: string | boolean) => {
+    setRows2(prevRows => 
+      prevRows.map((row, i) => 
+        i === index ? { ...row, [field]: value } : row
+      )
+    );
   };
-
-  const handleCheckboxChange2 = (index: number, field: string, value: boolean) => {
-  const newRows2 = [...rows2];
-  newRows2[index][field] = value;
-  setRows2(newRows2);
-  };
+  
+  
   /*Fin Actividades Pecuarias*/
    const [alimentoAnimales, setAlimentoAnimales] = useState('');  // Campo de texto
    const [planesProfilacticos, setPlanesProfilacticos] = useState(false);  // Checkbox
@@ -841,12 +856,12 @@ const handleGuardarClick = () => {
 };
 
 // Manejar la respuesta de la alerta
-const handleAlertResponse = (continueEditing) => {
+const handleAlertResponse = (continueEditing: boolean) => {
   setContinueEditing(continueEditing);
   setShowAlert(false);
 
   if (!continueEditing) {
-    enviarABaseDeDatos();  // Si el usuario elige no continuar editando, enviar datos a la base de datos
+    enviarABaseDeDatos(); // Si el usuario elige no continuar editando, enviar datos a la base de datos
   }
 };
 
@@ -2102,49 +2117,49 @@ const handleAlertResponse = (continueEditing) => {
             <IonInput
               value={row.tipo}
               placeholder="Tipo de Producción"
-              onIonChange={(e) => handleInputChange(index, 'tipo', e.detail.value!)}
+              onIonChange={(e) => handleInputChange2(index, 'tipo', e.detail.value!)}
             />
           </IonCol>
                       <IonCol>
                         <IonInput
                           value={row.frecuencia}
                           placeholder="Frecuencia"
-                          onIonChange={(e) => handleInputChange(index, 'frecuencia', e.detail.value!)}
+                          onIonChange={(e) => handleInputChange2(index, 'frecuencia', e.detail.value!)}
                         />
                       </IonCol>
                       <IonCol>
                         <IonInput
                           value={row.alimento}
                           placeholder="Alimento"
-                          onIonChange={(e) => handleInputChange(index, 'alimento', e.detail.value!)}
+                          onIonChange={(e) => handleInputChange2(index, 'alimento', e.detail.value!)}
                         />
                       </IonCol>
                       <IonCol>
                         <IonInput
                           value={row.area}
                           placeholder="Área"
-                          onIonChange={(e) => handleInputChange(index, 'area', e.detail.value!)}
+                          onIonChange={(e) => handleInputChange2(index, 'area', e.detail.value!)}
                         />
                       </IonCol>
                       <IonCol>
                         <IonInput
                           value={row.venta}
                           placeholder="Venta"
-                          onIonChange={(e) => handleInputChange(index, 'venta', e.detail.value!)}
+                          onIonChange={(e) => handleInputChange2(index, 'venta', e.detail.value!)}
                         />
                       </IonCol>
                       <IonCol>
                         <IonInput
                           value={row.precio}
                           placeholder="Precio"
-                          onIonChange={(e) => handleInputChange(index, 'precio', e.detail.value!)}
+                          onIonChange={(e) => handleInputChange2(index, 'precio', e.detail.value!)}
                         />
                       </IonCol>
                       <IonCol>
                         <IonInput
                           value={row.donde}
                           placeholder="Donde se Venden"
-                          onIonChange={(e) => handleInputChange(index, 'donde', e.detail.value!)}
+                          onIonChange={(e) => handleInputChange2(index, 'donde', e.detail.value!)}
                         />
                       </IonCol>
                     </IonRow>
