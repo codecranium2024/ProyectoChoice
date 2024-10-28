@@ -458,10 +458,6 @@ app.post('/comunidadr', async (req, res) => {
   }
 });
 
-
-
-
-
 // ------------------------------------------------------------------
 // Registrar un nuevo proyecto 
 app.get('/categorias', async (req, res) => {
@@ -726,8 +722,6 @@ app.get('/historial', async (req, res) => {
     res.status(500).send('Error al obtener historial de proyectos');
   }
 });
-
-
 
 //Departamentos y municipios
 app.post('/departamentos', async (req, res) => {
@@ -1085,6 +1079,110 @@ app.get('/informacioncomunidades', async (req, res) => {
     }
   }
 });
+
+//mapa registrar comunidad, localizacion
+app.post('/mapacomunidad', async (req, res) => {
+  const { comunidad_id, latitud, longitud } = req.body; // Eliminamos municipio_id
+
+  // Validación de los datos de entrada
+  if (!comunidad_id || !latitud || !longitud) {
+    return res.status(400).json({ error: 'Todos los campos (comunidad_id, latitud, longitud) son requeridos' });
+  }
+
+  const sql = 'INSERT INTO tb_mapacomunidad (comunidad_id, latitud, longitud) VALUES (?, ?, ?)';
+  let connection;
+
+  try {
+    // Crear una conexión única
+    connection = await mysql.createConnection(dbConfig);
+
+    // Ejecutar la consulta
+    const [result] = await connection.execute(sql, [comunidad_id, latitud, longitud]);
+
+    res.status(201).json({ message: 'Datos de comunidad registrados con éxito', id: result.insertId });
+  } catch (err) {
+    console.error('Error al registrar los datos de comunidad:', err.message);
+    res.status(500).json({ error: 'Error al registrar los datos de comunidad', details: err.message });
+  } finally {
+    // Cerrar la conexión si existe
+    if (connection) {
+      await connection.end();
+    }
+  }
+});
+
+app.get('/mapacomunidad', async (req, res) => {
+  const sql = `
+    SELECT 
+      tb_mapacomunidad.latitud AS lat,
+      tb_mapacomunidad.longitud AS lng,
+      tb_comunidad.nombre_comunidad,
+      tb_comunidad.idComunidad AS id
+    FROM 
+      tb_mapacomunidad
+    INNER JOIN 
+      tb_comunidad ON tb_mapacomunidad.comunidad_id = tb_comunidad.idComunidad
+  `;
+  
+  let connection;
+
+  try {
+    connection = await mysql.createConnection(dbConfig);
+    const [rows] = await connection.execute(sql);
+    res.status(200).json(rows);
+  } catch (err) {
+    console.error('Error al obtener los datos de comunidad:', err.message);
+    res.status(500).json({ error: 'Error al obtener los datos de comunidad', details: err.message });
+  } finally {
+    if (connection) {
+      await connection.end();
+    }
+  }
+});
+
+app.put('/mapacomunidad/:id', async (req, res) => {
+  const { id } = req.params; // Obtener el ID del parámetro de la URL
+  const { comunidad_id, latitud, longitud } = req.body; // Obtener datos del cuerpo de la solicitud
+
+  // Validación de los datos de entrada
+  if (!comunidad_id || !latitud || !longitud) {
+    return res.status(400).json({ error: 'Todos los campos (comunidad_id, latitud, longitud) son requeridos' });
+  }
+
+  const sql = `
+    UPDATE tb_mapacomunidad 
+    SET comunidad_id = ?, latitud = ?, longitud = ?
+    WHERE idmapa = ?  -- Asegúrate de que este nombre sea correcto
+  `;
+
+  let connection;
+
+  try {
+    // Crear una conexión única
+    connection = await mysql.createConnection(dbConfig);
+
+    // Ejecutar la consulta
+    const [result] = await connection.execute(sql, [comunidad_id, latitud, longitud, id]); // Usamos 'id' que corresponde a 'idmapa'
+
+    // Verificar si se actualizó alguna fila
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ error: 'No se encontró la comunidad para actualizar' });
+    }
+
+    res.status(200).json({ message: 'Datos de comunidad actualizados con éxito' });
+  } catch (err) {
+    console.error('Error al actualizar los datos de comunidad:', err.message);
+    res.status(500).json({ error: 'Error al actualizar los datos de comunidad', details: err.message });
+  } finally {
+    // Cerrar la conexión si existe
+    if (connection) {
+      await connection.end();
+    }
+  }
+});
+
+
+
 
 
 

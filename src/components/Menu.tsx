@@ -42,9 +42,9 @@ const appPages: AppPage[] = [
     url: '/Panel',
     iosIcon: appsOutline,
     mdIcon: appsSharp,
-    subPages: [
-      { title: 'Panel', url: 'Panel' },
-    ]
+    // subPages: [
+    //   { title: 'Panel', url: 'Panel' },
+    // ]
   },
   {
     title: 'Proyectos',
@@ -55,7 +55,7 @@ const appPages: AppPage[] = [
       { title: 'Registrar Proyecto', url: '/RegistrarProyecto' },
       // { title: 'Informacion Comunitaria', url: '/InformacionComunitaria' },
       { title: 'Historial Proyectos', url: '/Historial' },
-      { title: 'Mapa', url: '/Mapa' },
+      
     ]
   },
   {
@@ -67,6 +67,7 @@ const appPages: AppPage[] = [
       { title: 'Comunidades', url: '/Comunidad' },
       // { title: 'Listado General', url: '/ListadoGeneral' },
       { title: 'Agregar', url: '/AgregarComunidades' },
+      { title: 'Mapa', url: '/Mapa' },
     ]
   },
   {
