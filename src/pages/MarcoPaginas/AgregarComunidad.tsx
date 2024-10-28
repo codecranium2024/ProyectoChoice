@@ -304,6 +304,257 @@ function AgregarComunidades() {
   // Estado para la alerta
 const [showAlert, setShowAlert] = useState(false);
 const [continueEditing, setContinueEditing] = useState(false);
+const [showSuccessAlert, setShowSuccessAlert] = useState(false);
+const [showErrorAlert, setShowErrorAlert] = useState(false);
+
+const resetForm = () => {
+  setComunidad('');
+  setMunicipio('');
+  setAldea('');
+  setUbicacion('');
+  setPresidenteCOCODE('');
+  setTelefonoContacto('');
+  setOtroLider('');
+  setTelefonoOtroLider('');
+  setTransporte('');
+  setNumeroFamilias('');
+  setNumeroViviendas('');
+  setNumeroPersonas('');
+  setCertezaJuridica('');
+  setConflictosTierra('');
+  setDimensionesLotes('');
+  setDimensionesTrabajaderos('');
+  setTierraComunitaria('');
+  setIdiomas('');
+  setFuentesEmpleo('');
+  setRecreacion('');
+  setPotencialTuristico('');
+  setEdificiosPublicos('');
+  setInseguridad(false);
+  setTipoInseguridad('');
+  setGruposDelincuenciales('');
+  setPersonasOtrosMunicipios('');
+  setTipoTrabajo('');
+  setPersonasEEUU(false);
+  setCantidadPersonasEEUU('');
+  setMenoresEEUU(false);
+  setEdadTrabajoHombres('');
+  setEdadTrabajoMujeres('');
+  setOcupaciones('');
+  setJubilados(false);
+  setCantidadJubilados('');
+  setInstitucionJubilados('');
+  setOcupacionesMujeres('');
+  setOcupacionesHombres('');
+  setEnergiaElectrica(false);
+  setTipoServicio('');
+  setCalidadServicio('');
+  setCostosServicio('');
+  setPrestadorServicio('');
+  setFamiliasConServicio('');
+  setSenalTelefono(false);
+  setSenalInternet(false);
+  setSenalTV(false);
+  setCable(false);
+  setPrestadorServicios('');
+  setInstitucionesEducativas('');
+  setEdificiosEducativos('');
+  setConstructorEdificios('');
+  setMaterialesConstruccion('');
+  setDuenoTerreno('');
+  setDeseoPreparacion(false);
+  setLimitantesEstudio('');
+  setPersonasCarreraMedioH('');
+  setPersonasCarreraMedioM('');
+  setPersonasConcluyeronMedio('');
+  setPersonasUniversidadH('');
+  setPersonasUniversidadM('');
+  setAbandonoEstudios(false);
+  setCarrerasNivelMedio('');
+  setCarrerasUniversidad('');
+  setAguaEntubada(false);
+  setPozo(false);
+  setAguaLluvia(false);
+  setRio(false);
+  setLaguna(false);
+  setEstanque(false);
+  setCompraAgua(false);
+  setInodoroLavable(false);
+  setLetrina(false);
+  setPozoVentilado(false);
+  setCampoExcretas(false);
+  setManejoBasura('');
+  setTipoBasura('');
+  setFuenteEnergiaLenia(false);
+  setFuenteEnergiaGas(false);
+  setFuenteEnergiaCarbon(false);
+  setFuenteEnergiaOtros('');
+  setEstufaAhorradora(false);
+  setEstufaGas(false);
+  setPolleton(false);
+  setSueloCocina(false);
+  setCapacitacionesSaneamiento(false);
+  setDetalleCapacitaciones('');
+  setPolloCongelado(false);
+  setPolloCriollo(false);
+  setCerdo(false);
+  setRes(false);
+  setCarneMonte(false);
+  setPescado(false);
+  setMaiz(false);
+  setFrijol(false);
+  setVerduras(false);
+  setLegumbres(false);
+  setPastas(false);
+  setSopas(false);
+  setArroz(false);
+  setPapa(false);
+  setMalanga(false);
+  setCamote(false);
+  setYuca(false);
+  setOtroTuberculo('');
+  setPuestoSalud(false);
+  setFrecuenciaDoctor('');
+  setHayEnfermero(false);
+  setCentroConvergencia(false);
+  setUsoCentroConvergencia('');
+  setEmergencia('');
+  setTiposEmergencias('');
+  setVacunasNinos(false);
+  setFrecuenciaVacunacion('');
+  setMayores60('');
+  setPersonasCapacidadesDiferentes('');
+  setPersonasAbandono('');
+  setNinos0a5('');
+  setNinos6a10('');
+  setNinos11a15('');
+  setNinos16a18('');
+  setRecienNacidos('');
+  setNinosMuertos(false);
+  setNinosDesnutridos(false);
+  setMujeresEmbarazadas('');
+  setEmbarazosAlAnio('');
+  setTipoEnfermedades('');
+  setNumComadronas('');
+  setNumPromotoresSalud('');
+  setNumCuranderos('');
+  setBotiquinComunitario(false);
+  setJardinesMedicinales(false);
+  setVentaMedicina(false);
+  setVentaBebidasAlcoholicas(false);
+  setNumPuntosVentaBebidas('');
+  setTiposBebidasAlcoholicas('');
+  setConsumoTabaco(false);
+  setOtrosConsumo('');
+  setMaga(false);
+  setFodes(false);
+  setMides(false);
+  setSesan(false);
+  setLlegaPolicia(false);
+  setComites(false);
+  setOngList([{ nombre: '', trabajo: '' }]);
+  setReligion('');
+  setActors([]);
+  setRows([{ cultivo: '', area: '', rendimientos: '', destino: '', precio: '', siembra: '', cosecha: '' }]);
+  setComercializacionProductos('');
+  setTerrenoPropio(false);
+  setTerrenoPrestado(false);
+  setTerrenoArrendado(false);
+  setCostoArrendamiento('');
+  setPeriodoArrendamiento('');
+  setMomentoSiembra('');
+  setPlagasEnfermedades('');
+  setMesesPlagas('');
+  setCultivosAnteriores('');
+  setRazonNoSiembra('');
+  setNuevosCultivos('');
+  setSistemasProductivos('');
+  setAccionesSequía('');
+  setAccionesLluvia('');
+  setPerdidaCosechas(false);
+  setAñoPerdidaCosechas('');
+  setCausaPerdidaCosechas('');
+  setCapacitacionesAgricultura(false);
+  setTipoCapacitacion('');
+  setOrganizacionCapacitacion('');
+  setActividadSinSiembra('');
+  setUsoPesticidas(false);
+  setUsoInsecticidas(false);
+  setUsoHerbicidas(false);
+  setUsoFungicidas(false);
+  setUsoFertilizantes(false);
+  setUsoOtros('');
+  setRows2([{ tipo: 'Aves', frecuencia: '', alimento: '', area: '', venta: '', precio: '', donde: '' }]);
+  setAlimentoAnimales('');
+  setPlanesProfilacticos(false);
+  setEnfermedadesAnimales('');
+  setMesesEnfermedad('');
+  setCapacitacionesAnimales(false);
+  setTipoCapacitacionAnimales('');
+  setBosqueComunitario(false);
+  setDimensionesBosque('');
+  setEspeciesArboles('');
+  setEspeciesPlantas('');
+  setIncentivosForestales(false);
+  setBosquesPotenciales('');
+  setViveros(false);
+  setReforestado(false);
+  setAreaReforestada('');
+  setImpulsorReforestacion('');
+  setDuenoTierraBosque('');
+  setDuenosMotosierras(false);
+  setTalaParaCultivar(false);
+  setRozasQuemas('');
+  setIncendiosForestales(false);
+  setRazonIncendios('');
+  setAreaIncendio('');
+  setFechaIncendio('');
+  setFuentesAgua(false);
+  setNumNacimientos('');
+  setDuenoTierraFuentes('');
+  setAccionesConservacionAgua('');
+  setNumPozos('');
+  setNumRios('');
+  setNumLagunas('');
+  setOtrasFuentesAgua('');
+  setProyectoMedioAmbiental(false);
+  setAccionesProyecto('');
+  setAccionesConservacionAmbiente('');
+  setAnimalesSilvestres('');
+  setAnimalesPorTemporada('');
+  setPlantasExtintas('');
+  setPlantasDificiles('');
+  setDesastreNatural(false);
+  setAnioDesastre('');
+  setTipoDesastre('');
+  setRespuestaDesastre('');
+  setColred(false);
+  setOtrasInstituciones('');
+  setAmenazaDesastre('');
+};
+
+// Llama a resetForm() donde necesites limpiar todos los campos.
+
+
+
+// Función para capturar la ubicación
+const capturarUbicacion = () => {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const lat = position.coords.latitude;
+        const lon = position.coords.longitude;
+        const ubicacionActual = `${lat}, ${lon}`;
+        setUbicacion(ubicacionActual);  // Actualiza el estado de ubicación
+      },
+      (error) => {
+        console.error("Error obteniendo la ubicación:", error);
+      }
+    );
+  } else {
+    console.error("Geolocalización no es soportada en este navegador.");
+  }
+};
 
 // Función para guardar los datos en el localStorage
 const guardarEnLocalStorage = () => {
@@ -563,20 +814,25 @@ const enviarABaseDeDatos = async () => {
       });
 
       if (response.ok) {
-        console.log("Datos enviados a la base de datos correctamente.");
+        setShowSuccessAlert(true); // Mostrar alerta de éxito
+          // Limpiar el formulario
         localStorage.removeItem('formData');
         console.log("Datos borrados de localStorage.");
+        resetForm();
       } else {
         const errorMsg = await response.text();
         console.error("Error al enviar los datos a la base de datos:", errorMsg);
+        setShowErrorAlert(true); // Mostrar alerta de error
       }
     } catch (error) {
+      setShowErrorAlert(true); // Mostrar alerta de error en caso de excepción
       console.error("Error en la solicitud:", error);
     }
   } else {
     console.log("No hay datos en localStorage para enviar.");
   }
 };
+
 
 // Manejar el clic en el botón 'Guardar'
 const handleGuardarClick = () => {
@@ -635,9 +891,16 @@ const handleAlertResponse = (continueEditing) => {
               </IonRow>
 
               <IonRow className="FilaTextBox">
-                <h3 className="labelForm">4. Ubicación:</h3>
-                <input onChange={e => setUbicacion(e.target.value || '')} type="text" className='TextBox' />
-              </IonRow>
+  <h3 className="labelForm">4. Ubicación:</h3>
+  <input 
+    value={Ubicacion}  // Asigna el estado Ubicacion al valor del input
+    onChange={e => setUbicacion(e.target.value || '')} 
+    type="text" 
+    className='TextBox' 
+  />
+  {/* Botón para capturar ubicación */}
+  <IonButton onClick={capturarUbicacion} className="botonUbicacion">Capturar Ubicación</IonButton>
+</IonRow>
 
 
               <IonRow className="FilaTextBox">
@@ -2167,6 +2430,23 @@ const handleAlertResponse = (continueEditing) => {
             },
           ]}
         />
+        <>
+        <IonAlert
+          isOpen={showSuccessAlert}
+          onDidDismiss={() => setShowSuccessAlert(false)}
+          header={"Éxito"}
+          message={"Datos registrados exitosamente"}
+          buttons={["OK"]}
+        />
+
+        <IonAlert
+          isOpen={showErrorAlert}
+          onDidDismiss={() => setShowErrorAlert(false)}
+          header={"Error"}
+          message={"Error al registrar los datos, Por favor verifique si ingreso todos los campos obligatorios"}
+          buttons={["OK"]}
+        />
+      </>
     </IonPage>
   );
 }
