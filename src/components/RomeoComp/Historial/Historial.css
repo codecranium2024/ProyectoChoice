@@ -1,118 +1,36 @@
-/* Estilos generales */
-body {
-  font-family: Arial, sans-serif;
-  background-color: #f9f9f9;
-  color: #333;
-}
-
-/* Contenedor principal */
-ion-content {
-  padding: 20px;
-}
-
-/* Encabezado */
-h1 {
-  text-align: center;
-  color: #4a90e2;
-}
-
-/* Formulario */
-form {
-  background-color: #fff;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  margin-bottom: 20px;
-}
-
-form ion-item {
-  margin: 10px 0;
-}
-
-form ion-label {
-  color: #4a4a4a;
-}
-
-form input[type="file"] {
-  margin-top: 10px;
-}
-
-form ion-button {
-  margin-top: 20px;
-  width: 100%;
-  background-color: #4a90e2;
-}
-
-/* Tabla de proyectos */
 .table-container {
-  overflow-x: auto; /* Permitir desplazamiento horizontal */
-  margin-top: 20px; /* Espacio superior para la tabla */
+  overflow-x: auto; /* Permite el desplazamiento horizontal si la tabla es más ancha que su contenedor */
+  margin: 20px; /* Añade margen alrededor de la tabla */
 }
 
 .table {
-  width: 100%; /* Ancho completo */
-  border-collapse: collapse;
+  width: 100%; /* Asegúrate de que la tabla ocupe el 100% del contenedor */
+  border-collapse: collapse; /* Para que las celdas de la tabla se junten */
 }
 
 .table th, .table td {
-  padding: 12px; /* Relleno en las celdas */
-  border: 1px solid #ccc; /* Borde de las celdas */
-  text-align: left; /* Alinear texto a la izquierda */
+  padding: 12px; /* Añade relleno a las celdas para mejorar la legibilidad */
+  text-align: left; /* Alinea el texto a la izquierda */
+ /* Añade un borde a las celdas */
+ /* border: 1px solid #ddd;  */
 }
 
 .table th {
-  background-color: #f2f2f2; /* Color de fondo del encabezado */
+   /* Cambia el color de fondo de los encabezados para diferenciarlos */
+   /* background-color: #f2f2f2; */
+  font-weight: bold; /* Hace que los encabezados sean más prominentes */
 }
 
-ion-list {
-  margin-top: 20px; /* Margen superior para la lista de proyectos */
+.table tr:hover {
+   /* Cambia el color de la fila al pasar el mouse */
+   background-color: #f1f1f1;
 }
-
-ion-item {
-  background-color: #ffffff;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  margin-bottom: 15px;
-  align-items: center;
-}
-
-ion-thumbnail {
-  width: 60px;
-  height: 60px;
-}
-
-ion-label {
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-ion-label ion-input {
-  width: 100%;
-}
-
-ion-button {
-  margin-left: 10px;
-}
-
-ion-select,
-ion-input {
-  width: 100%;
-  max-width: 200px;
-}
-
-ion-button {
-  --background: #4a90e2;
-  --border-radius: 4px;
-  color: white;
-}
-
-ion-button:disabled {
-  --background: #ccc;
-  color: #666;
-}
-
-ion-button:hover {
-  --background: #357ab8;
+.table th {
+  /* Color de fondo para los encabezados */
+  /* background-color: #f2f2f2;  */
+   /* Hace que los encabezados sean más prominentes */
+  font-weight: bold;
+  /* Tamaño de fuente más grande */
+  font-size: 16px; 
+  white-space: nowrap; /* Evita que el texto se ajuste a múltiples líneas */
 }

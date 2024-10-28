@@ -1,62 +1,68 @@
-import React from 'react';
-import { IonContent, IonHeader, IonPage, IonToolbar, IonTitle, IonButton, IonList, IonIcon } from '@ionic/react';
+import React, { useEffect, useState } from 'react';
+import { IonContent, IonHeader, IonPage, IonToolbar, IonTitle, IonList, IonButton, IonIcon } from '@ionic/react';
+import axios from 'axios';
+import { useParams } from 'react-router-dom'; // Importa useParams
 import './InformacionComunitaria.css';
-import { home,people,person } from 'ionicons/icons';
-const VerComunidad: React.FC = () => (
-  <IonList>
-    <table className="table">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Proyecto</th>
-          <th>Tecnico</th>
-          <th>Municipio</th>
-          <th>Etapa</th>
-          <th>Accion</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>1</td>
-          <td>Salud</td>
-          <td>Eleazar Pec</td>
-          <td>Chisec</td>
-          <td>Ejecucion</td>
-          <td>
-            <IonButton color="secondary">Ejecucion</IonButton>
-          </td>
-        </tr>
-        <tr>
-          <td>2</td>
-          <td>Educacion</td>
-          <td>Eleazar Pec</td>
-          <td>Chisec</td>
-          <td>Ejecucion</td>
-          <td>
-            <IonButton color="secondary">Ejecucion</IonButton>
-          </td>
-        </tr>
-        <tr>
-          <td>3</td>
-          <td>Desarrollo Comunitario</td>
-          <td>Eleazar Pec</td>
-          <td>Chisec</td>
-          <td>Ejecucion</td>
-          <td>
-            <IonButton color="secondary">Ejecucion</IonButton>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </IonList>
-);
+import { home, people, person } from 'ionicons/icons';
+
+// Componente para mostrar la tabla de proyectos técnicos
+const VerComunidad: React.FC<{ nombreComunidad: string }> = ({ nombreComunidad }) => {
+  const [proyectos, setProyectos] = useState([]);
+
+  // Función para obtener los datos de los proyectos
+  const fetchProyectos = async () => {
+    try {
+      const response = await axios.get(`http://localhost:3000/informacioncomunidades?comunidad=${nombreComunidad}`); // Modifica la URL para incluir el nombre de la comunidad
+      setProyectos(response.data);
+    } catch (error) {
+      console.error('Error al obtener los proyectos:', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchProyectos(); // Llama a la función al montar el componente
+  }, [nombreComunidad]);
+
+  return (
+    <IonList>
+      <table className="table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Proyecto</th>
+            <th>Técnico</th>
+            <th>Municipio</th>
+            <th>Estado</th>
+            <th>Acción</th>
+          </tr>
+        </thead>
+        <tbody>
+          {proyectos.map((proyecto: any, index: number) => (
+            <tr key={index}>
+              <td>{index + 1}</td>
+              <td>{proyecto.NombreProyecto}</td>
+              <td>{proyecto.NombreUsuario}</td>
+              <td>{proyecto.NombreMunicipio}</td>
+              <td>{proyecto.EstadoProyecto}</td>
+              <td>
+                <IonButton color="secondary">Acción</IonButton>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </IonList>
+  );
+};
 
 const InformacionComunitaria: React.FC = () => {
+  const { nombreComunidad } = useParams<{ nombreComunidad: string }>(); // Extrae el parámetro de la URL
+
   return (
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>Informacion de las Comunidades</IonTitle>
+          <IonTitle>Información de la Comunidad: {nombreComunidad}</IonTitle> {/* Muestra el nombre de la comunidad */}
         </IonToolbar>
       </IonHeader>
       <IonContent>
@@ -72,35 +78,31 @@ const InformacionComunitaria: React.FC = () => {
             ></iframe>
           </div>
 
-          {/* Información y gráficos a la derecha */}
           <div className="info-container">
-            <h2>Comunidad San José</h2>
-            <h3>Chicoj, Cobán,Alta verapaz</h3>
-
+            <h2>Guatemala, Alta Verapaz</h2>
+            <h3>Comunidad: {nombreComunidad}</h3>
             <div className="icons-container">
               <div className="icon-item">
                 <IonIcon icon={person} style={{ fontSize: '30px' }} />
                 <p>Habitantes</p>
-                {/* cambiar el h4 por una variable para extraer los datos sql gay el que no lee esto */}
-                <h4>100</h4>
+                <h4>100</h4> {/* Puedes obtener esta información de la API también */}
               </div>
               <div className="icon-item">
-                <IonIcon icon={people} style={{ fontSize: '30px' }}/>
+                <IonIcon icon={people} style={{ fontSize: '30px' }} />
                 <p>Familias</p>
-                <h4>1200</h4>
+                <h4>1200</h4> {/* Igual que arriba */}
               </div>
               <div className="icon-item">
-                <IonIcon icon={home} style={{ fontSize: '30px' }}/>
+                <IonIcon icon={home} style={{ fontSize: '30px' }} />
                 <p>Casas</p>
-                <h4>900</h4>
+                <h4>900</h4> {/* Igual que arriba */}
               </div>
-
             </div>
           </div>
         </div>
 
-        {/* Tabla debajo */}
-        <VerComunidad />
+        {/* Tabla de proyectos técnicos debajo */}
+        <VerComunidad nombreComunidad={nombreComunidad} />
       </IonContent>
     </IonPage>
   );

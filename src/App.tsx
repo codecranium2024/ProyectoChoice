@@ -6,7 +6,6 @@ import Menu from './components/Menu';
 import Page from './pages/Page';
 import Login from './components/WilfredoComp/Login';
 import ListadoGeneral from './components/RomeoComp/Comunidad/ListadoGeneral';
-import Panel from './components/RomeoComp/Panel/Panel';
 import Comunidad from './components/RomeoComp/Comunidad/Comunidad1';
 import VisualizarComunidades from './pages/MarcoPaginas/AgregarComunidad';
 import EditarComunidades from './pages/MarcoPaginas/EditarComunidad';
@@ -19,8 +18,7 @@ import AdministrarUsuarios from './components/WilfredoComp/AdministrarUsuarios';
 import AdministrarRE from './components/WilfredoComp/AdministrarRE';
 import Historial from './components/RomeoComp/Historial/Historial';
 import Reporte from './components/RomeoComp/Reportes/Reporte';
-
-
+import bcrypt from 'bcryptjs';
 
 /* Importaciones CSS de Ionic */
 import '@ionic/react/css/core.css';
@@ -58,18 +56,60 @@ const App: React.FC = () => {
 
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [userName, setUserName] = useState('');
+  const [userPassword, setUserPassword] = useState('');
   const [userRole, setUserRole] = useState('');
 
-  const handleLoginSuccess = (name: string, role: string) => {
+  // Verificar si hay credenciales almacenadas al cargar la aplicación
+  useEffect(() => {
+    const storedCredentials = localStorage.getItem('userCredentials');
+    if (storedCredentials) {
+      const { username, password, role } = JSON.parse(storedCredentials);
+      setIsAuthenticated(true);
+      setUserName(username);
+      setUserPassword(password);
+      setUserRole(role);
+    }
+  }, []);
+
+  const handleLoginSuccess = (usuario: string, role: string, hashedPassword: string) => {
     setIsAuthenticated(true);
-    setUserName(name);
-    setUserRole(role);
+    setUserName(usuario);  // Almacenar el nombre de usuario (no el nombre completo)
+    setUserRole(role);     // Almacenar el rol
+  
+    // Guardar también la contraseña encriptada en localStorage
+    const credentials = { username: usuario, hashedPassword, role };
+    localStorage.setItem('userCredentials', JSON.stringify(credentials));
+    console.log('Credenciales guardadas localmente:', credentials);
+  };
+
+  const handleOfflineLogin = (name: string, password: string) => {
+    const storedCredentials = localStorage.getItem('userCredentials');
+    if (storedCredentials) {
+      const { username, hashedPassword } = JSON.parse(storedCredentials);
+      
+      if (!hashedPassword) {
+        console.error("Contraseña almacenada no encontrada");
+        return;
+      }
+  
+      // Verificar si el nombre de usuario coincide y la contraseña es correcta
+      if (username === name && bcrypt.compareSync(password, hashedPassword)) {
+        setIsAuthenticated(true);
+        setUserName(username);
+        console.log('Inicio de sesión offline exitoso.');
+      } else {
+        console.log('Error en el inicio de sesión offline.');
+      }
+    }
   };
 
   const handleLogout = () => {
     setIsAuthenticated(false);
     setUserName('');
+    setUserPassword('');
     setUserRole('');
+    // localStorage.removeItem('userCredentials');  // Eliminar esta línea para no borrar las credenciales almacenadas offline
+    console.log('Sesión cerrada, pero las credenciales permanecen guardadas para el modo offline');
   };
 
   return (
@@ -78,7 +118,10 @@ const App: React.FC = () => {
         {!isAuthenticated ? (
           <IonRouterOutlet>
             <Route path="/" exact>
-              <Login onLoginSuccess={handleLoginSuccess} />
+              <Login 
+                onLoginSuccess={handleLoginSuccess} 
+                onOfflineLogin={handleOfflineLogin}  // Pasar la función para login offline
+              />
             </Route>
             <Redirect to="/" />
           </IonRouterOutlet>
@@ -97,9 +140,6 @@ const App: React.FC = () => {
               </Route>
               <Route path="/InformacionComunitaria" exact={true}>
                 <InformacionComunitaria />
-              </Route>
-              <Route path="/panel" exact={true}>
-                <Panel />
               </Route>
               <Route path="/comunidad" exact={true}>
                 <Comunidad />
@@ -121,16 +161,16 @@ const App: React.FC = () => {
                 <AdministrarRE />
               </Route>
               <Route path="/RegistrarProyecto" exact={true}>
-                <RegistrarProyecto/>
+                <RegistrarProyecto />
               </Route>
               <Route path="/Mapa" exact={true}>
-              <Mapa />
+                <Mapa />
               </Route>
               <Route path="/Historial" exact={true}>
-              <Historial />
+                <Historial />
               </Route>
               <Route path="/Reporte" exact={true}>
-                <Reporte/>
+                <Reporte />
               </Route>
             </IonRouterOutlet>
           </IonSplitPane>

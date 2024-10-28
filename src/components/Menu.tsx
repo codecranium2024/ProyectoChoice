@@ -37,7 +37,7 @@ interface AppPage {
 
 // Configuración de páginas para el menú, con "Roles y Especialidades" combinados en un solo submenú
 const appPages: AppPage[] = [
-  {
+  /*{
     title: 'Panel',
     url: '/Panel',
     iosIcon: appsOutline,
@@ -45,7 +45,7 @@ const appPages: AppPage[] = [
     subPages: [
       { title: 'Panel', url: 'Panel' },
     ]
-  },
+  },*/
   {
     title: 'Proyectos',
     url: '/Proyectos',
@@ -53,7 +53,7 @@ const appPages: AppPage[] = [
     mdIcon: documentSharp,
     subPages: [
       { title: 'Registrar Proyecto', url: '/RegistrarProyecto' },
-      { title: 'Informacion Comunitaria', url: '/InformacionComunitaria' },
+      // { title: 'Informacion Comunitaria', url: '/InformacionComunitaria' },
       { title: 'Historial Proyectos', url: '/Historial' },
       { title: 'Mapa', url: '/Mapa' },
     ]
@@ -65,7 +65,7 @@ const appPages: AppPage[] = [
     mdIcon: peopleSharp,
     subPages: [
       { title: 'Comunidades', url: '/Comunidad' },
-      { title: 'Listado General', url: '/ListadoGeneral' },
+      // { title: 'Listado General', url: '/ListadoGeneral' },
       { title: 'Agregar', url: '/AgregarComunidades' },
     ]
   },
