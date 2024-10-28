@@ -415,7 +415,13 @@ app.post('/comunidadr', async (req, res) => {
     pollo_congelado,pollo_criollo,cerdo,ress,carne_monte,pescado,maiz,frijol,verduras,legumbres,pastas,sopas,arroz,papa,malanga,camote,yuca,otro_tuberculo,puesto_salud,frecuencia_doctor,hay_enfermero,
     centro_convergencia,uso_centro_convergencia,emergencia,tipos_emergencias,vacunas_ninos,frecuencia_vacunacion,mayores_60,personas_capacidades_diferentes,personas_abandono,ninos_0a5,ninos_6a10,ninos_11a15,
     ninos_16a18,recien_nacidos,ninos_muertos,ninos_desnutridos,mujeres_embarazadas,embarazos_al_anio,tipo_enfermedades,num_comadronas,num_promotores_salud,num_curanderos,botiquin_comunitario,jardines_medicinales,
-    venta_medicina,venta_bebidas_alcoholicas,num_puntos_venta_bebidas,tipos_bebidas_alcoholicas,consumo_tabaco,otros_consumo
+    venta_medicina,venta_bebidas_alcoholicas,num_puntos_venta_bebidas,tipos_bebidas_alcoholicas,consumo_tabaco,otros_consumo,
+    //seccion de mapa de actores
+    maga,fodes,mides,sesan,llega_policia,comites,religion,ongList,actors,
+    //seccion de agricultura
+    agricultura,comercializacion_productos,terreno_propio,terreno_prestado,terreno_arrendado,costo_arrendamiento,periodo_arrendamiento,momento_siembra,plagas_enfermedades,meses_plagas,cultivos_anteriores,razon_no_siembra,nuevos_cultivos,sistemas_productivos,
+    acciones_sequia,acciones_lluvia,perdida_cosechas,ano_perdida_cosechas,causa_perdida_cosechas,capacitaciones_agricultura ,tipo_capacitacion,organizacion_capacitacion,actividad_sin_siembra,uso_pesticidas ,uso_insecticidas,
+    uso_herbicidas,uso_fungicidas,uso_fertilizantes,uso_otros
 
   } = req.body;
 
@@ -444,7 +450,13 @@ app.post('/comunidadr', async (req, res) => {
     ninos_0a5|| null,ninos_6a10|| null,ninos_11a15|| null,
     ninos_16a18|| null,recien_nacidos|| null,ninos_muertos|| null,ninos_desnutridos|| null,mujeres_embarazadas|| null,embarazos_al_anio|| null,tipo_enfermedades|| null,num_comadronas|| null,num_promotores_salud|| null,num_curanderos|| null,
     botiquin_comunitario|| null,jardines_medicinales|| null,
-    venta_medicina|| null,venta_bebidas_alcoholicas|| null,num_puntos_venta_bebidas|| null,tipos_bebidas_alcoholicas|| null,consumo_tabaco|| null,otros_consumo|| null
+    venta_medicina|| null,venta_bebidas_alcoholicas|| null,num_puntos_venta_bebidas|| null,tipos_bebidas_alcoholicas|| null,consumo_tabaco|| null,otros_consumo|| null,
+    maga|| null,fodes|| null,mides|| null,sesan|| null,llega_policia|| null,comites|| null,religion|| null,ongList|| null,actors|| null,
+    agricultura|| null,comercializacion_productos|| null,terreno_propio|| null,terreno_prestado|| null,terreno_arrendado|| null,costo_arrendamiento|| null,periodo_arrendamiento|| null,momento_siembra|| null,plagas_enfermedades|| null,meses_plagas|| null,
+    cultivos_anteriores|| null,razon_no_siembra|| null,nuevos_cultivos|| null,sistemas_productivos|| null,
+    acciones_sequia|| null,acciones_lluvia|| null,perdida_cosechas|| null,ano_perdida_cosechas|| null,causa_perdida_cosechas|| null,capacitaciones_agricultura|| null ,tipo_capacitacion|| null,organizacion_capacitacion|| null,actividad_sin_siembra|| null,
+    uso_pesticidas|| null ,uso_insecticidas|| null,
+    uso_herbicidas|| null,uso_fungicidas|| null,uso_fertilizantes|| null,uso_otros|| null
 
   ];
 
@@ -485,8 +497,12 @@ app.post('/comunidadr', async (req, res) => {
         pollo_congelado,pollo_criollo,cerdo,ress,carne_monte,pescado,maiz,frijol,verduras,legumbres,pastas,sopas,arroz,papa,malanga,camote,yuca,otro_tuberculo,puesto_salud,frecuencia_doctor,hay_enfermero,
     centro_convergencia,uso_centro_convergencia,emergencia,tipos_emergencias,vacunas_ninos,frecuencia_vacunacion,mayores_60,personas_capacidades_diferentes,personas_abandono,ninos_0a5,ninos_6a10,ninos_11a15,
     ninos_16a18,recien_nacidos,ninos_muertos,ninos_desnutridos,mujeres_embarazadas,embarazos_al_anio,tipo_enfermedades,num_comadronas,num_promotores_salud,num_curanderos,botiquin_comunitario,jardines_medicinales,
-    venta_medicina,venta_bebidas_alcoholicas,num_puntos_venta_bebidas,tipos_bebidas_alcoholicas,consumo_tabaco,otros_consumo
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`;
+    venta_medicina,venta_bebidas_alcoholicas,num_puntos_venta_bebidas,tipos_bebidas_alcoholicas,consumo_tabaco,otros_consumo,
+    maga,fodes,mides,sesan,llega_policia,comites,religion,ongList,actors,
+    agricultura,comercializacion_productos,terreno_propio,terreno_prestado,terreno_arrendado,costo_arrendamiento,periodo_arrendamiento,momento_siembra,plagas_enfermedades,meses_plagas,cultivos_anteriores,razon_no_siembra,nuevos_cultivos,sistemas_productivos,
+    acciones_sequia,acciones_lluvia,perdida_cosechas,ano_perdida_cosechas,causa_perdida_cosechas,capacitaciones_agricultura ,tipo_capacitacion,organizacion_capacitacion,actividad_sin_siembra,uso_pesticidas ,uso_insecticidas,
+    uso_herbicidas,uso_fungicidas,uso_fertilizantes,uso_otros
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`;
 
     // Ejecutar el query con los valores seguros
     await connection.execute(query, safeValues);

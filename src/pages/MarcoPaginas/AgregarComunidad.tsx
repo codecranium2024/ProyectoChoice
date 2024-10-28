@@ -200,30 +200,6 @@ function AgregarComunidades() {
   };
   /*Fin tabla de agricultura*/ 
 
-
-  /*Actividades Pecuarias*/
-  const [rows2, setRows2] = useState([{ tipo: 'Aves', frecuencia: '', alimento: '', area: '', venta: '', precio: '', donde: '' },
-    { tipo: 'Cerdos', frecuencia: '', alimento: '', area: '', venta: '', precio: '', donde: '' },
-    { tipo: 'Vacas/toros', frecuencia: '', alimento: '', area: '', venta: '', precio: '', donde: '' }]);
-
-  // Función para agregar una nueva fila
-  const addRow2 = () => {
-  setRows2([...rows2, { tipo: '', frecuencia: '', alimento: '', area: '', venta: '', precio: '', donde: '' }]);
-  };
-
-  // Función para manejar cambios en los campos de entrada
-  const handleInputChange2 = (index: number, field: string, value: string) => {
-  const newRows = [...rows2];
-  newRows[index][field] = value;
-  setRows2(newRows);
-  };
-
-  const handleCheckboxChange2 = (index: number, field: string, value: boolean) => {
-  const newRows2 = [...rows2];
-  newRows2[index][field] = value;
-  setRows2(newRows2);
-  };
-  /*Fin Actividades Pecuarias*/
    const [comercializacionProductos, setComercializacionProductos] = useState(''); // Campo de texto
    const [terrenoPropio, setTerrenoPropio] = useState(false);  // Checkbox
    const [terrenoPrestado, setTerrenoPrestado] = useState(false);  // Checkbox
@@ -253,6 +229,30 @@ function AgregarComunidades() {
    const [usoFertilizantes, setUsoFertilizantes] = useState(false);  // Campo de texto
    const [usoOtros, setUsoOtros] = useState('');  // Campo de texto
 
+
+   /*Actividades Pecuarias*/
+  const [rows2, setRows2] = useState([{ tipo: 'Aves', frecuencia: '', alimento: '', area: '', venta: '', precio: '', donde: '' },
+    { tipo: 'Cerdos', frecuencia: '', alimento: '', area: '', venta: '', precio: '', donde: '' },
+    { tipo: 'Vacas/toros', frecuencia: '', alimento: '', area: '', venta: '', precio: '', donde: '' }]);
+
+  // Función para agregar una nueva fila
+  const addRow2 = () => {
+  setRows2([...rows2, { tipo: '', frecuencia: '', alimento: '', area: '', venta: '', precio: '', donde: '' }]);
+  };
+
+  // Función para manejar cambios en los campos de entrada
+  const handleInputChange2 = (index: number, field: string, value: string) => {
+  const newRows = [...rows2];
+  newRows[index][field] = value;
+  setRows2(newRows);
+  };
+
+  const handleCheckboxChange2 = (index: number, field: string, value: boolean) => {
+  const newRows2 = [...rows2];
+  newRows2[index][field] = value;
+  setRows2(newRows2);
+  };
+  /*Fin Actividades Pecuarias*/
    const [alimentoAnimales, setAlimentoAnimales] = useState('');  // Campo de texto
    const [planesProfilacticos, setPlanesProfilacticos] = useState(false);  // Checkbox
    const [enfermedadesAnimales, setEnfermedadesAnimales] = useState('');  // Campo de texto
@@ -449,7 +449,46 @@ const guardarEnLocalStorage = () => {
     num_puntos_venta_bebidas: numPuntosVentaBebidas  ,
     tipos_bebidas_alcoholicas: tiposBebidasAlcoholicas  ,
     consumo_tabaco: consumoTabaco  ,
-    otros_consumo: otrosConsumo
+    otros_consumo: otrosConsumo,
+    // seccion de mapa de actores / organizaciones
+    maga: maga,
+    fodes: fodes,
+    mides: mides,
+    sesan: sesan,
+    llega_policia: llegaPolicia,
+    comites: comites,
+    ongList: ongList,
+    actors: actors,
+    // seccion de agricultura
+    agricultura: rows,
+    comercializacion_productos: comercializacionProductos,
+    terreno_propio: terrenoPropio,
+    terreno_prestado: terrenoPrestado, 
+    terreno_arrendado:terrenoArrendado, 
+    costo_arrendamiento:costoArrendamiento, 
+    periodo_arrendamiento:periodoArrendamiento, 
+    momento_siembra:momentoSiembra,
+    plagas_enfermedades:plagasEnfermedades, 
+    meses_plagas: mesesPlagas, 
+    cultivos_anteriores:cultivosAnteriores, 
+    razon_no_siembra:razonNoSiembra, 
+    nuevos_cultivos:nuevosCultivos, 
+    sistemas_productivos:sistemasProductivos, 
+    acciones_sequia: accionesSequía, 
+    acciones_lluvia: accionesLluvia,
+    perdida_cosechas: perdidaCosechas, 
+    ano_perdida_cosechas: añoPerdidaCosechas,
+    causa_perdida_cosechas: causaPerdidaCosechas,
+    capacitaciones_agricultura: capacitacionesAgricultura,
+    tipo_capacitacion: tipoCapacitacion, 
+    organizacion_capacitacion: organizacionCapacitacion, 
+    actividad_sin_siembra: actividadSinSiembra, 
+    uso_pesticidas: usoPesticidas,
+    uso_insecticidas: usoInsecticidas, 
+    uso_herbicidas: usoHerbicidas, 
+    uso_fungicidas: usoFungicidas,
+    uso_fertilizantes: usoFertilizantes,
+    uso_otros: usoOtros
   };
   
   // Guardar los datos en el localStorage
