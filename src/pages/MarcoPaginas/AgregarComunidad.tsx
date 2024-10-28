@@ -304,6 +304,27 @@ function AgregarComunidades() {
   // Estado para la alerta
 const [showAlert, setShowAlert] = useState(false);
 const [continueEditing, setContinueEditing] = useState(false);
+const [showSuccessAlert, setShowSuccessAlert] = useState(false);
+const [showErrorAlert, setShowErrorAlert] = useState(false);
+
+// Función para capturar la ubicación
+const capturarUbicacion = () => {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const lat = position.coords.latitude;
+        const lon = position.coords.longitude;
+        const ubicacionActual = `${lat}, ${lon}`;
+        setUbicacion(ubicacionActual);  // Actualiza el estado de ubicación
+      },
+      (error) => {
+        console.error("Error obteniendo la ubicación:", error);
+      }
+    );
+  } else {
+    console.error("Geolocalización no es soportada en este navegador.");
+  }
+};
 
 // Función para guardar los datos en el localStorage
 const guardarEnLocalStorage = () => {
@@ -563,20 +584,23 @@ const enviarABaseDeDatos = async () => {
       });
 
       if (response.ok) {
-        console.log("Datos enviados a la base de datos correctamente.");
+        setShowSuccessAlert(true); // Mostrar alerta de éxito
         localStorage.removeItem('formData');
         console.log("Datos borrados de localStorage.");
       } else {
         const errorMsg = await response.text();
         console.error("Error al enviar los datos a la base de datos:", errorMsg);
+        setShowErrorAlert(true); // Mostrar alerta de error
       }
     } catch (error) {
+      setShowErrorAlert(true); // Mostrar alerta de error en caso de excepción
       console.error("Error en la solicitud:", error);
     }
   } else {
     console.log("No hay datos en localStorage para enviar.");
   }
 };
+
 
 // Manejar el clic en el botón 'Guardar'
 const handleGuardarClick = () => {
@@ -635,9 +659,16 @@ const handleAlertResponse = (continueEditing) => {
               </IonRow>
 
               <IonRow className="FilaTextBox">
-                <h3 className="labelForm">4. Ubicación:</h3>
-                <input onChange={e => setUbicacion(e.target.value || '')} type="text" className='TextBox' />
-              </IonRow>
+  <h3 className="labelForm">4. Ubicación:</h3>
+  <input 
+    value={Ubicacion}  // Asigna el estado Ubicacion al valor del input
+    onChange={e => setUbicacion(e.target.value || '')} 
+    type="text" 
+    className='TextBox' 
+  />
+  {/* Botón para capturar ubicación */}
+  <IonButton onClick={capturarUbicacion} className="botonUbicacion">Capturar Ubicación</IonButton>
+</IonRow>
 
 
               <IonRow className="FilaTextBox">
@@ -2167,6 +2198,23 @@ const handleAlertResponse = (continueEditing) => {
             },
           ]}
         />
+        <>
+        <IonAlert
+          isOpen={showSuccessAlert}
+          onDidDismiss={() => setShowSuccessAlert(false)}
+          header={"Éxito"}
+          message={"Datos registrados exitosamente"}
+          buttons={["OK"]}
+        />
+
+        <IonAlert
+          isOpen={showErrorAlert}
+          onDidDismiss={() => setShowErrorAlert(false)}
+          header={"Error"}
+          message={"Error al registrar los datos, Por favor verifique si ingreso todos los campos obligatorios"}
+          buttons={["OK"]}
+        />
+      </>
     </IonPage>
   );
 }
