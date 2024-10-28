@@ -8,8 +8,8 @@ import { PiCowFill, PiPlantFill } from "react-icons/pi";
 function AgregarComunidades() {
   // estructura de formularios
   const id = '1';
-  const history = useHistory();
-
+  // const history = useHistory();
+  //jesus
   const handleEditarComunidad = (id: string) => {
     history.push(`/EditarComunidad/${id}`);
   };
