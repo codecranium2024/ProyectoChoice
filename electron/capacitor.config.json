@@ -1,6 +1,0 @@
-{
-  "appId": "com.codecranium.app",
-  "appName": "com.miapp.desktop",
-  "bundledWebRuntime": false,
-  "webDir": "build"
-}
