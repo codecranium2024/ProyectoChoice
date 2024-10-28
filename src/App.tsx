@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { IonApp, IonRouterOutlet, IonSplitPane, setupIonicReact } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import { Redirect, Route } from 'react-router-dom';
@@ -8,7 +8,6 @@ import Login from './components/WilfredoComp/Login';
 import ListadoGeneral from './components/RomeoComp/Comunidad/ListadoGeneral';
 import Comunidad from './components/RomeoComp/Comunidad/Comunidad1';
 import VisualizarComunidades from './pages/MarcoPaginas/AgregarComunidad';
-import EditarComunidades from './pages/MarcoPaginas/EditarComunidad';
 import { Configuraciones } from './pages/MarcoPaginas/Configuraciones';
 import Departamentos from './components/RomeoComp/Region/Departamentos';
 import InformacionComunitaria from './components/RomeoComp/Proyecto/InformacionComunitaria';
@@ -18,7 +17,8 @@ import AdministrarUsuarios from './components/WilfredoComp/AdministrarUsuarios';
 import AdministrarRE from './components/WilfredoComp/AdministrarRE';
 import Historial from './components/RomeoComp/Historial/Historial';
 import Reporte from './components/RomeoComp/Reportes/Reporte';
-import bcrypt from 'bcryptjs';
+
+
 
 /* Importaciones CSS de Ionic */
 import '@ionic/react/css/core.css';
@@ -35,81 +35,21 @@ import './theme/variables.css';
 
 setupIonicReact();
 
-
 const App: React.FC = () => {
-
-
-  // Estado para almacenar el modo oscuro
-  const [isDarkMode, setIsDarkMode] = useState(false);
-  
-  useEffect(() => {
-      // Al cargar la página, verificar si el modo oscuro está activado en localStorage
-      const darkModeEnabled = localStorage.getItem("darkMode") === "true";
-      setIsDarkMode(darkModeEnabled);
-  
-      // Aplicar la clase "dark" al body si el modo oscuro está activado
-      if (darkModeEnabled) {
-          document.body.classList.add("dark");
-      }
-  }, []);
-
-
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [userName, setUserName] = useState('');
-  const [userPassword, setUserPassword] = useState('');
   const [userRole, setUserRole] = useState('');
 
-  // Verificar si hay credenciales almacenadas al cargar la aplicación
-  useEffect(() => {
-    const storedCredentials = localStorage.getItem('userCredentials');
-    if (storedCredentials) {
-      const { username, password, role } = JSON.parse(storedCredentials);
-      setIsAuthenticated(true);
-      setUserName(username);
-      setUserPassword(password);
-      setUserRole(role);
-    }
-  }, []);
-
-  const handleLoginSuccess = (usuario: string, role: string, hashedPassword: string) => {
+  const handleLoginSuccess = (name: string, role: string) => {
     setIsAuthenticated(true);
-    setUserName(usuario);  // Almacenar el nombre de usuario (no el nombre completo)
-    setUserRole(role);     // Almacenar el rol
-  
-    // Guardar también la contraseña encriptada en localStorage
-    const credentials = { username: usuario, hashedPassword, role };
-    localStorage.setItem('userCredentials', JSON.stringify(credentials));
-    console.log('Credenciales guardadas localmente:', credentials);
-  };
-
-  const handleOfflineLogin = (name: string, password: string) => {
-    const storedCredentials = localStorage.getItem('userCredentials');
-    if (storedCredentials) {
-      const { username, hashedPassword } = JSON.parse(storedCredentials);
-      
-      if (!hashedPassword) {
-        console.error("Contraseña almacenada no encontrada");
-        return;
-      }
-  
-      // Verificar si el nombre de usuario coincide y la contraseña es correcta
-      if (username === name && bcrypt.compareSync(password, hashedPassword)) {
-        setIsAuthenticated(true);
-        setUserName(username);
-        console.log('Inicio de sesión offline exitoso.');
-      } else {
-        console.log('Error en el inicio de sesión offline.');
-      }
-    }
+    setUserName(name);
+    setUserRole(role);
   };
 
   const handleLogout = () => {
     setIsAuthenticated(false);
     setUserName('');
-    setUserPassword('');
     setUserRole('');
-    // localStorage.removeItem('userCredentials');  // Eliminar esta línea para no borrar las credenciales almacenadas offline
-    console.log('Sesión cerrada, pero las credenciales permanecen guardadas para el modo offline');
   };
 
   return (
@@ -118,10 +58,7 @@ const App: React.FC = () => {
         {!isAuthenticated ? (
           <IonRouterOutlet>
             <Route path="/" exact>
-              <Login 
-                onLoginSuccess={handleLoginSuccess} 
-                onOfflineLogin={handleOfflineLogin}  // Pasar la función para login offline
-              />
+              <Login onLoginSuccess={handleLoginSuccess} />
             </Route>
             <Redirect to="/" />
           </IonRouterOutlet>
@@ -147,7 +84,6 @@ const App: React.FC = () => {
               <Route path="/AgregarComunidades" exact={true}>
                 <VisualizarComunidades />
               </Route>
-              <Route path="/EditarComunidad/:id" component={EditarComunidades} />
               <Route path="/Configuraciones" exact={true}>
                 <Configuraciones />
               </Route>
@@ -161,16 +97,16 @@ const App: React.FC = () => {
                 <AdministrarRE />
               </Route>
               <Route path="/RegistrarProyecto" exact={true}>
-                <RegistrarProyecto />
+                <RegistrarProyecto/>
               </Route>
               <Route path="/Mapa" exact={true}>
-                <Mapa />
+              <Mapa />
               </Route>
               <Route path="/Historial" exact={true}>
-                <Historial />
+              <Historial />
               </Route>
               <Route path="/Reporte" exact={true}>
-                <Reporte />
+                <Reporte/>
               </Route>
             </IonRouterOutlet>
           </IonSplitPane>
