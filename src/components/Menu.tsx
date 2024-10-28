@@ -42,17 +42,11 @@ const appPages: AppPage[] = [
     url: '/Panel',
     iosIcon: appsOutline,
     mdIcon: appsSharp,
-<<<<<<< HEAD
     // subPages: [
     //   { title: 'Panel', url: 'Panel' },
     // ]
-  },
-=======
-    subPages: [
-      { title: 'Panel', url: 'Panel' },
-    ]
   },*/
->>>>>>> e9ad74ead1b2fe2b74bb4126daf33b216b4d1d9b
+
   {
     title: 'Proyectos',
     url: '/Proyectos',
