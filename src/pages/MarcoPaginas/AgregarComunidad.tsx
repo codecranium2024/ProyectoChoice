@@ -488,7 +488,15 @@ const guardarEnLocalStorage = () => {
     uso_herbicidas: usoHerbicidas, 
     uso_fungicidas: usoFungicidas,
     uso_fertilizantes: usoFertilizantes,
-    uso_otros: usoOtros
+    uso_otros: usoOtros,
+    //seccion de actividades pecuarias
+    pecuarias:rows2,
+    alimento_animales:alimentoAnimales,
+    planes_profilacticos:planesProfilacticos, 
+    enfermedades_animales:enfermedadesAnimales, 
+    meses_enfermedad:mesesEnfermedad, 
+    capacitaciones_animales:capacitacionesAnimales, 
+    tipo_capacitacion_animales:tipoCapacitacionAnimales
   };
   
   // Guardar los datos en el localStorage

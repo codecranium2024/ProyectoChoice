@@ -421,7 +421,9 @@ app.post('/comunidadr', async (req, res) => {
     //seccion de agricultura
     agricultura,comercializacion_productos,terreno_propio,terreno_prestado,terreno_arrendado,costo_arrendamiento,periodo_arrendamiento,momento_siembra,plagas_enfermedades,meses_plagas,cultivos_anteriores,razon_no_siembra,nuevos_cultivos,sistemas_productivos,
     acciones_sequia,acciones_lluvia,perdida_cosechas,ano_perdida_cosechas,causa_perdida_cosechas,capacitaciones_agricultura ,tipo_capacitacion,organizacion_capacitacion,actividad_sin_siembra,uso_pesticidas ,uso_insecticidas,
-    uso_herbicidas,uso_fungicidas,uso_fertilizantes,uso_otros
+    uso_herbicidas,uso_fungicidas,uso_fertilizantes,uso_otros,
+    //seccion de pecuarias
+    pecuarias,alimento_animales,planes_profilacticos,enfermedades_animales,meses_enfermedad,capacitaciones_animales , tipo_capacitacion_animales
 
   } = req.body;
 
@@ -456,7 +458,8 @@ app.post('/comunidadr', async (req, res) => {
     cultivos_anteriores|| null,razon_no_siembra|| null,nuevos_cultivos|| null,sistemas_productivos|| null,
     acciones_sequia|| null,acciones_lluvia|| null,perdida_cosechas|| null,ano_perdida_cosechas|| null,causa_perdida_cosechas|| null,capacitaciones_agricultura|| null ,tipo_capacitacion|| null,organizacion_capacitacion|| null,actividad_sin_siembra|| null,
     uso_pesticidas|| null ,uso_insecticidas|| null,
-    uso_herbicidas|| null,uso_fungicidas|| null,uso_fertilizantes|| null,uso_otros|| null
+    uso_herbicidas|| null,uso_fungicidas|| null,uso_fertilizantes|| null,uso_otros|| null,
+    pecuarias|| null,alimento_animales|| null,planes_profilacticos|| null,enfermedades_animales|| null,meses_enfermedad|| null,capacitaciones_animales|| null , tipo_capacitacion_animales|| null
 
   ];
 
@@ -501,8 +504,9 @@ app.post('/comunidadr', async (req, res) => {
     maga,fodes,mides,sesan,llega_policia,comites,religion,ongList,actors,
     agricultura,comercializacion_productos,terreno_propio,terreno_prestado,terreno_arrendado,costo_arrendamiento,periodo_arrendamiento,momento_siembra,plagas_enfermedades,meses_plagas,cultivos_anteriores,razon_no_siembra,nuevos_cultivos,sistemas_productivos,
     acciones_sequia,acciones_lluvia,perdida_cosechas,ano_perdida_cosechas,causa_perdida_cosechas,capacitaciones_agricultura ,tipo_capacitacion,organizacion_capacitacion,actividad_sin_siembra,uso_pesticidas ,uso_insecticidas,
-    uso_herbicidas,uso_fungicidas,uso_fertilizantes,uso_otros
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`;
+    uso_herbicidas,uso_fungicidas,uso_fertilizantes,uso_otros,
+    pecuarias,alimento_animales,planes_profilacticos,enfermedades_animales,meses_enfermedad,capacitaciones_animales , tipo_capacitacion_animales
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`;
 
     // Ejecutar el query con los valores seguros
     await connection.execute(query, safeValues);
