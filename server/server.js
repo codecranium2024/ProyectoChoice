@@ -437,6 +437,30 @@ app.post('/comunidad', async (req, res) => {
     res.status(500).send('Error al registrar comunidad');
   }
 });
+
+
+//Endpoint para obtener comunidades
+// Endpoint para obtener comunidades
+app.get('/getComunidad/:idComunidad', async (req, res) => {
+  const { idComunidad } = req.params; // Extrae el ID de req.params
+  console.log("ID server.js:", idComunidad);
+
+  try {
+    const connection = await mysql.createConnection(dbConfig);
+    const [rows] = await connection.execute('SELECT nombre_comunidad FROM tb_comunidad WHERE idComunidad = ?', [idComunidad]);
+    
+    if (rows.length > 0) {
+      res.json(rows[0]); // Envía solo el primer resultado
+    } else {
+      res.status(404).send('Comunidad no encontrada');
+    }
+
+    await connection.end();
+  } catch (err) {
+    console.error('Error al obtener la comunidad:', err);
+    res.status(500).send('Error al obtener la comunidad');
+  }
+});
 // ------------------------------------------------------------------
 // Registrar un nuevo proyecto usando el procedimiento almacenado
 // Endpoint para obtener categorías

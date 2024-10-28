@@ -4,9 +4,17 @@ import { IonPage, IonContent, IonTabs, IonTab, IonTabBar, IonTabButton, IonIcon,
 import { add, bookOutline, cog, cogOutline, earthOutline, fitnessOutline, globeOutline, leafOutline, peopleOutline, waterOutline } from 'ionicons/icons';
 import { FaRecycle } from "react-icons/fa";
 import { PiCowFill, PiPlantFill} from "react-icons/pi";
+import { useHistory } from 'react-router-dom';
 
+  
 function AgregarComunidades() {
   // estructura de formularios
+  const id = '1';
+  const history = useHistory();
+
+  const handleEditarComunidad = (id: string) => {
+    history.push(`/EditarComunidad/${id}`);
+  };
   let [Comunidad, setComunidad] = useState('');
   let [Municipio, setMunicipio] = useState(''); // campo para guardar el municipio
   let [Aldea, setAldea] = useState(''); // para la aldea
@@ -2423,7 +2431,7 @@ const handleAlertResponse = (continueEditing: boolean) => {
 
       <IonRow>
           <IonButton onClick={handleGuardarClick}>Guardar</IonButton>
-          <IonButton color="danger" onClick={() => { /* Lógica de cancelación */ }}>
+          <IonButton color="danger" onClick={() => handleEditarComunidad(id)}>
             Cancelar
           </IonButton>
         </IonRow>
