@@ -32,5 +32,4 @@ yarn-error.log*
 
 /electron
 /out
-/node_modules
 /cypress
