@@ -29,3 +29,9 @@ yarn-error.log*
 
 # Optional eslint cache
 .eslintcache
+
+/electron
+/out
+/build
+/node_modules
+/cypress
