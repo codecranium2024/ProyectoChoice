@@ -46,7 +46,6 @@ const appPages: AppPage[] = [
     //   { title: 'Panel', url: 'Panel' },
     // ]
   },*/
-
   {
     title: 'Proyectos',
     url: '/Proyectos',

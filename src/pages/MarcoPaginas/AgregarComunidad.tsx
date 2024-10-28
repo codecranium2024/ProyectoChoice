@@ -3,7 +3,7 @@ import { IonPage, IonContent, IonTabs, IonTab, IonTabBar, IonTabButton, IonIcon,
 //import { earthOutline, cogOutline, bookOutline, waterOutline, fitnessOutline, peopleOutline, leafOutline } from 'ionicons/icons';
 import { add, bookOutline, cog, cogOutline, earthOutline, fitnessOutline, globeOutline, leafOutline, peopleOutline, waterOutline } from 'ionicons/icons';
 import { FaRecycle } from "react-icons/fa";
-import { PiCowFill, PiPlantFill} from "react-icons/pi";
+import { PiCowFill, PiPlantFill } from "react-icons/pi";
 
 function AgregarComunidades() {
   // estructura de formularios
@@ -218,160 +218,160 @@ const addRow = () => {
     newRows[index][field] = value;
     setRows(newRows);
   };
-  /*Fin tabla de agricultura*/ 
+  /*Fin tabla de agricultura*/
 
 
   /*Actividades Pecuarias*/
   const [rows2, setRows2] = useState([{ tipo: 'Aves', frecuencia: '', alimento: '', area: '', venta: '', precio: '', donde: '' },
-    { tipo: 'Cerdos', frecuencia: '', alimento: '', area: '', venta: '', precio: '', donde: '' },
-    { tipo: 'Vacas/toros', frecuencia: '', alimento: '', area: '', venta: '', precio: '', donde: '' }]);
+  { tipo: 'Cerdos', frecuencia: '', alimento: '', area: '', venta: '', precio: '', donde: '' },
+  { tipo: 'Vacas/toros', frecuencia: '', alimento: '', area: '', venta: '', precio: '', donde: '' }]);
 
   // Función para agregar una nueva fila
   const addRow2 = () => {
-  setRows2([...rows2, { tipo: '', frecuencia: '', alimento: '', area: '', venta: '', precio: '', donde: '' }]);
+    setRows2([...rows2, { tipo: '', frecuencia: '', alimento: '', area: '', venta: '', precio: '', donde: '' }]);
   };
 
   // Función para manejar cambios en los campos de entrada
   const handleInputChange2 = (index: number, field: string, value: string) => {
-  const newRows = [...rows2];
-  newRows[index][field] = value;
-  setRows2(newRows);
+    const newRows = [...rows2];
+    newRows[index][field] = value;
+    setRows2(newRows);
   };
 
   const handleCheckboxChange2 = (index: number, field: string, value: boolean) => {
-  const newRows2 = [...rows2];
-  newRows2[index][field] = value;
-  setRows2(newRows2);
+    const newRows2 = [...rows2];
+    newRows2[index][field] = value;
+    setRows2(newRows2);
   };
   /*Fin Actividades Pecuarias*/
-   const [comercializacionProductos, setComercializacionProductos] = useState(''); // Campo de texto
-   const [terrenoPropio, setTerrenoPropio] = useState(false);  // Checkbox
-   const [terrenoPrestado, setTerrenoPrestado] = useState(false);  // Checkbox
-   const [terrenoArrendado, setTerrenoArrendado] = useState(false);  // Checkbox
-   const [costoArrendamiento, setCostoArrendamiento] = useState(''); // Campo de texto
-   const [periodoArrendamiento, setPeriodoArrendamiento] = useState(''); // Campo de texto
-   const [momentoSiembra, setMomentoSiembra] = useState('');  // Campo de texto
-   const [plagasEnfermedades, setPlagasEnfermedades] = useState('');  // Campo de texto
-   const [mesesPlagas, setMesesPlagas] = useState('');  // Campo de texto
-   const [cultivosAnteriores, setCultivosAnteriores] = useState('');  // Campo de texto
-   const [razonNoSiembra, setRazonNoSiembra] = useState('');  // Campo de texto
-   const [nuevosCultivos, setNuevosCultivos] = useState('');  // Campo de texto
-   const [sistemasProductivos, setSistemasProductivos] = useState('');  // Campo de texto
-   const [accionesSequía, setAccionesSequía] = useState('');  // Campo de texto
-   const [accionesLluvia, setAccionesLluvia] = useState('');  // Campo de texto
-   const [perdidaCosechas, setPerdidaCosechas] = useState(false);  // Checkbox
-   const [añoPerdidaCosechas, setAñoPerdidaCosechas] = useState('');  // Campo de texto
-   const [causaPerdidaCosechas, setCausaPerdidaCosechas] = useState('');  // Campo de texto
-   const [capacitacionesAgricultura, setCapacitacionesAgricultura] = useState(false);  // Checkbox
-   const [tipoCapacitacion, setTipoCapacitacion] = useState('');  // Campo de texto
-   const [organizacionCapacitacion, setOrganizacionCapacitacion] = useState('');  // Campo de texto
-   const [actividadSinSiembra, setActividadSinSiembra] = useState('');  // Campo de texto
-   const [usoPesticidas, setUsoPesticidas] = useState(false);  // Checkbox
-   const [usoInsecticidas, setUsoInsecticidas] = useState(false);  // Checkbox
-   const [usoHerbicidas, setUsoHerbicidas] = useState(false);  // Checkbox
-   const [usoFungicidas, setUsoFungicidas] = useState(false);  // Campo de texto
-   const [usoFertilizantes, setUsoFertilizantes] = useState(false);  // Campo de texto
-   const [usoOtros, setUsoOtros] = useState('');  // Campo de texto
+  const [comercializacionProductos, setComercializacionProductos] = useState(''); // Campo de texto
+  const [terrenoPropio, setTerrenoPropio] = useState(false);  // Checkbox
+  const [terrenoPrestado, setTerrenoPrestado] = useState(false);  // Checkbox
+  const [terrenoArrendado, setTerrenoArrendado] = useState(false);  // Checkbox
+  const [costoArrendamiento, setCostoArrendamiento] = useState(''); // Campo de texto
+  const [periodoArrendamiento, setPeriodoArrendamiento] = useState(''); // Campo de texto
+  const [momentoSiembra, setMomentoSiembra] = useState('');  // Campo de texto
+  const [plagasEnfermedades, setPlagasEnfermedades] = useState('');  // Campo de texto
+  const [mesesPlagas, setMesesPlagas] = useState('');  // Campo de texto
+  const [cultivosAnteriores, setCultivosAnteriores] = useState('');  // Campo de texto
+  const [razonNoSiembra, setRazonNoSiembra] = useState('');  // Campo de texto
+  const [nuevosCultivos, setNuevosCultivos] = useState('');  // Campo de texto
+  const [sistemasProductivos, setSistemasProductivos] = useState('');  // Campo de texto
+  const [accionesSequía, setAccionesSequía] = useState('');  // Campo de texto
+  const [accionesLluvia, setAccionesLluvia] = useState('');  // Campo de texto
+  const [perdidaCosechas, setPerdidaCosechas] = useState(false);  // Checkbox
+  const [añoPerdidaCosechas, setAñoPerdidaCosechas] = useState('');  // Campo de texto
+  const [causaPerdidaCosechas, setCausaPerdidaCosechas] = useState('');  // Campo de texto
+  const [capacitacionesAgricultura, setCapacitacionesAgricultura] = useState(false);  // Checkbox
+  const [tipoCapacitacion, setTipoCapacitacion] = useState('');  // Campo de texto
+  const [organizacionCapacitacion, setOrganizacionCapacitacion] = useState('');  // Campo de texto
+  const [actividadSinSiembra, setActividadSinSiembra] = useState('');  // Campo de texto
+  const [usoPesticidas, setUsoPesticidas] = useState(false);  // Checkbox
+  const [usoInsecticidas, setUsoInsecticidas] = useState(false);  // Checkbox
+  const [usoHerbicidas, setUsoHerbicidas] = useState(false);  // Checkbox
+  const [usoFungicidas, setUsoFungicidas] = useState(false);  // Campo de texto
+  const [usoFertilizantes, setUsoFertilizantes] = useState(false);  // Campo de texto
+  const [usoOtros, setUsoOtros] = useState('');  // Campo de texto
 
-   const [alimentoAnimales, setAlimentoAnimales] = useState('');  // Campo de texto
-   const [planesProfilacticos, setPlanesProfilacticos] = useState(false);  // Checkbox
-   const [enfermedadesAnimales, setEnfermedadesAnimales] = useState('');  // Campo de texto
-   const [mesesEnfermedad, setMesesEnfermedad] = useState('');  // Campo de texto
-   const [capacitacionesAnimales, setCapacitacionesAnimales] = useState(false);  // Checkbox
-   const [tipoCapacitacionAnimales, setTipoCapacitacionAnimales] = useState('');  // Campo de texto
+  const [alimentoAnimales, setAlimentoAnimales] = useState('');  // Campo de texto
+  const [planesProfilacticos, setPlanesProfilacticos] = useState(false);  // Checkbox
+  const [enfermedadesAnimales, setEnfermedadesAnimales] = useState('');  // Campo de texto
+  const [mesesEnfermedad, setMesesEnfermedad] = useState('');  // Campo de texto
+  const [capacitacionesAnimales, setCapacitacionesAnimales] = useState(false);  // Checkbox
+  const [tipoCapacitacionAnimales, setTipoCapacitacionAnimales] = useState('');  // Campo de texto
 
-   const [bosqueComunitario, setBosqueComunitario] = useState(false);  // Checkbox
-   const [dimensionesBosque, setDimensionesBosque] = useState('');  // Campo de texto
-   const [especiesArboles, setEspeciesArboles] = useState('');  // Campo de texto
-   const [especiesPlantas, setEspeciesPlantas] = useState('');  // Campo de texto
-   const [incentivosForestales, setIncentivosForestales] = useState(false);  // Checkbox
-   const [bosquesPotenciales, setBosquesPotenciales] = useState('');  // Campo de texto
-   const [viveros, setViveros] = useState(false);  // Checkbox
-   const [reforestado, setReforestado] = useState(false);  // Checkbox
-   const [areaReforestada, setAreaReforestada] = useState('');  // Campo de texto
-   const [impulsorReforestacion, setImpulsorReforestacion] = useState('');  // Campo de texto
-   const [duenoTierraBosque, setDuenoTierraBosque] = useState('');  // Campo de texto
-   const [duenosMotosierras, setDuenosMotosierras] = useState(false);  // Checkbox
-   const [talaParaCultivar, setTalaParaCultivar] = useState(false);  // Checkbox
-   const [rozasQuemas, setRozasQuemas] = useState('');  // Campo de texto
-   const [incendiosForestales, setIncendiosForestales] = useState(false);  // Checkbox
-   const [razonIncendios, setRazonIncendios] = useState('');  // Campo de texto
-   const [areaIncendio, setAreaIncendio] = useState('');  // Campo de texto
-   const [fechaIncendio, setFechaIncendio] = useState('');  // Campo de texto
-   const [fuentesAgua, setFuentesAgua] = useState(false);  // Checkbox
-   const [numNacimientos, setNumNacimientos] = useState('');  // Campo de texto
-   const [duenoTierraFuentes, setDuenoTierraFuentes] = useState('');  // Campo de texto
-   const [accionesConservacionAgua, setAccionesConservacionAgua] = useState('');  // Campo de texto
-   const [numPozos, setNumPozos] = useState('');  // Campo de texto
-   const [numRios, setNumRios] = useState('');  // Campo de texto
-   const [numLagunas, setNumLagunas] = useState('');  // Campo de texto
-   const [otrasFuentesAgua, setOtrasFuentesAgua] = useState('');  // Campo de texto
-   const [proyectoMedioAmbiental, setProyectoMedioAmbiental] = useState(false);  // Checkbox
-   const [accionesProyecto, setAccionesProyecto] = useState('');  // Campo de texto
-   const [accionesConservacionAmbiente, setAccionesConservacionAmbiente] = useState('');  // Campo de texto
-   const [animalesSilvestres, setAnimalesSilvestres] = useState('');  // Campo de texto
-   const [animalesPorTemporada, setAnimalesPorTemporada] = useState('');  // Campo de texto
-   const [plantasExtintas, setPlantasExtintas] = useState('');  // Campo de texto
-   const [plantasDificiles, setPlantasDificiles] = useState('');  // Campo de texto
-   const [desastreNatural, setDesastreNatural] = useState(false);  // Checkbox
-   const [anioDesastre, setAnioDesastre] = useState('');  // Campo de texto
-   const [tipoDesastre, setTipoDesastre] = useState('');  // Campo de texto
-   const [respuestaDesastre, setRespuestaDesastre] = useState('');  // Campo de texto
-   const [colred, setColred] = useState(false);  // Checkbox
-   const [otrasInstituciones, setOtrasInstituciones] = useState('');  // Campo de texto
-   const [amenazaDesastre, setAmenazaDesastre] = useState('');  // Campo de texto
+  const [bosqueComunitario, setBosqueComunitario] = useState(false);  // Checkbox
+  const [dimensionesBosque, setDimensionesBosque] = useState('');  // Campo de texto
+  const [especiesArboles, setEspeciesArboles] = useState('');  // Campo de texto
+  const [especiesPlantas, setEspeciesPlantas] = useState('');  // Campo de texto
+  const [incentivosForestales, setIncentivosForestales] = useState(false);  // Checkbox
+  const [bosquesPotenciales, setBosquesPotenciales] = useState('');  // Campo de texto
+  const [viveros, setViveros] = useState(false);  // Checkbox
+  const [reforestado, setReforestado] = useState(false);  // Checkbox
+  const [areaReforestada, setAreaReforestada] = useState('');  // Campo de texto
+  const [impulsorReforestacion, setImpulsorReforestacion] = useState('');  // Campo de texto
+  const [duenoTierraBosque, setDuenoTierraBosque] = useState('');  // Campo de texto
+  const [duenosMotosierras, setDuenosMotosierras] = useState(false);  // Checkbox
+  const [talaParaCultivar, setTalaParaCultivar] = useState(false);  // Checkbox
+  const [rozasQuemas, setRozasQuemas] = useState('');  // Campo de texto
+  const [incendiosForestales, setIncendiosForestales] = useState(false);  // Checkbox
+  const [razonIncendios, setRazonIncendios] = useState('');  // Campo de texto
+  const [areaIncendio, setAreaIncendio] = useState('');  // Campo de texto
+  const [fechaIncendio, setFechaIncendio] = useState('');  // Campo de texto
+  const [fuentesAgua, setFuentesAgua] = useState(false);  // Checkbox
+  const [numNacimientos, setNumNacimientos] = useState('');  // Campo de texto
+  const [duenoTierraFuentes, setDuenoTierraFuentes] = useState('');  // Campo de texto
+  const [accionesConservacionAgua, setAccionesConservacionAgua] = useState('');  // Campo de texto
+  const [numPozos, setNumPozos] = useState('');  // Campo de texto
+  const [numRios, setNumRios] = useState('');  // Campo de texto
+  const [numLagunas, setNumLagunas] = useState('');  // Campo de texto
+  const [otrasFuentesAgua, setOtrasFuentesAgua] = useState('');  // Campo de texto
+  const [proyectoMedioAmbiental, setProyectoMedioAmbiental] = useState(false);  // Checkbox
+  const [accionesProyecto, setAccionesProyecto] = useState('');  // Campo de texto
+  const [accionesConservacionAmbiente, setAccionesConservacionAmbiente] = useState('');  // Campo de texto
+  const [animalesSilvestres, setAnimalesSilvestres] = useState('');  // Campo de texto
+  const [animalesPorTemporada, setAnimalesPorTemporada] = useState('');  // Campo de texto
+  const [plantasExtintas, setPlantasExtintas] = useState('');  // Campo de texto
+  const [plantasDificiles, setPlantasDificiles] = useState('');  // Campo de texto
+  const [desastreNatural, setDesastreNatural] = useState(false);  // Checkbox
+  const [anioDesastre, setAnioDesastre] = useState('');  // Campo de texto
+  const [tipoDesastre, setTipoDesastre] = useState('');  // Campo de texto
+  const [respuestaDesastre, setRespuestaDesastre] = useState('');  // Campo de texto
+  const [colred, setColred] = useState(false);  // Checkbox
+  const [otrasInstituciones, setOtrasInstituciones] = useState('');  // Campo de texto
+  const [amenazaDesastre, setAmenazaDesastre] = useState('');  // Campo de texto
 
   // Estado para la alerta
-const [showAlert, setShowAlert] = useState(false);
-const [continueEditing, setContinueEditing] = useState(false);
+  const [showAlert, setShowAlert] = useState(false);
+  const [continueEditing, setContinueEditing] = useState(false);
 
-// Función para guardar los datos en el localStorage
-const guardarEnLocalStorage = () => {
-  const data = {
-    nombre_comunidad: Comunidad,
-    nombre_municipio: Municipio,
-    nombre_aldea: Aldea,
-    ubicacion_real: Ubicacion,
-    presidente_cocode: PresidenteCOCODE,
-    telefono_contacto1: TelefonoContacto,
-    otro_lider: OtroLider,
-    telefono_contacto2: TelefonoOtroLider,
-    tipo_transporte: Transporte,
-    numero_familias: NumeroFamilias,
-    numero_viviendas: NumeroViviendas,
-    numero_personas: NumeroPersonas,
-    certeza_juridica_tierra: CertezaJuridica,
-    conflictos_tierra: ConflictosTierra,
-    dimension_lotes: DimensionesLotes,
-    dimension_trabajadores: DimensionesTrabajaderos,
-    tierra_comunitaria: TierraComunitaria,
-    idiomas_comunidad: Idiomas,
-    fuentes_empleo: FuentesEmpleo,
-    recreacion_comunidad: Recreacion,
-    potencial_turistico: PotencialTuristico,
-    tipo_edificios_publicos: EdificiosPublicos,
-    hay_inseguridad: Inseguridad,
-    tipo_inseguridad: TipoInseguridad,
-    grupos_delincuenciales: GruposDelincuenciales,
-    personas_otro_lugar: PersonasOtrosMunicipios,
-    ocupacion_otro_lugar: TipoTrabajo,  // Este estaba faltando
-    personas_en_eeuu: PersonasEEUU,
-    cantidad_personas_eeuu: CantidadPersonasEEUU,
-    menores_en_eeuu: MenoresEEUU,
-    edad_empieza_trabajar_hombres: EdadTrabajoHombres,
-    edad_empieza_trabajar_mujeres: EdadTrabajoMujeres,
-    tipo_empleo: TipoTrabajo,
-    existen_jubilados: Jubilados,
-    cantidad_jubilados: CantidadJubilados,
-    institucion_jubilados: InstitucionJubilados,
-    ocupaciones_tradicionales_mujeres: OcupacionesMujeres,
-    ocupaciones_tradicionales_hombres: OcupacionesHombres
+  // Función para guardar los datos en el localStorage
+  const guardarEnLocalStorage = () => {
+    const data = {
+      nombre_comunidad: Comunidad,
+      nombre_municipio: Municipio,
+      nombre_aldea: Aldea,
+      ubicacion_real: Ubicacion,
+      presidente_cocode: PresidenteCOCODE,
+      telefono_contacto1: TelefonoContacto,
+      otro_lider: OtroLider,
+      telefono_contacto2: TelefonoOtroLider,
+      tipo_transporte: Transporte,
+      numero_familias: NumeroFamilias,
+      numero_viviendas: NumeroViviendas,
+      numero_personas: NumeroPersonas,
+      certeza_juridica_tierra: CertezaJuridica,
+      conflictos_tierra: ConflictosTierra,
+      dimension_lotes: DimensionesLotes,
+      dimension_trabajadores: DimensionesTrabajaderos,
+      tierra_comunitaria: TierraComunitaria,
+      idiomas_comunidad: Idiomas,
+      fuentes_empleo: FuentesEmpleo,
+      recreacion_comunidad: Recreacion,
+      potencial_turistico: PotencialTuristico,
+      tipo_edificios_publicos: EdificiosPublicos,
+      hay_inseguridad: Inseguridad,
+      tipo_inseguridad: TipoInseguridad,
+      grupos_delincuenciales: GruposDelincuenciales,
+      personas_otro_lugar: PersonasOtrosMunicipios,
+      ocupacion_otro_lugar: TipoTrabajo,  // Este estaba faltando
+      personas_en_eeuu: PersonasEEUU,
+      cantidad_personas_eeuu: CantidadPersonasEEUU,
+      menores_en_eeuu: MenoresEEUU,
+      edad_empieza_trabajar_hombres: EdadTrabajoHombres,
+      edad_empieza_trabajar_mujeres: EdadTrabajoMujeres,
+      tipo_empleo: TipoTrabajo,
+      existen_jubilados: Jubilados,
+      cantidad_jubilados: CantidadJubilados,
+      institucion_jubilados: InstitucionJubilados,
+      ocupaciones_tradicionales_mujeres: OcupacionesMujeres,
+      ocupaciones_tradicionales_hombres: OcupacionesHombres
+    };
+
+    // Guardar los datos en el localStorage
+    localStorage.setItem('formData', JSON.stringify(data));
+    console.log("Datos guardados en localStorage:", data);
   };
-  
-  // Guardar los datos en el localStorage
-  localStorage.setItem('formData', JSON.stringify(data));
-  console.log("Datos guardados en localStorage:", data);
-};
 
   // Función para enviar los datos a la base de datos
   const enviarABaseDeDatos = async () => {
@@ -390,39 +390,40 @@ const guardarEnLocalStorage = () => {
           body: JSON.stringify(data),
         });
 
-      if (response.ok) {
-        console.log("Datos enviados a la base de datos correctamente.");
-        localStorage.removeItem('formData');
-        console.log("Datos borrados de localStorage.");
-      } else {
-        const errorMsg = await response.text();
-        console.error("Error al enviar los datos a la base de datos:", errorMsg);
+        if (response.ok) {
+          console.log("Datos enviados a la base de datos correctamente.");
+          localStorage.removeItem('formData');
+          console.log("Datos borrados de localStorage.");
+        } else {
+          const errorMsg = await response.text();
+          console.error("Error al enviar los datos a la base de datos:", errorMsg);
+        }
+      } catch (error) {
+        console.error("Error en la solicitud:", error);
       }
-    } catch (error) {
-      console.error("Error en la solicitud:", error);
+    } else {
+      console.log("No hay datos en localStorage para enviar.");
     }
-  } else {
-    console.log("No hay datos en localStorage para enviar.");
-  }
-};
+  };
 
-// Manejar el clic en el botón 'Guardar'
-const handleGuardarClick = () => {
-  guardarEnLocalStorage();
-  setShowAlert(true);  // Mostrar la alerta para preguntar si quiere continuar
-};
+  // Manejar el clic en el botón 'Guardar'
+  const handleGuardarClick = () => {
+    guardarEnLocalStorage();
+    setShowAlert(true);  // Mostrar la alerta para preguntar si quiere continuar
+  };
 
-// Manejar la respuesta de la alerta
-const handleAlertResponse = (continueEditing) => {
-  setContinueEditing(continueEditing);
-  setShowAlert(false);
+  // Manejar la respuesta de la alerta
+  const handleAlertResponse = (continueEditing) => {
+    setContinueEditing(continueEditing);
+    setShowAlert(false);
 
-  if (!continueEditing) {
-    enviarABaseDeDatos();  // Si el usuario elige no continuar editando, enviar datos a la base de datos
-  }
-};
+    if (!continueEditing) {
+      enviarABaseDeDatos();  // Si el usuario elige no continuar editando, enviar datos a la base de datos
+    }
+  };
+  //
+  
 
-   
   return (
     <IonPage className="pg">
       <h1 className='TituloPagina'>Crear comunidad</h1>
@@ -465,6 +466,7 @@ const handleAlertResponse = (continueEditing) => {
               <IonRow className="FilaTextBox">
                 <h3 className="labelForm">4. Ubicación:</h3>
                 <input onChange={e => setUbicacion(e.target.value || '')} type="text" className='TextBox' />
+                
               </IonRow>
 
 
@@ -1661,59 +1663,59 @@ const handleAlertResponse = (continueEditing) => {
                   <IonCol>Donde se Venden</IonCol>
                 </IonRow>
 
-                  {rows2.map((row, index) => (
-                    <IonRow key={index}>
-                      <IonCol>
-            <IonInput
-              value={row.tipo}
-              placeholder="Tipo de Producción"
-              onIonChange={(e) => handleInputChange(index, 'tipo', e.detail.value!)}
-            />
-          </IonCol>
-                      <IonCol>
-                        <IonInput
-                          value={row.frecuencia}
-                          placeholder="Frecuencia"
-                          onIonChange={(e) => handleInputChange(index, 'frecuencia', e.detail.value!)}
-                        />
-                      </IonCol>
-                      <IonCol>
-                        <IonInput
-                          value={row.alimento}
-                          placeholder="Alimento"
-                          onIonChange={(e) => handleInputChange(index, 'alimento', e.detail.value!)}
-                        />
-                      </IonCol>
-                      <IonCol>
-                        <IonInput
-                          value={row.area}
-                          placeholder="Área"
-                          onIonChange={(e) => handleInputChange(index, 'area', e.detail.value!)}
-                        />
-                      </IonCol>
-                      <IonCol>
-                        <IonInput
-                          value={row.venta}
-                          placeholder="Venta"
-                          onIonChange={(e) => handleInputChange(index, 'venta', e.detail.value!)}
-                        />
-                      </IonCol>
-                      <IonCol>
-                        <IonInput
-                          value={row.precio}
-                          placeholder="Precio"
-                          onIonChange={(e) => handleInputChange(index, 'precio', e.detail.value!)}
-                        />
-                      </IonCol>
-                      <IonCol>
-                        <IonInput
-                          value={row.donde}
-                          placeholder="Donde se Venden"
-                          onIonChange={(e) => handleInputChange(index, 'donde', e.detail.value!)}
-                        />
-                      </IonCol>
-                    </IonRow>
-                  ))}
+                {rows2.map((row, index) => (
+                  <IonRow key={index}>
+                    <IonCol>
+                      <IonInput
+                        value={row.tipo}
+                        placeholder="Tipo de Producción"
+                        onIonChange={(e) => handleInputChange(index, 'tipo', e.detail.value!)}
+                      />
+                    </IonCol>
+                    <IonCol>
+                      <IonInput
+                        value={row.frecuencia}
+                        placeholder="Frecuencia"
+                        onIonChange={(e) => handleInputChange(index, 'frecuencia', e.detail.value!)}
+                      />
+                    </IonCol>
+                    <IonCol>
+                      <IonInput
+                        value={row.alimento}
+                        placeholder="Alimento"
+                        onIonChange={(e) => handleInputChange(index, 'alimento', e.detail.value!)}
+                      />
+                    </IonCol>
+                    <IonCol>
+                      <IonInput
+                        value={row.area}
+                        placeholder="Área"
+                        onIonChange={(e) => handleInputChange(index, 'area', e.detail.value!)}
+                      />
+                    </IonCol>
+                    <IonCol>
+                      <IonInput
+                        value={row.venta}
+                        placeholder="Venta"
+                        onIonChange={(e) => handleInputChange(index, 'venta', e.detail.value!)}
+                      />
+                    </IonCol>
+                    <IonCol>
+                      <IonInput
+                        value={row.precio}
+                        placeholder="Precio"
+                        onIonChange={(e) => handleInputChange(index, 'precio', e.detail.value!)}
+                      />
+                    </IonCol>
+                    <IonCol>
+                      <IonInput
+                        value={row.donde}
+                        placeholder="Donde se Venden"
+                        onIonChange={(e) => handleInputChange(index, 'donde', e.detail.value!)}
+                      />
+                    </IonCol>
+                  </IonRow>
+                ))}
                 <IonRow>
                   <IonCol>
                     <IonButton color="secondary" onClick={addRow2}><IonIcon slot="start" icon={add}></IonIcon>Agregar Fila</IonButton>
@@ -1972,29 +1974,29 @@ const handleAlertResponse = (continueEditing) => {
       </IonContent>
 
       <IonRow>
-          <IonButton onClick={handleGuardarClick}>Guardar</IonButton>
-          <IonButton color="danger" onClick={() => { /* Lógica de cancelación */ }}>
-            Cancelar
-          </IonButton>
-        </IonRow>
+        <IonButton onClick={handleGuardarClick}>Guardar</IonButton>
+        <IonButton color="danger" onClick={() => { /* Lógica de cancelación */ }}>
+          Cancelar
+        </IonButton>
+      </IonRow>
 
-        {/* Alerta que se muestra cuando el usuario presiona 'Guardar' */}
-        <IonAlert
-          isOpen={showAlert}
-          onDidDismiss={() => setShowAlert(false)}
-          header={'¿Desea continuar?'}
-          message={'¿Quieres seguir editando o registrar la información?'}
-          buttons={[
-            {
-              text: 'Seguir editando',
-              handler: () => handleAlertResponse(true),
-            },
-            {
-              text: 'Registrar',
-              handler: () => handleAlertResponse(false),
-            },
-          ]}
-        />
+      {/* Alerta que se muestra cuando el usuario presiona 'Guardar' */}
+      <IonAlert
+        isOpen={showAlert}
+        onDidDismiss={() => setShowAlert(false)}
+        header={'¿Desea continuar?'}
+        message={'¿Quieres seguir editando o registrar la información?'}
+        buttons={[
+          {
+            text: 'Seguir editando',
+            handler: () => handleAlertResponse(true),
+          },
+          {
+            text: 'Registrar',
+            handler: () => handleAlertResponse(false),
+          },
+        ]}
+      />
     </IonPage>
   );
 }
