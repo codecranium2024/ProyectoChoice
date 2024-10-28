@@ -10,7 +10,7 @@
 
 # production
 /dist
-/electron
+/src/pages/MarcoPaginas/AgregarComunidad.tsx
 # misc
 .DS_Store
 .env.local
