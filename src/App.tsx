@@ -6,7 +6,6 @@ import Menu from './components/Menu';
 import Page from './pages/Page';
 import Login from './components/WilfredoComp/Login';
 import ListadoGeneral from './components/RomeoComp/Comunidad/ListadoGeneral';
-import Panel from './components/RomeoComp/Panel/Panel';
 import Comunidad from './components/RomeoComp/Comunidad/Comunidad1';
 import VisualizarComunidades from './pages/MarcoPaginas/AgregarComunidad';
 import { Configuraciones } from './pages/MarcoPaginas/Configuraciones';
@@ -122,9 +121,6 @@ const App: React.FC = () => {
               </Route>
               <Route path="/InformacionComunitaria" exact={true}>
                 <InformacionComunitaria />
-              </Route>
-              <Route path="/panel" exact={true}>
-                <Panel />
               </Route>
               <Route path="/comunidad" exact={true}>
                 <Comunidad />

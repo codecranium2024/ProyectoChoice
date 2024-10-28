@@ -37,7 +37,7 @@ interface AppPage {
 
 // Configuración de páginas para el menú, con "Roles y Especialidades" combinados en un solo submenú
 const appPages: AppPage[] = [
-  {
+  /*{
     title: 'Panel',
     url: '/Panel',
     iosIcon: appsOutline,
@@ -45,7 +45,7 @@ const appPages: AppPage[] = [
     subPages: [
       { title: 'Panel', url: 'Panel' },
     ]
-  },
+  },*/
   {
     title: 'Proyectos',
     url: '/Proyectos',
