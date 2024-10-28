@@ -259,7 +259,7 @@ function AgregarComunidades() {
    const [mesesEnfermedad, setMesesEnfermedad] = useState('');  // Campo de texto
    const [capacitacionesAnimales, setCapacitacionesAnimales] = useState(false);  // Checkbox
    const [tipoCapacitacionAnimales, setTipoCapacitacionAnimales] = useState('');  // Campo de texto
-
+    //seccion de ecoligia
    const [bosqueComunitario, setBosqueComunitario] = useState(false);  // Checkbox
    const [dimensionesBosque, setDimensionesBosque] = useState('');  // Campo de texto
    const [especiesArboles, setEspeciesArboles] = useState('');  // Campo de texto
@@ -496,7 +496,48 @@ const guardarEnLocalStorage = () => {
     enfermedades_animales:enfermedadesAnimales, 
     meses_enfermedad:mesesEnfermedad, 
     capacitaciones_animales:capacitacionesAnimales, 
-    tipo_capacitacion_animales:tipoCapacitacionAnimales
+    tipo_capacitacion_animales:tipoCapacitacionAnimales,
+    //seccion de ecologia
+    bosque_comunitario:bosqueComunitario,
+    dimensiones_bosque:dimensionesBosque, 
+    especies_arboles:especiesArboles, 
+    especies_plantas:especiesPlantas, 
+    incentivos_forestales:incentivosForestales, 
+    bosques_potenciales:bosquesPotenciales,
+    viveros :viveros, 
+    reforestado:reforestado, 
+    area_reforestada:areaReforestada, 
+    impulsor_reforestacion:impulsorReforestacion, 
+    dueno_tierra_bosque:duenoTierraBosque, 
+    duenos_motosierras:duenosMotosierras, 
+    tala_para_cultivar:talaParaCultivar,
+    rozas_quemas :rozasQuemas, 
+    incendios_forestales :incendiosForestales, 
+    razon_incendios:razonIncendios, 
+    area_incendio:areaIncendio, 
+    fecha_incendio:fechaIncendio,
+    fuentes_agua:fuentesAgua,
+    num_nacimientos:numNacimientos,
+    dueno_tierra_fuentes:duenoTierraFuentes,
+    acciones_conservacion_agua:accionesConservacionAgua, 
+    num_pozos:numPozos, 
+    num_rios:numRios, 
+    num_lagunas:numLagunas, 
+    otras_fuentes_agua:otrasFuentesAgua, 
+    proyecto_medio_ambiental:proyectoMedioAmbiental, 
+    acciones_proyecto:accionesProyecto, 
+    acciones_conservacion_ambiente:accionesConservacionAmbiente, 
+    animales_silvestres:animalesSilvestres, 
+    animales_por_temporada:animalesPorTemporada,
+    plantas_extintas:plantasExtintas, 
+    plantas_dificiles:plantasDificiles, 
+    desastre_natural:desastreNatural, 
+    ano_desastre:anioDesastre,
+    tipo_desastre :tipoDesastre, 
+    respuesta_desastre :respuestaDesastre, 
+    colred :colred, 
+    otras_instituciones:otrasInstituciones,
+    amenaza_desastre:amenazaDesastre,
   };
   
   // Guardar los datos en el localStorage

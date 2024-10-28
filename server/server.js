@@ -423,7 +423,11 @@ app.post('/comunidadr', async (req, res) => {
     acciones_sequia,acciones_lluvia,perdida_cosechas,ano_perdida_cosechas,causa_perdida_cosechas,capacitaciones_agricultura ,tipo_capacitacion,organizacion_capacitacion,actividad_sin_siembra,uso_pesticidas ,uso_insecticidas,
     uso_herbicidas,uso_fungicidas,uso_fertilizantes,uso_otros,
     //seccion de pecuarias
-    pecuarias,alimento_animales,planes_profilacticos,enfermedades_animales,meses_enfermedad,capacitaciones_animales , tipo_capacitacion_animales
+    pecuarias,alimento_animales,planes_profilacticos,enfermedades_animales,meses_enfermedad,capacitaciones_animales , tipo_capacitacion_animales,
+    //seccion de ecologia
+    bosque_comunitario,dimensiones_bosque,especies_arboles,especies_plantas ,incentivos_forestales,bosques_potenciales,viveros,reforestado,area_reforestada,impulsor_reforestacion,dueno_tierra_bosque,duenos_motosierras,tala_para_cultivar,rozas_quemas,incendios_forestales,razon_incendios,
+    area_incendio,fecha_incendio,fuentes_agua,num_nacimientos,dueno_tierra_fuentes,acciones_conservacion_agua,num_pozos,num_rios,num_lagunas,otras_fuentes_agua,proyecto_medio_ambiental,acciones_proyecto,acciones_conservacion_ambiente,animales_silvestres,animales_por_temporada,plantas_extintas,
+    plantas_dificiles,desastre_natural ,ano_desastre,tipo_desastre,respuesta_desastre,colred,otras_instituciones,amenaza_desastre
 
   } = req.body;
 
@@ -459,7 +463,10 @@ app.post('/comunidadr', async (req, res) => {
     acciones_sequia|| null,acciones_lluvia|| null,perdida_cosechas|| null,ano_perdida_cosechas|| null,causa_perdida_cosechas|| null,capacitaciones_agricultura|| null ,tipo_capacitacion|| null,organizacion_capacitacion|| null,actividad_sin_siembra|| null,
     uso_pesticidas|| null ,uso_insecticidas|| null,
     uso_herbicidas|| null,uso_fungicidas|| null,uso_fertilizantes|| null,uso_otros|| null,
-    pecuarias|| null,alimento_animales|| null,planes_profilacticos|| null,enfermedades_animales|| null,meses_enfermedad|| null,capacitaciones_animales|| null , tipo_capacitacion_animales|| null
+    pecuarias|| null,alimento_animales|| null,planes_profilacticos|| null,enfermedades_animales|| null,meses_enfermedad|| null,capacitaciones_animales|| null , tipo_capacitacion_animales|| null,
+    bosque_comunitario|| null,dimensiones_bosque|| null,especies_arboles|| null,especies_plantas|| null ,incentivos_forestales|| null,bosques_potenciales|| null,viveros|| null,reforestado,area_reforestada|| null,impulsor_reforestacion|| null,dueno_tierra_bosque|| null,duenos_motosierras|| null,tala_para_cultivar|| null,rozas_quemas|| null,incendios_forestales|| null,razon_incendios|| null,
+    area_incendio|| null,fecha_incendio|| null,fuentes_agua|| null,num_nacimientos|| null,dueno_tierra_fuentes|| null,acciones_conservacion_agua|| null,num_pozos|| null,num_rios|| null,num_lagunas|| null,otras_fuentes_agua|| null,proyecto_medio_ambiental|| null,acciones_proyecto|| null,acciones_conservacion_ambiente|| null,animales_silvestres|| null,animales_por_temporada|| null,plantas_extintas|| null,
+    plantas_dificiles|| null,desastre_natural|| null ,ano_desastre|| null,tipo_desastre|| null,respuesta_desastre|| null,colred|| null,otras_instituciones|| null,amenaza_desastre|| null
 
   ];
 
@@ -505,8 +512,11 @@ app.post('/comunidadr', async (req, res) => {
     agricultura,comercializacion_productos,terreno_propio,terreno_prestado,terreno_arrendado,costo_arrendamiento,periodo_arrendamiento,momento_siembra,plagas_enfermedades,meses_plagas,cultivos_anteriores,razon_no_siembra,nuevos_cultivos,sistemas_productivos,
     acciones_sequia,acciones_lluvia,perdida_cosechas,ano_perdida_cosechas,causa_perdida_cosechas,capacitaciones_agricultura ,tipo_capacitacion,organizacion_capacitacion,actividad_sin_siembra,uso_pesticidas ,uso_insecticidas,
     uso_herbicidas,uso_fungicidas,uso_fertilizantes,uso_otros,
-    pecuarias,alimento_animales,planes_profilacticos,enfermedades_animales,meses_enfermedad,capacitaciones_animales , tipo_capacitacion_animales
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`;
+    pecuarias,alimento_animales,planes_profilacticos,enfermedades_animales,meses_enfermedad,capacitaciones_animales , tipo_capacitacion_animales,
+    bosque_comunitario,dimensiones_bosque,especies_arboles,especies_plantas ,incentivos_forestales,bosques_potenciales,viveros,reforestado,area_reforestada,impulsor_reforestacion,dueno_tierra_bosque,duenos_motosierras,tala_para_cultivar,rozas_quemas,incendios_forestales,razon_incendios,
+    area_incendio,fecha_incendio,fuentes_agua,num_nacimientos,dueno_tierra_fuentes,acciones_conservacion_agua,num_pozos,num_rios,num_lagunas,otras_fuentes_agua,proyecto_medio_ambiental,acciones_proyecto,acciones_conservacion_ambiente,animales_silvestres,animales_por_temporada,plantas_extintas,
+    plantas_dificiles,desastre_natural ,ano_desastre,tipo_desastre,respuesta_desastre,colred,otras_instituciones,amenaza_desastre
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`;
 
     // Ejecutar el query con los valores seguros
     await connection.execute(query, safeValues);
