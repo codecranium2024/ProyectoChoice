@@ -58,6 +58,7 @@ function AgregarComunidades() {
   const [senalTV, setSenalTV] = useState(false);                    // Checkbox
   const [cable, setCable] = useState(false);                        // Checkbox
   const [prestadorServicios, setPrestadorServicios] = useState(''); // Campo de texto
+  //seccion de educacion
   const [institucionesEducativas, setInstitucionesEducativas] = useState('');   // Campo de texto
   const [edificiosEducativos, setEdificiosEducativos] = useState('');           // Campo de texto
   const [constructorEdificios, setConstructorEdificios] = useState('');         // Campo de texto
@@ -73,6 +74,7 @@ function AgregarComunidades() {
   const [abandonoEstudios, setAbandonoEstudios] = useState(false);              // Checkbox
   const [carrerasNivelMedio, setCarrerasNivelMedio] = useState('');             // Campo de texto
   const [carrerasUniversidad, setCarrerasUniversidad] = useState('');           // Campo de texto
+  //agua y saneamiento
   const [aguaEntubada, setAguaEntubada] = useState(false);          // Checkbox
   const [pozo, setPozo] = useState(false);                          // Checkbox
   const [aguaLluvia, setAguaLluvia] = useState(false);              // Checkbox
@@ -96,10 +98,11 @@ function AgregarComunidades() {
   const [sueloCocina, setSueloCocina] = useState(false);             // Checkbox
   const [capacitacionesSaneamiento, setCapacitacionesSaneamiento] = useState(false); // Checkbox
   const [detalleCapacitaciones, setDetalleCapacitaciones] = useState('');  // Campo de texto
+  //seccion de salud y nutricion
   const [polloCongelado, setPolloCongelado] = useState(false);  // Checkbox
   const [polloCriollo, setPolloCriollo] = useState(false);      // Checkbox
   const [cerdo, setCerdo] = useState(false);                    // Checkbox
-  const [res, setRes] = useState(false);                        // Checkbox
+  const [ress, setRes] = useState(false);                        // Checkbox
   const [carneMonte, setCarneMonte] = useState(false);          // Checkbox
   const [pescado, setPescado] = useState(false);                // Checkbox
   const [maiz, setMaiz] = useState(false);                      // Checkbox
@@ -197,30 +200,6 @@ function AgregarComunidades() {
   };
   /*Fin tabla de agricultura*/ 
 
-
-  /*Actividades Pecuarias*/
-  const [rows2, setRows2] = useState([{ tipo: 'Aves', frecuencia: '', alimento: '', area: '', venta: '', precio: '', donde: '' },
-    { tipo: 'Cerdos', frecuencia: '', alimento: '', area: '', venta: '', precio: '', donde: '' },
-    { tipo: 'Vacas/toros', frecuencia: '', alimento: '', area: '', venta: '', precio: '', donde: '' }]);
-
-  // Función para agregar una nueva fila
-  const addRow2 = () => {
-  setRows2([...rows2, { tipo: '', frecuencia: '', alimento: '', area: '', venta: '', precio: '', donde: '' }]);
-  };
-
-  // Función para manejar cambios en los campos de entrada
-  const handleInputChange2 = (index: number, field: string, value: string) => {
-  const newRows = [...rows2];
-  newRows[index][field] = value;
-  setRows2(newRows);
-  };
-
-  const handleCheckboxChange2 = (index: number, field: string, value: boolean) => {
-  const newRows2 = [...rows2];
-  newRows2[index][field] = value;
-  setRows2(newRows2);
-  };
-  /*Fin Actividades Pecuarias*/
    const [comercializacionProductos, setComercializacionProductos] = useState(''); // Campo de texto
    const [terrenoPropio, setTerrenoPropio] = useState(false);  // Checkbox
    const [terrenoPrestado, setTerrenoPrestado] = useState(false);  // Checkbox
@@ -250,13 +229,37 @@ function AgregarComunidades() {
    const [usoFertilizantes, setUsoFertilizantes] = useState(false);  // Campo de texto
    const [usoOtros, setUsoOtros] = useState('');  // Campo de texto
 
+
+   /*Actividades Pecuarias*/
+  const [rows2, setRows2] = useState([{ tipo: 'Aves', frecuencia: '', alimento: '', area: '', venta: '', precio: '', donde: '' },
+    { tipo: 'Cerdos', frecuencia: '', alimento: '', area: '', venta: '', precio: '', donde: '' },
+    { tipo: 'Vacas/toros', frecuencia: '', alimento: '', area: '', venta: '', precio: '', donde: '' }]);
+
+  // Función para agregar una nueva fila
+  const addRow2 = () => {
+  setRows2([...rows2, { tipo: '', frecuencia: '', alimento: '', area: '', venta: '', precio: '', donde: '' }]);
+  };
+
+  // Función para manejar cambios en los campos de entrada
+  const handleInputChange2 = (index: number, field: string, value: string) => {
+  const newRows = [...rows2];
+  newRows[index][field] = value;
+  setRows2(newRows);
+  };
+
+  const handleCheckboxChange2 = (index: number, field: string, value: boolean) => {
+  const newRows2 = [...rows2];
+  newRows2[index][field] = value;
+  setRows2(newRows2);
+  };
+  /*Fin Actividades Pecuarias*/
    const [alimentoAnimales, setAlimentoAnimales] = useState('');  // Campo de texto
    const [planesProfilacticos, setPlanesProfilacticos] = useState(false);  // Checkbox
    const [enfermedadesAnimales, setEnfermedadesAnimales] = useState('');  // Campo de texto
    const [mesesEnfermedad, setMesesEnfermedad] = useState('');  // Campo de texto
    const [capacitacionesAnimales, setCapacitacionesAnimales] = useState(false);  // Checkbox
    const [tipoCapacitacionAnimales, setTipoCapacitacionAnimales] = useState('');  // Campo de texto
-
+    //seccion de ecoligia
    const [bosqueComunitario, setBosqueComunitario] = useState(false);  // Checkbox
    const [dimensionesBosque, setDimensionesBosque] = useState('');  // Campo de texto
    const [especiesArboles, setEspeciesArboles] = useState('');  // Campo de texto
@@ -342,7 +345,199 @@ const guardarEnLocalStorage = () => {
     cantidad_jubilados: CantidadJubilados,
     institucion_jubilados: InstitucionJubilados,
     ocupaciones_tradicionales_mujeres: OcupacionesMujeres,
-    ocupaciones_tradicionales_hombres: OcupacionesHombres
+    ocupaciones_tradicionales_hombres: OcupacionesHombres,
+    //seccion de energia electrica
+    energia_electrica: energiaElectrica,
+    tipo_servicio: tipoServicio,
+    calidad_servicio: calidadServicio,
+    costos_servicio: costosServicio,
+    prestador_servicio1: prestadorServicio,
+    familias_con_servicio: familiasConServicio,
+    senal_telefono: senalTelefono,
+    senal_internet: senalInternet,
+    senal_tv: senalTV,
+    cable: cable,
+    prestador_servicios: prestadorServicios,
+    //seccion de educacion
+    instituciones_educativas: institucionesEducativas,
+    edificios_educativos: edificiosEducativos,
+    constructor_edificios: constructorEdificios,
+    materiales_construccion: materialesConstruccion,
+    dueno_terreno: duenoTerreno,
+    deseo_preparacion: deseoPreparacion,
+    limitantes_estudio: limitantesEstudio,
+    personas_carrera_medio_hombres: personasCarreraMedioH,
+    personas_carrera_medio_mujeres: personasCarreraMedioM,
+    personas_concluyeron_medio: personasConcluyeronMedio,
+    personas_universidad_hombres: personasUniversidadH,
+    personas_universidad_mujeres: personasUniversidadM,
+    abandono_estudios: abandonoEstudios,
+    carreras_nivel_medio: carrerasNivelMedio,
+    carreras_universidad: carrerasUniversidad,
+    //seccion de agua y saneamiento
+    agua_entubada:aguaEntubada,
+    pozo:pozo,
+    agua_lluvia:aguaLluvia,
+    rio:rio,
+    laguna:laguna,
+    estanque:estanque,
+    compra_agua:compraAgua,
+    inodoro_lavable:inodoroLavable,
+    letrina:letrina,
+    pozo_ventilado:pozoVentilado,
+    campo_excretas:campoExcretas,
+    manejo_basura:manejoBasura,
+    tipo_basura:tipoBasura,
+    fuente_energia_lenia:fuenteEnergiaLenia,
+    fuente_energia_gas:fuenteEnergiaGas,
+    fuente_energia_carbon:fuenteEnergiaCarbon,
+    fuente_energia_otros:fuenteEnergiaOtros,
+    estufa_ahorradora:estufaAhorradora,
+    estufa_gas:estufaGas,
+    polleton:polleton,
+    suelo_cocina:sueloCocina,
+    capacitaciones_saneamiento:capacitacionesSaneamiento,
+    detalle_capacitaciones: detalleCapacitaciones,
+    //seccion de salud y nutricion
+    pollo_congelado: polloCongelado, 
+    pollo_criollo: polloCriollo,  
+    cerdo: cerdo  ,
+    ress: ress,  
+    carne_monte: carneMonte  ,
+    pescado: pescado  ,
+    maiz: maiz  ,
+    frijol: frijol  ,
+    verduras: verduras  ,
+    legumbres: legumbres  ,
+    pastas: pastas  ,
+    sopas: sopas  ,
+    arroz: arroz  ,
+    papa: papa  ,
+    malanga: malanga  ,
+    camote: camote  ,
+    yuca: yuca  ,
+    otro_tuberculo: otroTuberculo  ,
+    puesto_salud: puestoSalud  ,
+    frecuencia_doctor: frecuenciaDoctor  ,
+    hay_enfermero: hayEnfermero  ,
+    centro_convergencia: centroConvergencia  ,
+    uso_centro_convergencia: usoCentroConvergencia  ,
+    emergencia: Emergencia  ,
+    tipos_emergencias: tiposEmergencias  ,
+    vacunas_ninos: vacunasNinos  ,
+    frecuencia_vacunacion: frecuenciaVacunacion  ,
+    mayores_60: mayores60  ,
+    personas_capacidades_diferentes: personasCapacidadesDiferentes  ,
+    personas_abandono: personasAbandono  ,
+    ninos_0a5: ninos0a5  ,
+    ninos_6a10: ninos6a10  ,
+    ninos_11a15: ninos11a15  ,
+    ninos_16a18: ninos16a18  ,
+    recien_nacidos: recienNacidos  ,
+    ninos_muertos: ninosMuertos  ,
+    ninos_desnutridos: ninosDesnutridos  ,
+    mujeres_embarazadas: mujeresEmbarazadas  ,
+    embarazos_al_anio: embarazosAlAnio  ,
+    tipo_enfermedades: tipoEnfermedades  ,
+    num_comadronas: numComadronas  ,
+    num_promotores_salud: numPromotoresSalud  ,
+    num_curanderos: numCuranderos  ,
+    botiquin_comunitario: botiquinComunitario  ,
+    jardines_medicinales: jardinesMedicinales  ,
+    venta_medicina: ventaMedicina  ,
+    venta_bebidas_alcoholicas: ventaBebidasAlcoholicas  ,
+    num_puntos_venta_bebidas: numPuntosVentaBebidas  ,
+    tipos_bebidas_alcoholicas: tiposBebidasAlcoholicas  ,
+    consumo_tabaco: consumoTabaco  ,
+    otros_consumo: otrosConsumo,
+    // seccion de mapa de actores / organizaciones
+    maga: maga,
+    fodes: fodes,
+    mides: mides,
+    sesan: sesan,
+    llega_policia: llegaPolicia,
+    comites: comites,
+    ongList: ongList,
+    actors: actors,
+    // seccion de agricultura
+    agricultura: rows,
+    comercializacion_productos: comercializacionProductos,
+    terreno_propio: terrenoPropio,
+    terreno_prestado: terrenoPrestado, 
+    terreno_arrendado:terrenoArrendado, 
+    costo_arrendamiento:costoArrendamiento, 
+    periodo_arrendamiento:periodoArrendamiento, 
+    momento_siembra:momentoSiembra,
+    plagas_enfermedades:plagasEnfermedades, 
+    meses_plagas: mesesPlagas, 
+    cultivos_anteriores:cultivosAnteriores, 
+    razon_no_siembra:razonNoSiembra, 
+    nuevos_cultivos:nuevosCultivos, 
+    sistemas_productivos:sistemasProductivos, 
+    acciones_sequia: accionesSequía, 
+    acciones_lluvia: accionesLluvia,
+    perdida_cosechas: perdidaCosechas, 
+    ano_perdida_cosechas: añoPerdidaCosechas,
+    causa_perdida_cosechas: causaPerdidaCosechas,
+    capacitaciones_agricultura: capacitacionesAgricultura,
+    tipo_capacitacion: tipoCapacitacion, 
+    organizacion_capacitacion: organizacionCapacitacion, 
+    actividad_sin_siembra: actividadSinSiembra, 
+    uso_pesticidas: usoPesticidas,
+    uso_insecticidas: usoInsecticidas, 
+    uso_herbicidas: usoHerbicidas, 
+    uso_fungicidas: usoFungicidas,
+    uso_fertilizantes: usoFertilizantes,
+    uso_otros: usoOtros,
+    //seccion de actividades pecuarias
+    pecuarias:rows2,
+    alimento_animales:alimentoAnimales,
+    planes_profilacticos:planesProfilacticos, 
+    enfermedades_animales:enfermedadesAnimales, 
+    meses_enfermedad:mesesEnfermedad, 
+    capacitaciones_animales:capacitacionesAnimales, 
+    tipo_capacitacion_animales:tipoCapacitacionAnimales,
+    //seccion de ecologia
+    bosque_comunitario:bosqueComunitario,
+    dimensiones_bosque:dimensionesBosque, 
+    especies_arboles:especiesArboles, 
+    especies_plantas:especiesPlantas, 
+    incentivos_forestales:incentivosForestales, 
+    bosques_potenciales:bosquesPotenciales,
+    viveros :viveros, 
+    reforestado:reforestado, 
+    area_reforestada:areaReforestada, 
+    impulsor_reforestacion:impulsorReforestacion, 
+    dueno_tierra_bosque:duenoTierraBosque, 
+    duenos_motosierras:duenosMotosierras, 
+    tala_para_cultivar:talaParaCultivar,
+    rozas_quemas :rozasQuemas, 
+    incendios_forestales :incendiosForestales, 
+    razon_incendios:razonIncendios, 
+    area_incendio:areaIncendio, 
+    fecha_incendio:fechaIncendio,
+    fuentes_agua:fuentesAgua,
+    num_nacimientos:numNacimientos,
+    dueno_tierra_fuentes:duenoTierraFuentes,
+    acciones_conservacion_agua:accionesConservacionAgua, 
+    num_pozos:numPozos, 
+    num_rios:numRios, 
+    num_lagunas:numLagunas, 
+    otras_fuentes_agua:otrasFuentesAgua, 
+    proyecto_medio_ambiental:proyectoMedioAmbiental, 
+    acciones_proyecto:accionesProyecto, 
+    acciones_conservacion_ambiente:accionesConservacionAmbiente, 
+    animales_silvestres:animalesSilvestres, 
+    animales_por_temporada:animalesPorTemporada,
+    plantas_extintas:plantasExtintas, 
+    plantas_dificiles:plantasDificiles, 
+    desastre_natural:desastreNatural, 
+    ano_desastre:anioDesastre,
+    tipo_desastre :tipoDesastre, 
+    respuesta_desastre :respuestaDesastre, 
+    colred :colred, 
+    otras_instituciones:otrasInstituciones,
+    amenaza_desastre:amenazaDesastre,
   };
   
   // Guardar los datos en el localStorage
@@ -1052,7 +1247,7 @@ const handleAlertResponse = (continueEditing) => {
                 <h3 className="labelForm">Cerdo</h3>
                 <IonCheckbox checked={cerdo} onIonChange={e => setCerdo(e.target.checked)} />
                 <h3 className="labelForm">Res</h3>
-                <IonCheckbox checked={res} onIonChange={e => setRes(e.target.checked)} />
+                <IonCheckbox checked={ress} onIonChange={e => setRes(e.target.checked)} />
                 <h3 className="labelForm">Carne de monte</h3>
                 <IonCheckbox checked={carneMonte} onIonChange={e => setCarneMonte(e.target.checked)} />
                 <h3 className="labelForm">Pescado</h3>

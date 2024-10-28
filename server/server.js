@@ -401,7 +401,34 @@ app.post('/comunidadr', async (req, res) => {
     tipo_inseguridad, grupos_delincuenciales, personas_otro_lugar, ocupacion_otro_lugar, personas_en_eeuu,
     cantidad_personas_eeuu, menores_en_eeuu, edad_empieza_trabajar_hombres, edad_empieza_trabajar_mujeres,
     tipo_empleo, existen_jubilados, cantidad_jubilados, institucion_jubilados, ocupaciones_tradicionales_mujeres,
-    ocupaciones_tradicionales_hombres
+    ocupaciones_tradicionales_hombres,
+    //registrar el modulo de servicios
+    energia_electrica,tipo_servicio,calidad_servicio,costos_servicio,prestador_servicio,familias_con_servicio,senal_telefono,senal_internet,senal_tv,cable,prestador_servicios,
+    //registrar el modulo de educacion
+    instituciones_educativas, edificios_educativos, constructor_edificios, materiales_construccion, dueno_terreno, deseo_preparacion, limitantes_estudio, personas_carrera_medio_hombres,
+    personas_carrera_medio_mujeres, personas_concluyeron_medio, personas_universidad_hombres, personas_universidad_mujeres, abandono_estudios,
+    carreras_nivel_medio, carreras_universidad,
+    //seccion de agua y saneamiento
+    agua_entubada,pozo,agua_lluvia,rio,laguna,estanque,compra_agua,inodoro_lavable,letrina,pozo_ventilado,campo_excretas,manejo_basura,tipo_basura,fuente_energia_lenia,fuente_energia_gas,
+    fuente_energia_carbon,fuente_energia_otros,estufa_ahorradora,estufa_gas,polleton,suelo_cocina,capacitaciones_saneamiento,detalle_capacitaciones,
+    //seccion de educacion
+    pollo_congelado,pollo_criollo,cerdo,ress,carne_monte,pescado,maiz,frijol,verduras,legumbres,pastas,sopas,arroz,papa,malanga,camote,yuca,otro_tuberculo,puesto_salud,frecuencia_doctor,hay_enfermero,
+    centro_convergencia,uso_centro_convergencia,emergencia,tipos_emergencias,vacunas_ninos,frecuencia_vacunacion,mayores_60,personas_capacidades_diferentes,personas_abandono,ninos_0a5,ninos_6a10,ninos_11a15,
+    ninos_16a18,recien_nacidos,ninos_muertos,ninos_desnutridos,mujeres_embarazadas,embarazos_al_anio,tipo_enfermedades,num_comadronas,num_promotores_salud,num_curanderos,botiquin_comunitario,jardines_medicinales,
+    venta_medicina,venta_bebidas_alcoholicas,num_puntos_venta_bebidas,tipos_bebidas_alcoholicas,consumo_tabaco,otros_consumo,
+    //seccion de mapa de actores
+    maga,fodes,mides,sesan,llega_policia,comites,religion,ongList,actors,
+    //seccion de agricultura
+    agricultura,comercializacion_productos,terreno_propio,terreno_prestado,terreno_arrendado,costo_arrendamiento,periodo_arrendamiento,momento_siembra,plagas_enfermedades,meses_plagas,cultivos_anteriores,razon_no_siembra,nuevos_cultivos,sistemas_productivos,
+    acciones_sequia,acciones_lluvia,perdida_cosechas,ano_perdida_cosechas,causa_perdida_cosechas,capacitaciones_agricultura ,tipo_capacitacion,organizacion_capacitacion,actividad_sin_siembra,uso_pesticidas ,uso_insecticidas,
+    uso_herbicidas,uso_fungicidas,uso_fertilizantes,uso_otros,
+    //seccion de pecuarias
+    pecuarias,alimento_animales,planes_profilacticos,enfermedades_animales,meses_enfermedad,capacitaciones_animales , tipo_capacitacion_animales,
+    //seccion de ecologia
+    bosque_comunitario,dimensiones_bosque,especies_arboles,especies_plantas ,incentivos_forestales,bosques_potenciales,viveros,reforestado,area_reforestada,impulsor_reforestacion,dueno_tierra_bosque,duenos_motosierras,tala_para_cultivar,rozas_quemas,incendios_forestales,razon_incendios,
+    area_incendio,fecha_incendio,fuentes_agua,num_nacimientos,dueno_tierra_fuentes,acciones_conservacion_agua,num_pozos,num_rios,num_lagunas,otras_fuentes_agua,proyecto_medio_ambiental,acciones_proyecto,acciones_conservacion_ambiente,animales_silvestres,animales_por_temporada,plantas_extintas,
+    plantas_dificiles,desastre_natural ,ano_desastre,tipo_desastre,respuesta_desastre,colred,otras_instituciones,amenaza_desastre
+
   } = req.body;
 
   console.log("Datos recibidos en el servidor:", req.body);
@@ -415,7 +442,32 @@ app.post('/comunidadr', async (req, res) => {
     hay_inseguridad || null, tipo_inseguridad || null, grupos_delincuenciales || null, personas_otro_lugar || null, ocupacion_otro_lugar || null, 
     personas_en_eeuu || null, cantidad_personas_eeuu || null, menores_en_eeuu || null, edad_empieza_trabajar_hombres || null, 
     edad_empieza_trabajar_mujeres || null, tipo_empleo || null, existen_jubilados || null, cantidad_jubilados || null, institucion_jubilados || null, 
-    ocupaciones_tradicionales_mujeres || null, ocupaciones_tradicionales_hombres || null
+    ocupaciones_tradicionales_mujeres || null, ocupaciones_tradicionales_hombres || null, energia_electrica || null,tipo_servicio || null,
+    calidad_servicio || null,costos_servicio || null,prestador_servicio || null,familias_con_servicio || null,senal_telefono || null,senal_internet || null,
+    senal_tv || null,cable || null,prestador_servicios || null, instituciones_educativas || null, edificios_educativos || null, constructor_edificios|| null, 
+    materiales_construccion || null, dueno_terreno|| null, deseo_preparacion|| null, limitantes_estudio|| null, personas_carrera_medio_hombres|| null,
+    personas_carrera_medio_mujeres|| null, personas_concluyeron_medio|| null, personas_universidad_hombres|| null, personas_universidad_mujeres|| null, abandono_estudios|| null,
+    carreras_nivel_medio|| null, carreras_universidad|| null, agua_entubada|| null,pozo|| null,agua_lluvia|| null,rio,laguna|| null,estanque|| null,compra_agua,inodoro_lavable|| null,
+    letrina,pozo_ventilado|| null,campo_excretas|| null,manejo_basura|| null,tipo_basura|| null,fuente_energia_lenia|| null,fuente_energia_gas|| null,
+    fuente_energia_carbon|| null,fuente_energia_otros|| null,estufa_ahorradora|| null,estufa_gas|| null,polleton|| null,suelo_cocina|| null,capacitaciones_saneamiento|| null,
+    detalle_capacitaciones|| null, pollo_congelado|| null,pollo_criollo|| null,cerdo|| null,ress|| null,carne_monte|| null,pescado|| null,maiz|| null,frijol|| null,verduras|| null,legumbres|| null,pastas|| null,sopas|| null,
+    arroz|| null,papa|| null,malanga|| null,camote|| null,yuca|| null,otro_tuberculo|| null,puesto_salud|| null,frecuencia_doctor|| null,hay_enfermero|| null,
+    centro_convergencia|| null,uso_centro_convergencia|| null,emergencia|| null,tipos_emergencias|| null,vacunas_ninos|| null,frecuencia_vacunacion|| null,mayores_60|| null,personas_capacidades_diferentes|| null,personas_abandono|| null,
+    ninos_0a5|| null,ninos_6a10|| null,ninos_11a15|| null,
+    ninos_16a18|| null,recien_nacidos|| null,ninos_muertos|| null,ninos_desnutridos|| null,mujeres_embarazadas|| null,embarazos_al_anio|| null,tipo_enfermedades|| null,num_comadronas|| null,num_promotores_salud|| null,num_curanderos|| null,
+    botiquin_comunitario|| null,jardines_medicinales|| null,
+    venta_medicina|| null,venta_bebidas_alcoholicas|| null,num_puntos_venta_bebidas|| null,tipos_bebidas_alcoholicas|| null,consumo_tabaco|| null,otros_consumo|| null,
+    maga|| null,fodes|| null,mides|| null,sesan|| null,llega_policia|| null,comites|| null,religion|| null,ongList|| null,actors|| null,
+    agricultura|| null,comercializacion_productos|| null,terreno_propio|| null,terreno_prestado|| null,terreno_arrendado|| null,costo_arrendamiento|| null,periodo_arrendamiento|| null,momento_siembra|| null,plagas_enfermedades|| null,meses_plagas|| null,
+    cultivos_anteriores|| null,razon_no_siembra|| null,nuevos_cultivos|| null,sistemas_productivos|| null,
+    acciones_sequia|| null,acciones_lluvia|| null,perdida_cosechas|| null,ano_perdida_cosechas|| null,causa_perdida_cosechas|| null,capacitaciones_agricultura|| null ,tipo_capacitacion|| null,organizacion_capacitacion|| null,actividad_sin_siembra|| null,
+    uso_pesticidas|| null ,uso_insecticidas|| null,
+    uso_herbicidas|| null,uso_fungicidas|| null,uso_fertilizantes|| null,uso_otros|| null,
+    pecuarias|| null,alimento_animales|| null,planes_profilacticos|| null,enfermedades_animales|| null,meses_enfermedad|| null,capacitaciones_animales|| null , tipo_capacitacion_animales|| null,
+    bosque_comunitario|| null,dimensiones_bosque|| null,especies_arboles|| null,especies_plantas|| null ,incentivos_forestales|| null,bosques_potenciales|| null,viveros|| null,reforestado,area_reforestada|| null,impulsor_reforestacion|| null,dueno_tierra_bosque|| null,duenos_motosierras|| null,tala_para_cultivar|| null,rozas_quemas|| null,incendios_forestales|| null,razon_incendios|| null,
+    area_incendio|| null,fecha_incendio|| null,fuentes_agua|| null,num_nacimientos|| null,dueno_tierra_fuentes|| null,acciones_conservacion_agua|| null,num_pozos|| null,num_rios|| null,num_lagunas|| null,otras_fuentes_agua|| null,proyecto_medio_ambiental|| null,acciones_proyecto|| null,acciones_conservacion_ambiente|| null,animales_silvestres|| null,animales_por_temporada|| null,plantas_extintas|| null,
+    plantas_dificiles|| null,desastre_natural|| null ,ano_desastre|| null,tipo_desastre|| null,respuesta_desastre|| null,colred|| null,otras_instituciones|| null,amenaza_desastre|| null
+
   ];
 
   // Validación adicional para verificar si algún campo es undefined
@@ -444,8 +496,27 @@ app.post('/comunidadr', async (req, res) => {
         tipo_inseguridad, grupos_delincuenciales, personas_otro_lugar, ocupacion_otro_lugar, personas_en_eeuu,
         cantidad_personas_eeuu, menores_en_eeuu, edad_empieza_trabajar_hombres, edad_empieza_trabajar_mujeres,
         tipo_empleo, existen_jubilados, cantidad_jubilados, institucion_jubilados, ocupaciones_tradicionales_mujeres,
-        ocupaciones_tradicionales_hombres
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+        ocupaciones_tradicionales_hombres,
+        energia_electrica,tipo_servicio,calidad_servicio,costos_servicio,prestador_servicio,familias_con_servicio,
+        senal_telefono,senal_internet,senal_tv,cable,prestador_servicios,
+        instituciones_educativas, edificios_educativos, constructor_edificios, materiales_construccion, dueno_terreno, deseo_preparacion, limitantes_estudio, personas_carrera_medio_hombres,
+        personas_carrera_medio_mujeres, personas_concluyeron_medio, personas_universidad_hombres, personas_universidad_mujeres, abandono_estudios,
+        carreras_nivel_medio, carreras_universidad,
+        agua_entubada,pozo,agua_lluvia,rio,laguna,estanque,compra_agua,inodoro_lavable,letrina,pozo_ventilado,campo_excretas,manejo_basura,tipo_basura,fuente_energia_lenia,fuente_energia_gas,
+        fuente_energia_carbon,fuente_energia_otros,estufa_ahorradora,estufa_gas,polleton,suelo_cocina,capacitaciones_saneamiento,detalle_capacitaciones,
+        pollo_congelado,pollo_criollo,cerdo,ress,carne_monte,pescado,maiz,frijol,verduras,legumbres,pastas,sopas,arroz,papa,malanga,camote,yuca,otro_tuberculo,puesto_salud,frecuencia_doctor,hay_enfermero,
+    centro_convergencia,uso_centro_convergencia,emergencia,tipos_emergencias,vacunas_ninos,frecuencia_vacunacion,mayores_60,personas_capacidades_diferentes,personas_abandono,ninos_0a5,ninos_6a10,ninos_11a15,
+    ninos_16a18,recien_nacidos,ninos_muertos,ninos_desnutridos,mujeres_embarazadas,embarazos_al_anio,tipo_enfermedades,num_comadronas,num_promotores_salud,num_curanderos,botiquin_comunitario,jardines_medicinales,
+    venta_medicina,venta_bebidas_alcoholicas,num_puntos_venta_bebidas,tipos_bebidas_alcoholicas,consumo_tabaco,otros_consumo,
+    maga,fodes,mides,sesan,llega_policia,comites,religion,ongList,actors,
+    agricultura,comercializacion_productos,terreno_propio,terreno_prestado,terreno_arrendado,costo_arrendamiento,periodo_arrendamiento,momento_siembra,plagas_enfermedades,meses_plagas,cultivos_anteriores,razon_no_siembra,nuevos_cultivos,sistemas_productivos,
+    acciones_sequia,acciones_lluvia,perdida_cosechas,ano_perdida_cosechas,causa_perdida_cosechas,capacitaciones_agricultura ,tipo_capacitacion,organizacion_capacitacion,actividad_sin_siembra,uso_pesticidas ,uso_insecticidas,
+    uso_herbicidas,uso_fungicidas,uso_fertilizantes,uso_otros,
+    pecuarias,alimento_animales,planes_profilacticos,enfermedades_animales,meses_enfermedad,capacitaciones_animales , tipo_capacitacion_animales,
+    bosque_comunitario,dimensiones_bosque,especies_arboles,especies_plantas ,incentivos_forestales,bosques_potenciales,viveros,reforestado,area_reforestada,impulsor_reforestacion,dueno_tierra_bosque,duenos_motosierras,tala_para_cultivar,rozas_quemas,incendios_forestales,razon_incendios,
+    area_incendio,fecha_incendio,fuentes_agua,num_nacimientos,dueno_tierra_fuentes,acciones_conservacion_agua,num_pozos,num_rios,num_lagunas,otras_fuentes_agua,proyecto_medio_ambiental,acciones_proyecto,acciones_conservacion_ambiente,animales_silvestres,animales_por_temporada,plantas_extintas,
+    plantas_dificiles,desastre_natural ,ano_desastre,tipo_desastre,respuesta_desastre,colred,otras_instituciones,amenaza_desastre
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`;
 
     // Ejecutar el query con los valores seguros
     await connection.execute(query, safeValues);
