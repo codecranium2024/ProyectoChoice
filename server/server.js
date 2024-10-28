@@ -566,7 +566,8 @@ app.get('/responsables', async (req, res) => {
     res.status(500).send('Error al obtener nombres de usuarios');
   }
 });
-
+1
+// Endpoint para registrar un proyecto
 app.post('/RegistrarProyecto', async (req, res) => {
   const { 
     idCategoriaProyecto, 
