@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { IonApp, IonRouterOutlet, IonSplitPane, setupIonicReact } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import { Redirect, Route } from 'react-router-dom';
@@ -9,6 +9,7 @@ import ListadoGeneral from './components/RomeoComp/Comunidad/ListadoGeneral';
 import Panel from './components/RomeoComp/Panel/Panel';
 import Comunidad from './components/RomeoComp/Comunidad/Comunidad1';
 import VisualizarComunidades from './pages/MarcoPaginas/AgregarComunidad';
+import EditarComunidades from './pages/MarcoPaginas/EditarComunidad';
 import { Configuraciones } from './pages/MarcoPaginas/Configuraciones';
 import Departamentos from './components/RomeoComp/Region/Departamentos';
 import InformacionComunitaria from './components/RomeoComp/Proyecto/InformacionComunitaria';
@@ -36,7 +37,25 @@ import './theme/variables.css';
 
 setupIonicReact();
 
+
 const App: React.FC = () => {
+
+
+  // Estado para almacenar el modo oscuro
+  const [isDarkMode, setIsDarkMode] = useState(false);
+  
+  useEffect(() => {
+      // Al cargar la página, verificar si el modo oscuro está activado en localStorage
+      const darkModeEnabled = localStorage.getItem("darkMode") === "true";
+      setIsDarkMode(darkModeEnabled);
+  
+      // Aplicar la clase "dark" al body si el modo oscuro está activado
+      if (darkModeEnabled) {
+          document.body.classList.add("dark");
+      }
+  }, []);
+
+
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [userName, setUserName] = useState('');
   const [userRole, setUserRole] = useState('');
@@ -88,6 +107,7 @@ const App: React.FC = () => {
               <Route path="/AgregarComunidades" exact={true}>
                 <VisualizarComunidades />
               </Route>
+              <Route path="/EditarComunidad/:id" component={EditarComunidades} />
               <Route path="/Configuraciones" exact={true}>
                 <Configuraciones />
               </Route>
